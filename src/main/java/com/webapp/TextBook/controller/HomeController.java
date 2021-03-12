@@ -45,4 +45,19 @@ public class HomeController {
         return "replaceBarcode";
     }
 
+    @RequestMapping("/queryCourse")
+    public String queryCourse(){
+        return "queryCourse";
+    }
+
+    @RequestMapping("/courseMessage")
+    public String courseMessage(){
+        return "courseMessage";
+    }
+
+    @RequestMapping("/changeBookCode")
+    public String changeBookCode(){
+        return "changeBookCode";
+    }
+
 }

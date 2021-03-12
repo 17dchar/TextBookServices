@@ -52,11 +52,11 @@
             <a href="addBook">Add Books</a>
             <a href="bookQuery">Query Books</a>
             <a href="bookDisposition">Change Book Disposition</a>
-            <a href="navigationBar">Replace Barcode</a>
-            <a href="navigationBar">Query Course</a>
-            <a href="navigationBar">Course Message</a>
-            <a href="navigationBar">Change Book Code/Year</a>
-        </div>
+            <a href="replaceBarcode">Replace Barcode</a>
+            <a href="queryCourse">Query Course</a>
+            <a href="courseMessage">Course Message</a>
+            <a href="changeBookCode">Change Book Code/Year</a>
+    </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
