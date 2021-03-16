@@ -76,13 +76,13 @@
         <p>
             <label>Book Code:</label>
             <input type = "text"
-                   id = "bookCode" />
+                     id = "bookCode" />
             <label>Book Year:</label>
             <input type = "text"
-                   id = "bookYear" />
+                     id = "bookYear" />
             <label>Strike Bar Code:</label>
             <input type = "text"
-                    id = "barCode" />
+                     id = "barCode" />
         </p>
     </fieldset>
 </form>

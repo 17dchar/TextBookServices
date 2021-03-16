@@ -1,2 +1,3 @@
-com\webapp\TextBook\model\UserModel.class
+com\webapp\TextBook\model\Addbookmodel.class
+com\webapp\TextBook\model\Usermodel.class
 com\webapp\TextBook\controller\HomeController.class

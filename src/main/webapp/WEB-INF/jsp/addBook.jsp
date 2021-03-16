@@ -70,7 +70,7 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form>
+<form action="guru_register" method="post">
     <fieldset>
         <p>
             <label>Book Code:</label>
@@ -82,6 +82,7 @@
         </p>
     </fieldset>
 </form>
+<%--
 <form>
     <fieldset>
         <p>
@@ -101,6 +102,7 @@
         </p>
     </fieldset>
 </form>
+--%>
 <div class="column right">
     <p>
         <button type="button">Save</button>
