@@ -51,14 +51,14 @@
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
-        <a href="/maintenenceFormView.jsp">Maintenance</a>
-        <a href="/addBook.jsp">Add Books</a>
-        <a href="/bookQuery">Query Books</a>
-        <a href="/bookDisposition.jsp">Change Book Disposition</a>
-        <a href="navigationBar.jsp">Replace Barcode</a>
-        <a href="navigationBar.jsp">Query Course</a>
-        <a href="navigationBar.jsp">Course Message</a>
-        <a href="navigationBar.jsp">Change Book Code/Year</a>
+                <a href="maintenanceFormView">Maintenance</a>
+                <a href="addBook">Add Books</a>
+                <a href="bookQuery">Query Books</a>
+                <a href="bookDisposition">Change Book Disposition</a>
+                <a href="replaceBarcode">Replace Barcode</a>
+                <a href="queryCourse">Query Course</a>
+                <a href="courseMessage">Course Message</a>
+                <a href="changeBookCode">Change Book Code/Year</a>
     </div>
 </div>
 <div class="dropdown">

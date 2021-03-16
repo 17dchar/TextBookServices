@@ -7,12 +7,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @RequestMapping("/")
-    public String login(){ return "supervisorView"; }
+    public String login(){
+        return "login";
+    }
 
-    @RequestMapping("/maintenanceFormView.jsp")
-    public String maintenance(){ return "maintenanceFormView";}
+    @RequestMapping("/supervisorView")
+    public String supervisor(){
+        return "supervisorView";
+    }
 
-    @RequestMapping("/addBook.jsp")
-    public String addBook(){ return "addBook";}
+    @RequestMapping("/maintenanceFormView")
+    public String maintenance(){
+        return "maintenanceFormView";
+    }
+
+    @RequestMapping("/addBook")
+    public String addBook(){
+        return "addBook";
+    }
+
+    @RequestMapping("/bookQuery")
+    public String bookQuery(){
+        return "bookQuery";
+    }
+
+    @RequestMapping("/bookDisposition")
+    public String bookDisposition(){
+        return "bookDisposition";
+    }
+
+    @RequestMapping("/replaceBarcode")
+    public String replaceBarcode(){
+        return "replaceBarcode";
+    }
+
+    @RequestMapping("/queryCourse")
+    public String queryCourse(){
+        return "queryCourse";
+    }
+
+    @RequestMapping("/courseMessage")
+    public String courseMessage(){
+        return "courseMessage";
+    }
+
+    @RequestMapping("/changeBookCode")
+    public String changeBookCode(){
+        return "changeBookCode";
+    }
 
 }

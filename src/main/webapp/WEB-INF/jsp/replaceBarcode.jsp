@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add a Book</title>
+    <title>replaceBarcodeForm.html</title>
     <style>
         .column {float: left;}
-        .left {width: 60%;}
-        .middle {width: 30%;}
+        .left {width: 90%;}
         .right {width: 10%;}
+
         .row:after {
             content: "";
             display: table;
@@ -44,7 +44,7 @@
     </style>
 </head>
 <body>
-<h1>Textbook Services: Add Book</h1>
+<h1>Textbook Services: Replace Barcode</h1>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
@@ -70,7 +70,7 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form action="guru_register" method="post">
+<form>
     <fieldset>
         <p>
             <label>Book Code:</label>
@@ -79,34 +79,45 @@
             <label>Book Year:</label>
             <input type = "text"
                    id = "bookYear" />
+            <label>Strike Barcode:</label>
+            <input type = "text"
+                   id = "strikeBarcode" />
         </p>
     </fieldset>
 </form>
-<%--
-<form>
-    <fieldset>
-        <p>
-            <label>Title:</label>
-            <input type = "text"
-                   id = "bookTitle" />
-        </p>
-        <p>
-            <label>Seq Nr:</label>
-            <input type = "text"
-                   id = "seqNr" />
-        </p>
-        <p>
-            <label>Strike Bar Code:</label>
-            <input type = "text"
-                   id = "barCode" />
-        </p>
-    </fieldset>
-</form>
---%>
-<div class="column right">
-    <p>
-        <button type="button">Save</button>
-        <button type="button">Clear</button>
-    </p>
+<div class="container">
+    <div class="row">
+        <div class="column left">
+            <form>
+                <fieldset>
+                    <legend>Book Info</legend>
+                    <p>
+                        <label>Title:</label>
+                        <input type = "text"
+                               id = "bookTitle" />
+                    </p>
+                    <p>
+                        <label>Seq Nr:</label>
+                        <input type = "number"
+                               id = "seqNumber" />
+                    </p>
+                    <p>
+                        <label>Change Barcode To:</label>
+                        <input type = "text"
+                               id = "newBarcode" />
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+        <div class="column right">
+            <p>
+                <button type="button">Save</button>
+            </p>
+            <p>
+                <button type="button">Clear</button>
+            </p>
+        </div>
+    </div>
 </div>
 </body>
+</html>

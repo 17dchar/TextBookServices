@@ -49,14 +49,14 @@
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
-        <a href="#">Maintenance</a>
-        <a href="#">Add Books</a>
-        <a href="#">Query Books</a>
-        <a href="#">Change Book Disposition</a>
-        <a href="#">Replace Barcode</a>
-        <a href="#">Query Course</a>
-        <a href="#">Course Message</a>
-        <a href="#">Change Book Code/Year</a>
+                <a href="maintenanceFormView">Maintenance</a>
+                <a href="addBook">Add Books</a>
+                <a href="bookQuery">Query Books</a>
+                <a href="bookDisposition">Change Book Disposition</a>
+                <a href="replaceBarcode">Replace Barcode</a>
+                <a href="queryCourse">Query Course</a>
+                <a href="courseMessage">Course Message</a>
+                <a href="changeBookCode">Change Book Code/Year</a>
     </div>
 </div>
 <div class="dropdown">
