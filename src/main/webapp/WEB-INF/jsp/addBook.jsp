@@ -1,7 +1,10 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Add a Book</title>
     <style>
         .column {float: left;}
@@ -70,7 +73,7 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form action="guru_register" method="post">
+<form action="Addbookmodellol" method="post">
     <fieldset>
         <p>
             <label>Book Code:</label>
@@ -80,7 +83,9 @@
             <input type = "text"
                    id = "bookYear" />
         </p>
+
     </fieldset>
+    <input type="submit" value="Submit" />
 </form>
 <%--
 <form>
