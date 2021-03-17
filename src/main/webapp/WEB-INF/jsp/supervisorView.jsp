@@ -52,7 +52,7 @@
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
         <a href="/maintenenceFormView.jsp">Maintenance</a>
-        <a href="/addBook.jsp">Add Books</a>
+        <a href="addBook">Add Books</a>
         <a href="/bookQuery">Query Books</a>
         <a href="/bookDisposition.jsp">Change Book Disposition</a>
         <a href="navigationBar.jsp">Replace Barcode</a>
