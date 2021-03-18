@@ -30,14 +30,6 @@ public class TextBookApplication implements CommandLineRunner {
 
 		List<SCBCRSEModel> scbcrseList = jdbcTemplate.query(sql,
 				BeanPropertyRowMapper.newInstance(SCBCRSEModel.class));
-
-		scbcrseList.forEach(System.out :: println);
-		String sqlChanging = "UPDATE SCBCRSE;" +
-				"SET SCBCRSE_CRSE_NUMB = 'haha'";
-
-		scbcrseList = jdbcTemplate.query(sqlChanging,
-				BeanPropertyRowMapper.newInstance(SCBCRSEModel.class));
-
 		scbcrseList.forEach(System.out :: println);
 	}
 }
