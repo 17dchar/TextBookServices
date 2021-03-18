@@ -40,6 +40,7 @@ import net.guides.springboot2.springboot2jpacrudexample.repository.EmployeeRepos
 
 
  */
+/*
 @RestController
 @RequestMapping("/api/v1")
 public class EmployeeController {
@@ -53,7 +54,7 @@ public class EmployeeController {
 
     @GetMapping("/employees/{id}")
     public ResponseEntity < Addbookmodel > get(@PathVariable(value = "bookYearId") Long bookYearId)
-            /*throws ResourceNotFoundException */{
+            throws ResourceNotFoundException {
         Addbookmodel bookYear = addbookrepository.findById(bookYearId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + bookYearId);
         return ResponseEntity.ok().body(bookYear);
@@ -89,5 +90,6 @@ public class EmployeeController {
         return response;
     }
 
- */
+
 }
+*/

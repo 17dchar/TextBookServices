@@ -2,7 +2,7 @@
          pageEncoding="ISO-8859-1"%>
 <% page import="java.sql.*, java.util.*"%>
 
-<% Class.forName("clienDriver?");%>
+<% Class.forName("clientDriver?");%>
 <%
     String bc = request.getParameter("bookCode");
     String by = request.getParameter("bookYear");
@@ -12,7 +12,7 @@
 
     Connection con = DriverManager.getConnection("localhost?");
     Statement st = con.createStatement();
-    int i = st.executeUpdate("INSERT INTO bookInfo (bookCode, bookYear, bookTitle, seqNr, barCode)
+    String qry = st.executeUpdate("INSERT INTO bookInfo (bookCode, bookYear, bookTitle, seqNr, barCode)
                                   VALUES ('"+bc+"', '"+by+"', '"+bt+"', '"+bs+"', '"+bb+"')";
     out.println("book added");
 %>
