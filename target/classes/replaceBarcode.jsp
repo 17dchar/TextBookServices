@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add a Book</title>
+    <title>replaceBarcodeForm.html</title>
     <style>
         .column {float: left;}
-        .left {width: 60%;}
-        .middle {width: 30%;}
+        .left {width: 90%;}
         .right {width: 10%;}
+
         .row:after {
             content: "";
             display: table;
@@ -44,7 +44,7 @@
     </style>
 </head>
 <body>
-<h1>Textbook Services: Add Book</h1>
+<h1>Textbook Services: Replace Barcode</h1>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
@@ -70,42 +70,54 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form method = "post" action = "process.jsp">
+<form>
     <fieldset>
         <p>
             <label>Book Code:</label>
             <input type = "text"
-                   name = "bookCode" />
+                   id = "bookCode" />
             <label>Book Year:</label>
             <input type = "text"
-                   name = "bookYear" />
+                   id = "bookYear" />
+            <label>Strike Barcode:</label>
+            <input type = "text"
+                   id = "strikeBarcode" />
         </p>
     </fieldset>
-    <fieldset>
-        <p>
-            <label>Title:</label>
-            <input type = "text"
-                   name = "bookTitle" />
-        </p>
-        <p>
-            <label>Seq Nr:</label>
-            <input type = "text"
-                   name = "seqNr" />
-        </p>
-        <!--
-        <p>
-            <label>Strike Bar Code:</label>
-            <input type = "text"
-                   id = "barCode" />
-        </p>
-        -->
-
-    </fieldset>
-    <div class="column right">
-        <p>
-            <input type="submit" name="submit">Save</input>
-            <button type="button">Clear</button>
-        </p>
-    </div>
 </form>
+<div class="container">
+    <div class="row">
+        <div class="column left">
+            <form>
+                <fieldset>
+                    <legend>Book Info</legend>
+                    <p>
+                        <label>Title:</label>
+                        <input type = "text"
+                               id = "bookTitle" />
+                    </p>
+                    <p>
+                        <label>Seq Nr:</label>
+                        <input type = "number"
+                               id = "seqNumber" />
+                    </p>
+                    <p>
+                        <label>Change Barcode To:</label>
+                        <input type = "text"
+                               id = "newBarcode" />
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+        <div class="column right">
+            <p>
+                <button type="button">Save</button>
+            </p>
+            <p>
+                <button type="button">Clear</button>
+            </p>
+        </div>
+    </div>
+</div>
 </body>
+</html>

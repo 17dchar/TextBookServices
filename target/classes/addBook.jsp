@@ -70,42 +70,41 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form method = "post" action = "process.jsp">
+<form>
     <fieldset>
         <p>
             <label>Book Code:</label>
             <input type = "text"
-                   name = "bookCode" />
+                   id = "bookCode" />
             <label>Book Year:</label>
             <input type = "text"
-                   name = "bookYear" />
+                   id = "bookYear" />
         </p>
     </fieldset>
+</form>
+<form>
     <fieldset>
         <p>
             <label>Title:</label>
             <input type = "text"
-                   name = "bookTitle" />
+                   id = "bookTitle" />
         </p>
         <p>
             <label>Seq Nr:</label>
             <input type = "text"
-                   name = "seqNr" />
+                   id = "seqNr" />
         </p>
-        <!--
         <p>
             <label>Strike Bar Code:</label>
             <input type = "text"
                    id = "barCode" />
         </p>
-        -->
-
     </fieldset>
-    <div class="column right">
-        <p>
-            <input type="submit" name="submit">Save</input>
-            <button type="button">Clear</button>
-        </p>
-    </div>
 </form>
+<div class="column right">
+    <p>
+        <button type="button">Save</button>
+        <button type="button">Clear</button>
+    </p>
+</div>
 </body>
