@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66a77f85-1bec-4a3c-9c59-6f97abb5ae11" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Model/AddBookModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/AddBookServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Model/SCBCRSEModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/TextBook_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/TextBook_war_exploded.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/model/UserModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Model/UserModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TextBook.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TextBook.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/TextBookApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/TextBookApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/AddBookServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,21 +79,23 @@
       <recent name="C:\Users\s529295\Documents\GitHub\TextBookServices\src\main\webapp\WEB-INF" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Dao" />
       <recent name="C:\Users\s529295\Documents\GitHub\TextBookServices\src\main\webapp\WEB-INF\jsp" />
       <recent name="C:\Users\s529295\Documents\GitHub\TextBookServices\src\main" />
       <recent name="C:\Users\s529295\Documents\GitHub\TextBookServices\src\main\resources\static" />
       <recent name="C:\Users\s529295\Documents\GitHub\TextBookServices\src\webapp\WEB-INF\jsp" />
-      <recent name="C:\Users\s529295\Documents\GitHub\TextBookServices\src\webapp\WEB-INF" />
     </key>
   </component>
   <component name="RunManager" selected="Maven.TextBook [spring-boot:run]">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
