@@ -1,0 +1,17 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(‡ÄÃ†ıÿÿÿÿ
+[
+java:S1128"9Remove this unused import 'org.springframework.ui.Model'.(ê†ıÿÿÿÿ8ªê¼†/
+l
+java:S4488"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(ÿÈ§÷şÿÿÿÿ8ã‰ñƒ†/
+d
+java:S1192"HDefine a constant instead of duplicating this literal "addBook" 3 times.(âİ÷k8“¨œ…†/
+R
+java:S2209"5Change this instance-reference to a static reference.(¬İíã8´…ü„†/
+d
+java:S4488"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(“Şß~8Ş£¶†/
+z
+java:S3753"XAdd a call to "setComplete()" on the SessionStatus object in a "@RequestMapping" method.(Ì¹¢õúÿÿÿÿ8‰ª±†/
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ıÔÚç8Ï¤ƒ†/
+]	java:S125-"<This block of commented-out lines of code should be removed.(›²úØÿÿÿÿÿ8ã‰ñƒ†/
+Z	java:S106%"9Replace this use of System.out or System.err by a logger.(åˆòùÿÿÿÿ8ã‰ñƒ†/

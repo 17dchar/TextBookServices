@@ -1,5 +1,7 @@
 com\webapp\TextBook\ServletInitializer.class
+com\webapp\TextBook\controller\AddBookController.class
 com\webapp\TextBook\controller\HomeController.class
 com\webapp\TextBook\TextBookApplication.class
 com\webapp\TextBook\Model\UserModel.class
+com\webapp\TextBook\Service\AddBookService.class
 com\webapp\TextBook\Model\SCBCRSEModel.class

@@ -70,8 +70,11 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form method = "post" action = "process.jsp">
+<form method = "post">
     <fieldset>
+        Book Code: <input type="text" name="bookCode">
+        Book Year: <input type="text" name="bookYear">
+        <!--
         <p>
             <label>Book Code:</label>
             <input type = "text"
@@ -80,6 +83,10 @@
             <input type = "text"
                    name = "bookYear" />
         </p>
+        -->
+        Title: <input type = "text" name = "bookTitle">
+        Seq Nr: <input type = "text" name = "seqNm">
+        <!--
     </fieldset>
     <fieldset>
         <p>
@@ -92,6 +99,7 @@
             <input type = "text"
                    name = "seqNr" />
         </p>
+        -->
         <!--
         <p>
             <label>Strike Bar Code:</label>
@@ -107,5 +115,12 @@
             <button type="button">Clear</button>
         </p>
     </div>
+
+
 </form>
+
+Here is a list of your books:
+${books.get(0).getBookTitle()}
+<BR/>
+
 </body>
