@@ -52,11 +52,11 @@
             <a href="addBook">Add Books</a>
             <a href="bookQuery">Query Books</a>
             <a href="bookDisposition">Change Book Disposition</a>
-            <a href="navigationBar">Replace Barcode</a>
-            <a href="navigationBar">Query Course</a>
-            <a href="navigationBar">Course Message</a>
-            <a href="navigationBar">Change Book Code/Year</a>
-        </div>
+            <a href="replaceBarcode">Replace Barcode</a>
+            <a href="queryCourse">Query Course</a>
+            <a href="courseMessage">Course Message</a>
+            <a href="changeBookCode">Change Book Code/Year</a>
+    </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
@@ -70,41 +70,57 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form>
+<form method = "post">
     <fieldset>
+        Book Code: <input type="text" name="bookCode">
+        Book Year: <input type="text" name="bookYear">
+        <!--
         <p>
             <label>Book Code:</label>
             <input type = "text"
-                   id = "bookCode" />
+                   name = "bookCode" />
             <label>Book Year:</label>
             <input type = "text"
-                   id = "bookYear" />
+                   name = "bookYear" />
         </p>
+        -->
+        Title: <input type = "text" name = "bookTitle">
+        Seq Nr: <input type = "text" name = "seqNm">
+        <!--
     </fieldset>
-</form>
-<form>
     <fieldset>
         <p>
             <label>Title:</label>
             <input type = "text"
-                   id = "bookTitle" />
+                   name = "bookTitle" />
         </p>
         <p>
             <label>Seq Nr:</label>
             <input type = "text"
-                   id = "seqNr" />
+                   name = "seqNr" />
         </p>
+        -->
+        <!--
         <p>
             <label>Strike Bar Code:</label>
             <input type = "text"
                    id = "barCode" />
         </p>
+        -->
+
     </fieldset>
+    <div class="column right">
+        <p>
+            <input type="submit" name="submit">Save</input>
+            <button type="button">Clear</button>
+        </p>
+    </div>
+
+
 </form>
-<div class="column right">
-    <p>
-        <button type="button">Save</button>
-        <button type="button">Clear</button>
-    </p>
-</div>
+
+Here is a list of your books:
+${books.get(0).getBookTitle()}
+<BR/>
+
 </body>

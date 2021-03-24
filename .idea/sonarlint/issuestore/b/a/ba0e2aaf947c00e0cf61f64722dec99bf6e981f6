@@ -1,0 +1,17 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¶Ñ‹¤
+Z	java:S106)"9Replace this use of System.out or System.err by a logger.(÷ÅÛŒùÿÿÿÿ8ãÙ…†/
+U	java:S106*"9Replace this use of System.out or System.err by a logger.(¹ó¥8ãÙ…†/
+U	java:S106("9Replace this use of System.out or System.err by a logger.(˜•‡×8ä¹Š…†/
+Q
+java:S1128	"4Remove this unused import 'java.lang.reflect.Array'.(‡¡É˜8Š¬œ‚†/
+g
+java:S1128"ERemove this unused import 'org.springframework.stereotype.Component'.(Ş÷Ñ¸ÿÿÿÿÿ8‹‡Ô†/
+@
+java:S1128"Remove this duplicated import.(Èµµùÿÿÿÿ8Š¬œ‚†/
+T	java:S106""9Replace this use of System.out or System.err by a logger.(¬æp8î°¥ƒ†/
+v
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(×·»¯8øÑœ‚†/
+C
+java:S1172&"&Remove these unused method parameters.(Ğ»ì8ä¹Š…†/
+U	java:S106+"9Replace this use of System.out or System.err by a logger.(×ü÷Å8ãÙ…†/
