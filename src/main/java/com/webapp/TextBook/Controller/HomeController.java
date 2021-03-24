@@ -1,20 +1,11 @@
-package com.webapp.TextBook.controller;
-
-import java.util.List;
+package com.webapp.TextBook.Controller;
 
 import com.webapp.TextBook.Service.AddBookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
-
-
-    @Autowired
-    AddBookService service;
 
     @RequestMapping("/")
     public String login(){

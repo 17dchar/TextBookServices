@@ -86,6 +86,7 @@
         -->
         Title: <input type = "text" name = "bookTitle">
         Seq Nr: <input type = "text" name = "seqNm">
+        Strike Bar Code: <input type = "text" name = "strikeBarCode">
         <!--
     </fieldset>
     <fieldset>

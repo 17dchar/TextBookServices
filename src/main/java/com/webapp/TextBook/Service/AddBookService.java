@@ -54,7 +54,7 @@ public class AddBookService {
         jdbcTemplate.update("INSERT INTO SCBCRSE VALUES(?,?,?,?)", bookCode, bookTitle, bookYear, seqNm);
     }
     //Create Model class for all tables
-    // Implement findAll(), findByID(1234) ==> repository
+    //Implement findAll(), findByID(1234) ==> repository
     //Create a demo jsp where you can get the repo data
     //Things to notice:
     /*
