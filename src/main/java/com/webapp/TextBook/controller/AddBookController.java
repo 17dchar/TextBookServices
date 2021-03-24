@@ -19,7 +19,7 @@ public class AddBookController {
     @Autowired
     AddBookService service;
 
-    @RequestMapping(value="/getBook", method = RequestMethod.GET)
+    @RequestMapping(value="/addBook", method = RequestMethod.GET)
     public String showAddBookPage(ModelMap model){
         System.out.println("went through here");
         model.put("books", service.retrieveBooks());

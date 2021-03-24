@@ -1,48 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <meta charset="UTF-8">
     <title>replaceBarcodeForm.html</title>
-    <style>
-        .column {float: left;}
-        .left {width: 90%;}
-        .right {width: 10%;}
-
-        .row:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-        .dropbtn {
-            background-color: lightgrey;
-            color: darkgreen;
-            padding: 10px;
-            font-size: 16px;
-            border: darkgreen;
-        }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-        .dropdown-content a {
-            color: darkgreen;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {background-color: #ddd;}
-        .dropdown:hover .dropdown-content {display: block;}
-        .dropdown:hover .dropbtn {background-color: grey;}
-    </style>
-</head>
+    </head>
 <body>
 <h1>Textbook Services: Replace Barcode</h1>
 <div class="dropdown">
