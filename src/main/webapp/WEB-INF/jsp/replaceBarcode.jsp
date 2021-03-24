@@ -3,21 +3,21 @@
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <meta charset="UTF-8">
-    <title>replaceBarcodeForm.html</title>
-    </head>
+    <title>Replace Barcode Form</title>
+</head>
 <body>
 <h1>Textbook Services: Replace Barcode</h1>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
-            <a href="maintenanceFormView">Maintenance</a>
-            <a href="addBook">Add Books</a>
-            <a href="bookQuery">Query Books</a>
-            <a href="bookDisposition">Change Book Disposition</a>
-            <a href="replaceBarcode">Replace Barcode</a>
-            <a href="queryCourse">Query Course</a>
-            <a href="courseMessage">Course Message</a>
-            <a href="changeBookCode">Change Book Code/Year</a>
+        <a href="maintenanceFormView">Maintenance</a>
+        <a href="addBook">Add Books</a>
+        <a href="bookQuery">Query Books</a>
+        <a href="bookDisposition">Change Book Disposition</a>
+        <a href="replaceBarcode">Replace Barcode</a>
+        <a href="queryCourse">Query Course</a>
+        <a href="courseMessage">Course Message</a>
+        <a href="changeBookCode">Change Book Code/Year</a>
     </div>
 </div>
 <div class="dropdown">
@@ -36,14 +36,14 @@
     <fieldset>
         <p>
             <label>Book Code:</label>
-            <input type = "text"
-                   id = "bookCode" />
+            <input type="text"
+                   id="bookCode"/>
             <label>Book Year:</label>
-            <input type = "text"
-                   id = "bookYear" />
+            <input type="text"
+                   id="bookYear"/>
             <label>Strike Barcode:</label>
-            <input type = "text"
-                   id = "strikeBarcode" />
+            <input type="text"
+                   id="strikeBarcode"/>
         </p>
     </fieldset>
 </form>
@@ -55,18 +55,18 @@
                     <legend>Book Info</legend>
                     <p>
                         <label>Title:</label>
-                        <input type = "text"
-                               id = "bookTitle" />
+                        <input type="text"
+                               id="bookTitle"/>
                     </p>
                     <p>
                         <label>Seq Nr:</label>
-                        <input type = "number"
-                               id = "seqNumber" />
+                        <input type="number"
+                               id="seqNumber"/>
                     </p>
                     <p>
                         <label>Change Barcode To:</label>
-                        <input type = "text"
-                               id = "newBarcode" />
+                        <input type="text"
+                               id="newBarcode"/>
                     </p>
                 </fieldset>
             </form>
