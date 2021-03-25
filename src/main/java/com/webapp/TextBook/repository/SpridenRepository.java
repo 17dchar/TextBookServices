@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface SpridenRepository extends JpaRepository<Spriden, Integer>{
     @Override
-    List<Scbcrse> findAll();
+    List<Spriden> findAll();
 }

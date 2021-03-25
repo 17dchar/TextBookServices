@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ScbcrseRepository extends JpaRepository<Scbrse, Integer>{
+public interface ScbcrseRepository extends JpaRepository<Scbcrse, Integer>{
     @Override
-    List<Spriden> findAll();
+    List<Scbcrse> findAll();
 }
