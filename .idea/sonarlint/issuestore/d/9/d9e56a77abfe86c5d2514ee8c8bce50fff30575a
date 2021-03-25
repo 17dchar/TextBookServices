@@ -1,7 +1,7 @@
 
-]	java:S125#"<This block of commented-out lines of code should be removed.(üÃÑºúÿÿÿÿ8ìã’†/
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(‡ÄÃ†ıÿÿÿÿ
-[
-java:S1128"9Remove this unused import 'org.springframework.ui.Model'.(ê†ıÿÿÿÿ8˜¥Á‘†/
+]	java:S125#"<This block of commented-out lines of code should be removed.(ï¿½ï¿½Ñºï¿½ï¿½ï¿½ï¿½ï¿½8ï¿½ã’ï¿½/
 M
-java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8˜¥Á‘†/
+java:S1128"+Remove this unused import 'java.util.List'.(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½8ï¿½ï¿½ï¿½ï¿½ï¿½/
+[
+java:S1128"9Remove this unused import 'org.springframework.ui.Model'.(ê†ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½8ï¿½ï¿½ï¿½ï¿½ï¿½/
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ï¿½ï¿½Ã†ï¿½ï¿½ï¿½ï¿½ï¿½

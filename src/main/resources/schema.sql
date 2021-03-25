@@ -128,7 +128,6 @@ CREATE TABLE "SFRVERF"
     "NWTXAR_BILL_DATE" DATE,
     "NWTXAR_TERM" VARCHAR2(6 CHAR)
    );
-
    -- notes: nw textbook access resource?
    -- detail code is hard stuff, activity date is date of charge, doc num book code?, bill date not relevant, term of purchase
 
