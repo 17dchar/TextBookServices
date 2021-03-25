@@ -1,12 +1,13 @@
 package com.webapp.TextBook.repository;
-import com.webapp.TextBook.Model.Nwtxar;
+
+import com.webapp.TextBook.Model.Nwtxbn;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface NwtxarRepository extends JpaRepository<Nwtxar, Integer>{
+public interface NwtxbnRepository extends JpaRepository<Nwtxbn, Integer>{
     @Override
-    List<Nwtxar> findAll();
+    List<Nwtxbn> findAll();
 }
