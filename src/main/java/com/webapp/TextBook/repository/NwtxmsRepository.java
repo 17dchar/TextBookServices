@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface NwtxmsRepository extends JpaRepository<Nwtxdt, Integer>{
+public interface NwtxmsRepository extends JpaRepository<Nwtxms, Integer>{
     @Override
     List<Nwtxms> findAll();
 }

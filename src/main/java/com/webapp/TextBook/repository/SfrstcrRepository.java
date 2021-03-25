@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SfrstcrRepository extends JpaRepository<Sfrstcer, Integer>{
+public interface SfrstcrRepository extends JpaRepository<Sfrstcr, Integer>{
     @Override
     List<Sfrstcr> findAll();
 }
