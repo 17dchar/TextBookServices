@@ -17,12 +17,6 @@ public class AddBookModel implements Serializable{
         this.seqNr = seqNr;
     }
 
-    public AddBookModel(){
-        this.bookYear = "work";
-        this.bookCode = "work";
-        this.bookTitle = "work";
-        this.seqNr = "work";
-    }
     public String getBookTitle() {
         return bookTitle;
     }
@@ -31,7 +25,6 @@ public class AddBookModel implements Serializable{
         this.bookTitle = bookTitle;
     }
 
-
     public String getSeqNr() {
         return seqNr;
     }
@@ -39,8 +32,6 @@ public class AddBookModel implements Serializable{
     public void setSeqNr(String seqNr) {
         this.seqNr = seqNr;
     }
-
-
 
     public String getBookYear() {
         return bookYear;
