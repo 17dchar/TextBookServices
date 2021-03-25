@@ -4,6 +4,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 
+@Entity
+@Table(name = "SFRVERF")
 public class Sfrverf {
     @Id
     @Column(name = "SFRVERF_PIDM")
