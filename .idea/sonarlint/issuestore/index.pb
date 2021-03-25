@@ -21,3 +21,5 @@ m
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 r
 Bsrc/main/java/com/webapp/TextBook/repository/NwtxdtRepository.java,a\5\a5d3a179dd2003d426ffb12a0debc524a61ed5c8
+^
+.src/main/webapp/WEB-INF/jsp/replaceBarcode.jsp,1\0\10c184f1f7a63bb40f8f18e68776561870b54177
