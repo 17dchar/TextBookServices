@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66a77f85-1bec-4a3c-9c59-6f97abb5ae11" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Model/Sfrverf.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Model/Sgbstdn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/schema.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Model/Nwtxar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/TextBook_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/TextBook_war_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/repository/ScbcrseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/repository/ScbcrseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/repository/SpridenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/repository/SpridenRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/repository/SsrmeetRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/repository/SsrmeetRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,6 +1,6 @@
 package com.webapp.TextBook.repository;
 
-import com.webapp.TextBook.Model.Ssbsect;
+import com.webapp.TextBook.Model.Ssrmeet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
