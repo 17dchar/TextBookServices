@@ -93,6 +93,7 @@ CREATE TABLE "SGBSTDN"
 	-- notes: student uhh stats?
 	-- term code eff is 202120 last active/enrolled semester?, levl code undergrad, stst 'as' 'is'?
 
+    --Here
 CREATE TABLE "SFRVERF"
    (	"SFRVERF_PIDM" NUMBER(8,0),
 	"SFRVERF_TERM_CODE" VARCHAR2(6 CHAR),
@@ -128,7 +129,7 @@ CREATE TABLE "SFRVERF"
     "NWTXAR_BILL_DATE" DATE,
     "NWTXAR_TERM" VARCHAR2(6 CHAR)
    );
-
+   -- to here
    -- notes: nw textbook access resource?
    -- detail code is hard stuff, activity date is date of charge, doc num book code?, bill date not relevant, term of purchase
 
