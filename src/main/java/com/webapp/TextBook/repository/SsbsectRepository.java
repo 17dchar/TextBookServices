@@ -1,13 +1,14 @@
 package com.webapp.TextBook.repository;
 
-import com.webapp.TextBook.Model.Sfrstcr;
+import com.webapp.TextBook.Model.Ssbsect;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface SfrstcrRepository extends JpaRepository<Sfrstcer, Integer>{
+public interface SsbsectRepository extends JpaRepository<Ssbsect, Integer>{
     @Override
-    List<Sfrstcr> findAll();
+    List<Ssbsect> findAll();
 }
+
