@@ -1,13 +1,13 @@
 package com.webapp.TextBook.repository;
 
-import com.webapp.TextBook.Model.Nwtxcm;
+import com.webapp.TextBook.Model.Nwtxin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface NwtxcmRepository extends JpaRepository<Nwtxcm, Integer>{
+public interface NwtxinRepository extends JpaRepository<Nwtxin, Integer>{
     @Override
-    List<Nwtxcm> findAll();
+    List<Nwtxin> findAll();
 }
