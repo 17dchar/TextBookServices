@@ -18,7 +18,6 @@ public class Sgbstdn {
     @NotEmpty
     private String ststCode;
     @Column(name = "SGBSTDN_LEVL_CODE")
-    @NotEmpty
     private String levlCode;
 
     public Integer getPidm() {
