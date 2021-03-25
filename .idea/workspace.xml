@@ -83,15 +83,13 @@
     </key>
   </component>
   <component name="RunManager" selected="Maven.TextBook [spring-boot:run]">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -157,7 +155,7 @@
       <workItem from="1616467935381" duration="42000" />
       <workItem from="1616520740389" duration="9049000" />
       <workItem from="1616530097782" duration="6346000" />
-      <workItem from="1616690261426" duration="1502000" />
+      <workItem from="1616697628480" duration="677000" />
     </task>
     <servers />
   </component>
