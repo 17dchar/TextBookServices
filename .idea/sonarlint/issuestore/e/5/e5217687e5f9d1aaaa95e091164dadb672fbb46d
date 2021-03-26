@@ -1,0 +1,27 @@
+
+f	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(蓀�
+u	java:S116"[Rename this field "SCBCRSE_EFF_TERM" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(���������
+h	java:S100
+"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(䎶������
+h	java:S100%"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(���������
+k	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ߋ�������
+v	java:S116"\Rename this field "SCBCRSE_SUBJ_CODE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(���������
+h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(�ʚ�����
+k	java:S117%"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(���������
+h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ߋ�������
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(黱�
+r	java:S116"XRename this field "SCBCRSE_TITLE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(�ߢ������
+k	java:S117
+"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(䎶������
+h	java:S100!"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(���������
+h	java:S100	"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(���������
+c	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ߍ��
+k	java:S117
+"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(䎶������
+h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(�ʚ�����
+r	java:S116"XRename this field "SCBCRSE_TITLE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(�ߢ������
+k	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ߋ�������
+f	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(蓀�
+u	java:S116"[Rename this field "SCBCRSE_EFF_TERM" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(���������
+c	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(蓀�
+p	java:S116"\Rename this field "SCBCRSE_CRSE_NUMB" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ӕ�

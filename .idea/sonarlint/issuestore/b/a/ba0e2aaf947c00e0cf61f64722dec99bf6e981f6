@@ -1,0 +1,22 @@
+
+g
+java:S1128	"ERemove this unused import 'org.springframework.stereotype.Component'.(��Ѹ�����8��ԁ�/
+@
+java:S1128"Remove this duplicated import.(ȵ�������8�����/
+Q
+java:S1128
+"4Remove this unused import 'java.lang.reflect.Array'.(��ɘ8�����/
+d
+java:S1128"GRemove this unused import 'org.springframework.boot.CommandLineRunner'.(ȗ��8�М��/
+C
+java:S1172*"&Remove these unused method parameters.(Ў��8乊��/
+U	java:S106,"9Replace this use of System.out or System.err by a logger.(����8乊��/
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(�ы�
+U	java:S106."9Replace this use of System.out or System.err by a logger.(��8�ٍ��/
+T	java:S106&"9Replace this use of System.out or System.err by a logger.(��p8��/
+Z	java:S106-"9Replace this use of System.out or System.err by a logger.(��ی�����8�ٍ��/
+r
+java:S1128"PRemove this unused import 'org.springframework.jdbc.core.BeanPropertyRowMapper'.(ߩŴ�����8�М��/
+U	java:S106/"9Replace this use of System.out or System.err by a logger.(����8�ٍ��/
+v
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(׷��8�ќ��/
