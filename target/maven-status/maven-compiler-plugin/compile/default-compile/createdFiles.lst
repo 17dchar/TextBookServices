@@ -19,6 +19,7 @@ com\webapp\TextBook\repository\SsbsectRepository.class
 com\webapp\TextBook\Model\Nwtxar.class
 com\webapp\TextBook\Model\Ssbsect.class
 com\webapp\TextBook\TextBookApplication.class
+com\webapp\TextBook\Service\BookQueryService.class
 com\webapp\TextBook\repository\SfrstcrRepository.class
 com\webapp\TextBook\Model\Nwtxdt.class
 com\webapp\TextBook\controller\AddBookController.class

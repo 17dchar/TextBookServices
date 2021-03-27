@@ -32,18 +32,22 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form>
+<form method="post">
     <fieldset>
         <p>
             <label>Book Code:</label>
             <input type="text"
-                   id="bookCode"/>
+                   name="bookCode"/>
             <label>Book Year:</label>
             <input type="text"
-                   id="bookYear"/>
+                   name="editionYear"/>
             <label>Strike Bar Code:</label>
             <input type="text"
-                   id="barCode"/>
+                   name="seqNm"/>
+        </p>
+        <p>
+            <input type="submit" name="Save"/>
+            <button type="button">Clear</button>
         </p>
     </fieldset>
 </form>

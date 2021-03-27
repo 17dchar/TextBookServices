@@ -3,11 +3,14 @@ package com.webapp.TextBook.controller;
 import java.util.List;
 
 import com.webapp.TextBook.Service.AddBookService;
+import com.webapp.TextBook.Service.BookQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomeController {
@@ -40,8 +43,25 @@ public class HomeController {
 
  */
 
-    @RequestMapping("/bookQuery")
-    public String bookQuery(){
+
+    @Autowired
+    BookQueryService bookQueryService;
+
+    @RequestMapping(value = "/bookQuery", method = RequestMethod.GET)
+    public String bookQuery(ModelMap model){
+        System.out.println("Book Query GET");
+        return "bookQuery";
+    }
+
+    @RequestMapping(value = "/bookQuery", method = RequestMethod.POST)
+    public String bookQueryPost(ModelMap model, @RequestParam String bookCode, @RequestParam String editionYear, @RequestParam String seqNm){
+        System.out.println("Book Query POST");
+        if(!bookQueryService.validateBook(bookCode, editionYear, seqNm)){
+            model.put("errorMessage", "Invalid Credentials");
+            return "addBook";
+        }
+        System.out.println("Passed Book Validation");
+        bookQueryService.logQuery(bookCode,editionYear,seqNm);
         return "bookQuery";
     }
 
