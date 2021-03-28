@@ -76,15 +76,15 @@ public class HomeController {
         bookQueryService.logQuery(bookCode,editionYear,seqNm);
         //bookQueryService.queryDatabaseTerm(bookCode,editionYear,seqNm);
         //if(nwtxdtRepository.findById(nwtxdt.getBarcode()) == null){
-        System.out.println(nwtxdt.getBookCode());
+        //System.out.println(nwtxdt.getBookCode());
         if(bookQueryService.getNwtxdt(nwtxdt.getBookCode()) != null){
             System.out.println("made it in here");
-            System.out.println(nwtxdt.getTerm());
-            model.put("term", nwtxdt.getTerm());
+            System.out.println(nwtxdt.getBookCode());
+            model.put("term", nwtxdt.getBookCode());
 
             return "bookQuery";
         } else {
-            System.out.println("It is null!");
+            System.out.println("Inproper Book Code Given. Returning to Main Page");
         }
         bookQueryService.testNwtxdt();
 

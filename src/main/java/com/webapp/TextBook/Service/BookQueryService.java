@@ -32,16 +32,14 @@ public class BookQueryService {
 
     public Nwtxdt getNwtxdt(String bookCode){
         System.out.println("This is the book code: " + bookCode);
-        System.out.println("Returns: " + nwtxdtRepository.findByBookCode(bookCode).size() + " length");
+        System.out.println("Returns: " + nwtxdtRepository.findByBookCode(bookCode).size() + " Length \n" +
+                "of Book Code " + bookCode);
         return nwtxdtRepository.findById(bookCode).orElse(null);
     }
 
     public void testNwtxdt(){
         System.out.println("Testing Database connection");
-        List<Nwtxdt> list = nwtxdtRepository.findAll();
-
-        System.out.println("Returns: " + nwtxdtRepository.findAll().get(0).getBookCode());
-        //return nwtxdtRepository.findById(bookCode).orElse(null);
+        System.out.println("Your Book Code, Fine Sir: " + nwtxdtRepository.findAll().get(0).getBookCode());
     }
 
     public void logQuery(String bookCode, String editionYear, String seqNm){
