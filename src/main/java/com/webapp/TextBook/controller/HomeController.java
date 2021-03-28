@@ -1,16 +1,23 @@
 package com.webapp.TextBook.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import com.webapp.TextBook.Service.AddBookService;
+import com.webapp.TextBook.Repository.NwtxdtRepository;
+import com.webapp.TextBook.Model.Nwtxdt;
 import com.webapp.TextBook.Service.BookQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 @Controller
 public class HomeController {
@@ -18,6 +25,9 @@ public class HomeController {
 
     @Autowired
     AddBookService service;
+
+    @Autowired
+    NwtxdtRepository nwtxdtRepository;
 
     @RequestMapping("/")
     public String login(){
@@ -54,7 +64,9 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/bookQuery", method = RequestMethod.POST)
-    public String bookQueryPost(ModelMap model, @RequestParam String bookCode, @RequestParam String editionYear, @RequestParam String seqNm){
+    public String bookQueryPost(@Valid @ModelAttribute("nwtxdt") Nwtxdt nwtxdt, ModelMap model,
+                                @RequestParam String bookCode, @RequestParam String editionYear, @RequestParam String seqNm,
+                                BindingResult result) throws ParseException {
         System.out.println("Book Query POST");
         if(!bookQueryService.validateBook(bookCode, editionYear, seqNm)){
             model.put("errorMessage", "Invalid Credentials");
@@ -62,6 +74,20 @@ public class HomeController {
         }
         System.out.println("Passed Book Validation");
         bookQueryService.logQuery(bookCode,editionYear,seqNm);
+        //bookQueryService.queryDatabaseTerm(bookCode,editionYear,seqNm);
+        //if(nwtxdtRepository.findById(nwtxdt.getBarcode()) == null){
+        System.out.println(nwtxdt.getBookCode());
+        if(bookQueryService.getNwtxdt(nwtxdt.getBookCode()) != null){
+            System.out.println("made it in here");
+            System.out.println(nwtxdt.getTerm());
+            model.put("term", nwtxdt.getTerm());
+
+            return "bookQuery";
+        } else {
+            System.out.println("It is null!");
+        }
+        bookQueryService.testNwtxdt();
+
         return "bookQuery";
     }
 
