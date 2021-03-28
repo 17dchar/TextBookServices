@@ -49,7 +49,7 @@
                    name="editionYear"/>
             <label>Strike Bar Code:</label>
             <input type="text"
-                   name="seqNm"/>
+                   name="barcode"/>
         </p>
         <p>
             <input type="submit" name="Save"/>
@@ -65,13 +65,20 @@
                     <legend>Book Info</legend>
                     <p>
                         <label>Title:</label>
+                        <!--
                         <input type="text"
                                id="bookTitle"/>
+                        -->
+                        ${bookTitle}
                     </p>
                     <p>
+
                         <label>Seq Nr:</label>
+                        <!--
                         <input type="text"
                                id="seqNr"/>
+                        -->
+                        ${seqNr}
                     </p>
                 </fieldset>
             </form>
@@ -80,8 +87,11 @@
                     <legend>Current Info</legend>
                     <p>
                         <label>Current Disposition:</label>
+                        <!--
                         <input type="text"
                                id="bookDisposition"/>
+                        -->
+                        ${bookDisposition}
                     </p>
                     <p>
                         <label>Term Check Out:</label>
@@ -116,7 +126,7 @@
                         <input type="text"
                                id="previouslyCheckedOutTo"/>
                          -->
-                        ${term}
+                        ${prevTerm}
                     </p>
                     <p>
                         <label>Date Checked In:</label>

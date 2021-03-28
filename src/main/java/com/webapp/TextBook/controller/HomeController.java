@@ -65,28 +65,31 @@ public class HomeController {
 
     @RequestMapping(value = "/bookQuery", method = RequestMethod.POST)
     public String bookQueryPost(@Valid @ModelAttribute("nwtxdt") Nwtxdt nwtxdt, ModelMap model,
-                                @RequestParam String bookCode, @RequestParam String editionYear, @RequestParam String seqNm,
+                                @RequestParam String bookCode, @RequestParam String editionYear, @RequestParam String barcode,
                                 BindingResult result) throws ParseException {
         System.out.println("Book Query POST");
-        if(!bookQueryService.validateBook(bookCode, editionYear, seqNm)){
+        if(!bookQueryService.validateBook(bookCode, editionYear, barcode)){
             model.put("errorMessage", "Invalid Credentials");
             return "addBook";
         }
-        System.out.println("Passed Book Validation");
-        bookQueryService.logQuery(bookCode,editionYear,seqNm);
-        //bookQueryService.queryDatabaseTerm(bookCode,editionYear,seqNm);
-        //if(nwtxdtRepository.findById(nwtxdt.getBarcode()) == null){
-        //System.out.println(nwtxdt.getBookCode());
-        if(bookQueryService.getNwtxdt(nwtxdt.getBookCode()) != null){
-            System.out.println("made it in here");
-            System.out.println(nwtxdt.getBookCode());
-            model.put("term", nwtxdt.getBookCode());
+
+
+        System.out.println("Querying off of: " + nwtxdt.getBookCode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBarcode());
+        if(bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()) != null){
+            System.out.println("These are Valid Credentials");
+
+            //Literally, just copy one of these and paste it with a different first argument off of the
+            //next "bookQuery.jsp" fake input.
+            //I'll fix the input fields in there later, but comment them out for now. Look at what I've been doing
+            model.put("bookTitle",bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()).getBookCode());
+            model.put("seqNr",bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()).getSeqNr());
+            model.put("prevTerm", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()).getPrevTerm());
+            model.put("bookDisposition", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()).getDisposition());
 
             return "bookQuery";
         } else {
-            System.out.println("Inproper Book Code Given. Returning to Main Page");
+            System.out.println("No Book Found Off of Given Credentials");
         }
-        bookQueryService.testNwtxdt();
 
         return "bookQuery";
     }
