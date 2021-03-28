@@ -94,19 +94,16 @@
                         ${bookDisposition}
                     </p>
                     <p>
-                        <label>Term Check Out:</label>
-                        <input type="text"
-                               id="termCheckOut"/>
+                        <label>Term Checked Out:</label>
+                        ${termCheckedOut}
                     </p>
                     <p>
                         <label>Checked Out To:</label>
-                        <input type="text"
-                               id="checkedOutTo"/>
+                        ${checkedOutTo}
                     </p>
                     <p>
                         <label>Date Checked Out:</label>
-                        <input type="date"
-                               id="dateCheckedOut"/>
+                        ${dateCheckedOut}
                     </p>
                 </fieldset>
             </form>
@@ -117,21 +114,15 @@
                     <legend>Previous Info</legend>
                     <p>
                         <label>Previous Term Check Out:</label>
-                        <input type="text"
-                               id="previouslyTermCheckOut"/>
-                    </p>
-                    <p>
-                        <label>Previously Checked Out To:</label>
-                        <!--
-                        <input type="text"
-                               id="previouslyCheckedOutTo"/>
-                         -->
                         ${prevTerm}
                     </p>
                     <p>
+                        <label>Previously Checked Out To:</label>
+                        ${prevCheckedOutTo}
+                    </p>
+                    <p>
                         <label>Date Checked In:</label>
-                        <input type="date"
-                               id="dateCheckedIn"/>
+                        ${dateCheckedIn}
                     </p>
                 </fieldset>
             </form>
