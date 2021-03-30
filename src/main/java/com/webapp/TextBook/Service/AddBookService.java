@@ -24,20 +24,10 @@ public class AddBookService {
     }
 
 
-    public boolean validateBook(String bookCode, String bookTitle, String bookYear, String seqNm){
-
-        return !bookCode.isEmpty() && !bookTitle.isEmpty() && !bookYear.isEmpty() && !seqNm.isEmpty();
-    }
-
     public void addToModel(String bookCode, String bookTitle, String bookYear, String seqNm){
         books.add(new AddBookModel(bookYear, bookCode, bookTitle, seqNm));
     }
 
-    public static List<AddBookModel> retrieveBooks(){
-
-        System.out.println("retrieveBooks works!");
-        return books;
-    }
 
     public void logBook(String bookCode, String bookTitle, String bookYear, String seqNm){
 

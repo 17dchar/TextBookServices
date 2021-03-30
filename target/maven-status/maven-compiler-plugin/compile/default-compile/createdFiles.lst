@@ -22,7 +22,6 @@ com\webapp\TextBook\TextBookApplication.class
 com\webapp\TextBook\Service\BookQueryService.class
 com\webapp\TextBook\repository\SfrstcrRepository.class
 com\webapp\TextBook\Model\Nwtxdt.class
-com\webapp\TextBook\controller\AddBookController.class
 com\webapp\TextBook\repository\SgbstdnRepository.class
 com\webapp\TextBook\repository\StvtermRepository.class
 com\webapp\TextBook\repository\NwtxmsRepository.class

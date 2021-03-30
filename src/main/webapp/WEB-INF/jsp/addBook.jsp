@@ -40,7 +40,7 @@
                 <label>Book Code: </label>
                 <input type="text" name="bookCode">
                 <label>Year: </label>
-                <input type="text" name="bookYear">
+                <input type="text" name="editionYear">
             </p>
         </fieldset>
         <fieldset>
@@ -48,15 +48,18 @@
                 <label>Title: </label>
                 <input type="text" name="bookTitle">
                 <label>Sequence Number:</label>
-                <input type="text" name="seqNm">
+                <input type="text" name="seqNr">
             </p>
             <p>
                 <label>Strike Bar Code:</label>
                 <input type="text"
-                       id="barCode"/>
+                       name="barcode"/>
             </p>
         </fieldset>
     </fieldset>
+    <p>
+        ${returnVoidError}
+    </p>
     <div class="column right">
         <p>
             <input type="submit" name="Save"/>

@@ -43,24 +43,35 @@ public class HomeController {
     @Autowired
     AddBookService addBookService;
     @RequestMapping(value="/addBook", method = RequestMethod.GET)
-    public String showAddBookPage(ModelMap model){
+    public String addBookPage(ModelMap model){
         System.out.println("Add Book GET");
-        //model.put("books", addBookService.retrieveBooks());
         return "addBook";
     }
     @RequestMapping(value="/addBook", method = RequestMethod.POST)
-    public String showAddBookRecognition(ModelMap model, @RequestParam String bookCode, @RequestParam String bookYear, @RequestParam String bookTitle, @RequestParam String seqNm){
-
+    public String addBookPOST(ModelMap model,
+                              @RequestParam (value = "bookCode",required = false, defaultValue = "")String bookCode,
+                              @RequestParam (value = "editionYear",required = false, defaultValue = "")String editionYear,
+                              @RequestParam (value = "bookTitle",required = false, defaultValue = "")String bookTitle,
+                              @RequestParam (value = "barcode",required = false, defaultValue = "")String barcode,
+                              @RequestParam (value = "seqNr",required = false, defaultValue = "")String seqNr)
+                              throws ParseException{
         System.out.println("Add Book POST");
-        boolean isValidBook = addBookService.validateBook(bookCode, bookTitle, bookYear, seqNm);
-
-        if(!isValidBook){
-            model.put("errorMessage", "Invalid Credentials");
+        if(bookCode.equals("") || editionYear.equals("") || bookTitle.equals("") ||barcode.equals("") || seqNr.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
             return "addBook";
         }
-        addBookService.addToModel(bookCode, bookTitle, bookYear, seqNm);
-        addBookService.logBook(bookCode, bookTitle, bookYear, seqNm);
-        addBookService.postToDatabase(bookCode, bookTitle, bookYear, seqNm);
+        Nwtxdt nwtxdt = new Nwtxdt();
+        nwtxdt.setBarcode(barcode);
+        nwtxdt.setEditionYear(editionYear);
+        nwtxdt.setBookCode(bookCode);
+        nwtxdt.setSeqNr(seqNr);
+
+        System.out.println("Adding Book with " + barcode + ", " + editionYear + ", " + bookCode + ", " +
+                seqNr + " Credentials");
+
+        //addBookService.addToModel(bookCode, bookTitle, bookYear, seqNm);
+        //addBookService.logBook(bookCode, bookTitle, bookYear, seqNm);
+        //addBookService.postToDatabase(bookCode, bookTitle, bookYear, seqNm);
         return "addBook";
     }
 
