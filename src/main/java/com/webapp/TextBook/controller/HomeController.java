@@ -21,10 +21,9 @@ public class HomeController {
 
 
     @Autowired
-    AddBookService service;
-
-    @Autowired
     NwtxdtRepository nwtxdtRepository;
+    //@Autowired
+
 
     @RequestMapping("/")
     public String login(){
@@ -40,15 +39,30 @@ public class HomeController {
     public String maintenance(){
         return "maintenanceFormView";
     }
-/*
-    @RequestMapping("/addBook")
-    public String addBook(ModelMap model){
-        System.out.println("went through here at home");
-        model.put("books", service.retrieveBooks());
+
+    @Autowired
+    AddBookService addBookService;
+    @RequestMapping(value="/addBook", method = RequestMethod.GET)
+    public String showAddBookPage(ModelMap model){
+        System.out.println("Add Book GET");
+        //model.put("books", addBookService.retrieveBooks());
         return "addBook";
     }
+    @RequestMapping(value="/addBook", method = RequestMethod.POST)
+    public String showAddBookRecognition(ModelMap model, @RequestParam String bookCode, @RequestParam String bookYear, @RequestParam String bookTitle, @RequestParam String seqNm){
 
- */
+        System.out.println("Add Book POST");
+        boolean isValidBook = addBookService.validateBook(bookCode, bookTitle, bookYear, seqNm);
+
+        if(!isValidBook){
+            model.put("errorMessage", "Invalid Credentials");
+            return "addBook";
+        }
+        addBookService.addToModel(bookCode, bookTitle, bookYear, seqNm);
+        addBookService.logBook(bookCode, bookTitle, bookYear, seqNm);
+        addBookService.postToDatabase(bookCode, bookTitle, bookYear, seqNm);
+        return "addBook";
+    }
 
 
     @Autowired
