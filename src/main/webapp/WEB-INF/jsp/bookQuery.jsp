@@ -1,3 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,18 +38,22 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form>
+<form method="post">
     <fieldset>
         <p>
             <label>Book Code:</label>
             <input type="text"
-                   id="bookCode"/>
+                   name="bookCode"/>
             <label>Book Year:</label>
             <input type="text"
-                   id="bookYear"/>
+                   name="editionYear"/>
             <label>Strike Bar Code:</label>
             <input type="text"
-                   id="barCode"/>
+                   name="barcode"/>
+        </p>
+        <p>
+            <input type="submit" name="Save"/>
+            <button type="button">Clear</button>
         </p>
     </fieldset>
 </form>
@@ -55,38 +65,48 @@
                     <legend>Book Info</legend>
                     <p>
                         <label>Title:</label>
+                        <!--
                         <input type="text"
                                id="bookTitle"/>
+                        -->
+                        ${bookTitle}
                     </p>
                     <p>
+
                         <label>Seq Nr:</label>
+                        <!--
                         <input type="text"
                                id="seqNr"/>
+                        -->
+                        ${seqNr}
                     </p>
                 </fieldset>
+                <p>
+                    ${returnVoidError}
+                </p>
             </form>
             <form>
                 <fieldset>
                     <legend>Current Info</legend>
                     <p>
                         <label>Current Disposition:</label>
+                        <!--
                         <input type="text"
                                id="bookDisposition"/>
+                        -->
+                        ${bookDisposition}
                     </p>
                     <p>
-                        <label>Term Check Out:</label>
-                        <input type="text"
-                               id="termCheckOut"/>
+                        <label>Term Checked Out:</label>
+                        ${termCheckedOut}
                     </p>
                     <p>
                         <label>Checked Out To:</label>
-                        <input type="text"
-                               id="checkedOutTo"/>
+                        ${checkedOutTo}
                     </p>
                     <p>
                         <label>Date Checked Out:</label>
-                        <input type="date"
-                               id="dateCheckedOut"/>
+                        ${dateCheckedOut}
                     </p>
                 </fieldset>
             </form>
@@ -97,18 +117,15 @@
                     <legend>Previous Info</legend>
                     <p>
                         <label>Previous Term Check Out:</label>
-                        <input type="text"
-                               id="previouslyTermCheckOut"/>
+                        ${prevTerm}
                     </p>
                     <p>
                         <label>Previously Checked Out To:</label>
-                        <input type="text"
-                               id="previouslyCheckedOutTo"/>
+                        ${prevCheckedOutTo}
                     </p>
                     <p>
                         <label>Date Checked In:</label>
-                        <input type="date"
-                               id="dateCheckedIn"/>
+                        ${dateCheckedIn}
                     </p>
                 </fieldset>
             </form>

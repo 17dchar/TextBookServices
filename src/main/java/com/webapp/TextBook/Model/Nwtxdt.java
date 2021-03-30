@@ -8,7 +8,6 @@ import java.util.Date;
 @Entity
 @Table(name="NWTXDT")
 public class Nwtxdt {
-    @Id
     @Column(name="NWTXDT_BOOK_CODE")
     @NotEmpty
     //@Pattern(regexp = "{8}")
@@ -18,6 +17,7 @@ public class Nwtxdt {
     private String editionYear;
     @Column(name = "NWTXDT_SEQ_NR")
     private String seqNr;
+    @Id
     @Column(name = "NWTXDT_BARCODE")
     private String barcode;
     @Column(name = "NWTXDT_PIDM")
@@ -44,6 +44,10 @@ public class Nwtxdt {
     @Column(name = "NWTXDT_BILLABLE_FLAG")
     private String billableFlag;
 
+    public Nwtxdt(){
+        editionYear = "";
+        barcode = "";
+    }
     public String getBookCode() {
         return bookCode;
     }
