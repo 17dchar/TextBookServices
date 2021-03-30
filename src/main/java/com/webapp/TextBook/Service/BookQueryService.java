@@ -3,17 +3,7 @@ package com.webapp.TextBook.Service;
 import com.webapp.TextBook.Model.Nwtxdt;
 import com.webapp.TextBook.Repository.NwtxdtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.stereotype.Component;
-
-import com.webapp.TextBook.Model.AddBookModel;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class BookQueryService {

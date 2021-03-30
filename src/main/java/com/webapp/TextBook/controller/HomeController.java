@@ -22,7 +22,6 @@ public class HomeController {
 
     @Autowired
     NwtxdtRepository nwtxdtRepository;
-    //@Autowired
 
 
     @RequestMapping("/")
@@ -42,11 +41,13 @@ public class HomeController {
 
     @Autowired
     AddBookService addBookService;
+
     @RequestMapping(value="/addBook", method = RequestMethod.GET)
     public String addBookPage(ModelMap model){
         System.out.println("Add Book GET");
         return "addBook";
     }
+
     @RequestMapping(value="/addBook", method = RequestMethod.POST)
     public String addBookPOST(ModelMap model,
                               @RequestParam (value = "bookCode",required = false, defaultValue = "")String bookCode,
@@ -66,12 +67,9 @@ public class HomeController {
         nwtxdt.setBookCode(bookCode);
         nwtxdt.setSeqNr(seqNr);
 
-        System.out.println("Adding Book with " + barcode + ", " + editionYear + ", " + bookCode + ", " +
-                seqNr + " Credentials");
-
-        //addBookService.addToModel(bookCode, bookTitle, bookYear, seqNm);
-        //addBookService.logBook(bookCode, bookTitle, bookYear, seqNm);
-        //addBookService.postToDatabase(bookCode, bookTitle, bookYear, seqNm);
+        System.out.println("Adding Book with " + nwtxdt.getBarcode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBookCode() + ", " +
+                nwtxdt.getSeqNr() + " Credentials");
+        addBookService.saveNwtxdt(nwtxdt);
         return "addBook";
     }
 

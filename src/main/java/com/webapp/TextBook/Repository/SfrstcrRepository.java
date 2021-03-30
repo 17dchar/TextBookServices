@@ -1,4 +1,4 @@
-package com.webapp.TextBook.repository;
+package com.webapp.TextBook.Repository;
 
 import com.webapp.TextBook.Model.Sfrstcr;
 import org.springframework.data.jpa.repository.JpaRepository;
