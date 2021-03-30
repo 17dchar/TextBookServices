@@ -78,11 +78,6 @@ public class HomeController {
 
         System.out.println("Querying off of: " + nwtxdt.getBookCode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBarcode());
         if(bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()) != null){
-            System.out.println("These are Valid Credentials");
-
-            //Literally, just copy one of these and paste it with a different first argument off of the
-            //next "bookQuery.jsp" fake input.
-            //I'll fix the input fields in there later, but comment them out for now. Look at what I've been doing
             model.put("bookTitle",bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()).getBookCode());
             model.put("seqNr",bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()).getSeqNr());
             model.put("prevTerm", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()).getPrevTerm());
@@ -95,7 +90,6 @@ public class HomeController {
 
             return "bookQuery";
         } else {
-            System.out.println("No Book Found Off of Given Credentials");
             model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
 

@@ -9,11 +9,11 @@ import java.util.Date;
 @Table(name="NWTXDT")
 public class Nwtxdt {
     @Column(name="NWTXDT_BOOK_CODE")
-    //@NotEmpty
+    @NotEmpty
     //@Pattern(regexp = "{8}")
     private String bookCode;
     @Column(name = "NWTXDT_EDITION_YEAR")
-    //@NotEmpty
+    @NotEmpty
     private String editionYear;
     @Column(name = "NWTXDT_SEQ_NR")
     private String seqNr;
@@ -44,7 +44,10 @@ public class Nwtxdt {
     @Column(name = "NWTXDT_BILLABLE_FLAG")
     private String billableFlag;
 
-    public Nwtxdt(){}
+    public Nwtxdt(){
+        editionYear = "";
+        barcode = "";
+    }
     public String getBookCode() {
         return bookCode;
     }
