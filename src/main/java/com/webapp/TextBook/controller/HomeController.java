@@ -12,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -64,15 +61,20 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/bookQuery", method = RequestMethod.POST)
-    public String bookQueryPost(@Valid @ModelAttribute("nwtxdt") Nwtxdt nwtxdt, ModelMap model,
-                                @RequestParam String bookCode, @RequestParam String editionYear, @RequestParam String barcode,
-                                BindingResult result) throws ParseException {
+    public String bookQueryPost(/*@Valid @ModelAttribute("nwtxdt") Nwtxdt nwtxdt*/ ModelMap model,
+                                @RequestParam (value = "bookCode",required = false, defaultValue = "") String bookCode,
+                                @RequestParam (value = "editionYear", required = false, defaultValue = "") String editionYear,
+                                @RequestParam (value = "barcode", required = false, defaultValue = "") String barcode
+                                /*BindingResult result*/) throws ParseException {
         System.out.println("Book Query POST");
-        if(!bookQueryService.validateBook(bookCode, editionYear, barcode)){
-            model.put("errorMessage", "Invalid Credentials");
-            return "addBook";
+        Nwtxdt nwtxdt = new Nwtxdt();
+        if(bookCode.equals("") || editionYear.equals("") || barcode.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "bookQuery";
         }
-
+        nwtxdt.setBarcode(barcode);
+        nwtxdt.setEditionYear(editionYear);
+        nwtxdt.setBookCode(bookCode);
 
         System.out.println("Querying off of: " + nwtxdt.getBookCode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBarcode());
         if(bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()) != null){
@@ -94,6 +96,7 @@ public class HomeController {
             return "bookQuery";
         } else {
             System.out.println("No Book Found Off of Given Credentials");
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
 
         return "bookQuery";

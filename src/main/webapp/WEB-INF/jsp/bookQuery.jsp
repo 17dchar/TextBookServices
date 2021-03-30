@@ -81,6 +81,9 @@
                         ${seqNr}
                     </p>
                 </fieldset>
+                <p>
+                    ${returnVoidError}
+                </p>
             </form>
             <form>
                 <fieldset>

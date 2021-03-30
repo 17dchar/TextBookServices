@@ -18,10 +18,6 @@ import java.util.List;
 @Service
 public class BookQueryService {
 
-  public boolean validateBook(String bookCode, String editionYear, String barcode) {
-
-    return !bookCode.isEmpty() && !editionYear.isEmpty() && !barcode.isEmpty();
-  }
 
   @Autowired private NwtxdtRepository nwtxdtRepository;
 
