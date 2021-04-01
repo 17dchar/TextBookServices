@@ -117,10 +117,7 @@
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
     <div class="dropdown-content">
-        <a href="#">Check In/Out</a>
-        <a href="#">Patron Schedule</a>
-        <a href="#">Patrons Previous Books</a>
-        <a href="#">Patrons Sold Books</a>
+        <a href="#">blah</a>
     </div>
 </div>
 <div class="dropdown">

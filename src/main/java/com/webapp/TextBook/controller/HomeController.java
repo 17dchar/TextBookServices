@@ -1,14 +1,28 @@
 package com.webapp.TextBook.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
-import com.webapp.TextBook.model.UserModel;
+import com.webapp.TextBook.Service.AddBookService;
+import com.webapp.TextBook.Repository.NwtxdtRepository;
+import com.webapp.TextBook.Model.Nwtxdt;
+import com.webapp.TextBook.Service.BookQueryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class HomeController {
+
+
+    @Autowired
+    NwtxdtRepository nwtxdtRepository;
+
 
     @RequestMapping("/")
     public String login(){
@@ -25,8 +39,37 @@ public class HomeController {
         return "maintenanceFormView";
     }
 
-    @RequestMapping("/addBook")
-    public String addBook(){
+    @Autowired
+    AddBookService addBookService;
+
+    @RequestMapping(value="/addBook", method = RequestMethod.GET)
+    public String addBookPage(ModelMap model){
+        System.out.println("Add Book GET");
+        return "addBook";
+    }
+
+    @RequestMapping(value="/addBook", method = RequestMethod.POST)
+    public String addBookPOST(ModelMap model,
+                              @RequestParam (value = "bookCode",required = false, defaultValue = "")String bookCode,
+                              @RequestParam (value = "editionYear",required = false, defaultValue = "")String editionYear,
+                              @RequestParam (value = "bookTitle",required = false, defaultValue = "")String bookTitle,
+                              @RequestParam (value = "barcode",required = false, defaultValue = "")String barcode,
+                              @RequestParam (value = "seqNr",required = false, defaultValue = "")String seqNr)
+                              throws ParseException{
+        System.out.println("Add Book POST");
+        if(bookCode.equals("") || editionYear.equals("") || bookTitle.equals("") ||barcode.equals("") || seqNr.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "addBook";
+        }
+        Nwtxdt nwtxdt = new Nwtxdt();
+        nwtxdt.setBarcode(barcode);
+        nwtxdt.setEditionYear(editionYear);
+        nwtxdt.setBookCode(bookCode);
+        nwtxdt.setSeqNr(seqNr);
+
+        System.out.println("Adding Book with " + nwtxdt.getBarcode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBookCode() + ", " +
+                nwtxdt.getSeqNr() + " Credentials");
+        addBookService.saveNwtxdt(nwtxdt);
         return "addBook";
     }
 
@@ -82,6 +125,7 @@ public class HomeController {
     public String bookDisposition(){
         return "bookDisposition";
     }
+
     @RequestMapping("/replaceBarcode")
     public String replaceBarcode(){
         return "replaceBarcode";
@@ -101,25 +145,4 @@ public class HomeController {
     public String changeBookCode(){
         return "changeBookCode";
     }
-    @RequestMapping("/createReport")
-    public String createReport(){
-        return "createReport";
-    }
-    @RequestMapping("/patronCheckInOut")
-    public String patronCheckInOut(){
-        return "patronCheckInOut";
-    }
-    @RequestMapping("/patronPrevBooks")
-    public String patronPrevBooks(){
-        return "patronPrevBooks";
-    }
-    @RequestMapping("/patronSchedule")
-    public String patronSchedule(){
-        return "patronSchedule";
-    }
-    @RequestMapping("/patronSoldBooks")
-    public String patronSoldBooks(){
-        return "patronSoldBooks";
-    }
-
 }
