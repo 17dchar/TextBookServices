@@ -12,10 +12,10 @@ public class Scbcrse {
     @Column(name = "SCBCRSE_SUBJ_CODE")
     @NotEmpty
     private String subjCode;
-    @Column(name = "SCBRSE_CRSE_NUMB")
+    @Column(name = "SCBCRSE_CRSE_NUMB")
     @NotEmpty
     private String crseNumb;
-    @Column(name = "SCBRSE_EFF_TERM")
+    @Column(name = "SCBCRSE_EFF_TERM")
     private String effTerm;
     @Column(name = "SCBCRSE_TITLE")
     private String title;

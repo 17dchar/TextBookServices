@@ -11,7 +11,7 @@ public class Sfrstcr {
     @Column(name = "SFRSTCR_TERM_CODE")
     @NotEmpty
     private String termCode;
-    @Column(name = "SFRTCR_PIDM")
+    @Column(name = "SFRSTCR_PIDM")
     @NotEmpty
     private int pidm;
     @Column(name = "SFRSTCR_CRN")

@@ -27,7 +27,7 @@ public class Nwtxar {
     @Column(name = "NWTXAR_BILL_DATE")
     @Temporal(TemporalType.DATE)
     private Date billDate;
-    @Column(name = "NWXTAR_TERM")
+    @Column(name = "NWTXAR_TERM")
     private String term;
 
     public String getPidm() {
