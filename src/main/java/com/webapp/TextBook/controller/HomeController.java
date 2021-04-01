@@ -85,7 +85,7 @@ public class HomeController {
 
     @RequestMapping(value = "/bookQuery", method = RequestMethod.POST)
     public String bookQueryPost(/*@Valid @ModelAttribute("nwtxdt") Nwtxdt nwtxdt*/ ModelMap model,
-                                @RequestParam (value = "bookCode",required = false, defaultValue = "") String bookCode,
+                                @RequestParam (value = "bookCode",required = true, defaultValue = "") String bookCode,
                                 @RequestParam (value = "editionYear", required = false, defaultValue = "") String editionYear,
                                 @RequestParam (value = "barcode", required = false, defaultValue = "") String barcode
                                 /*BindingResult result*/) throws ParseException {
@@ -98,6 +98,8 @@ public class HomeController {
         nwtxdt.setBarcode(barcode);
         nwtxdt.setEditionYear(editionYear);
         nwtxdt.setBookCode(bookCode);
+
+        //nwtxdt = bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode());
 
         System.out.println("Querying off of: " + nwtxdt.getBookCode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBarcode());
         if(bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()) != null){

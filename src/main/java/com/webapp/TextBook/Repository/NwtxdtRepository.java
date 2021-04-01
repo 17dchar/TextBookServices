@@ -19,4 +19,5 @@ public interface NwtxdtRepository extends CrudRepository<Nwtxdt, String> {
     List<Nwtxdt> findByBookCode(String bookCode);
     List<Nwtxdt> findByBarcode(String barcode);
     List<Nwtxdt> findByBookCodeAndEditionYearAndBarcode(String BookCode, String editionYear, String barcode);
+
 }

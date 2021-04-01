@@ -43,7 +43,8 @@
         <p>
             <label>Book Code:</label>
             <input type="text"
-                   name="bookCode"/>
+                   name="bookCode"
+                    required = "required"/>
             <label>Book Year:</label>
             <input type="text"
                    name="editionYear"/>
