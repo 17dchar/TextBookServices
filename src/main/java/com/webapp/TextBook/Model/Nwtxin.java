@@ -25,7 +25,7 @@ public class Nwtxin {
     private String bookStatus;
     @Column (name = "NWTXIN_CURRENT_PRICE")
     private String currentPrice;
-    @Column(name = "ISBN")
+    @Column(name = "NWTXIN_ISBN")
     private String isbn;
     @Column(name = "NWTXIN_PURCHASE_DATE")
     @Temporal(TemporalType.DATE)
