@@ -1,4 +1,4 @@
-package com.webapp.TextBook.Model;
+package com.webapp.TextBook.model;
 
 public class UserModel {
     private String userName;

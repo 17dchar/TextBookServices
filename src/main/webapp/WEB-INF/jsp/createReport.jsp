@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Supervisor Access</title>
+    <title>Reports</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <style>
         .TBSHeader {
@@ -44,9 +44,7 @@
         }
         .btnCol {
             background-color: #006747;
-            outline-color: black;
         }
-        .btnCol:hover { background-color: #014811}
 
         .form-control:focus {
             border-color: #006747;
@@ -76,7 +74,7 @@
         .dropdown {
             position: relative;
             display: inline-block;
-            margin-left: 20px;
+            margin-left: 30px;
             margin-bottom: 6px;
         }
         .dropdown-content {
@@ -86,7 +84,7 @@
             min-width: 200px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            margin-left: 2px;
+            margin-left: 10px;
         }
         .dropdown-content a {
             color: #f1f1f1;
@@ -94,7 +92,7 @@
             text-decoration: none;
             display: block;
         }
-        .dropdown-content a:hover {background-color: #014811;}
+        .dropdown-content a:hover {background-color: #006747;}
         .dropdown:hover .dropdown-content {display: block;}
         .dropdown:hover .dropbtn {background-color: #006747;}
         .container {
@@ -110,7 +108,7 @@
 </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>
-<h2 class="BookCodeYearTitle">Supervisor Access</h2>
+<h2 class="BookCodeYearTitle">Reports</h2>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
@@ -127,10 +125,10 @@
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
     <div class="dropdown-content">
-        <a href="#">Check In/Out</a>
-        <a href="#">Patron Schedule</a>
-        <a href="#">Patrons Previous Books</a>
-        <a href="#">Patrons Sold Books</a>
+        <a href="patronCheckInOut">Check In/Out</a>
+        <a href="patronSchedule">Patron Schedule</a>
+        <a href="patronPrevBooks">Patrons Previous Books</a>
+        <a href="patronSoldBooks">Patrons Sold Books</a>
     </div>
 </div>
 <div class="dropdown">
@@ -139,6 +137,7 @@
         <a href="#">blah</a>
     </div>
 </div>
+<div class="tenPix"></div>
 <div class="container"></div>
 
 </body>

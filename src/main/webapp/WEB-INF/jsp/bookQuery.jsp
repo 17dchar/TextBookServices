@@ -1,29 +1,62 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <meta charset="UTF-8">
     <title>Query a Book</title>
-    </head>
+    <style>
+        .column {float: left;}
+        .left {width: 60%;}
+        .middle {width: 30%;}
+        .right {width: 10%;}
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .dropbtn {
+            background-color: lightgrey;
+            color: darkgreen;
+            padding: 10px;
+            font-size: 16px;
+            border: darkgreen;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: darkgreen;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {background-color: #ddd;}
+        .dropdown:hover .dropdown-content {display: block;}
+        .dropdown:hover .dropbtn {background-color: grey;}
+    </style>
+</head>
 <body>
 <h1>Textbook Services: Query A Book</h1>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
-        <a href="maintenanceFormView">Maintenance</a>
-        <a href="addBook">Add Books</a>
-        <a href="bookQuery">Query Books</a>
-        <a href="bookDisposition">Change Book Disposition</a>
-        <a href="replaceBarcode">Replace Barcode</a>
-        <a href="queryCourse">Query Course</a>
-        <a href="courseMessage">Course Message</a>
-        <a href="changeBookCode">Change Book Code/Year</a>
+            <a href="maintenanceFormView">Maintenance</a>
+            <a href="addBook">Add Books</a>
+            <a href="bookQuery">Query Books</a>
+            <a href="bookDisposition">Change Book Disposition</a>
+            <a href="replaceBarcode">Replace Barcode</a>
+            <a href="queryCourse">Query Course</a>
+            <a href="courseMessage">Course Message</a>
+            <a href="changeBookCode">Change Book Code/Year</a>
     </div>
 </div>
 <div class="dropdown">
@@ -38,22 +71,18 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form method="post">
+<form>
     <fieldset>
         <p>
             <label>Book Code:</label>
-            <input type="text"
-                   name="bookCode"/>
+            <input type = "text"
+                   id = "bookCode" />
             <label>Book Year:</label>
-            <input type="text"
-                   name="editionYear"/>
+            <input type = "text"
+                   id = "bookYear" />
             <label>Strike Bar Code:</label>
-            <input type="text"
-                   name="barcode"/>
-        </p>
-        <p>
-            <input type="submit" name="Save"/>
-            <button type="button">Clear</button>
+            <input type = "text"
+                    id = "barCode" />
         </p>
     </fieldset>
 </form>
@@ -65,48 +94,38 @@
                     <legend>Book Info</legend>
                     <p>
                         <label>Title:</label>
-                        <!--
-                        <input type="text"
-                               id="bookTitle"/>
-                        -->
-                        ${bookTitle}
+                        <input type = "text"
+                               id = "bookTitle" />
                     </p>
                     <p>
-
                         <label>Seq Nr:</label>
-                        <!--
-                        <input type="text"
-                               id="seqNr"/>
-                        -->
-                        ${seqNr}
+                        <input type = "text"
+                               id = "seqNr" />
                     </p>
                 </fieldset>
-                <p>
-                    ${returnVoidError}
-                </p>
             </form>
             <form>
                 <fieldset>
                     <legend>Current Info</legend>
                     <p>
                         <label>Current Disposition:</label>
-                        <!--
-                        <input type="text"
-                               id="bookDisposition"/>
-                        -->
-                        ${bookDisposition}
+                        <input type = "text"
+                               id = "bookDisposition" />
                     </p>
                     <p>
-                        <label>Term Checked Out:</label>
-                        ${termCheckedOut}
+                        <label>Term Check Out:</label>
+                        <input type = "text"
+                               id = "termCheckOut" />
                     </p>
                     <p>
                         <label>Checked Out To:</label>
-                        ${checkedOutTo}
+                        <input type = "text"
+                               id = "checkedOutTo" />
                     </p>
                     <p>
                         <label>Date Checked Out:</label>
-                        ${dateCheckedOut}
+                        <input type = "date"
+                               id = "dateCheckedOut" />
                     </p>
                 </fieldset>
             </form>
@@ -117,15 +136,18 @@
                     <legend>Previous Info</legend>
                     <p>
                         <label>Previous Term Check Out:</label>
-                        ${prevTerm}
+                        <input type = "text"
+                               id = "previouslyTermCheckOut" />
                     </p>
                     <p>
                         <label>Previously Checked Out To:</label>
-                        ${prevCheckedOutTo}
+                        <input type = "text"
+                               id = "previouslyCheckedOutTo" />
                     </p>
                     <p>
                         <label>Date Checked In:</label>
-                        ${dateCheckedIn}
+                        <input type = "date"
+                               id = "dateCheckedIn" />
                     </p>
                 </fieldset>
             </form>

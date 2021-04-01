@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Supervisor Access</title>
+    <title>Course Message</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <style>
         .TBSHeader {
@@ -56,61 +56,61 @@
             box-shadow: none;
             -webkit-box-shadow: none;}
 
-        .column {float: left;}
-        .left {width: 60%;}
-        .middle {width: 30%;}
-        .right {width: 10%;}
+            .column {float: left;}
+            .left {width: 60%;}
+            .middle {width: 30%;}
+            .right {width: 10%;}
 
-        .row:after {
-            content: "";
-            display: table;
-            clear: both;
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            .dropbtn {
+                background-color: #006747;
+                color: #f1f1f1;
+                padding: 10px;
+                font-size: 16px;
+                border: #f1f1f1;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+                margin-left: 20px;
+                margin-bottom: 6px;
+            }
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #006747;
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                margin-left: 2px;
+            }
+            .dropdown-content a {
+                color: #f1f1f1;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+            .dropdown-content a:hover {background-color: #014811;}
+            .dropdown:hover .dropdown-content {display: block;}
+            .dropdown:hover .dropbtn {background-color: #006747;}
+            .container {
+                margin-top: 15px;
+                margin-left: 20px;
+                float: left;
         }
-        .dropbtn {
-            background-color: #006747;
-            color: #f1f1f1;
-            padding: 10px;
-            font-size: 16px;
-            border: #f1f1f1;
-        }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            margin-left: 20px;
-            margin-bottom: 6px;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #006747;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            margin-left: 2px;
-        }
-        .dropdown-content a {
-            color: #f1f1f1;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {background-color: #014811;}
-        .dropdown:hover .dropdown-content {display: block;}
-        .dropdown:hover .dropbtn {background-color: #006747;}
-        .container {
-            margin-top: 15px;
-            margin-left: 20px;
-            float: left;
-        }
-        .tenPix {
-            height: 10px;
-            width: 100%;
-        }
-    </style>
+            .tenPix {
+                height: 10px;
+                width: 100%;
+            }
+        </style>
 </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>
-<h2 class="BookCodeYearTitle">Supervisor Access</h2>
+<h2 class="BookCodeYearTitle">Course Message</h2>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
@@ -127,19 +127,39 @@
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
     <div class="dropdown-content">
-        <a href="#">Check In/Out</a>
-        <a href="#">Patron Schedule</a>
-        <a href="#">Patrons Previous Books</a>
-        <a href="#">Patrons Sold Books</a>
+        <a href="patronCheckInOut">Check In/Out</a>
+        <a href="patronSchedule">Patron Schedule</a>
+        <a href="patronPrevBooks">Patrons Previous Books</a>
+        <a href="patronSoldBooks">Patrons Sold Books</a>
     </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Reports</button>
     <div class="dropdown-content">
-        <a href="#">blah</a>
+        <a href="createReport">Create Report</a>
     </div>
 </div>
-<div class="container"></div>
+<div class="tenPix"></div>
+<div class="container">
+    <form class="courseMessageForm">
+        <fieldset>
+            <p>
+                <div class="form-group">
+                <label>Course:</label>
+                <input type = "text"
+                       id = "courseId"
+                       class="form-control"/>
+                <label>Message:</label>
+                <input type = "text"
+                       id = "courseMessage"
+                       class="form-control"/>
+                </div>
+            </p>
+        </fieldset>
+    </form>
+    <button type="button" class="btn btn-primary btnCol">Save</button>
+    <button type="button" class="btn btn-primary btnCol">Clear</button>
+</div>
 
 </body>
 </html>

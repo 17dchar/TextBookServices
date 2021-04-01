@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Supervisor Access</title>
+    <title>Sold Books</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <style>
         .TBSHeader {
@@ -110,7 +110,7 @@
 </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>
-<h2 class="BookCodeYearTitle">Supervisor Access</h2>
+<h2 class="BookCodeYearTitle">Sold Books</h2>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
@@ -127,19 +127,43 @@
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
     <div class="dropdown-content">
-        <a href="#">Check In/Out</a>
-        <a href="#">Patron Schedule</a>
-        <a href="#">Patrons Previous Books</a>
-        <a href="#">Patrons Sold Books</a>
+        <a href="patronCheckInOut">Check In/Out</a>
+        <a href="patronSchedule">Patron Schedule</a>
+        <a href="patronPrevBooks">Patrons Previous Books</a>
+        <a href="patronSoldBooks">Patrons Sold Books</a>
     </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Reports</button>
     <div class="dropdown-content">
-        <a href="#">blah</a>
+        <a href="createReport">Create Report</a>
     </div>
 </div>
-<div class="container"></div>
+<div class="tenPix"></div>
+<div class="container">
+    <div class="container">
+        <form class="yearCodeForm">
+            <fieldset>
+                <p>
+                    <label>Term:</label>
+                    <input type = "text"
+                           id = "termSeason" />
+                    <input type = "text"
+                           id = "termYear" />
+                    <label>ID:</label>
+                    <input type = "text"
+                           id = "bookID1" />
+                    <input type = "text"
+                           id = "bookID2" />
+                    <label>Bag#:</label>
+                    <input type = "text"
+                           id = "bagNumber" />
+                </p>
+            </fieldset>
+        </form>
+    </div>
+
+</div>
 
 </body>
 </html>

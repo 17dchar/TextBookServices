@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Supervisor Access</title>
+    <title>Change Book Code/Year</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <style>
         .TBSHeader {
@@ -108,9 +106,10 @@
         }
     </style>
 </head>
-<body>
+<body class="body">
 <h1 class="TBSHeader">Textbook Services</h1>
-<h2 class="BookCodeYearTitle">Supervisor Access</h2>
+<!-- <img class="Hlogo" src="https://www.nwmissouri.edu/layout/v2019/images/svg/logo-n.svg">-->
+<h2 class="BookCodeYearTitle">Change Book Code/Year</h2>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
@@ -127,19 +126,35 @@
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
     <div class="dropdown-content">
-        <a href="#">Check In/Out</a>
-        <a href="#">Patron Schedule</a>
-        <a href="#">Patrons Previous Books</a>
-        <a href="#">Patrons Sold Books</a>
+        <a href="patronCheckInOut">Check In/Out</a>
+        <a href="patronSchedule">Patron Schedule</a>
+        <a href="patronPrevBooks">Patrons Previous Books</a>
+        <a href="patronSoldBooks">Patrons Sold Books</a>
     </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Reports</button>
     <div class="dropdown-content">
-        <a href="#">blah</a>
+        <a href="createReport">Create Report</a>
     </div>
 </div>
-<div class="container"></div>
-
+<form class="yearCodeForm">
+    <fieldset>
+        <p>
+            <label>Book Code:</label>
+            <input type = "text"
+                   id = "bookCode" />
+            <label>Book Year:</label>
+            <input type = "text"
+                   id = "bookYear" />
+            <label>New Book Code:</label>
+            <input type = "text"
+                   id = "newBookCode" />
+            <label>New Book year:</label>
+            <input type = "text"
+                   id = "newBookYear" />
+        </p>
+    </fieldset>
+</form>
 </body>
 </html>
