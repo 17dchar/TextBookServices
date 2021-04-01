@@ -75,8 +75,9 @@
     <fieldset>
         <p>
             <label>Book Code:</label>
-            <input type = "text"
-                   id = "bookCode" />
+            <input type="text"
+                   name="bookCode"
+                    required = "required"/>
             <label>Book Year:</label>
             <input type = "text"
                    id = "bookYear" />
