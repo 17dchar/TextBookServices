@@ -14,7 +14,7 @@ public class Sgbstdn {
     @Column(name = "SGBSTDN_TERM_CODE_EFF")
     @NotEmpty
     private String termCodeEff;
-    @Column(name = "SGNSTDN_STST_CODE")
+    @Column(name = "SGBSTDN_STST_CODE")
     @NotEmpty
     private String ststCode;
     @Column(name = "SGBSTDN_LEVL_CODE")

@@ -9,7 +9,7 @@ import java.util.Date;
 @Table(name = "NWTXMS")
 public class Nwtxms {
     @Id
-    @Column(name = "NWTXMS")
+    @Column(name = "NWTXMS_PIDM")
     private String pidm;
     @Column(name = "NWTXMS_MESSAGE")
     private String message;
