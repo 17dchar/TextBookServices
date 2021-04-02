@@ -3,10 +3,12 @@ package com.webapp.TextBook.controller;
 import java.text.ParseException;
 import java.util.List;
 
+import com.webapp.TextBook.Model.Scbcrse;
 import com.webapp.TextBook.Service.AddBookService;
 import com.webapp.TextBook.Repository.NwtxdtRepository;
 import com.webapp.TextBook.Model.Nwtxdt;
 import com.webapp.TextBook.Service.BookQueryService;
+import com.webapp.TextBook.Service.QueryCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -85,7 +87,7 @@ public class HomeController {
 
     @RequestMapping(value = "/bookQuery", method = RequestMethod.POST)
     public String bookQueryPost(/*@Valid @ModelAttribute("nwtxdt") Nwtxdt nwtxdt*/ ModelMap model,
-                                @RequestParam (value = "bookCode",required = true, defaultValue = "") String bookCode,
+                                @RequestParam (value = "bookCode", required = true, defaultValue = "") String bookCode,
                                 @RequestParam (value = "editionYear", required = false, defaultValue = "") String editionYear,
                                 @RequestParam (value = "barcode", required = false, defaultValue = "") String barcode
                                 /*BindingResult result*/) throws ParseException {
@@ -131,8 +133,33 @@ public class HomeController {
         return "replaceBarcode";
     }
 
-    @RequestMapping("/queryCourse")
-    public String queryCourse(){
+    @Autowired
+    QueryCourseService queryCourseService;
+    @RequestMapping(value = "/queryCourse", method = RequestMethod.GET)
+    public String queryCourse(ModelMap model){
+        System.out.println("Course Query GET");
+        return "queryCourse";
+    }
+    @RequestMapping(value = "/queryCourse", method = RequestMethod.POST)
+    public String queryCoursePost(ModelMap model,
+                                  @RequestParam(value = "courseCode", required = false, defaultValue = "")String courseCode)
+                                  throws ParseException{
+        System.out.println("Course Query POST");
+        Scbcrse scbcrse = new Scbcrse();
+        if(courseCode.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "queryCourse";
+        }
+        scbcrse.setCrseNumb(courseCode);
+
+        System.out.println("Querying off of: " + scbcrse.getCrseNumb());
+        if(queryCourseService.getScbcrse(courseCode) != null){
+            model.put("crseNumb", queryCourseService.getScbcrse(courseCode).getCrseNumb());
+            model.put("crseTable", queryCourseService.getScbcrse(courseCode));
+
+        } else {
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        }
         return "queryCourse";
     }
 

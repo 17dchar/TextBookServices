@@ -74,6 +74,7 @@
             padding: 0px 15px;
         }
     </style>
+    <!--
     <script>
         let bookData = [
         { title: 'book1', code: '1010', year: '2000'},
@@ -98,6 +99,7 @@
         }
 
     </script>
+    -->
 </head>
 <body>
 <h1>Textbook Services: Query a Course</h1>
@@ -126,23 +128,38 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form>
+<form method="post">
     <fieldset>
         <p>
             <label>Course:</label>
             <input type = "text"
-                   id = "course" />
+                   name = "courseCode" />
+        </p>
+        <p>
+            <input type="submit" name="Save"/>
+            <button type="button">Clear</button>
         </p>
     </fieldset>
 </form>
+<p>
+    ${returnVoidError}
+    ${crseNumb}
+</p>
 <div id = 'tableDiv'>
 <table>
     <thead>
         <tr>
-            <th>Book Code</th>
-            <th>Book Year</th>
+            <th>Course Code</th>
+            <th>Course Year</th>
             <th>Title</th>
         </tr>
+        <c:forEach items="${crseTable}" var="crseTable">
+            <tr>
+                <td>${crseTable.subjCode}</td>
+                <td>${crseTable.crseNumb}</td>
+                <td>${crseTable.title}</td>
+            </tr>
+        </c:forEach>
     </thead>
     <tbody id="tableData"></tbody>
 </table>
