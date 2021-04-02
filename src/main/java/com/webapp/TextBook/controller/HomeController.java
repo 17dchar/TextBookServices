@@ -154,7 +154,6 @@ public class HomeController {
 
         System.out.println("Querying off of: " + scbcrse.getCrseNumb());
         if(queryCourseService.getScbcrse(courseCode) != null){
-            model.put("crseNumb", queryCourseService.getScbcrse(courseCode).getCrseNumb());
             model.put("crseTable", queryCourseService.getScbcrse(courseCode));
 
         } else {

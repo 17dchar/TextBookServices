@@ -1,8 +1,6 @@
 package com.webapp.TextBook.Service;
 
-import com.webapp.TextBook.Model.Nwtxdt;
 import com.webapp.TextBook.Model.Scbcrse;
-import com.webapp.TextBook.Repository.NwtxdtRepository;
 import com.webapp.TextBook.Repository.ScbcrseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
