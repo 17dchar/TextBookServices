@@ -159,7 +159,7 @@
         </fieldset>
 
         <input type="submit" class="btn btn-primary btnCol" name="Save"></input>
-        <button type="button" class="btn btn-primary btnCol">Clear</button>
+        <button type="submit" class="btn btn-primary btnCol" name="clear">Clear Message</button>
     </form>
     <p>
         ${returnVoidError}

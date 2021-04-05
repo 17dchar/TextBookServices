@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CourseMessageService {
-    @Autowired private NwtxcmRepository nwtxcmRepository;
 
+    @Autowired private NwtxcmRepository nwtxcmRepository;
     public Nwtxcm getNwtxcm(String courseId) {
         if (nwtxcmRepository.findByCourse(courseId).size()
                 > 0) {
@@ -17,5 +17,11 @@ public class CourseMessageService {
         } else{
             return null;
         }
+    }
+
+    public Nwtxcm saveNwtxcm(Nwtxcm nwtxcm){
+        System.out.println("Saving Added Repository");
+        return nwtxcmRepository.save(nwtxcm);
+
     }
 }
