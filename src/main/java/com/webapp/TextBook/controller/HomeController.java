@@ -193,6 +193,28 @@ public class HomeController {
         }
         return "courseMessage";
     }
+    @RequestMapping(value = "/courseMessage", method = RequestMethod.POST, params="clear")
+    public String courseMessageClear(ModelMap model,
+                                    @RequestParam(value = "courseId", required = false, defaultValue = "")String courseId)
+            throws ParseException{
+        System.out.println("Course Message POST - CLEAR");
+        if(courseId.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "courseMessage";
+        }
+        System.out.println("Querying off of: " + courseId);
+        if(courseMessageService.getNwtxcm(courseId) != null){
+            Nwtxcm nwtxcm = new Nwtxcm();
+            nwtxcm = courseMessageService.getNwtxcm(courseId);
+            nwtxcm.setCmMessage("");
+            model.put("courseMessage", "Cleared!");
+            courseMessageService.saveNwtxcm(nwtxcm);
+
+        } else {
+            model.put("returnVoidError", "No Course Found Off of Given Credentials");
+        }
+        return "courseMessage";
+    }
 
     @RequestMapping("/changeBookCode")
     public String changeBookCode(){
