@@ -55,18 +55,15 @@
                     <legend>Book Info</legend>
                     <p>
                         <label>Title:</label>
-                        <input type="text"
-                               id="bookTitle"/>
+                        ${bookTitle}
                     </p>
                     <p>
                         <label>Seq Nr:</label>
-                        <input type="text"
-                               id="seqNr"/>
+                        ${seqNr}
                     </p>
                     <p>
                         <label>Current Disposition:</label>
-                        <input type="text"
-                               id="bookDisposition"/>
+                        ${bookDisposition}
                     </p>
                     <p>
                         <label for="bookDisposition">Change Disposition To:</label>

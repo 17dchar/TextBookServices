@@ -10,4 +10,5 @@ import java.util.List;
 public interface NwtxinRepository extends JpaRepository<Nwtxin, Integer>{
     @Override
     List<Nwtxin> findAll();
+    List<Nwtxin> findByBookCode(String bookCode);
 }

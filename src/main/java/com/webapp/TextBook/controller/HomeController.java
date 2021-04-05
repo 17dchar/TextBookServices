@@ -3,9 +3,11 @@ package com.webapp.TextBook.controller;
 import java.text.ParseException;
 import java.util.List;
 
+import com.webapp.TextBook.Model.Nwtxin;
 import com.webapp.TextBook.Service.AddBookService;
 import com.webapp.TextBook.Repository.NwtxdtRepository;
 import com.webapp.TextBook.Model.Nwtxdt;
+import com.webapp.TextBook.Service.BookDispositionService;
 import com.webapp.TextBook.Service.BookQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -121,8 +123,44 @@ public class HomeController {
         return "bookQuery";
     }
 
-    @RequestMapping("/bookDisposition")
-    public String bookDisposition(){
+    @Autowired
+    BookDispositionService bookDispositionService;
+
+    @RequestMapping(value = "/bookDisposition", method = RequestMethod.GET)
+    public String bookDisposition(ModelMap model){
+        System.out.println("Book Disposition GET");
+        return "bookDisposition";
+    }
+
+    @RequestMapping(value = "/bookQuery", method = RequestMethod.POST)
+    public String bookDispositionPost(/*@Valid @ModelAttribute("nwtxdt") Nwtxdt nwtxdt*/ ModelMap model,
+                                      @RequestParam (value = "bookCode",required = true, defaultValue = "") String bookCode,
+                                      @RequestParam (value = "editionYear", required = false, defaultValue = "") String editionYear,
+                                      @RequestParam (value = "barcode", required = false, defaultValue = "") String barcode
+            /*BindingResult result*/) throws ParseException {
+        System.out.println("Book Disposition POST");
+        Nwtxdt nwtxdt = new Nwtxdt();
+        Nwtxin nwtxin = new Nwtxin();
+        if(bookCode.equals("") || editionYear.equals("") || barcode.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "bookDisposition";
+        }
+        nwtxdt.setBarcode(barcode);
+        nwtxdt.setEditionYear(editionYear);
+        nwtxdt.setBookCode(bookCode);
+        nwtxin.setBookCode(bookCode);
+
+        System.out.println("Querying off of: " + nwtxdt.getBookCode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBarcode());
+        if(bookDispositionService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()) != null){
+            model.put("seqNr",bookDispositionService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()).getSeqNr());
+            model.put("bookDisposition", bookDispositionService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()).getDisposition());
+            model.put("bookTitle", bookDispositionService.getNwtxin(nwtxin.getBookCode()).getBookCode());
+
+            return "bookDisposition";
+        } else {
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        }
+
         return "bookDisposition";
     }
 
