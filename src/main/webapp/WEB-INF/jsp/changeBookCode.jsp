@@ -143,16 +143,16 @@
         <p>
             <label>Book Code:</label>
             <input type = "text"
-                   id = "bookCode" />
+                   name = "bookCode" />
             <label>Book Year:</label>
             <input type = "text"
-                   id = "bookYear" />
+                   name = "bookYear" />
             <label>New Book Code:</label>
             <input type = "text"
-                   id = "newBookCode" />
+                   name = "newBookCode" />
             <label>New Book year:</label>
             <input type = "text"
-                   id = "newBookYear" />
+                   name = "newBookYear" />
         </p>
         <input type="submit" name="Save"/>
     </fieldset>

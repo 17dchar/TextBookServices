@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 //Imported Spring Libraries
 import com.webapp.TextBook.Model.Nwtxcm;
+import com.webapp.TextBook.Model.Nwtxin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -204,8 +205,28 @@ public class HomeController {
     }
 
     @RequestMapping(value= "/changeBookCode", method = RequestMethod.POST)
-    public String changeBookCodePost(){
+    public String changeBookCodePost(ModelMap model,
+                                     @RequestParam(value = "bookCode", required = false, defaultValue = "")String bookCode,
+                                     @RequestParam(value = "bookYear", required = false, defaultValue = "")String bookYear,
+                                     @RequestParam(value = "newBookCode", required = false, defaultValue = "")String newBookCode,
+                                     @RequestParam(value = "newBookYear", required = false, defaultValue = "")String newBookYear)
+                                     throws ParseException{
         System.out.println("Course Message POST");
+        System.out.println("Querying off of " + bookCode + ", " + bookYear);
+
+        if(changeBarcodeService.getNwtxin(bookCode, bookYear) != null){
+
+            Nwtxin nwtxin = new Nwtxin();
+            Nwtxin oldNwtxin;
+            oldNwtxin = changeBarcodeService.getNwtxin(bookCode, bookYear);
+            nwtxin.setAuthor(oldNwtxin.getAuthor());
+            nwtxin.setBookStatus(oldNwtxin.getBookStatus());
+            nwtxin.setEditionYear(newBookYear);
+            nwtxin.setBookCode(newBookCode);
+            changeBarcodeService.deleteNwtxin(bookCode);
+            changeBarcodeService.saveNwtxin(nwtxin);
+            System.out.println("saved");
+        }
         return "changeBookCode";
     }
 }
