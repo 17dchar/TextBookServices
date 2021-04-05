@@ -2,8 +2,6 @@ package com.webapp.TextBook.controller;
 
 //Imported Standard Java Libraries
 import java.text.ParseException;
-import java.util.List;
-import javax.validation.Valid;
 
 
 //Imported Spring Libraries
@@ -11,9 +9,7 @@ import com.webapp.TextBook.Model.Nwtxcm;
 import com.webapp.TextBook.Model.Nwtxin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -22,7 +18,7 @@ import com.webapp.TextBook.Service.AddBookService;
 import com.webapp.TextBook.Service.BookQueryService;
 import com.webapp.TextBook.Service.QueryCourseService;
 import com.webapp.TextBook.Service.CourseMessageService;
-import com.webapp.TextBook.Service.ChangeBarcodeService;
+import com.webapp.TextBook.Service.ChangeBookcodeService;
 
 
 //Imported Models
@@ -219,7 +215,7 @@ public class HomeController {
     }
 
     @Autowired
-    ChangeBarcodeService changeBarcodeService;
+    ChangeBookcodeService changeBookcodeService;
     @RequestMapping(value= "/changeBookCode", method = RequestMethod.GET)
     public String changeBookCode(){
         System.out.println("Course Message GET");
@@ -240,9 +236,9 @@ public class HomeController {
             return "changeBookCode";
         }
 
-        if(changeBarcodeService.getNwtxin(bookCode, editionYear) != null){
+        if(changeBookcodeService.getNwtxin(bookCode, editionYear) != null){
             //Nwtxin Creation of new and old versions
-            Nwtxin oldNwtxin = changeBarcodeService.getNwtxin(bookCode, editionYear);
+            Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(bookCode, editionYear);
             Nwtxin nwtxin = new Nwtxin();
 
             //Setting all
@@ -266,8 +262,8 @@ public class HomeController {
             nwtxin.setCrse5(oldNwtxin.getCrse5());
             nwtxin.setComment(oldNwtxin.getComment());
 
-            changeBarcodeService.deleteNwtxin(bookCode);
-            changeBarcodeService.saveNwtxin(nwtxin);
+            changeBookcodeService.deleteNwtxin(bookCode);
+            changeBookcodeService.saveNwtxin(nwtxin);
         }
         return "changeBookCode";
     }

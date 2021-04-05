@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ChangeBarcodeService {
+public class ChangeBookcodeService {
     @Autowired
     private NwtxinRepository nwtxinRepository;
 

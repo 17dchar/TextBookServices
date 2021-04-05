@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="66a77f85-1bec-4a3c-9c59-6f97abb5ae11" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Service/CourseMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Service/CourseMessageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/courseMessage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/courseMessage.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,17 +87,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Maven.TextBook [spring-boot:run]">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TextBook [spring-boot:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
       <MavenSettings>
         <option name="myGeneralSettings" />

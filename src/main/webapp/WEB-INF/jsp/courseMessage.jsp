@@ -150,10 +150,14 @@
                        name = "courseId"
                        class="form-control"/>
                 <label>Message:</label>
+                <!--
                 <input type = "text"
                        id = "courseMessage"
                        class="form-control"/>
+                -->
+                <p class="form-control">
                     ${courseMessage}
+                </p>
                 <label>New Message:</label>
                 <input type = "text"
                        id = "newCourseMessage"
