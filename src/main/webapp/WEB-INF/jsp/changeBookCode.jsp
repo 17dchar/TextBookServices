@@ -138,7 +138,7 @@
         <a href="createReport">Create Report</a>
     </div>
 </div>
-<form class="yearCodeForm">
+<form class="yearCodeForm" method = "post">
     <fieldset>
         <p>
             <label>Book Code:</label>
@@ -154,6 +154,7 @@
             <input type = "text"
                    id = "newBookYear" />
         </p>
+        <input type="submit" name="Save"/>
     </fieldset>
 </form>
 </body>

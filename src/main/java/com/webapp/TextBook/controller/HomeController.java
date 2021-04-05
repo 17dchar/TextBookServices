@@ -21,6 +21,7 @@ import com.webapp.TextBook.Service.AddBookService;
 import com.webapp.TextBook.Service.BookQueryService;
 import com.webapp.TextBook.Service.QueryCourseService;
 import com.webapp.TextBook.Service.CourseMessageService;
+import com.webapp.TextBook.Service.ChangeBarcodeService;
 
 
 //Imported Models
@@ -194,8 +195,17 @@ public class HomeController {
         return "courseMessage";
     }
 
-    @RequestMapping("/changeBookCode")
+    @Autowired
+    ChangeBarcodeService changeBarcodeService;
+    @RequestMapping(value= "/changeBookCode", method = RequestMethod.GET)
     public String changeBookCode(){
+        System.out.println("Course Message GET");
+        return "changeBookCode";
+    }
+
+    @RequestMapping(value= "/changeBookCode", method = RequestMethod.POST)
+    public String changeBookCodePost(){
+        System.out.println("Course Message POST");
         return "changeBookCode";
     }
 }
