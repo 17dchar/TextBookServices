@@ -141,24 +141,37 @@
 </div>
 <div class="tenPix"></div>
 <div class="container">
-    <form class="courseMessageForm">
+    <form class="courseMessageForm" method = post>
         <fieldset>
             <p>
                 <div class="form-group">
                 <label>Course:</label>
                 <input type = "text"
-                       id = "courseId"
+                       name = "courseId"
                        class="form-control"/>
                 <label>Message:</label>
+                <!--
                 <input type = "text"
                        id = "courseMessage"
+                       class="form-control"/>
+                -->
+                <p class="form-control">
+                    ${courseMessage}
+                </p>
+                <label>New Message:</label>
+                <input type = "text"
+                       id = "newCourseMessage"
                        class="form-control"/>
                 </div>
             </p>
         </fieldset>
+
+        <input type="submit" class="btn btn-primary btnCol" name="Save"></input>
+        <button type="submit" class="btn btn-primary btnCol" name="clear">Clear Message</button>
     </form>
-    <button type="button" class="btn btn-primary btnCol">Save</button>
-    <button type="button" class="btn btn-primary btnCol">Clear</button>
+    <p>
+        ${returnVoidError}
+    </p>
 </div>
 
 </body>

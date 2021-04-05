@@ -1,28 +1,48 @@
 package com.webapp.TextBook.controller;
 
+//Imported Standard Java Libraries
 import java.text.ParseException;
-import java.util.List;
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+>>>>>>> Stashed changes
+import com.webapp.TextBook.Model.Nwtxin;
 import com.webapp.TextBook.Service.AddBookService;
 import com.webapp.TextBook.Repository.NwtxdtRepository;
 import com.webapp.TextBook.Model.Nwtxdt;
 import com.webapp.TextBook.Service.BookQueryService;
+import com.webapp.TextBook.Service.ReplaceBarcodeService;
+<<<<<<< Updated upstream
+=======
+=======
+
+//Imported Spring Libraries
+import com.webapp.TextBook.Model.Nwtxcm;
+import com.webapp.TextBook.Model.Nwtxin;
+>>>>>>> 7428922757b88ae4c1ef1a0ead2df8d15df57b76
+>>>>>>> Stashed changes
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
+//Imported Services
+import com.webapp.TextBook.Service.AddBookService;
+import com.webapp.TextBook.Service.BookQueryService;
+import com.webapp.TextBook.Service.QueryCourseService;
+import com.webapp.TextBook.Service.CourseMessageService;
+import com.webapp.TextBook.Service.ChangeBookcodeService;
+
+
+//Imported Models
+import com.webapp.TextBook.Model.Scbcrse;
+import com.webapp.TextBook.Model.Nwtxdt;
+
 
 @Controller
 public class HomeController {
-
-
-    @Autowired
-    NwtxdtRepository nwtxdtRepository;
-
 
     @RequestMapping("/")
     public String login(){
@@ -85,7 +105,7 @@ public class HomeController {
 
     @RequestMapping(value = "/bookQuery", method = RequestMethod.POST)
     public String bookQueryPost(/*@Valid @ModelAttribute("nwtxdt") Nwtxdt nwtxdt*/ ModelMap model,
-                                @RequestParam (value = "bookCode",required = true, defaultValue = "") String bookCode,
+                                @RequestParam (value = "bookCode", required = true, defaultValue = "") String bookCode,
                                 @RequestParam (value = "editionYear", required = false, defaultValue = "") String editionYear,
                                 @RequestParam (value = "barcode", required = false, defaultValue = "") String barcode
                                 /*BindingResult result*/) throws ParseException {
@@ -126,23 +146,197 @@ public class HomeController {
         return "bookDisposition";
     }
 
-    @RequestMapping("/replaceBarcode")
-    public String replaceBarcode(){
+    @Autowired
+    ReplaceBarcodeService replaceBarcodeService;
+
+    @RequestMapping(value="/replaceBarcode", method = RequestMethod.GET)
+    public String replaceBarcode(ModelMap model){
+        System.out.println("Replace Barcode GET");
+<<<<<<< Updated upstream
         return "replaceBarcode";
     }
 
-    @RequestMapping("/queryCourse")
-    public String queryCourse(){
+    @RequestMapping(value="/replaceBarcode", method = RequestMethod.POST)
+    public String replaceBarcodePOST(ModelMap model,
+                              @RequestParam (value = "bookCode",required = false, defaultValue = "")String bookCode,
+                              @RequestParam (value = "bookYear",required = false, defaultValue = "")String editionYear,
+                              @RequestParam (value = "barcode",required = false, defaultValue = "")String barcode,
+                              @RequestParam (value = "newBarcode",required = false, defaultValue = "")String newBarcode)
+            throws ParseException{
+        System.out.println("Replace Barcode POST");
+        if(bookCode.equals("") || editionYear.equals("") ||barcode.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "replaceBarcode";
+        }
+        Nwtxdt nwtxdt = new Nwtxdt();
+        Nwtxin nwtxin = new Nwtxin();
+        nwtxdt.setBarcode(barcode);
+        nwtxdt.setEditionYear(editionYear);
+        nwtxdt.setBookCode(bookCode);
+        //nwtxdt.setBarcode(newBarcode);
+
+        System.out.println(replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode).getDisposition());
+        System.out.println("Change barcode: " + nwtxin.getTitle() + ", " + nwtxdt.getSeqNr() + " Credentials");
+        addBookService.saveNwtxdt(nwtxdt);
+=======
+>>>>>>> Stashed changes
+        return "replaceBarcode";
+    }
+
+    @RequestMapping(value="/replaceBarcode", method = RequestMethod.POST)
+    public String replaceBarcodePOST(ModelMap model,
+                              @RequestParam (value = "bookCode",required = false, defaultValue = "")String bookCode,
+                              @RequestParam (value = "bookYear",required = false, defaultValue = "")String editionYear,
+                              @RequestParam (value = "barcode",required = false, defaultValue = "")String barcode,
+                              @RequestParam (value = "newBarcode",required = false, defaultValue = "")String newBarcode)
+            throws ParseException{
+        System.out.println("Replace Barcode POST");
+        if(bookCode.equals("") || editionYear.equals("") ||barcode.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "replaceBarcode";
+        }
+        Nwtxdt nwtxdt = new Nwtxdt();
+        Nwtxin nwtxin = new Nwtxin();
+        nwtxdt.setBarcode(barcode);
+        nwtxdt.setEditionYear(editionYear);
+        nwtxdt.setBookCode(bookCode);
+        //nwtxdt.setBarcode(newBarcode);
+
+        System.out.println(replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode).getDisposition());
+        System.out.println("Change barcode: " + nwtxin.getTitle() + ", " + nwtxdt.getSeqNr() + " Credentials");
+        addBookService.saveNwtxdt(nwtxdt);
+        return "replaceBarcode";
+    }
+
+    @Autowired
+    QueryCourseService queryCourseService;
+    @RequestMapping(value = "/queryCourse", method = RequestMethod.GET)
+    public String queryCourse(ModelMap model){
+        System.out.println("Course Query GET");
+        return "queryCourse";
+    }
+    @RequestMapping(value = "/queryCourse", method = RequestMethod.POST)
+    public String queryCoursePost(ModelMap model,
+                                  @RequestParam(value = "courseCode", required = false, defaultValue = "")String courseCode)
+                                  throws ParseException{
+        System.out.println("Course Query POST");
+        Scbcrse scbcrse = new Scbcrse();
+        if(courseCode.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "queryCourse";
+        }
+        scbcrse.setCrseNumb(courseCode);
+
+        System.out.println("Querying off of: " + scbcrse.getCrseNumb());
+        if(queryCourseService.getScbcrse(courseCode) != null){
+            model.put("crseTable", queryCourseService.getScbcrse(courseCode));
+
+        } else {
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        }
         return "queryCourse";
     }
 
-    @RequestMapping("/courseMessage")
+    @Autowired
+    CourseMessageService courseMessageService;
+    @RequestMapping(value = "/courseMessage", method = RequestMethod.GET)
     public String courseMessage(){
+        System.out.println("Course Message GET");
         return "courseMessage";
     }
 
-    @RequestMapping("/changeBookCode")
+    @RequestMapping(value = "/courseMessage", method = RequestMethod.POST)
+    public String courseMessagePost(ModelMap model,
+                                    @RequestParam(value = "courseId", required = false, defaultValue = "")String courseId)
+                                    throws ParseException{
+        System.out.println("Course Message POST");
+        if(courseId.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "courseMessage";
+        }
+        System.out.println("Querying off of: " + courseId);
+        if(courseMessageService.getNwtxcm(courseId) != null){
+            model.put("courseMessage", courseMessageService.getNwtxcm((courseId)).getCmMessage());
+
+        } else {
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        }
+        return "courseMessage";
+    }
+    @RequestMapping(value = "/courseMessage", method = RequestMethod.POST, params="clear")
+    public String courseMessageClear(ModelMap model,
+                                    @RequestParam(value = "courseId", required = false, defaultValue = "")String courseId)
+            throws ParseException{
+        System.out.println("Course Message POST - CLEAR");
+        if(courseId.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "courseMessage";
+        }
+        System.out.println("Querying off of: " + courseId);
+        if(courseMessageService.getNwtxcm(courseId) != null){
+            Nwtxcm nwtxcm = new Nwtxcm();
+            nwtxcm = courseMessageService.getNwtxcm(courseId);
+            nwtxcm.setCmMessage("");
+            model.put("courseMessage", "Cleared!");
+            courseMessageService.saveNwtxcm(nwtxcm);
+
+        } else {
+            model.put("returnVoidError", "No Course Found Off of Given Credentials");
+        }
+        return "courseMessage";
+    }
+
+    @Autowired
+    ChangeBookcodeService changeBookcodeService;
+    @RequestMapping(value= "/changeBookCode", method = RequestMethod.GET)
     public String changeBookCode(){
+        System.out.println("Course Message GET");
+        return "changeBookCode";
+    }
+
+    @RequestMapping(value= "/changeBookCode", method = RequestMethod.POST)
+    public String changeBookCodePost(ModelMap model,
+                                     @RequestParam(value = "bookCode", required = false, defaultValue = "")String bookCode,
+                                     @RequestParam(value = "editionYear", required = false, defaultValue = "")String editionYear,
+                                     @RequestParam(value = "newBookCode", required = false, defaultValue = "")String newBookCode,
+                                     @RequestParam(value = "newEditionYear", required = false, defaultValue = "")String newEditionYear)
+                                     throws ParseException{
+        System.out.println("Course Message POST");
+        if(bookCode.equals("") || editionYear.equals("") || newBookCode.equals("") || newEditionYear.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            System.out.println("it don't work");
+            return "changeBookCode";
+        }
+
+        if(changeBookcodeService.getNwtxin(bookCode, editionYear) != null){
+            //Nwtxin Creation of new and old versions
+            Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(bookCode, editionYear);
+            Nwtxin nwtxin = new Nwtxin();
+
+            //Setting all
+            nwtxin.setBookCode(newBookCode);
+            nwtxin.setEditionYear(newEditionYear);
+            nwtxin.setTitle(oldNwtxin.getTitle());
+            nwtxin.setAuthor(oldNwtxin.getAuthor());
+            nwtxin.setPublisher(oldNwtxin.getPublisher());
+            nwtxin.setBookStatus(oldNwtxin.getBookStatus());
+            nwtxin.setCurrentPrice(oldNwtxin.getCurrentPrice());
+            nwtxin.setIsbn(oldNwtxin.getIsbn());
+            nwtxin.setPruchaseDate(oldNwtxin.getPruchaseDate());
+            nwtxin.setFirstUsedDate(oldNwtxin.getFirstUsedDate());
+            nwtxin.setDiscontinuedDate(oldNwtxin.getDiscontinuedDate());
+            nwtxin.setActivityDate(oldNwtxin.getActivityDate());
+            nwtxin.setCrseName(oldNwtxin.getCrseName());
+            nwtxin.setCrse1(oldNwtxin.getCrse1());
+            nwtxin.setCrse2(oldNwtxin.getCrse2());
+            nwtxin.setCrse3(oldNwtxin.getCrse3());
+            nwtxin.setCrse4(oldNwtxin.getCrse4());
+            nwtxin.setCrse5(oldNwtxin.getCrse5());
+            nwtxin.setComment(oldNwtxin.getComment());
+
+            changeBookcodeService.deleteNwtxin(bookCode);
+            changeBookcodeService.saveNwtxin(nwtxin);
+        }
         return "changeBookCode";
     }
 }

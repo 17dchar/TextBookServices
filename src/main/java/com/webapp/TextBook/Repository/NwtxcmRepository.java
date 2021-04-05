@@ -10,4 +10,5 @@ import java.util.List;
 public interface NwtxcmRepository extends JpaRepository<Nwtxcm, Integer>{
     @Override
     List<Nwtxcm> findAll();
+    List<Nwtxcm> findByCourse(String courseId);
 }

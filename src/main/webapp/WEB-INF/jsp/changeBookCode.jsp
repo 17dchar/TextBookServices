@@ -138,22 +138,23 @@
         <a href="createReport">Create Report</a>
     </div>
 </div>
-<form class="yearCodeForm">
+<form class="yearCodeForm" method = "post">
     <fieldset>
         <p>
             <label>Book Code:</label>
             <input type = "text"
-                   id = "bookCode" />
-            <label>Book Year:</label>
+                   name = "bookCode" />
+            <label>Edition Year:</label>
             <input type = "text"
-                   id = "bookYear" />
+                   name = "editionYear" />
             <label>New Book Code:</label>
             <input type = "text"
-                   id = "newBookCode" />
+                   name = "newBookCode" />
             <label>New Book year:</label>
             <input type = "text"
-                   id = "newBookYear" />
+                   name = "newEditionYear" />
         </p>
+        <input type="submit" name="Save"/>
     </fieldset>
 </form>
 </body>
