@@ -11,6 +11,7 @@ C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\Text
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Scbcrse.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Repository\StvtermRepository.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Sgbstdn.java
+C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Service\CourseMessageService.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Repository\SpridenRepository.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\TextBookApplication.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Nwtxdt.java
@@ -26,6 +27,7 @@ C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\Text
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Spriden.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Ssrmeet.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Nwtxcm.java
+C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Service\QueryCourseService.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Nwtxar.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\ServletInitializer.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Ssbsect.java

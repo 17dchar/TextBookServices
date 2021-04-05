@@ -1,14 +1,12 @@
 package com.webapp.TextBook.controller;
 
+//Imported Standard Java Libraries
 import java.text.ParseException;
 import java.util.List;
+import javax.validation.Valid;
 
-import com.webapp.TextBook.Model.Scbcrse;
-import com.webapp.TextBook.Service.AddBookService;
-import com.webapp.TextBook.Repository.NwtxdtRepository;
-import com.webapp.TextBook.Model.Nwtxdt;
-import com.webapp.TextBook.Service.BookQueryService;
-import com.webapp.TextBook.Service.QueryCourseService;
+
+//Imported Spring Libraries
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,15 +14,21 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
+//Imported Services
+import com.webapp.TextBook.Service.AddBookService;
+import com.webapp.TextBook.Service.BookQueryService;
+import com.webapp.TextBook.Service.QueryCourseService;
+import com.webapp.TextBook.Service.CourseMessageService;
+
+
+//Imported Models
+import com.webapp.TextBook.Model.Scbcrse;
+import com.webapp.TextBook.Model.Nwtxdt;
+
 
 @Controller
 public class HomeController {
-
-
-    @Autowired
-    NwtxdtRepository nwtxdtRepository;
-
 
     @RequestMapping("/")
     public String login(){
@@ -162,8 +166,16 @@ public class HomeController {
         return "queryCourse";
     }
 
-    @RequestMapping("/courseMessage")
+    @Autowired
+    CourseMessageService courseMessageService;
+    @RequestMapping(value = "/courseMessage", method = RequestMethod.GET)
     public String courseMessage(){
+        System.out.println("Course Message GET");
+        return "courseMessage";
+    }
+    @RequestMapping(value = "/courseMessage", method = RequestMethod.POST)
+    public String courseMessagePost(ModelMap model)throws ParseException{
+        System.out.println("Course Message POST");
         return "courseMessage";
     }
 

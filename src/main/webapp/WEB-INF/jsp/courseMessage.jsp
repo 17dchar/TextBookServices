@@ -141,7 +141,7 @@
 </div>
 <div class="tenPix"></div>
 <div class="container">
-    <form class="courseMessageForm">
+    <form class="courseMessageForm" method = post>
         <fieldset>
             <p>
                 <div class="form-group">
@@ -156,9 +156,10 @@
                 </div>
             </p>
         </fieldset>
+
+        <input type="submit" class="btn btn-primary btnCol" name="Save"></input>
+        <button type="button" class="btn btn-primary btnCol">Clear</button>
     </form>
-    <button type="button" class="btn btn-primary btnCol">Save</button>
-    <button type="button" class="btn btn-primary btnCol">Clear</button>
 </div>
 
 </body>

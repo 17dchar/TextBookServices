@@ -32,6 +32,7 @@ com\webapp\TextBook\Model\Sfrverf.class
 com\webapp\TextBook\Model\Ssrmeet.class
 com\webapp\TextBook\Model\Spriden.class
 com\webapp\TextBook\repository\SfrverfRepository.class
+com\webapp\TextBook\Service\CourseMessageService.class
 com\webapp\TextBook\repository\NwtxarRepository.class
 com\webapp\TextBook\Service\QueryCourseService.class
 com\webapp\TextBook\repository\NwtxbnRepository.class
