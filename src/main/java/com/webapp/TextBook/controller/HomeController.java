@@ -215,17 +215,33 @@ public class HomeController {
         System.out.println("Querying off of " + bookCode + ", " + bookYear);
 
         if(changeBarcodeService.getNwtxin(bookCode, bookYear) != null){
-
+            //Nwtxin Creation of new and old versions
+            Nwtxin oldNwtxin = changeBarcodeService.getNwtxin(bookCode, bookYear);
             Nwtxin nwtxin = new Nwtxin();
-            Nwtxin oldNwtxin;
-            oldNwtxin = changeBarcodeService.getNwtxin(bookCode, bookYear);
-            nwtxin.setAuthor(oldNwtxin.getAuthor());
-            nwtxin.setBookStatus(oldNwtxin.getBookStatus());
-            nwtxin.setEditionYear(newBookYear);
+
+            //Setting all
             nwtxin.setBookCode(newBookCode);
+            nwtxin.setEditionYear(newBookYear);
+            nwtxin.setTitle(oldNwtxin.getTitle());
+            nwtxin.setAuthor(oldNwtxin.getAuthor());
+            nwtxin.setPublisher(oldNwtxin.getPublisher());
+            nwtxin.setBookStatus(oldNwtxin.getBookStatus());
+            nwtxin.setCurrentPrice(oldNwtxin.getCurrentPrice());
+            nwtxin.setIsbn(oldNwtxin.getIsbn());
+            nwtxin.setPruchaseDate(oldNwtxin.getPruchaseDate());
+            nwtxin.setFirstUsedDate(oldNwtxin.getFirstUsedDate());
+            nwtxin.setDiscontinuedDate(oldNwtxin.getDiscontinuedDate());
+            nwtxin.setActivityDate(oldNwtxin.getActivityDate());
+            nwtxin.setCrseName(oldNwtxin.getCrseName());
+            nwtxin.setCrse1(oldNwtxin.getCrse1());
+            nwtxin.setCrse2(oldNwtxin.getCrse2());
+            nwtxin.setCrse3(oldNwtxin.getCrse3());
+            nwtxin.setCrse4(oldNwtxin.getCrse4());
+            nwtxin.setCrse5(oldNwtxin.getCrse5());
+            nwtxin.setComment(oldNwtxin.getComment());
+
             changeBarcodeService.deleteNwtxin(bookCode);
             changeBarcodeService.saveNwtxin(nwtxin);
-            System.out.println("saved");
         }
         return "changeBookCode";
     }
