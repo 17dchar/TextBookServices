@@ -1,20 +1,19 @@
 package com.webapp.TextBook.Service;
 
-import com.webapp.TextBook.Model.Nwtxdt;
-import com.webapp.TextBook.Model.Scbcrse;
-import com.webapp.TextBook.Repository.NwtxdtRepository;
+import com.webapp.TextBook.Model.Nwtxcm;
+import com.webapp.TextBook.Repository.NwtxcmRepository;
 import com.webapp.TextBook.Repository.ScbcrseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CourseMessageService {
-    @Autowired private ScbcrseRepository scbcrseRepository;
+    @Autowired private NwtxcmRepository nwtxcmRepository;
 
-    public Scbcrse getScbcrse(String subjCode) {
-        if (scbcrseRepository.findBySubjCode(subjCode).size()
+    public Nwtxcm getNwtxcm(String courseId) {
+        if (nwtxcmRepository.findByCourse(courseId).size()
                 > 0) {
-            return scbcrseRepository.findBySubjCode(subjCode).get(0);
+            return nwtxcmRepository.findByCourse(courseId).get(0);
         } else{
             return null;
         }

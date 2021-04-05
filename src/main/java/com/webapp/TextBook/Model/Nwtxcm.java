@@ -12,27 +12,27 @@ public class Nwtxcm
     @Id
     @Column(name = "NWTXCM_COURSE")
     @NotEmpty
-    private String cmCourse;
+    private String course;
     @Column(name = "NWTXCM_MESSAGE")
-    private String cmMessage;
+    private String message;
     @Column(name = "NWTXCM_ACTIVITY_DATE")
     @Temporal(TemporalType.DATE)
     private Date acDate;
 
     public String getCmCourse() {
-        return cmCourse;
+        return course;
     }
 
     public void setCmCourse(String cmCourse) {
-        this.cmCourse = cmCourse;
+        this.course = cmCourse;
     }
 
     public String getCmMessage() {
-        return cmMessage;
+        return message;
     }
 
     public void setCmMessage(String cmMessage) {
-        this.cmMessage = cmMessage;
+        this.message = cmMessage;
     }
 
     public Date getAcDate() {

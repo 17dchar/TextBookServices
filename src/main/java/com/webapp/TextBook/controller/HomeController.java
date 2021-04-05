@@ -173,9 +173,19 @@ public class HomeController {
         System.out.println("Course Message GET");
         return "courseMessage";
     }
+
     @RequestMapping(value = "/courseMessage", method = RequestMethod.POST)
-    public String courseMessagePost(ModelMap model)throws ParseException{
+    public String courseMessagePost(ModelMap model,
+                                    @RequestParam(value = "courseId", required = false, defaultValue = "")String courseId)
+                                    throws ParseException{
         System.out.println("Course Message POST");
+        System.out.println("Querying off of: " + courseId);
+        if(courseMessageService.getNwtxcm(courseId) != null){
+            model.put("courseMessage", courseMessageService.getNwtxcm((courseId)).getCmMessage());
+
+        } else {
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        }
         return "courseMessage";
     }
 

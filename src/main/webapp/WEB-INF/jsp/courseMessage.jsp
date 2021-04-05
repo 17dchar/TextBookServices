@@ -147,12 +147,13 @@
                 <div class="form-group">
                 <label>Course:</label>
                 <input type = "text"
-                       id = "courseId"
+                       name = "courseId"
                        class="form-control"/>
                 <label>Message:</label>
                 <input type = "text"
                        id = "courseMessage"
                        class="form-control"/>
+                    ${courseMessage}
                 </div>
             </p>
         </fieldset>
@@ -160,6 +161,9 @@
         <input type="submit" class="btn btn-primary btnCol" name="Save"></input>
         <button type="button" class="btn btn-primary btnCol">Clear</button>
     </form>
+    <p>
+        ${returnVoidError}
+    </p>
 </div>
 
 </body>
