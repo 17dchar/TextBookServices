@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 
 //Imported Spring Libraries
+import com.webapp.TextBook.Model.Nwtxcm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -179,6 +180,10 @@ public class HomeController {
                                     @RequestParam(value = "courseId", required = false, defaultValue = "")String courseId)
                                     throws ParseException{
         System.out.println("Course Message POST");
+        if(courseId.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "courseMessage";
+        }
         System.out.println("Querying off of: " + courseId);
         if(courseMessageService.getNwtxcm(courseId) != null){
             model.put("courseMessage", courseMessageService.getNwtxcm((courseId)).getCmMessage());
