@@ -154,6 +154,10 @@
                        id = "courseMessage"
                        class="form-control"/>
                     ${courseMessage}
+                <label>New Message:</label>
+                <input type = "text"
+                       id = "newCourseMessage"
+                       class="form-control"/>
                 </div>
             </p>
         </fieldset>
