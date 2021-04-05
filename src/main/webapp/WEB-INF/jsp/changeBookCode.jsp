@@ -144,15 +144,15 @@
             <label>Book Code:</label>
             <input type = "text"
                    name = "bookCode" />
-            <label>Book Year:</label>
+            <label>Edition Year:</label>
             <input type = "text"
-                   name = "bookYear" />
+                   name = "editionYear" />
             <label>New Book Code:</label>
             <input type = "text"
                    name = "newBookCode" />
             <label>New Book year:</label>
             <input type = "text"
-                   name = "newBookYear" />
+                   name = "newEditionYear" />
         </p>
         <input type="submit" name="Save"/>
     </fieldset>

@@ -207,21 +207,25 @@ public class HomeController {
     @RequestMapping(value= "/changeBookCode", method = RequestMethod.POST)
     public String changeBookCodePost(ModelMap model,
                                      @RequestParam(value = "bookCode", required = false, defaultValue = "")String bookCode,
-                                     @RequestParam(value = "bookYear", required = false, defaultValue = "")String bookYear,
+                                     @RequestParam(value = "editionYear", required = false, defaultValue = "")String editionYear,
                                      @RequestParam(value = "newBookCode", required = false, defaultValue = "")String newBookCode,
-                                     @RequestParam(value = "newBookYear", required = false, defaultValue = "")String newBookYear)
+                                     @RequestParam(value = "newEditionYear", required = false, defaultValue = "")String newEditionYear)
                                      throws ParseException{
         System.out.println("Course Message POST");
-        System.out.println("Querying off of " + bookCode + ", " + bookYear);
+        if(bookCode.equals("") || editionYear.equals("") || newBookCode.equals("") || newEditionYear.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            System.out.println("it don't work");
+            return "changeBookCode";
+        }
 
-        if(changeBarcodeService.getNwtxin(bookCode, bookYear) != null){
+        if(changeBarcodeService.getNwtxin(bookCode, editionYear) != null){
             //Nwtxin Creation of new and old versions
-            Nwtxin oldNwtxin = changeBarcodeService.getNwtxin(bookCode, bookYear);
+            Nwtxin oldNwtxin = changeBarcodeService.getNwtxin(bookCode, editionYear);
             Nwtxin nwtxin = new Nwtxin();
 
             //Setting all
             nwtxin.setBookCode(newBookCode);
-            nwtxin.setEditionYear(newBookYear);
+            nwtxin.setEditionYear(newEditionYear);
             nwtxin.setTitle(oldNwtxin.getTitle());
             nwtxin.setAuthor(oldNwtxin.getAuthor());
             nwtxin.setPublisher(oldNwtxin.getPublisher());
