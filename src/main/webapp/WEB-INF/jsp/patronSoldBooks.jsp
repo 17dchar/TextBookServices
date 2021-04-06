@@ -142,9 +142,13 @@
 <div class="tenPix"></div>
 <div class="container">
     <div class="container">
-        <form class="yearCodeForm">
+        <form class="yearCodeForm" method = "post">
             <fieldset>
                 <p>
+                    <label>919#</label>
+                    <input type = "text"
+                           name = "id"/>
+                    <input type="submit" name="Find Them!"/>
                     <label>Term:</label>
                     <input type = "text"
                            id = "termSeason" />
@@ -162,6 +166,12 @@
             </fieldset>
         </form>
     </div>
+
+    <c:forEach items="${soldBooks}" var="soldBooks">
+        <p>
+            <p>${soldBooks.bookCode}</p>
+        </p>
+    </c:forEach>
 
 </div>
 
