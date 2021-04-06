@@ -277,18 +277,39 @@ public class HomeController {
         return "changeBookCode";
     }
 
+    @Autowired
+    PreviousBooksService previousBooksService;
+    @RequestMapping(value= "/Previous-Books", method = RequestMethod.GET)
+    public String prevBoooks(){
+        System.out.println("Previous Books GET");
+        return "patronPrevBooks";
+    }
 
+    @RequestMapping(value= "/Previous-Books", method = RequestMethod.POST)
+    public String prevBooksPost(ModelMap model,
+                                @RequestParam(value = "id", required = false, defaultValue = "")String id){
+        System.out.println("Previous Books POST");
+        if(id.equals("")){
+            return "patronPrevBooks";
+        }
 
-    //@Autowired
-    //ChangeBookcodeService changeBookcodeService;
+        if(previousBooksService.getSpriden(id) != null){
+            Spriden spriden = previousBooksService.getSpriden(id);
+            System.out.println(spriden.getPidm());
+            model.put("prevBooks",previousBooksService.getNwtxdt(spriden.getPidm()));
+        }
+
+        return "patronSoldBooks";
+    }
+
+    @Autowired
+    SoldBooksService soldBooksService;
     @RequestMapping(value= "/Sold-Books", method = RequestMethod.GET)
     public String soldBooks(){
         System.out.println("Sold Books GET");
         return "patronSoldBooks";
     }
 
-    @Autowired
-    SoldBooksService soldBooksService;
     @RequestMapping(value= "/Sold-Books", method = RequestMethod.POST)
     public String soldBooksPost(ModelMap model,
                                 @RequestParam(value = "id", required = false, defaultValue = "")String id){

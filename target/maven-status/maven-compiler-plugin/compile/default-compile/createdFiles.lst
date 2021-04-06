@@ -26,6 +26,7 @@ com\webapp\TextBook\repository\SfrstcrRepository.class
 com\webapp\TextBook\Model\Nwtxdt.class
 com\webapp\TextBook\Configuration\MaskConfig$1.class
 com\webapp\TextBook\repository\SgbstdnRepository.class
+com\webapp\TextBook\Service\PreviousBooksService.class
 com\webapp\TextBook\repository\StvtermRepository.class
 com\webapp\TextBook\repository\NwtxmsRepository.class
 com\webapp\TextBook\repository\NwtxcmRepository.class

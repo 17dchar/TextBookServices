@@ -142,7 +142,7 @@
 <div class="tenPix"></div>
 <div class="container">
     <div class="container">
-        <form class="yearCodeForm">
+        <form class="yearCodeForm" method = "post">
             <fieldset>
                 <p>
                 <div class="form-group">
@@ -154,6 +154,7 @@
                     <input type = "text"
                            id = "termYear"
                            class="form-control"/>
+                <input type="submit" name="Find Them!"/>
                 </div>
                 <div class="form-group">
                 <label>ID:</label>
