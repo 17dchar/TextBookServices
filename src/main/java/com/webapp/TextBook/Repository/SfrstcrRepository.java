@@ -10,4 +10,5 @@ import java.util.List;
 public interface SfrstcrRepository extends JpaRepository<Sfrstcr, Integer>{
     @Override
     List<Sfrstcr> findAll();
+    List<Sfrstcr> findAllByTermCodeAndPidm(String termCode, int pidm);
 }

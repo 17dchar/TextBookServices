@@ -152,25 +152,26 @@
                 <div class="form-group">
                 <label>Term:</label>
                     <input type = "text"
-                           id = "termSeason"
+                           name = "termSeason"
                            class="form-control fiftyWidth"/>
                     </div></p>
                 </fieldset>
-                </form>
-                <form>
                 <fieldset>
                     <p>
                 <div class="form-group">
                 <label>ID:</label>
                     <input type = "text"
-                           id = "bookID1"
+                           name = "id"
                            class="form-control fiftyWidth"/>
                 </div>
                     </p>
+                    <input type="submit" name="Save"/>
             </fieldset>
-                    <input type="submit" name="Find Them!"/>
         </form>
 
+        <c:forEach items="${output}" var="output">
+                <p>${output.subjCode}, ${output.crseNumb}, ${output.seqNumb}, ${output.ptrmCode}</p>
+        </c:forEach>
 
     </div>
 

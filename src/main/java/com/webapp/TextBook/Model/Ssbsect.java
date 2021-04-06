@@ -7,12 +7,13 @@ import java.util.Date;
 @Entity
 @Table(name="SSBSECT")
 public class Ssbsect {
-    @Id
+
     @Column(name = "SSBSECT_TERM_CODE")
     @NotEmpty
     private String termCode;
-    @Column(name = "SSRMEET_CRN")
+    @Column(name = "SSBSECT_CRN")
     @NotEmpty
+    @Id
     private String crn;
     @Column(name = "SSBSECT_PTRM_CODE")
     private String ptrmCode;

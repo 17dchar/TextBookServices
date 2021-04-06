@@ -2,11 +2,13 @@ package com.webapp.TextBook.controller;
 
 //Imported Standard Java Libraries
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 //Imported Spring Libraries
-import com.webapp.TextBook.Model.Nwtxcm;
-import com.webapp.TextBook.Model.Nwtxin;
+import com.webapp.TextBook.Model.*;
+import com.webapp.TextBook.Repository.SfrstcrRepository;
 import com.webapp.TextBook.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 //Imported Models
-import com.webapp.TextBook.Model.Scbcrse;
-import com.webapp.TextBook.Model.Nwtxdt;
-import com.webapp.TextBook.Model.Spriden;
 
 
 @Controller
@@ -353,8 +352,8 @@ public class HomeController {
         return "patronSoldBooks";
     }
 
-    //@Autowired
-    //SoldBooksService soldBooksService;
+    @Autowired
+    StudentScheduleService studentScheduleService;
     @RequestMapping(value= "/Student-Schedule", method = RequestMethod.GET)
     public String studentSchedule(){
         System.out.println("Student Schedule GET");
@@ -362,8 +361,33 @@ public class HomeController {
     }
 
     @RequestMapping(value= "/Student-Schedule", method = RequestMethod.POST)
-    public String studentSchedulePost(){
+    public String studentSchedulePost(ModelMap model,
+                                      @RequestParam(value = "termSeason", required = false, defaultValue = "")String termSeason,
+                                      @RequestParam(value = "id", required = false, defaultValue = "")String id)
+                                      throws ParseException{
         System.out.println("Student Schedule POST");
+        if(termSeason.equals("") || id.equals("")){
+            System.out.println("nah dawg");
+            return "patronSchedule";
+        }
+
+        studentScheduleService.getStvterm(termSeason).getDesc();
+        System.out.println("Checkpoint 1");
+        if(studentScheduleService.getSpriden(id).getPidm().equals("")){
+            System.out.println("pidm empty");
+            return "patronSchedule";
+        }
+        int pidm = Integer.parseInt(studentScheduleService.getSpriden(id).getPidm());
+
+        List<Sfrstcr> sfrstcr = studentScheduleService.getSfrstcr(pidm, termSeason);
+        List<Ssbsect> output = new ArrayList<>();
+        for(Sfrstcr item: sfrstcr){
+            Ssbsect ssbsect = studentScheduleService.getSsbsect(item.getCrn(), item.getTermCode());
+            output.add(ssbsect);
+        }
+        model.put("output", output);
+
+
         return "patronSchedule";
     }
 

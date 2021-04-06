@@ -7,7 +7,6 @@ import java.util.Date;
 @Entity
 @Table(name="SFRSTCR")
 public class Sfrstcr {
-    @Id
     @Column(name = "SFRSTCR_TERM_CODE")
     @NotEmpty
     private String termCode;
@@ -16,6 +15,7 @@ public class Sfrstcr {
     private int pidm;
     @Column(name = "SFRSTCR_CRN")
     @NotEmpty
+    @Id
     private String crn;
     @Column(name = "SFRSTCR_RSTS_CODE")
     private String rstsCode;

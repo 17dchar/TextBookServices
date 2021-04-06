@@ -10,5 +10,6 @@ import java.util.List;
 public interface SsbsectRepository extends JpaRepository<Ssbsect, Integer>{
     @Override
     List<Ssbsect> findAll();
+    List<Ssbsect> findByCrnAndTermCode(String crn, String termCode);
 }
 

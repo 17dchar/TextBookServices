@@ -9,4 +9,5 @@ import java.util.List;
 public interface SfrverfRepository extends JpaRepository<Sfrverf, Integer> {
     @Override
     List<Sfrverf> findAll();
+    List<Sfrverf> findByPidmAndTermCode(String pidm, String termCode);
 }
