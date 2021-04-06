@@ -3,25 +3,18 @@ package com.webapp.TextBook.controller;
 //Imported Standard Java Libraries
 import java.text.ParseException;
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
->>>>>>> Stashed changes
+
 import com.webapp.TextBook.Model.Nwtxin;
 import com.webapp.TextBook.Service.AddBookService;
 import com.webapp.TextBook.Repository.NwtxdtRepository;
 import com.webapp.TextBook.Model.Nwtxdt;
 import com.webapp.TextBook.Service.BookQueryService;
 import com.webapp.TextBook.Service.ReplaceBarcodeService;
-<<<<<<< Updated upstream
-=======
-=======
 
 //Imported Spring Libraries
 import com.webapp.TextBook.Model.Nwtxcm;
 import com.webapp.TextBook.Model.Nwtxin;
->>>>>>> 7428922757b88ae4c1ef1a0ead2df8d15df57b76
->>>>>>> Stashed changes
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -152,61 +145,56 @@ public class HomeController {
     @RequestMapping(value="/replaceBarcode", method = RequestMethod.GET)
     public String replaceBarcode(ModelMap model){
         System.out.println("Replace Barcode GET");
-<<<<<<< Updated upstream
+
         return "replaceBarcode";
     }
+
 
     @RequestMapping(value="/replaceBarcode", method = RequestMethod.POST)
     public String replaceBarcodePOST(ModelMap model,
                               @RequestParam (value = "bookCode",required = false, defaultValue = "")String bookCode,
                               @RequestParam (value = "bookYear",required = false, defaultValue = "")String editionYear,
                               @RequestParam (value = "barcode",required = false, defaultValue = "")String barcode,
-                              @RequestParam (value = "newBarcode",required = false, defaultValue = "")String newBarcode)
-            throws ParseException{
+                              @RequestParam (value = "newBarcode",required = false, defaultValue = "")String newBarcode,
+                              @RequestParam (value = "bookTitle",required = false, defaultValue = "")String bookTitle)
+            throws ParseException {
         System.out.println("Replace Barcode POST");
-        if(bookCode.equals("") || editionYear.equals("") ||barcode.equals("")){
+        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
+            System.out.println("hmmm bad!");
             return "replaceBarcode";
         }
-        Nwtxdt nwtxdt = new Nwtxdt();
-        Nwtxin nwtxin = new Nwtxin();
-        nwtxdt.setBarcode(barcode);
-        nwtxdt.setEditionYear(editionYear);
-        nwtxdt.setBookCode(bookCode);
-        //nwtxdt.setBarcode(newBarcode);
+        if (replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode) != null) {
+            Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode);
+            Nwtxdt nwtxdt = new Nwtxdt();
 
-        System.out.println(replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode).getDisposition());
-        System.out.println("Change barcode: " + nwtxin.getTitle() + ", " + nwtxdt.getSeqNr() + " Credentials");
-        addBookService.saveNwtxdt(nwtxdt);
-=======
->>>>>>> Stashed changes
+            nwtxdt.setBookCode(oldNwtxdt.getBookCode());
+            nwtxdt.setEditionYear(oldNwtxdt.getEditionYear());
+            nwtxdt.setSeqNr(oldNwtxdt.getSeqNr());
+            nwtxdt.setBarcode(newBarcode);
+            nwtxdt.setPidm(oldNwtxdt.getPidm());
+            nwtxdt.setTerm(oldNwtxdt.getTerm());
+            nwtxdt.setDateCheckedOut(oldNwtxdt.getDateCheckedOut());
+            nwtxdt.setDisposition(oldNwtxdt.getDisposition());
+            nwtxdt.setBookSalePrice(oldNwtxdt.getBookSalePrice());
+            nwtxdt.setPrevPidm(oldNwtxdt.getPrevPidm());
+            nwtxdt.setPrevDateCheckedIn(oldNwtxdt.getPrevDateCheckedIn());
+            nwtxdt.setActivityDate(oldNwtxdt.getActivityDate());
+            nwtxdt.setBillableFlag(oldNwtxdt.getBillableFlag());
+
+            replaceBarcodeService.deleteNwtxdt(barcode);
+            replaceBarcodeService.saveNwtxdt(nwtxdt);
+        }
+        if (replaceBarcodeService.getNwtxin(bookCode, editionYear, bookTitle) != null) {
+            Nwtxin nwtxin = replaceBarcodeService.getNwtxin(bookCode, editionYear, bookTitle);
+            model.put("bookTitle",replaceBarcodeService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear(), nwtxin.getTitle()).getTitle());
+        }
         return "replaceBarcode";
     }
 
-    @RequestMapping(value="/replaceBarcode", method = RequestMethod.POST)
-    public String replaceBarcodePOST(ModelMap model,
-                              @RequestParam (value = "bookCode",required = false, defaultValue = "")String bookCode,
-                              @RequestParam (value = "bookYear",required = false, defaultValue = "")String editionYear,
-                              @RequestParam (value = "barcode",required = false, defaultValue = "")String barcode,
-                              @RequestParam (value = "newBarcode",required = false, defaultValue = "")String newBarcode)
-            throws ParseException{
-        System.out.println("Replace Barcode POST");
-        if(bookCode.equals("") || editionYear.equals("") ||barcode.equals("")){
-            model.put("returnVoidError", "Invalid Credentials");
-            return "replaceBarcode";
-        }
-        Nwtxdt nwtxdt = new Nwtxdt();
-        Nwtxin nwtxin = new Nwtxin();
-        nwtxdt.setBarcode(barcode);
-        nwtxdt.setEditionYear(editionYear);
-        nwtxdt.setBookCode(bookCode);
-        //nwtxdt.setBarcode(newBarcode);
 
-        System.out.println(replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode).getDisposition());
-        System.out.println("Change barcode: " + nwtxin.getTitle() + ", " + nwtxdt.getSeqNr() + " Credentials");
-        addBookService.saveNwtxdt(nwtxdt);
-        return "replaceBarcode";
-    }
+
+
 
     @Autowired
     QueryCourseService queryCourseService;

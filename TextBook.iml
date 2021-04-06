@@ -21,7 +21,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="TextBook" value="0a9bb1ae-76ee-497f-a08f-55fa776ec81e" />
-          <factory-entry name="entityManagerFactory" value="afb6bdec-0d01-46f8-a275-3be941866754" />
+          <factory-entry name="entityManagerFactory" value="8fe03ba5-74c7-46b4-9aa4-b2625ff96bcc" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

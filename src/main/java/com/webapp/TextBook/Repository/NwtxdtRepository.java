@@ -2,6 +2,7 @@ package com.webapp.TextBook.Repository;
 
 import com.webapp.TextBook.Model.Nwtxdt;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +21,7 @@ public interface NwtxdtRepository extends CrudRepository<Nwtxdt, String> {
     List<Nwtxdt> findByBarcode(String barcode);
     List<Nwtxdt> findByBookCodeAndEditionYearAndBarcode(String BookCode, String editionYear, String barcode);
 
+    @Modifying
+    @Query(value = "DELETE FROM NWTXDT WHERE NWTXIN_BARCODE = :id",nativeQuery = true)
+    void deleteById(@Param("id")String id);
 }
