@@ -20,6 +20,18 @@ public class StudentScheduleService {
             return null;
         }
     }
+
+    @Autowired
+    private SsrmeetRepository ssrmeetRepository;
+    public Ssrmeet getSsrmeet(String term, String crn){
+        if (ssrmeetRepository.findByTermCodeAndCrn(term, crn).size()
+                > 0) {
+            return ssrmeetRepository.findByTermCodeAndCrn(term, crn).get(0);
+        } else{
+            return null;
+        }
+    }
+
     @Autowired
     private SpridenRepository spridenRepository;
     public Spriden getSpriden(String id) {
@@ -55,10 +67,10 @@ public class StudentScheduleService {
         }
     }
 
-    public Scbcrse getScbcrse(String subjCode) {
-        if (scbcrseRepository.findBySubjCode(subjCode).size()
+    public Scbcrse getScbcrse(String subjCode, String crseNumb) {
+        if (scbcrseRepository.findBySubjCodeAndCrseNumb(subjCode, crseNumb).size()
                 > 0) {
-            return scbcrseRepository.findBySubjCode(subjCode).get(0);
+            return scbcrseRepository.findBySubjCodeAndCrseNumb(subjCode, crseNumb).get(0);
         } else{
             return null;
         }

@@ -7,12 +7,12 @@ import java.util.Date;
 @Entity
 @Table(name="SSRMEET")
 public class Ssrmeet {
-    @Id
     @Column(name = "SSRMEET_TERM_CODE")
     @NotEmpty
     private String termCode;
     @Column(name = "SSRMEET_CRN")
     @NotEmpty
+    @Id
     private String crn;
     @Column(name = "SSRMEET_BEGIN_TIME")
     private String beginTime;

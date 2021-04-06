@@ -10,4 +10,5 @@ import java.util.List;
 public interface SsrmeetRepository extends JpaRepository<Ssrmeet, Integer>{
     @Override
     List<Ssrmeet> findAll();
+    List<Ssrmeet> findByTermCodeAndCrn(String termCode, String crn);
 }

@@ -169,8 +169,11 @@
             </fieldset>
         </form>
 
-        <c:forEach items="${output}" var="output">
-                <p>${output.subjCode}, ${output.crseNumb}, ${output.seqNumb}, ${output.ptrmCode}</p>
+        <c:forEach items="${output}" var="output" varStatus="status">
+                <p>Title: ${outputTitle[status.index]}</p>
+                <p>Meta Data: ${output.subjCode}, ${output.crseNumb}, ${output.seqNumb}, ${output.ptrmCode}</p>
+                <p>Times: ${outputTimes[status.index].monday} ${outputTimes[status.index].tuesday} ${outputTimes[status.index].wednesday}
+                        ${outputTimes[status.index].thursday} ${outputTimes[status.index].friday}</p>
         </c:forEach>
 
     </div>

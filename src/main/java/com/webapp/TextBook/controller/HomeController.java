@@ -381,11 +381,23 @@ public class HomeController {
 
         List<Sfrstcr> sfrstcr = studentScheduleService.getSfrstcr(pidm, termSeason);
         List<Ssbsect> output = new ArrayList<>();
+        List<String> outputTitle = new ArrayList<>();
+        List<Ssrmeet> outputTimes = new ArrayList<>();
         for(Sfrstcr item: sfrstcr){
             Ssbsect ssbsect = studentScheduleService.getSsbsect(item.getCrn(), item.getTermCode());
             output.add(ssbsect);
+            String courseSubject = ssbsect.getSubjCode();
+            String courseNumber = ssbsect.getCrseNumb();
+            if(studentScheduleService.getScbcrse(ssbsect.getSubjCode(),ssbsect.getCrseNumb()) != null){
+                System.out.println("there are titles!");
+                outputTitle.add(studentScheduleService.getScbcrse(ssbsect.getSubjCode(),ssbsect.getCrseNumb()).getTitle());
+            }
+
+            outputTimes.add(studentScheduleService.getSsrmeet(termSeason,item.getCrn()));
         }
         model.put("output", output);
+        model.put("outputTitle", outputTitle);
+        model.put("outputTimes", outputTimes);
 
 
         return "patronSchedule";
