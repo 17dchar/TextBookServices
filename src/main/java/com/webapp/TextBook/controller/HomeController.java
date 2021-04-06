@@ -7,6 +7,7 @@ import java.text.ParseException;
 //Imported Spring Libraries
 import com.webapp.TextBook.Model.Nwtxcm;
 import com.webapp.TextBook.Model.Nwtxin;
+import com.webapp.TextBook.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,16 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 
 //Imported Services
-import com.webapp.TextBook.Service.AddBookService;
-import com.webapp.TextBook.Service.BookQueryService;
-import com.webapp.TextBook.Service.QueryCourseService;
-import com.webapp.TextBook.Service.CourseMessageService;
-import com.webapp.TextBook.Service.ChangeBookcodeService;
 
 
 //Imported Models
 import com.webapp.TextBook.Model.Scbcrse;
 import com.webapp.TextBook.Model.Nwtxdt;
+import com.webapp.TextBook.Model.Spriden;
 
 
 @Controller
@@ -267,4 +264,37 @@ public class HomeController {
         }
         return "changeBookCode";
     }
+
+
+
+    //@Autowired
+    //ChangeBookcodeService changeBookcodeService;
+    @RequestMapping(value= "/Sold-Books", method = RequestMethod.GET)
+    public String soldBooks(){
+        System.out.println("Sold Books GET");
+        return "patronSoldBooks";
+    }
+
+    @Autowired
+    SoldBooksService soldBooksService;
+    @RequestMapping(value= "/Sold-Books", method = RequestMethod.POST)
+    public String soldBooksPost(ModelMap model,
+                                @RequestParam(value = "id", required = false, defaultValue = "")String id){
+        System.out.println("Sold Books Post");
+        if(id.equals("")){
+            return "patronSoldBooks";
+        }
+
+        if(soldBooksService.getSpriden(id) != null){
+            Spriden spriden = soldBooksService.getSpriden(id);
+            System.out.println(spriden.getPidm());
+            if(soldBooksService.getNwtxdt(spriden.getPidm()) != null){
+
+            }
+            model.put("soldBooks",soldBooksService.getNwtxdt(spriden.getPidm()));
+        }
+
+        return "patronSoldBooks";
+    }
+
 }

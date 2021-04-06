@@ -10,4 +10,5 @@ import java.util.List;
 public interface SpridenRepository extends JpaRepository<Spriden, Integer>{
     @Override
     List<Spriden> findAll();
+    List<Spriden> findById(String id);
 }
