@@ -146,16 +146,13 @@
 <div class="tenPix"></div>
 <div class="container">
     <div class="container">
-        <form class="yearCodeForm">
+        <form class="yearCodeForm" method="post">
             <fieldset>
                 <p>
                 <div class="form-group">
                 <label>Term:</label>
                     <input type = "text"
                            id = "termSeason"
-                           class="form-control fiftyWidth"/>
-                    <input type = "text"
-                           id = "termYear"
                            class="form-control fiftyWidth"/>
                     </div></p>
                 </fieldset>
@@ -168,12 +165,10 @@
                     <input type = "text"
                            id = "bookID1"
                            class="form-control fiftyWidth"/>
-                    <input type = "text"
-                           id = "bookID2"
-                           class="form-control fiftyWidth"/>
                 </div>
                     </p>
             </fieldset>
+                    <input type="submit" name="Find Them!"/>
         </form>
 
 

@@ -353,4 +353,18 @@ public class HomeController {
         return "patronSoldBooks";
     }
 
+    //@Autowired
+    //SoldBooksService soldBooksService;
+    @RequestMapping(value= "/Student-Schedule", method = RequestMethod.GET)
+    public String studentSchedule(){
+        System.out.println("Student Schedule GET");
+        return "patronSchedule";
+    }
+
+    @RequestMapping(value= "/Student-Schedule", method = RequestMethod.POST)
+    public String studentSchedulePost(){
+        System.out.println("Student Schedule POST");
+        return "patronSchedule";
+    }
+
 }
