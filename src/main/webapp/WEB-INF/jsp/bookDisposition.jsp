@@ -37,20 +37,20 @@
         <p>
             <label>Book Code:</label>
             <input type="text"
-                   id="bookCode"/>
+                   name="bookCode"/>
             <label>Book Year:</label>
             <input type="text"
-                   id="bookYear"/>
+                   name="editionYear"/>
             <label>Strike Bar Code:</label>
             <input type="text"
-                   id="barCode"/>
+                   name="barcode"/>
         </p>
     </fieldset>
-</form>
+
 <div class="container">
     <div class="row">
         <div class="column left">
-            <form method = "post">
+
                 <fieldset>
                     <legend>Book Info</legend>
                     <p>
@@ -70,12 +70,12 @@
                     </p>
                     <p>
                         <label for="bookDisposition">Change Disposition To:</label>
-                        <select name="bookDisposition" id="bookDisposition">
-                            <option value="bookDisposition">(No Change)</option>
-                            <option value="bookDisposition">I</option>
-                            <option value="bookDisposition">O</option>
-                            <option value="bookDisposition">S</option>
-                            <option value="bookDisposition">N</option>
+                        <select name="bookDisposition" id = "bookDisposition">
+                            <option value="">(No Change)</option>
+                            <option value="I">I</option>
+                            <option value="O">O</option>
+                            <option value="S">S</option>
+                            <option value="N">N</option>
                         </select>
                     </p>
                 </fieldset>

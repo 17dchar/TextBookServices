@@ -12,25 +12,18 @@ import java.util.List;
 @Service
 public class BookDispositionService {
 
+
     @Autowired
-    private SpridenRepository spridenRepository;
-    public Spriden getSpriden(String id) {
-        if (spridenRepository.findById(id).size()
-                > 0) {
-            return spridenRepository.findById(id).get(0);
+    private NwtxdtRepository nwtxdtRepository;
+    public Nwtxdt getNwtxdt(String bookCode, String editionYear, String barcode) {
+        if(nwtxdtRepository.findByBookCodeAndEditionYearAndBarcode(bookCode, editionYear, barcode).size() > 0){
+            return nwtxdtRepository.findByBookCodeAndEditionYearAndBarcode(bookCode, editionYear, barcode).get(0);
         } else{
             return null;
         }
     }
 
-    @Autowired
-    private NwtxdtRepository nwtxdtRepository;
-    public List<Nwtxdt> getNwtxdt(String pidm){
-        if(nwtxdtRepository.findByPidm(pidm).size() >0){
-            return nwtxdtRepository.findByPidm(pidm);
-
-        } else{
-            return null;
-        }
+    public Nwtxdt setNwtxdt(Nwtxdt nwtxdt){
+        return nwtxdtRepository.save(nwtxdt);
     }
 }
