@@ -57,17 +57,17 @@
                     <p>
                         <label>Title:</label>
                         <input type="text"
-                               id="bookTitle"/>
+                               name="bookTitle"/>
                     </p>
                     <p>
                         <label>Seq Nr:</label>
                         <input type="number"
-                               id="seqNumber"/>
+                               name="seqNumber"/>
                     </p>
                     <p>
                         <label>Change Barcode To:</label>
                         <input type="text"
-                               id="newBarcode"/>
+                               name="newBarcode"/>
                     </p>
                 </fieldset>
             </form>

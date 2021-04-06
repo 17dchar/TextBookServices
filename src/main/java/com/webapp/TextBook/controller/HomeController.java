@@ -185,10 +185,10 @@ public class HomeController {
             replaceBarcodeService.deleteNwtxdt(barcode);
             replaceBarcodeService.saveNwtxdt(nwtxdt);
         }
-        if (replaceBarcodeService.getNwtxin(bookCode, editionYear, bookTitle) != null) {
+        /*if (replaceBarcodeService.getNwtxin(bookCode, editionYear, bookTitle) != null) {
             Nwtxin nwtxin = replaceBarcodeService.getNwtxin(bookCode, editionYear, bookTitle);
             model.put("bookTitle",replaceBarcodeService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear(), nwtxin.getTitle()).getTitle());
-        }
+        }*/
         return "replaceBarcode";
     }
 

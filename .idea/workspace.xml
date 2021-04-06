@@ -5,30 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66a77f85-1bec-4a3c-9c59-6f97abb5ae11" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.factorypath" beforeDir="false" afterPath="$PROJECT_DIR$/.factorypath" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TextBook.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TextBook.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Repository/NwtxdtRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Repository/NwtxdtRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Repository/NwtxinRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Repository/NwtxinRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Service/ReplaceBarcodeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Service/ReplaceBarcodeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/addBook.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bookDisposition.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bookQuery.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/login.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/maintenanceFormView.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/replaceBarcode.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/Maintenance Form View.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/addBook.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/bookQuery.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/error.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/login.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/supervisorView.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/replaceBarcode.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/replaceBarcode.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +53,7 @@
     <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="oracle" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RequestMappingsPanelOrder0" value="0" />
@@ -113,19 +97,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Maven.TextBook [spring-boot:run]">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TextBook [spring-boot:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -194,6 +165,7 @@
       <workItem from="1617117297802" duration="3608000" />
       <workItem from="1617314720335" duration="350000" />
       <workItem from="1617651637317" duration="3979000" />
+      <workItem from="1617716419580" duration="1749000" />
     </task>
     <servers />
   </component>

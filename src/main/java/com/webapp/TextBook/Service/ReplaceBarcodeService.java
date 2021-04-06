@@ -30,7 +30,7 @@ public class ReplaceBarcodeService {
     public void deleteNwtxdt(String barcode) {
         System.out.println("Deleteing Line");
         if (nwtxdtRepository.findByBarcode(barcode) != null) {
-            nwtxinRepository.deleteById(barcode);
+            nwtxdtRepository.deleteById(barcode);
         } else {
             System.out.println("No book found");
         }

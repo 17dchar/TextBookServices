@@ -22,6 +22,6 @@ public interface NwtxdtRepository extends CrudRepository<Nwtxdt, String> {
     List<Nwtxdt> findByBookCodeAndEditionYearAndBarcode(String BookCode, String editionYear, String barcode);
 
     @Modifying
-    @Query(value = "DELETE FROM NWTXDT WHERE NWTXIN_BARCODE = :id",nativeQuery = true)
+    @Query(value = "DELETE FROM NWTXDT WHERE NWTXDT_BARCODE = :id",nativeQuery = true)
     void deleteById(@Param("id")String id);
 }
