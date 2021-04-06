@@ -32,7 +32,7 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form>
+<form method = "post">
     <fieldset>
         <p>
             <label>Book Code:</label>
@@ -50,7 +50,7 @@
 <div class="container">
     <div class="row">
         <div class="column left">
-            <form>
+            <form method = "post">
                 <fieldset>
                     <legend>Book Info</legend>
                     <p>
@@ -72,19 +72,24 @@
                         <label for="bookDisposition">Change Disposition To:</label>
                         <select name="bookDisposition" id="bookDisposition">
                             <option value="bookDisposition">(No Change)</option>
+                            <option value="bookDisposition">I</option>
+                            <option value="bookDisposition">O</option>
+                            <option value="bookDisposition">S</option>
+                            <option value="bookDisposition">N</option>
                         </select>
                     </p>
                 </fieldset>
-            </form>
         </div>
         <div class="column right">
             <p>
-                <button type="button">Save</button>
+                <input type="submit" name="Save"/>
             </p>
             <p>
                 <button type="button">Clear</button>
             </p>
         </div>
+
+        </form>
     </div>
 </div>
 </body>

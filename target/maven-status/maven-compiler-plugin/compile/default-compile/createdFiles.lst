@@ -12,6 +12,7 @@ com\webapp\TextBook\Service\SoldBooksService.class
 com\webapp\TextBook\Model\Scbcrse.class
 com\webapp\TextBook\Model\Sgbstdn.class
 com\webapp\TextBook\Model\Stvterm.class
+com\webapp\TextBook\Service\BookDispositionService.class
 com\webapp\TextBook\repository\NwtxdtRepository.class
 com\webapp\TextBook\repository\ScbcrseRepository.class
 com\webapp\TextBook\Model\Nwtxin.class

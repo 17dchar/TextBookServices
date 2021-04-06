@@ -18,14 +18,17 @@ C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\Text
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Repository\NwtxcmRepository.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Repository\SsbsectRepository.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Sfrverf.java
+C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Service\PreviousBooksService.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Nwtxin.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Repository\NwtxbnRepository.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Nwtxbn.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Repository\NwtxdtRepository.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Repository\NwtxmsRepository.java
+C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Service\SoldBooksService.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Nwtxms.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Spriden.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Ssrmeet.java
+C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Service\ChangeBookcodeService.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Nwtxcm.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Service\QueryCourseService.java
 C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Model\Nwtxar.java

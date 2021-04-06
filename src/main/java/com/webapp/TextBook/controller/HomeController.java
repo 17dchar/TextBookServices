@@ -135,12 +135,23 @@ public class HomeController {
         return "bookQuery";
     }
 
-    @RequestMapping("/bookDisposition")
+    @Autowired
+    BookDispositionService bookDispositionService;
+    @RequestMapping(value = "/bookDisposition", method = RequestMethod.GET)
     public String bookDisposition(){
+        System.out.println("Book Dispostion GET");
         return "bookDisposition";
     }
 
-    @RequestMapping("/replaceBarcode")
+  @RequestMapping(value = "/bookDisposition", method = RequestMethod.POST)
+  public String bookDispositionPost(ModelMap model,
+                                    @RequestParam(value = "courseCode", required = false, defaultValue = "") String courseCode)
+                                    throws ParseException {
+        System.out.println("Book Disposition POST");
+        return "bookDisposition";
+  }
+
+        @RequestMapping("/replaceBarcode")
     public String replaceBarcode(){
         return "replaceBarcode";
     }
