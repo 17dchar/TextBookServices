@@ -149,21 +149,15 @@
 
                 <label>Term:</label>
                     <input type = "text"
-                           id = "termSeason"
+                           name = "prevTerm"
                            class="form-control"/>
-                    <input type = "text"
-                           id = "termYear"
-                           class="form-control"/>
-                <input type="submit" name="Find Them!"/>
                 </div>
                 <div class="form-group">
                 <label>ID:</label>
                     <input type = "text"
-                           id = "bookID1"
+                           name = "id"
                            class="form-control"/>
-                    <input type = "text"
-                           id = "bookID2"
-                           class="form-control"/>
+                    <input type="submit" name="Find Them!"/>
                 </div>
                     <div class="form-group">
                     <label>Bag#:</label>
@@ -173,6 +167,12 @@
                     </div>
                         </p>
             </fieldset>
+
+            <c:forEach items="${prevBooks}" var="prevBooks">
+                <p>
+                <p>${prevBooks.bookCode}</p>
+                </p>
+            </c:forEach>
         </form>
 
     </div>

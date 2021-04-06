@@ -10,4 +10,5 @@ import java.util.List;
 public interface StvtermRepository extends JpaRepository<Stvterm, Integer>{
     @Override
     List<Stvterm> findAll();
+    List<Stvterm> findByCode(String code);
 }

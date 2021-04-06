@@ -287,19 +287,23 @@ public class HomeController {
 
     @RequestMapping(value= "/Previous-Books", method = RequestMethod.POST)
     public String prevBooksPost(ModelMap model,
-                                @RequestParam(value = "id", required = false, defaultValue = "")String id){
+                                @RequestParam(value = "id", required = false, defaultValue = "")String id,
+                                @RequestParam(value = "prevTerm", required = false, defaultValue = "")String prevTerm)
+                                throws ParseException{
         System.out.println("Previous Books POST");
-        if(id.equals("")){
+        if(id.equals("") || prevTerm.equals("")){
+            System.out.println("nah dawg");
             return "patronPrevBooks";
         }
 
-        if(previousBooksService.getSpriden(id) != null){
+        if(previousBooksService.getSpriden(id) != null && previousBooksService.getStvterm(prevTerm) != null){
             Spriden spriden = previousBooksService.getSpriden(id);
-            System.out.println(spriden.getPidm());
-            model.put("prevBooks",previousBooksService.getNwtxdt(spriden.getPidm()));
+            System.out.println(spriden.getFirstName() + " " + spriden.getMiddleInitial() + " " + spriden.getLastName());
+            previousBooksService.getNwtxdt(spriden.getPidm(), prevTerm);
+            model.put("prevBooks",previousBooksService.getNwtxdt(spriden.getPidm(), prevTerm));
         }
 
-        return "patronSoldBooks";
+        return "patronPrevBooks";
     }
 
     @Autowired
