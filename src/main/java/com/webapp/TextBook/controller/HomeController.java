@@ -29,9 +29,21 @@ import com.webapp.TextBook.Model.Nwtxdt;
 @Controller
 public class HomeController {
 
-    @RequestMapping("/")
+    @RequestMapping(value="/", method = RequestMethod.GET)
     public String login(){
         return "login";
+    }
+
+    //Just temporary login things for now. Intended to be replaced later!
+    @RequestMapping(value="/", method = RequestMethod.POST)
+    public String loginPost(@RequestParam (value = "login",required = false, defaultValue = "")String login,
+                            @RequestParam (value = "password",required = false, defaultValue = "")String password)
+                            throws ParseException{
+        if(login.equals("admin") && password.equals("admin")){
+            return "supervisorView";
+        } else{
+            return "maintenanceFormView";
+        }
     }
 
     @RequestMapping("/supervisorView")

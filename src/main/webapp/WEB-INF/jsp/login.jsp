@@ -12,11 +12,11 @@
 </head>
 <body>
 <h1 class="loginh1">Log In:</h1>
-<form class="loginform" method="get" action="/supervisorView">
-    <label class="loginlabel" for="uName">Username:</label>
-    <input class="logininput" type="text" id="uName" name="uName"/>
-    <label class="loginlabel" for="uPass">Password:</label>
-    <input class="logininput" type="text" id="uPass" name="uPass"/>
+<form class="loginform" method="post">
+    <label class="loginlabel">Username:</label>
+    <input class="logininput" type="text" name="login"/>
+    <label class="loginlabel">Password:</label>
+    <input class="logininput" type="text" name="password"/>
     <input class="logininput" type="submit" value="Submit" id="loginBtn">
 </form>
 </body>
