@@ -157,6 +157,9 @@ public class HomeController {
         if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || bookDisposition.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "bookDisposition";
+        }else{
+            //Wasn't able to find a book off of given credentials
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
 
         Nwtxdt nwtxdt = bookDispositionService.getNwtxdt(bookCode, editionYear, barcode);
@@ -210,6 +213,9 @@ public class HomeController {
             //Deletes Old Repository Item and Saves New One
             replaceBarcodeService.deleteNwtxdt(barcode);
             replaceBarcodeService.saveNwtxdt(nwtxdt);
+        }else{
+            //Wasn't able to find a book off of given credentials
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
         return "replaceBarcode";
     }
@@ -217,9 +223,8 @@ public class HomeController {
 
     @Autowired
     QueryCourseService queryCourseService;
-
     @RequestMapping(value = "/queryCourse", method = RequestMethod.GET)
-    public String queryCourse(ModelMap model) {
+    public String queryCourse() {
         System.out.println("Course Query GET");
         return "queryCourse";
     }
@@ -227,21 +232,20 @@ public class HomeController {
     @RequestMapping(value = "/queryCourse", method = RequestMethod.POST)
     public String queryCoursePost(ModelMap model,
                                   @RequestParam(value = "courseCode", required = false, defaultValue = "") String courseCode)
-            throws ParseException {
+                                  throws ParseException {
         System.out.println("Course Query POST");
-        Scbcrse scbcrse = new Scbcrse();
+        //Pseudo Regex
         if (courseCode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "queryCourse";
         }
-        scbcrse.setCrseNumb(courseCode);
 
-        System.out.println("Querying off of: " + scbcrse.getCrseNumb());
-        if (queryCourseService.getScbcrse(courseCode) != null) {
-            model.put("crseTable", queryCourseService.getScbcrse(courseCode));
-
-        } else {
-            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        Scbcrse scbcrse = queryCourseService.getScbcrse(courseCode);
+        if (scbcrse != null) {
+            model.put("crseTable", scbcrse);
+        }else{
+            //Wasn't able to find a book off of given credentials
+            model.put("returnVoidError", "No Courses Found Off of Given Credentials");
         }
         return "queryCourse";
     }
