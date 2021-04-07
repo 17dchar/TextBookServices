@@ -104,9 +104,10 @@ public class HomeController {
         return "Supervisor/bookQuery";
     }
 
+    //@PostMapping({"/{bookCode}/check", "Check Listing"})
     @RequestMapping(value = "/Find-Book", method = RequestMethod.POST)
     public String bookQueryPost(ModelMap model,
-                                @RequestParam(value = "bookCode", required = true, defaultValue = "") String bookCode,
+                                @RequestParam(value = "bookCode", required = false, defaultValue = "") String bookCode,
                                 @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
                                 @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode)
                                 throws ParseException {
@@ -115,6 +116,9 @@ public class HomeController {
         if (bookCode.equals("") || editionYear.equals("") || barcode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "Supervisor/bookQuery";
+        }
+        if (editionYear.equals("") && barcode.equals("") && !bookCode.equals("")){
+            //Do new method for ajax
         }
 
         Nwtxdt nwtxdt = bookQueryService.getNwtxdt(bookCode, editionYear, barcode);

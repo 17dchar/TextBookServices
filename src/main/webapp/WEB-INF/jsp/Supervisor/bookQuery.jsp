@@ -9,10 +9,40 @@
 <head>
     <link rel="stylesheet" href="/css/style.css">
     <meta charset="UTF-8">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script type="text/javascript"
+            src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <title>Query a Book</title>
     </head>
 <body>
 <h1>Textbook Services: Query A Book</h1>
+<script>
+    $(document).ready(
+        function() {
+            setInterval(function() {
+                var randomnumber = Math.floor(Math.random() * 100);
+                $('#show').text(
+                    'I am getting refreshed every 3 seconds..! Random Number ==> '
+                    + randomnumber);
+            }, 3000);
+        });
+    function showHint(str) {
+        var xhttp;
+        if (str.length == 0) {
+            document.getElementById("txtHint").innerHTML = "";
+            return;
+        }
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "gethint.asp?q="+str, true);
+        xhttp.send();
+    }
+</script>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
@@ -38,14 +68,18 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form method="post">
+<form action="" autocomplete="off">
     <fieldset>
         <p>
             <label>Book Code:</label>
             <input type="text"
                    name="bookCode"
-                    required = "required"/>
-            <label>Book Year:</label>
+                   id="bookCode"
+                   required = "required"
+                   onkeyup="showHint(this.value)"/>
+        <p>Suggestions: <span id="txtHint"></span></p>
+
+        <label>Book Year:</label>
             <input type="text"
                    name="editionYear"/>
             <label>Strike Bar Code:</label>
@@ -61,6 +95,7 @@
 <div class="container">
     <div class="row">
         <div class="column left">
+            <div id = "show"></div>
             <form>
                 <fieldset>
                     <legend>Book Info</legend>
