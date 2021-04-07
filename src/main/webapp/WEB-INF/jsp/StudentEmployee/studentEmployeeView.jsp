@@ -6,18 +6,18 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <meta charset="UTF-8">
-    <title>Supervisor View</title>
+    <title>Employee Home</title>
 </head>
 <body>
-<h1>Textbook Services: Supervisor Access</h1>
+<h1>Textbook Services: Employee Home</h1>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
         <a href="maintenanceFormView">Maintenance</a>
         <a href="addBook">Add Books</a>
-        <a href="bookQuery">Query Books</a>
+        <a href="Find-Book">Find a Book</a>
         <a href="bookDisposition">Change Book Disposition</a>
         <a href="replaceBarcode">Replace Barcode</a>
         <a href="queryCourse">Query Course</a>

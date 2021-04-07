@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <meta charset="UTF-8">
     <title>Query a Book</title>
     </head>
