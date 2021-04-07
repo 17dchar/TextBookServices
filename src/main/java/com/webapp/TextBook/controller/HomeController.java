@@ -412,6 +412,7 @@ public class HomeController {
         return "patronSoldBooks";
     }
 
+
     @Autowired
     StudentScheduleService studentScheduleService;
     @RequestMapping(value= "/Student-Schedule", method = RequestMethod.GET)
@@ -426,13 +427,13 @@ public class HomeController {
                                       @RequestParam(value = "id", required = false, defaultValue = "")String id)
                                       throws ParseException{
         System.out.println("Student Schedule POST");
+        //Pseudo Regex
         if(termSeason.equals("") || id.equals("")){
             System.out.println("nah dawg");
             return "patronSchedule";
         }
 
         studentScheduleService.getStvterm(termSeason).getDesc();
-        System.out.println("Checkpoint 1");
         if(studentScheduleService.getSpriden(id).getPidm().equals("")){
             System.out.println("pidm empty");
             return "patronSchedule";
@@ -446,20 +447,16 @@ public class HomeController {
         for(Sfrstcr item: sfrstcr){
             Ssbsect ssbsect = studentScheduleService.getSsbsect(item.getCrn(), item.getTermCode());
             output.add(ssbsect);
-            String courseSubject = ssbsect.getSubjCode();
-            String courseNumber = ssbsect.getCrseNumb();
-            if(studentScheduleService.getScbcrse(ssbsect.getSubjCode(),ssbsect.getCrseNumb()) != null){
+            Scbcrse scbcrse = studentScheduleService.getScbcrse(ssbsect.getSubjCode(),ssbsect.getCrseNumb());
+            if(scbcrse != null){
                 System.out.println("there are titles!");
-                outputTitle.add(studentScheduleService.getScbcrse(ssbsect.getSubjCode(),ssbsect.getCrseNumb()).getTitle());
+                outputTitle.add(scbcrse.getTitle());
             }
-
             outputTimes.add(studentScheduleService.getSsrmeet(termSeason,item.getCrn()));
         }
         model.put("output", output);
         model.put("outputTitle", outputTitle);
         model.put("outputTimes", outputTimes);
-
-
         return "patronSchedule";
     }
 

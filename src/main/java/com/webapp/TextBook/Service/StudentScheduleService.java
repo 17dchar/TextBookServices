@@ -58,9 +58,11 @@ public class StudentScheduleService {
     @Autowired
     private SsbsectRepository ssbsectRepository;
     public Ssbsect getSsbsect(String crn, String term){
-        List<Ssbsect> ssbsects = ssbsectRepository.findByCrnAndTermCode(crn, term);
-        if(ssbsects.size()>0){
-            return ssbsectRepository.findByCrnAndTermCode(crn, term).get(0);
+        List<Ssbsect> ssbsectList = ssbsectRepository.findByCrnAndTermCode(crn, term);
+        //If there is at least 1 model under given credentials, return the first
+        //Else, return nothing
+        if(ssbsectList.size()>0){
+            return ssbsectList.get(0);
         }
         else{
             return null;
@@ -68,9 +70,11 @@ public class StudentScheduleService {
     }
 
     public Scbcrse getScbcrse(String subjCode, String crseNumb) {
-        if (scbcrseRepository.findBySubjCodeAndCrseNumb(subjCode, crseNumb).size()
-                > 0) {
-            return scbcrseRepository.findBySubjCodeAndCrseNumb(subjCode, crseNumb).get(0);
+        List<Scbcrse> scbcrseList = scbcrseRepository.findBySubjCodeAndCrseNumb(subjCode, crseNumb);
+        //If there is at least 1 model under given credentials, return the first
+        //Else, return nothing
+        if (scbcrseList.size() > 0) {
+            return scbcrseList.get(0);
         } else{
             return null;
         }
