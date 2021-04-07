@@ -139,23 +139,25 @@ public class HomeController {
 
     @Autowired
     BookDispositionService bookDispositionService;
-
     @RequestMapping(value = "/bookDisposition", method = RequestMethod.GET)
     public String bookDisposition() {
         System.out.println("Book Dispostion GET");
         return "bookDisposition";
     }
-
-
+    
     @RequestMapping(value = "/bookDisposition", method = RequestMethod.POST)
     public String bookDispositionPost(ModelMap model,
                                       @RequestParam(value = "bookCode", required = true, defaultValue = "") String bookCode,
                                       @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
                                       @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
                                       @RequestParam(value = "bookDisposition", required = false, defaultValue = "") String bookDisposition)
-            throws ParseException {
+                                      throws ParseException {
         System.out.println("Book Disposition POST");
-        System.out.println(bookCode + editionYear + barcode + bookDisposition);
+        //Pseudo Regex
+        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || bookDisposition.equals("")) {
+            model.put("returnVoidError", "Invalid Credentials");
+            return "bookDisposition";
+        }
 
         Nwtxdt nwtxdt = bookDispositionService.getNwtxdt(bookCode, editionYear, barcode);
         nwtxdt.setDisposition(bookDisposition);

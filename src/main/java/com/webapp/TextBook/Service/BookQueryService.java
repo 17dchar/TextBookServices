@@ -15,8 +15,8 @@ public class BookQueryService {
 
     @Autowired private NwtxdtRepository nwtxdtRepository;
     public Nwtxdt saveNwtxdt(Nwtxdt nwtxdt) {
-    return nwtxdtRepository.save(nwtxdt);
-  }
+        return nwtxdtRepository.save(nwtxdt);
+    }
 
     public Nwtxdt getNwtxdt(String bookCode, String editionYear, String barcode) {
         //Create a list of all repositories under given credentials
