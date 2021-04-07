@@ -11,13 +11,15 @@ import java.util.List;
 
 @Service
 public class SoldBooksService {
-
     @Autowired
     private SpridenRepository spridenRepository;
     public Spriden getSpriden(String id) {
-        if (spridenRepository.findById(id).size()
-                > 0) {
-            return spridenRepository.findById(id).get(0);
+        List<Spriden> spridenList = spridenRepository.findById(id);
+        //If there is at least 1 model under given credentials, return the first
+        //Else, return nothing
+        if (spridenList.size() > 0) {
+            //Create a list of all repositories under given credentials
+            return spridenList.get(0);
         } else{
             return null;
         }
@@ -26,10 +28,13 @@ public class SoldBooksService {
     @Autowired
     private NwtxdtRepository nwtxdtRepository;
     public List<Nwtxdt> getNwtxdt(String pidm){
-        if(nwtxdtRepository.findByPidm(pidm).size() >0){
-            return nwtxdtRepository.findByPidm(pidm);
-
+        //If there is at least 1 model under given credentials, return the first
+        //Else, return nothing
+        List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByPidm(pidm);
+        if(nwtxdtList.size() >0){
+            return nwtxdtList;
         } else{
+            //Create a list of all repositories under given credentials
             return null;
         }
     }

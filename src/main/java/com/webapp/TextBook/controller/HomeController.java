@@ -57,6 +57,7 @@ public class HomeController {
         return "Supervisor/maintenanceFormView";
     }
 
+
     @Autowired
     AddBookService addBookService;
 
@@ -73,20 +74,22 @@ public class HomeController {
                               @RequestParam(value = "bookTitle", required = false, defaultValue = "") String bookTitle,
                               @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
                               @RequestParam(value = "seqNr", required = false, defaultValue = "") String seqNr)
-            throws ParseException {
+                              throws ParseException {
         System.out.println("Add Book POST");
+        //Pseudo Regex
         if (bookCode.equals("") || editionYear.equals("") || bookTitle.equals("") || barcode.equals("") || seqNr.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "Supervisor/addBook";
         }
+
+        //Model for Nwtxdt Changing
         Nwtxdt nwtxdt = new Nwtxdt();
         nwtxdt.setBarcode(barcode);
         nwtxdt.setEditionYear(editionYear);
         nwtxdt.setBookCode(bookCode);
         nwtxdt.setSeqNr(seqNr);
 
-        System.out.println("Adding Book with " + nwtxdt.getBarcode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBookCode() + ", " +
-                nwtxdt.getSeqNr() + " Credentials");
+        //Add Book Service - Save
         addBookService.saveNwtxdt(nwtxdt);
         return "Supervisor/addBook";
     }
@@ -102,42 +105,40 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/Find-Book", method = RequestMethod.POST)
-    public String bookQueryPost(/*@Valid @ModelAttribute("nwtxdt") Nwtxdt nwtxdt*/ ModelMap model,
-                                                                                   @RequestParam(value = "bookCode", required = true, defaultValue = "") String bookCode,
-                                                                                   @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
-                                                                                   @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode
-            /*BindingResult result*/) throws ParseException {
+    public String bookQueryPost(ModelMap model,
+                                @RequestParam(value = "bookCode", required = true, defaultValue = "") String bookCode,
+                                @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
+                                @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode)
+                                throws ParseException {
         System.out.println("Book Query POST");
-        Nwtxdt nwtxdt = new Nwtxdt();
+        //Pseudo Regex
         if (bookCode.equals("") || editionYear.equals("") || barcode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "StudentEmployee/bookQuery";
         }
-        nwtxdt.setBarcode(barcode);
-        nwtxdt.setEditionYear(editionYear);
-        nwtxdt.setBookCode(bookCode);
 
-        //nwtxdt = bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode());
-
-        System.out.println("Querying off of: " + nwtxdt.getBookCode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBarcode());
-        if (bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()) != null) {
-            model.put("bookTitle", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getBookCode());
-            model.put("seqNr", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getSeqNr());
-            model.put("prevTerm", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getPrevTerm());
-            model.put("bookDisposition", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getDisposition());
-            model.put("termCheckedOut", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getTerm());
-            model.put("checkedOutTo", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getPidm());
-            model.put("dateCheckedOut", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getDateCheckedOut());
-            model.put("prevCheckedOutTo", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getPrevPidm());
-            model.put("dateCheckedIn", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getPrevDateCheckedIn());
+        Nwtxdt nwtxdt = bookQueryService.getNwtxdt(bookCode, editionYear, barcode);
+        if (nwtxdt != null) {
+            //Found everything, and putting all needed items to the front page
+            model.put("bookTitle",          nwtxdt.getBookCode());
+            model.put("seqNr",              nwtxdt.getSeqNr());
+            model.put("prevTerm",           nwtxdt.getPrevTerm());
+            model.put("bookDisposition",    nwtxdt.getDisposition());
+            model.put("termCheckedOut",     nwtxdt.getTerm());
+            model.put("checkedOutTo",       nwtxdt.getPidm());
+            model.put("dateCheckedOut",     nwtxdt.getDateCheckedOut());
+            model.put("prevCheckedOutTo",   nwtxdt.getPrevPidm());
+            model.put("dateCheckedIn",      nwtxdt.getPrevDateCheckedIn());
 
             return "StudentEmployee/bookQuery";
         } else {
+            //Wasn't able to find a book off of given credentials
             model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
 
         return "StudentEmployee/bookQuery";
     }
+
 
     @Autowired
     BookDispositionService bookDispositionService;
@@ -147,15 +148,22 @@ public class HomeController {
         return "Supervisor/bookDisposition";
     }
 
-  @RequestMapping(value = "/Disposition-Change", method = RequestMethod.POST)
-  public String bookDispositionPost(ModelMap model,
-                                    @RequestParam (value = "bookCode", required = true, defaultValue = "") String bookCode,
-                                    @RequestParam (value = "editionYear", required = false, defaultValue = "") String editionYear,
-                                    @RequestParam (value = "barcode", required = false, defaultValue = "") String barcode,
-                                    @RequestParam (value = "bookDisposition", required = false, defaultValue = "") String bookDisposition)
-                                    throws ParseException {
+    @RequestMapping(value = "/Disposition-Change", method = RequestMethod.POST)
+    public String bookDispositionPost(ModelMap model,
+                                      @RequestParam(value = "bookCode", required = true, defaultValue = "") String bookCode,
+                                      @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
+                                      @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
+                                      @RequestParam(value = "bookDisposition", required = false, defaultValue = "") String bookDisposition)
+                                      throws ParseException {
         System.out.println("Book Disposition POST");
-        System.out.println(bookCode + editionYear + barcode + bookDisposition);
+        //Pseudo Regex
+        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || bookDisposition.equals("")) {
+            model.put("returnVoidError", "Invalid Credentials");
+            return "bookDisposition";
+        }else{
+            //Wasn't able to find a book off of given credentials
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        }
 
         Nwtxdt nwtxdt = bookDispositionService.getNwtxdt(bookCode, editionYear, barcode);
         nwtxdt.setDisposition(bookDisposition);
@@ -163,16 +171,14 @@ public class HomeController {
         return "bookDisposition";
     }
 
+
     @Autowired
     ReplaceBarcodeService replaceBarcodeService;
-
     @RequestMapping(value = "/Change-Barcode", method = RequestMethod.GET)
-    public String replaceBarcode(ModelMap model) {
+    public String replaceBarcode() {
         System.out.println("Replace Barcode GET");
-
         return "Supervisor/replaceBarcode";
     }
-
 
     @RequestMapping(value = "/replaceBarcode", method = RequestMethod.POST)
     public String replaceBarcodePOST(ModelMap model,
@@ -181,26 +187,23 @@ public class HomeController {
                                      @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
                                      @RequestParam(value = "newBarcode", required = false, defaultValue = "") String newBarcode,
                                      @RequestParam(value = "bookTitle", required = false, defaultValue = "") String bookTitle)
-            throws ParseException {
+                                     throws ParseException {
         System.out.println("Replace Barcode POST");
+        //Pseudo Regex
         if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || newBarcode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
-            System.out.println("U missed a line!");
             return "replaceBarcode";
         }
-        /*if (barcode.equals("")) {
-            model.put("returnVoidError", "Invalid Credentials");
-            System.out.println("U missed a line!");
-            return "replaceBarcode";
-        }*/
-        if (replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode) != null) {
-            Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode);
+
+        Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode);
+        if (oldNwtxdt != null) {
             Nwtxdt nwtxdt = new Nwtxdt();
 
+            //Duplicating everything to the new model
             nwtxdt.setBookCode(oldNwtxdt.getBookCode());
             nwtxdt.setEditionYear(oldNwtxdt.getEditionYear());
             nwtxdt.setSeqNr(oldNwtxdt.getSeqNr());
-            nwtxdt.setBarcode(newBarcode);
+            nwtxdt.setBarcode(newBarcode); //<-- This is the changed Item
             nwtxdt.setPidm(oldNwtxdt.getPidm());
             nwtxdt.setTerm(oldNwtxdt.getTerm());
             nwtxdt.setDateCheckedOut(oldNwtxdt.getDateCheckedOut());
@@ -211,13 +214,13 @@ public class HomeController {
             nwtxdt.setActivityDate(oldNwtxdt.getActivityDate());
             nwtxdt.setBillableFlag(oldNwtxdt.getBillableFlag());
 
+            //Deletes Old Repository Item and Saves New One
             replaceBarcodeService.deleteNwtxdt(barcode);
             replaceBarcodeService.saveNwtxdt(nwtxdt);
+        }else{
+            //Wasn't able to find a book off of given credentials
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
-        /*if (replaceBarcodeService.getNwtxin(bookCode, editionYear, bookTitle) != null) {
-            Nwtxin nwtxin = replaceBarcodeService.getNwtxin(bookCode, editionYear, bookTitle);
-            model.put("bookTitle",replaceBarcodeService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear(), nwtxin.getTitle()).getTitle());
-        }*/
         return "replaceBarcode";
     }
 
@@ -225,31 +228,31 @@ public class HomeController {
     @Autowired
     QueryCourseService queryCourseService;
     @RequestMapping(value = "/Find-Course", method = RequestMethod.GET)
-    public String queryCourse(ModelMap model){
+    public String queryCourse(){
         System.out.println("Course Query GET");
         return "StudentEmployee/queryCourse";
     }
     @RequestMapping(value = "/Find-Course", method = RequestMethod.POST)
     public String queryCoursePost(ModelMap model,
                                   @RequestParam(value = "courseCode", required = false, defaultValue = "") String courseCode)
-            throws ParseException {
+                                  throws ParseException {
         System.out.println("Course Query POST");
-        Scbcrse scbcrse = new Scbcrse();
+        //Pseudo Regex
         if (courseCode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "StudentEmployee/queryCourse";
         }
-        scbcrse.setCrseNumb(courseCode);
 
-        System.out.println("Querying off of: " + scbcrse.getCrseNumb());
-        if (queryCourseService.getScbcrse(courseCode) != null) {
-            model.put("crseTable", queryCourseService.getScbcrse(courseCode));
-
-        } else {
-            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        Scbcrse scbcrse = queryCourseService.getScbcrse(courseCode);
+        if (scbcrse != null) {
+            model.put("crseTable", scbcrse);
+        }else{
+            //Wasn't able to find a book off of given credentials
+            model.put("returnVoidError", "No Courses Found Off of Given Credentials");
         }
         return "StudentEmployee/queryCourse";
     }
+
 
     @Autowired
     CourseMessageService courseMessageService;
@@ -264,40 +267,43 @@ public class HomeController {
                                     @RequestParam(value = "courseId", required = false, defaultValue = "")String courseId)
                                     throws ParseException{
         System.out.println("Course Message POST");
+        //Pseudo Regex
         if (courseId.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "StudentEmployee/courseMessage";
         }
-        System.out.println("Querying off of: " + courseId);
-        if (courseMessageService.getNwtxcm(courseId) != null) {
-            model.put("courseMessage", courseMessageService.getNwtxcm((courseId)).getCmMessage());
 
-        } else {
-            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        Nwtxcm nwtxcm = courseMessageService.getNwtxcm(courseId);
+        if (nwtxcm != null) {
+            model.put("courseMessage", nwtxcm.getCmMessage());
+        }else{
+            //Wasn't able to find a course off of given credentials
+            model.put("returnVoidError", "No Course Found Off of Given Credentials");
         }
         return "StudentEmployee/courseMessage";
     }
     @RequestMapping(value = "/Course-Message", method = RequestMethod.POST, params="clear")
     public String courseMessageClear(ModelMap model,
                                      @RequestParam(value = "courseId", required = false, defaultValue = "") String courseId)
-            throws ParseException {
+                                     throws ParseException {
         System.out.println("Course Message POST - CLEAR");
+        //Pseudo Regex
         if (courseId.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "StudentEmployee/courseMessage";
         }
-        System.out.println("Querying off of: " + courseId);
-        if (courseMessageService.getNwtxcm(courseId) != null) {
-            Nwtxcm nwtxcm = new Nwtxcm();
-            nwtxcm = courseMessageService.getNwtxcm(courseId);
+
+        Nwtxcm nwtxcm = courseMessageService.getNwtxcm(courseId);
+        if (nwtxcm != null) {
             nwtxcm.setCmMessage("");
-            model.put("courseMessage", "Cleared!");
             courseMessageService.saveNwtxcm(nwtxcm);
+            model.put("courseMessage", "Cleared!");
+        }else{
+            //Wasn't able to find a course off of given credentials
+            model.put("returnVoidError", "No Course Found Off of Given Credentials");
         }
         return "StudentEmployee/courseMessage";
     }
-
-
 
     @Autowired
     ChangeBookcodeService changeBookcodeService;
@@ -315,20 +321,19 @@ public class HomeController {
                                      @RequestParam(value = "newEditionYear", required = false, defaultValue = "")String newEditionYear)
                                      throws ParseException{
         System.out.println("Course Message POST");
+        //Pseudo Regex
         if(bookCode.equals("") || editionYear.equals("") || newBookCode.equals("") || newEditionYear.equals("")){
             model.put("returnVoidError", "Invalid Credentials");
-            System.out.println("it don't work");
             return "Supervisor/changeBookCode";
         }
 
-        if(changeBookcodeService.getNwtxin(bookCode, editionYear) != null){
-            //Nwtxin Creation of new and old versions
-            Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(bookCode, editionYear);
+        Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(bookCode, editionYear);
+        if(oldNwtxin != null){
             Nwtxin nwtxin = new Nwtxin();
 
-            //Setting all
-            nwtxin.setBookCode(newBookCode);
-            nwtxin.setEditionYear(newEditionYear);
+            //Duplicating everything to the new model
+            nwtxin.setBookCode(newBookCode); //<-- This is the changed Item
+            nwtxin.setEditionYear(newEditionYear); //<-- This is the changed Item
             nwtxin.setTitle(oldNwtxin.getTitle());
             nwtxin.setAuthor(oldNwtxin.getAuthor());
             nwtxin.setPublisher(oldNwtxin.getPublisher());
@@ -368,20 +373,21 @@ public class HomeController {
                                 @RequestParam(value = "prevTerm", required = false, defaultValue = "")String prevTerm)
                                 throws ParseException{
         System.out.println("Previous Books POST");
+        //Pseudo Regex
         if(id.equals("") || prevTerm.equals("")){
             System.out.println("nah dawg");
             return "StudentEmployee/previousBooks";
         }
 
-        if(previousBooksService.getSpriden(id) != null && previousBooksService.getStvterm(prevTerm) != null){
-            Spriden spriden = previousBooksService.getSpriden(id);
-            System.out.println(spriden.getFirstName() + " " + spriden.getMiddleInitial() + " " + spriden.getLastName());
-            previousBooksService.getNwtxdt(spriden.getPidm(), prevTerm);
+        Spriden spriden = previousBooksService.getSpriden(id);
+        Stvterm stvterm = previousBooksService.getStvterm(prevTerm);
+        if(spriden != null && stvterm != null){
             model.put("prevBooks",previousBooksService.getNwtxdt(spriden.getPidm(), prevTerm));
         }
 
         return "StudentEmployee/previousBooks";
     }
+
 
     @Autowired
     SoldBooksService soldBooksService;
@@ -395,21 +401,19 @@ public class HomeController {
     public String soldBooksPost(ModelMap model,
                                 @RequestParam(value = "id", required = false, defaultValue = "")String id){
         System.out.println("Sold Books Post");
+        //Pseudo Regex
         if(id.equals("")){
             return "StudentEmployee/soldBooks";
         }
 
-        if(soldBooksService.getSpriden(id) != null){
-            Spriden spriden = soldBooksService.getSpriden(id);
-            System.out.println(spriden.getPidm());
-            if(soldBooksService.getNwtxdt(spriden.getPidm()) != null){
-
-            }
+        Spriden spriden = soldBooksService.getSpriden(id);
+        if(spriden != null){
             model.put("soldBooks",soldBooksService.getNwtxdt(spriden.getPidm()));
         }
 
         return "StudentEmployee/soldBooks";
     }
+
 
     @Autowired
     StudentScheduleService studentScheduleService;
@@ -425,13 +429,13 @@ public class HomeController {
                                       @RequestParam(value = "id", required = false, defaultValue = "")String id)
                                       throws ParseException{
         System.out.println("Student Schedule POST");
+        //Pseudo Regex
         if(termSeason.equals("") || id.equals("")){
             System.out.println("nah dawg");
             return "StudentEmployee/studentSchedule";
         }
 
         studentScheduleService.getStvterm(termSeason).getDesc();
-        System.out.println("Checkpoint 1");
         if(studentScheduleService.getSpriden(id).getPidm().equals("")){
             System.out.println("pidm empty");
             return "StudentEmployee/studentSchedule";
@@ -445,13 +449,11 @@ public class HomeController {
         for(Sfrstcr item: sfrstcr){
             Ssbsect ssbsect = studentScheduleService.getSsbsect(item.getCrn(), item.getTermCode());
             output.add(ssbsect);
-            String courseSubject = ssbsect.getSubjCode();
-            String courseNumber = ssbsect.getCrseNumb();
-            if(studentScheduleService.getScbcrse(ssbsect.getSubjCode(),ssbsect.getCrseNumb()) != null){
+            Scbcrse scbcrse = studentScheduleService.getScbcrse(ssbsect.getSubjCode(),ssbsect.getCrseNumb());
+            if(scbcrse != null){
                 System.out.println("there are titles!");
-                outputTitle.add(studentScheduleService.getScbcrse(ssbsect.getSubjCode(),ssbsect.getCrseNumb()).getTitle());
+                outputTitle.add(scbcrse.getTitle());
             }
-
             outputTimes.add(studentScheduleService.getSsrmeet(termSeason,item.getCrn()));
         }
         model.put("output", output);
