@@ -92,7 +92,7 @@ public class HomeController {
     @RequestMapping(value = "/Find-Book", method = RequestMethod.GET)
     public String bookQuery(ModelMap model){
         System.out.println("Book Query GET");
-        return "StudentEmployee/bookQuery";
+        return "Supervisor/bookQuery";
     }
 
     @RequestMapping(value = "/Find-Book", method = RequestMethod.POST)
