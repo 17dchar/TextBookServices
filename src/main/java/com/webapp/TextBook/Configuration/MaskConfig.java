@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
@@ -39,9 +38,9 @@ public class MaskConfig implements WebMvcConfigurer {
                 registry.addViewController("/").setViewName(
                         "forward:/WEB-INF/jsp/login.jsp");
                 registry.addViewController("/bookQuery").setViewName(
-                        "forward:/WEB-INF/jsp/bookQuery.jsp");
+                        "/WEB-INF/jsp/Patron/bookQuery.jsp");
                 registry.addViewController("/addBook").setViewName(
-                        "forward:/WEB-INF/jsp/addBook.jsp");
+                        "/WEB-INF/jsp/Supervisor/addBook.jsp");
 
             }
         };

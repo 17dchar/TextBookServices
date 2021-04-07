@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Previous Books</title>
+    <title>Sold Books</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <style>
         .TBSHeader {
@@ -110,33 +110,33 @@
 </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>
-<h2 class="BookCodeYearTitle">Previous Books</h2>
+<h2 class="BookCodeYearTitle">Sold Books</h2>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
-        <a href="maintenanceFormView">Maintenance</a>
-        <a href="addBook">Add Books</a>
-        <a href="bookQuery">Query Books</a>
-        <a href="bookDisposition">Change Book Disposition</a>
-        <a href="replaceBarcode">Replace Barcode</a>
-        <a href="queryCourse">Query Course</a>
-        <a href="courseMessage">Course Message</a>
-        <a href="changeBookCode">Change Book Code/Year</a>
+        <a href="Maintenance-Form">Maintenance</a>
+        <a href="Add-Book">Add Books</a>
+        <a href="Find-Book">Query Books</a>
+        <a href="Change-Disposition">Change Book Disposition</a>
+        <a href="Change-Barcode">Replace Barcode</a>
+        <a href="Find-Course">Query Course</a>
+        <a href="Course-Message">Course Message</a>
+        <a href="Change-Book-Code">Change Book Code/Year</a>
     </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
     <div class="dropdown-content">
-        <a href="patronCheckInOut">Check In/Out</a>
-        <a href="patronSchedule">Patron Schedule</a>
-        <a href="patronPrevBooks">Patrons Previous Books</a>
-        <a href="patronSoldBooks">Patrons Sold Books</a>
+        <a href="Check-In-Out">Check Books In/Out</a>
+        <a href="Student-Schedule">Schedule</a>
+        <a href="Sold-Books">Sold Books</a>
+        <a href="Previous-Books">Previous Books</a>
     </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Reports</button>
     <div class="dropdown-content">
-        <a href="createReport">Create Report</a>
+        <a href="Report">Add Report Here</a>
     </div>
 </div>
 <div class="tenPix"></div>
@@ -145,37 +145,33 @@
         <form class="yearCodeForm" method = "post">
             <fieldset>
                 <p>
-                <div class="form-group">
-
-                <label>Term:</label>
+                    <label>919#</label>
                     <input type = "text"
-                           name = "prevTerm"
-                           class="form-control"/>
-                </div>
-                <div class="form-group">
-                <label>ID:</label>
-                    <input type = "text"
-                           name = "id"
-                           class="form-control"/>
+                           name = "id"/>
                     <input type="submit" name="Find Them!"/>
-                </div>
-                    <div class="form-group">
+                    <label>Term:</label>
+                    <input type = "text"
+                           id = "termSeason" />
+                    <input type = "text"
+                           id = "termYear" />
+                    <label>ID:</label>
+                    <input type = "text"
+                           id = "bookID1" />
+                    <input type = "text"
+                           id = "bookID2" />
                     <label>Bag#:</label>
                     <input type = "text"
-                           id = "bagNumber"
-                           class="form-control"/>
-                    </div>
-                        </p>
-            </fieldset>
-
-            <c:forEach items="${prevBooks}" var="prevBooks">
-                <p>
-                <p>${prevBooks.bookCode}</p>
+                           id = "bagNumber" />
                 </p>
-            </c:forEach>
+            </fieldset>
         </form>
-
     </div>
+
+    <c:forEach items="${soldBooks}" var="soldBooks">
+        <p>
+            <p>${soldBooks.bookCode}</p>
+        </p>
+    </c:forEach>
 
 </div>
 

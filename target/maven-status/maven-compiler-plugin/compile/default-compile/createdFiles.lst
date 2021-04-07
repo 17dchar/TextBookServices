@@ -15,6 +15,7 @@ com\webapp\TextBook\Repository\NwtxdtRepository.class
 com\webapp\TextBook\Model\Scbcrse.class
 com\webapp\TextBook\Repository\StvtermRepository.class
 com\webapp\TextBook\Model\Sgbstdn.class
+com\webapp\TextBook\Service\ChangeBookcodeService.class
 com\webapp\TextBook\Model\Stvterm.class
 com\webapp\TextBook\Repository\NwtxinRepository.class
 com\webapp\TextBook\Service\BookDispositionService.class

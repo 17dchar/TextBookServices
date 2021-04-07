@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Reports</title>
+    <title>Schedule</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <style>
         .TBSHeader {
@@ -44,7 +44,9 @@
         }
         .btnCol {
             background-color: #006747;
+            outline-color: black;
         }
+        .btnCol:hover { background-color: #014811}
 
         .form-control:focus {
             border-color: #006747;
@@ -53,6 +55,10 @@
         .has-error .form-control:focus{
             box-shadow: none;
             -webkit-box-shadow: none;}
+        .fiftyWidth {
+            width: 50%;
+
+        }
 
         .column {float: left;}
         .left {width: 60%;}
@@ -74,7 +80,7 @@
         .dropdown {
             position: relative;
             display: inline-block;
-            margin-left: 30px;
+            margin-left: 20px;
             margin-bottom: 6px;
         }
         .dropdown-content {
@@ -84,7 +90,7 @@
             min-width: 200px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            margin-left: 10px;
+            margin-left: 2px;
         }
         .dropdown-content a {
             color: #f1f1f1;
@@ -92,7 +98,7 @@
             text-decoration: none;
             display: block;
         }
-        .dropdown-content a:hover {background-color: #006747;}
+        .dropdown-content a:hover {background-color: #014811;}
         .dropdown:hover .dropdown-content {display: block;}
         .dropdown:hover .dropbtn {background-color: #006747;}
         .container {
@@ -108,37 +114,71 @@
 </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>
-<h2 class="BookCodeYearTitle">Reports</h2>
+<h2 class="BookCodeYearTitle">Schedule</h2>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
-        <a href="maintenanceFormView">Maintenance</a>
-        <a href="addBook">Add Books</a>
-        <a href="bookQuery">Query Books</a>
-        <a href="bookDisposition">Change Book Disposition</a>
-        <a href="replaceBarcode">Replace Barcode</a>
-        <a href="queryCourse">Query Course</a>
-        <a href="courseMessage">Course Message</a>
-        <a href="changeBookCode">Change Book Code/Year</a>
+        <a href="Maintenance-Form">Maintenance</a>
+        <a href="Add-Book">Add Books</a>
+        <a href="Find-Book">Query Books</a>
+        <a href="Change-Disposition">Change Book Disposition</a>
+        <a href="Change-Barcode">Replace Barcode</a>
+        <a href="Find-Course">Query Course</a>
+        <a href="Course-Message">Course Message</a>
+        <a href="Change-Book-Code">Change Book Code/Year</a>
     </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
     <div class="dropdown-content">
-        <a href="patronCheckInOut">Check In/Out</a>
-        <a href="patronSchedule">Patron Schedule</a>
-        <a href="patronPrevBooks">Patrons Previous Books</a>
-        <a href="patronSoldBooks">Patrons Sold Books</a>
+        <a href="Check-In-Out">Check Books In/Out</a>
+        <a href="Student-Schedule">Schedule</a>
+        <a href="Sold-Books">Sold Books</a>
+        <a href="Previous-Books">Previous Books</a>
     </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Reports</button>
     <div class="dropdown-content">
-        <a href="#">blah</a>
+        <a href="Report">Add Report Here</a>
     </div>
 </div>
 <div class="tenPix"></div>
-<div class="container"></div>
+<div class="container">
+    <div class="container">
+        <form class="yearCodeForm" method="post">
+            <fieldset>
+                <p>
+                <div class="form-group">
+                <label>Term:</label>
+                    <input type = "text"
+                           name = "termSeason"
+                           class="form-control fiftyWidth"/>
+                    </div></p>
+                </fieldset>
+                <fieldset>
+                    <p>
+                <div class="form-group">
+                <label>ID:</label>
+                    <input type = "text"
+                           name = "id"
+                           class="form-control fiftyWidth"/>
+                </div>
+                    </p>
+                    <input type="submit" name="Save"/>
+            </fieldset>
+        </form>
+
+        <c:forEach items="${output}" var="output" varStatus="status">
+                <p>Title: ${outputTitle[status.index]}</p>
+                <p>Meta Data: ${output.subjCode}, ${output.crseNumb}, ${output.seqNumb}, ${output.ptrmCode}</p>
+                <p>Times: ${outputTimes[status.index].monday} ${outputTimes[status.index].tuesday} ${outputTimes[status.index].wednesday}
+                        ${outputTimes[status.index].thursday} ${outputTimes[status.index].friday}</p>
+        </c:forEach>
+
+    </div>
+
+</div>
 
 </body>
 </html>
