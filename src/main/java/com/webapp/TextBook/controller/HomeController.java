@@ -379,13 +379,11 @@ public class HomeController {
             return "patronPrevBooks";
         }
 
-        if(previousBooksService.getSpriden(id) != null && previousBooksService.getStvterm(prevTerm) != null){
-            Spriden spriden = previousBooksService.getSpriden(id);
-            System.out.println(spriden.getFirstName() + " " + spriden.getMiddleInitial() + " " + spriden.getLastName());
-            previousBooksService.getNwtxdt(spriden.getPidm(), prevTerm);
+        Spriden spriden = previousBooksService.getSpriden(id);
+        Stvterm stvterm = previousBooksService.getStvterm(prevTerm);
+        if(spriden != null && stvterm != null){
             model.put("prevBooks",previousBooksService.getNwtxdt(spriden.getPidm(), prevTerm));
         }
-
         return "patronPrevBooks";
     }
 
