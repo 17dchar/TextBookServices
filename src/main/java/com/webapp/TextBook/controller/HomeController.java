@@ -167,14 +167,11 @@ public class HomeController {
 
     @Autowired
     ReplaceBarcodeService replaceBarcodeService;
-
     @RequestMapping(value = "/replaceBarcode", method = RequestMethod.GET)
-    public String replaceBarcode(ModelMap model) {
+    public String replaceBarcode() {
         System.out.println("Replace Barcode GET");
-
         return "replaceBarcode";
     }
-
 
     @RequestMapping(value = "/replaceBarcode", method = RequestMethod.POST)
     public String replaceBarcodePOST(ModelMap model,
@@ -183,26 +180,23 @@ public class HomeController {
                                      @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
                                      @RequestParam(value = "newBarcode", required = false, defaultValue = "") String newBarcode,
                                      @RequestParam(value = "bookTitle", required = false, defaultValue = "") String bookTitle)
-            throws ParseException {
+                                     throws ParseException {
         System.out.println("Replace Barcode POST");
+        //Pseudo Regex
         if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || newBarcode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
-            System.out.println("U missed a line!");
             return "replaceBarcode";
         }
-        /*if (barcode.equals("")) {
-            model.put("returnVoidError", "Invalid Credentials");
-            System.out.println("U missed a line!");
-            return "replaceBarcode";
-        }*/
-        if (replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode) != null) {
-            Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode);
+
+        Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode);
+        if (oldNwtxdt != null) {
             Nwtxdt nwtxdt = new Nwtxdt();
 
+            //Duplicating everything to the new model
             nwtxdt.setBookCode(oldNwtxdt.getBookCode());
             nwtxdt.setEditionYear(oldNwtxdt.getEditionYear());
             nwtxdt.setSeqNr(oldNwtxdt.getSeqNr());
-            nwtxdt.setBarcode(newBarcode);
+            nwtxdt.setBarcode(newBarcode); //<-- This is the changed Item
             nwtxdt.setPidm(oldNwtxdt.getPidm());
             nwtxdt.setTerm(oldNwtxdt.getTerm());
             nwtxdt.setDateCheckedOut(oldNwtxdt.getDateCheckedOut());
@@ -213,13 +207,10 @@ public class HomeController {
             nwtxdt.setActivityDate(oldNwtxdt.getActivityDate());
             nwtxdt.setBillableFlag(oldNwtxdt.getBillableFlag());
 
+            //Deletes Old Repository Item and Saves New One
             replaceBarcodeService.deleteNwtxdt(barcode);
             replaceBarcodeService.saveNwtxdt(nwtxdt);
         }
-        /*if (replaceBarcodeService.getNwtxin(bookCode, editionYear, bookTitle) != null) {
-            Nwtxin nwtxin = replaceBarcodeService.getNwtxin(bookCode, editionYear, bookTitle);
-            model.put("bookTitle",replaceBarcodeService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear(), nwtxin.getTitle()).getTitle());
-        }*/
         return "replaceBarcode";
     }
 
