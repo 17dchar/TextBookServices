@@ -58,6 +58,7 @@ public class HomeController {
         return "maintenanceFormView";
     }
 
+
     @Autowired
     AddBookService addBookService;
     @RequestMapping(value = "/addBook", method = RequestMethod.GET)
@@ -96,7 +97,6 @@ public class HomeController {
 
     @Autowired
     BookQueryService bookQueryService;
-
     @RequestMapping(value = "/bookQuery", method = RequestMethod.GET)
     public String bookQuery(ModelMap model) {
         System.out.println("Book Query GET");
@@ -137,6 +137,7 @@ public class HomeController {
         return "bookQuery";
     }
 
+
     @Autowired
     BookDispositionService bookDispositionService;
     @RequestMapping(value = "/bookDisposition", method = RequestMethod.GET)
@@ -167,6 +168,7 @@ public class HomeController {
         bookDispositionService.setNwtxdt(nwtxdt);
         return "bookDisposition";
     }
+
 
     @Autowired
     ReplaceBarcodeService replaceBarcodeService;
@@ -250,9 +252,9 @@ public class HomeController {
         return "queryCourse";
     }
 
+
     @Autowired
     CourseMessageService courseMessageService;
-
     @RequestMapping(value = "/courseMessage", method = RequestMethod.GET)
     public String courseMessage() {
         System.out.println("Course Message GET");
@@ -262,18 +264,20 @@ public class HomeController {
     @RequestMapping(value = "/courseMessage", method = RequestMethod.POST)
     public String courseMessagePost(ModelMap model,
                                     @RequestParam(value = "courseId", required = false, defaultValue = "") String courseId)
-            throws ParseException {
+                                    throws ParseException {
         System.out.println("Course Message POST");
+        //Pseudo Regex
         if (courseId.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "courseMessage";
         }
-        System.out.println("Querying off of: " + courseId);
-        if (courseMessageService.getNwtxcm(courseId) != null) {
-            model.put("courseMessage", courseMessageService.getNwtxcm((courseId)).getCmMessage());
 
-        } else {
-            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        Nwtxcm nwtxcm = courseMessageService.getNwtxcm(courseId);
+        if (nwtxcm != null) {
+            model.put("courseMessage", nwtxcm.getCmMessage());
+        }else{
+            //Wasn't able to find a course off of given credentials
+            model.put("returnVoidError", "No Course Found Off of Given Credentials");
         }
         return "courseMessage";
     }
@@ -281,21 +285,23 @@ public class HomeController {
     @RequestMapping(value = "/courseMessage", method = RequestMethod.POST, params = "clear")
     public String courseMessageClear(ModelMap model,
                                      @RequestParam(value = "courseId", required = false, defaultValue = "") String courseId)
-            throws ParseException {
+                                     throws ParseException {
         System.out.println("Course Message POST - CLEAR");
+        //Pseudo Regex
         if (courseId.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "courseMessage";
         }
-        System.out.println("Querying off of: " + courseId);
-        if (courseMessageService.getNwtxcm(courseId) != null) {
-            Nwtxcm nwtxcm = new Nwtxcm();
-            nwtxcm = courseMessageService.getNwtxcm(courseId);
-            nwtxcm.setCmMessage("");
-            model.put("courseMessage", "Cleared!");
-            courseMessageService.saveNwtxcm(nwtxcm);
-        }
 
+        Nwtxcm nwtxcm = courseMessageService.getNwtxcm(courseId);
+        if (nwtxcm != null) {
+            nwtxcm.setCmMessage("");
+            courseMessageService.saveNwtxcm(nwtxcm);
+            model.put("courseMessage", "Cleared!");
+        }else{
+            //Wasn't able to find a course off of given credentials
+            model.put("returnVoidError", "No Course Found Off of Given Credentials");
+        }
         return "courseMessage";
     }
 

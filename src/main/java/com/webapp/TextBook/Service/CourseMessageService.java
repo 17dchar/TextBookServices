@@ -1,20 +1,28 @@
 package com.webapp.TextBook.Service;
 
-import com.webapp.TextBook.Model.Nwtxcm;
-import com.webapp.TextBook.Repository.NwtxcmRepository;
-import com.webapp.TextBook.Repository.ScbcrseRepository;
+//Spring Dependencies
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
+
+//Textbook Services Dependencies
+import com.webapp.TextBook.Repository.NwtxcmRepository;
+import com.webapp.TextBook.Model.Nwtxcm;
+
 
 @Service
 public class CourseMessageService {
 
     @Autowired private NwtxcmRepository nwtxcmRepository;
     public Nwtxcm getNwtxcm(String courseId) {
-        if (nwtxcmRepository.findByCourse(courseId).size()
-                > 0) {
-            return nwtxcmRepository.findByCourse(courseId).get(0);
-        } else{
+        //Create a list of all repositories under given credentials
+        List<Nwtxcm> nwtxcmList = nwtxcmRepository.findByCourse(courseId);
+
+        //If there is at least 1 model under given credentials, return the first
+        //Else, return nothing
+        if (nwtxcmList.size() > 0) {
+            return nwtxcmList.get(0);
+        }else{
             return null;
         }
     }
