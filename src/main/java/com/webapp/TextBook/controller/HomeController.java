@@ -135,7 +135,7 @@ public class HomeController {
 
     @Autowired
     BookDispositionService bookDispositionService;
-    @RequestMapping(value = "/Disposition-Change", method = RequestMethod.GET)
+    @RequestMapping(value = "/Change-Disposition", method = RequestMethod.GET)
     public String bookDisposition(){
         System.out.println("Book Dispostion GET");
         return "Supervisor/bookDisposition";
@@ -157,7 +157,7 @@ public class HomeController {
         return "Supervisor/bookDisposition";
   }
 
-        @RequestMapping("/Barcode-Change")
+        @RequestMapping("/Change-Barcode")
     public String replaceBarcode(){
         return "Supervisor/replaceBarcode";
     }
@@ -242,7 +242,7 @@ public class HomeController {
 
     @Autowired
     ChangeBookcodeService changeBookcodeService;
-    @RequestMapping(value= "/Book-Code-Change", method = RequestMethod.GET)
+    @RequestMapping(value= "/Change-Book-Code", method = RequestMethod.GET)
     public String changeBookCode(){
         System.out.println("Course Message GET");
         return "Supervisor/changeBookCode";
