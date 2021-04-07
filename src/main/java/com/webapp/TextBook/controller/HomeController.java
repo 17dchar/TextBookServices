@@ -164,6 +164,11 @@ public class HomeController {
             System.out.println("U missed a line!");
             return "replaceBarcode";
         }
+        /*if (barcode.equals("")) {
+            model.put("returnVoidError", "Invalid Credentials");
+            System.out.println("U missed a line!");
+            return "replaceBarcode";
+        }*/
         if (replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode) != null) {
             Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode);
             Nwtxdt nwtxdt = new Nwtxdt();
