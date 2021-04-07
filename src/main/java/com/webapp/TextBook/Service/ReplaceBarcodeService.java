@@ -36,26 +36,11 @@ public class ReplaceBarcodeService {
     }
 
     public void deleteNwtxdt(String barcode) {
+        //If there is at least 1 model under given credentials, delete them
         if (nwtxdtRepository.findByBarcode(barcode) != null) {
             nwtxdtRepository.deleteById(barcode);
         }
     }
-
-    /*
-    public Nwtxin getNwtxin(String bookCode, String editionYear, String barcode) {
-        if (nwtxinRepository.findByBookCodeAndEditionYearAndTitle(bookCode, editionYear, barcode).size() > 0) {
-            return nwtxinRepository.findByBookCodeAndEditionYearAndTitle(bookCode, editionYear, barcode).get(0);
-        } else {
-            return null;
-        }
-    }
-
-    public Nwtxin saveNwtxin(Nwtxin nwtxin) {
-        System.out.println("Saving Added Repository");
-        return nwtxinRepository.save(nwtxin);
-    }
-
-     */
 }
 
 

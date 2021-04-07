@@ -305,14 +305,11 @@ public class HomeController {
         return "courseMessage";
     }
 
-
-
     @Autowired
     ChangeBookcodeService changeBookcodeService;
     @RequestMapping(value= "/changeBookCode", method = RequestMethod.GET)
     public String changeBookCode(){
         System.out.println("Course Message GET");
-
         return "changeBookCode";
     }
 
@@ -324,20 +321,19 @@ public class HomeController {
                                      @RequestParam(value = "newEditionYear", required = false, defaultValue = "")String newEditionYear)
                                      throws ParseException{
         System.out.println("Course Message POST");
+        //Pseudo Regex
         if(bookCode.equals("") || editionYear.equals("") || newBookCode.equals("") || newEditionYear.equals("")){
             model.put("returnVoidError", "Invalid Credentials");
-            System.out.println("it don't work");
             return "changeBookCode";
         }
 
-        if(changeBookcodeService.getNwtxin(bookCode, editionYear) != null){
-            //Nwtxin Creation of new and old versions
-            Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(bookCode, editionYear);
+        Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(bookCode, editionYear);
+        if(oldNwtxin != null){
             Nwtxin nwtxin = new Nwtxin();
 
-            //Setting all
-            nwtxin.setBookCode(newBookCode);
-            nwtxin.setEditionYear(newEditionYear);
+            //Duplicating everything to the new model
+            nwtxin.setBookCode(newBookCode); //<-- This is the changed Item
+            nwtxin.setEditionYear(newEditionYear); //<-- This is the changed Item
             nwtxin.setTitle(oldNwtxin.getTitle());
             nwtxin.setAuthor(oldNwtxin.getAuthor());
             nwtxin.setPublisher(oldNwtxin.getPublisher());
@@ -377,6 +373,7 @@ public class HomeController {
                                 @RequestParam(value = "prevTerm", required = false, defaultValue = "")String prevTerm)
                                 throws ParseException{
         System.out.println("Previous Books POST");
+        //Pseudo Regex
         if(id.equals("") || prevTerm.equals("")){
             System.out.println("nah dawg");
             return "patronPrevBooks";
