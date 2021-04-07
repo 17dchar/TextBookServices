@@ -104,40 +104,36 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/bookQuery", method = RequestMethod.POST)
-    public String bookQueryPost(/*@Valid @ModelAttribute("nwtxdt") Nwtxdt nwtxdt*/ ModelMap model,
-                                                                                   @RequestParam(value = "bookCode", required = true, defaultValue = "") String bookCode,
-                                                                                   @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
-                                                                                   @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode
-            /*BindingResult result*/) throws ParseException {
+    public String bookQueryPost(ModelMap model,
+                                @RequestParam(value = "bookCode", required = true, defaultValue = "") String bookCode,
+                                @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
+                                @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode)
+                                throws ParseException {
         System.out.println("Book Query POST");
-        Nwtxdt nwtxdt = new Nwtxdt();
+        //Pseudo Regex
         if (bookCode.equals("") || editionYear.equals("") || barcode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "bookQuery";
         }
-        nwtxdt.setBarcode(barcode);
-        nwtxdt.setEditionYear(editionYear);
-        nwtxdt.setBookCode(bookCode);
 
-        //nwtxdt = bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode());
-
-        System.out.println("Querying off of: " + nwtxdt.getBookCode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBarcode());
-        if (bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()) != null) {
-            model.put("bookTitle", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getBookCode());
-            model.put("seqNr", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getSeqNr());
-            model.put("prevTerm", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getPrevTerm());
-            model.put("bookDisposition", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getDisposition());
-            model.put("termCheckedOut", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getTerm());
-            model.put("checkedOutTo", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getPidm());
-            model.put("dateCheckedOut", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getDateCheckedOut());
-            model.put("prevCheckedOutTo", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getPrevPidm());
-            model.put("dateCheckedIn", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode()).getPrevDateCheckedIn());
+        Nwtxdt nwtxdt = bookQueryService.getNwtxdt(bookCode, editionYear, barcode);
+        if (nwtxdt != null) {
+            //Found everything, and putting all needed items to the front page
+            model.put("bookTitle",          nwtxdt.getBookCode());
+            model.put("seqNr",              nwtxdt.getSeqNr());
+            model.put("prevTerm",           nwtxdt.getPrevTerm());
+            model.put("bookDisposition",    nwtxdt.getDisposition());
+            model.put("termCheckedOut",     nwtxdt.getTerm());
+            model.put("checkedOutTo",       nwtxdt.getPidm());
+            model.put("dateCheckedOut",     nwtxdt.getDateCheckedOut());
+            model.put("prevCheckedOutTo",   nwtxdt.getPrevPidm());
+            model.put("dateCheckedIn",      nwtxdt.getPrevDateCheckedIn());
 
             return "bookQuery";
         } else {
+            //Wasn't able to find a book off of given credentials
             model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
-
         return "bookQuery";
     }
 
