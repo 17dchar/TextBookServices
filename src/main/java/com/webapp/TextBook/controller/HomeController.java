@@ -60,7 +60,6 @@ public class HomeController {
 
     @Autowired
     AddBookService addBookService;
-
     @RequestMapping(value = "/addBook", method = RequestMethod.GET)
     public String addBookPage(ModelMap model) {
         System.out.println("Add Book GET");
@@ -74,20 +73,22 @@ public class HomeController {
                               @RequestParam(value = "bookTitle", required = false, defaultValue = "") String bookTitle,
                               @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
                               @RequestParam(value = "seqNr", required = false, defaultValue = "") String seqNr)
-            throws ParseException {
+                              throws ParseException {
         System.out.println("Add Book POST");
+        //Pseudo Regex
         if (bookCode.equals("") || editionYear.equals("") || bookTitle.equals("") || barcode.equals("") || seqNr.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "addBook";
         }
+
+        //Model for Nwtxdt Changing
         Nwtxdt nwtxdt = new Nwtxdt();
         nwtxdt.setBarcode(barcode);
         nwtxdt.setEditionYear(editionYear);
         nwtxdt.setBookCode(bookCode);
         nwtxdt.setSeqNr(seqNr);
 
-        System.out.println("Adding Book with " + nwtxdt.getBarcode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBookCode() + ", " +
-                nwtxdt.getSeqNr() + " Credentials");
+        //Add Book Service - Save
         addBookService.saveNwtxdt(nwtxdt);
         return "addBook";
     }
