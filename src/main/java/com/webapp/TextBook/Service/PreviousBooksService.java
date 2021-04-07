@@ -51,10 +51,13 @@ public class PreviousBooksService {
     @Autowired
     private NwtxdtRepository nwtxdtRepository;
     public List<Nwtxdt> getNwtxdt(String pidm, String prevTerm){
-        if(nwtxdtRepository.findByPidmAndPrevTerm(pidm, prevTerm).size() >0){
-            return nwtxdtRepository.findByPidmAndPrevTerm(pidm, prevTerm);
-
-        } else{
+        List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByPidmAndPrevTerm(pidm, prevTerm);
+        //If there is at least 1 model under given credentials, return the first
+        //Else, return nothing
+        if(nwtxdtList.size() >0){
+            return nwtxdtList;
+        }else{
+            //Create a list of all repositories under given credentials
             return null;
         }
     }

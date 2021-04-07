@@ -387,6 +387,7 @@ public class HomeController {
         return "patronPrevBooks";
     }
 
+
     @Autowired
     SoldBooksService soldBooksService;
     @RequestMapping(value= "/Sold-Books", method = RequestMethod.GET)
@@ -399,19 +400,15 @@ public class HomeController {
     public String soldBooksPost(ModelMap model,
                                 @RequestParam(value = "id", required = false, defaultValue = "")String id){
         System.out.println("Sold Books Post");
+        //Pseudo Regex
         if(id.equals("")){
             return "patronSoldBooks";
         }
 
-        if(soldBooksService.getSpriden(id) != null){
-            Spriden spriden = soldBooksService.getSpriden(id);
-            System.out.println(spriden.getPidm());
-            if(soldBooksService.getNwtxdt(spriden.getPidm()) != null){
-
-            }
+        Spriden spriden = soldBooksService.getSpriden(id);
+        if(spriden != null){
             model.put("soldBooks",soldBooksService.getNwtxdt(spriden.getPidm()));
         }
-
         return "patronSoldBooks";
     }
 
