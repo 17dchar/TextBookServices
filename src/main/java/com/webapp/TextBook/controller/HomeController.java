@@ -8,7 +8,6 @@ import java.util.List;
 
 //Imported Spring Libraries
 import com.webapp.TextBook.Model.*;
-import com.webapp.TextBook.Repository.SfrstcrRepository;
 import com.webapp.TextBook.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,20 +35,20 @@ public class HomeController {
                             @RequestParam (value = "password",required = false, defaultValue = "")String password)
                             throws ParseException{
         if(login.equals("admin") && password.equals("admin")){
-            return "supervisorView";
+            return "Supervisor/supervisorView";
         } else{
-            return "maintenanceFormView";
+            return "StudentEmployee/studentEmployeeView";
         }
     }
 
     @RequestMapping("/supervisorView")
     public String supervisor(){
-        return "supervisorView";
+        return "Supervisor/supervisorView";
     }
 
     @RequestMapping("/maintenanceFormView")
     public String maintenance(){
-        return "maintenanceFormView";
+        return "Supervisor/maintenanceFormView";
     }
 
     @Autowired
@@ -58,7 +57,7 @@ public class HomeController {
     @RequestMapping(value="/addBook", method = RequestMethod.GET)
     public String addBookPage(ModelMap model){
         System.out.println("Add Book GET");
-        return "addBook";
+        return "Supervisor/addBook";
     }
 
     @RequestMapping(value="/addBook", method = RequestMethod.POST)
@@ -72,7 +71,7 @@ public class HomeController {
         System.out.println("Add Book POST");
         if(bookCode.equals("") || editionYear.equals("") || bookTitle.equals("") ||barcode.equals("") || seqNr.equals("")){
             model.put("returnVoidError", "Invalid Credentials");
-            return "addBook";
+            return "Supervisor/addBook";
         }
         Nwtxdt nwtxdt = new Nwtxdt();
         nwtxdt.setBarcode(barcode);
@@ -83,7 +82,7 @@ public class HomeController {
         System.out.println("Adding Book with " + nwtxdt.getBarcode() + ", " + nwtxdt.getEditionYear() + ", " + nwtxdt.getBookCode() + ", " +
                 nwtxdt.getSeqNr() + " Credentials");
         addBookService.saveNwtxdt(nwtxdt);
-        return "addBook";
+        return "Supervisor/addBook";
     }
 
 
@@ -93,7 +92,7 @@ public class HomeController {
     @RequestMapping(value = "/bookQuery", method = RequestMethod.GET)
     public String bookQuery(ModelMap model){
         System.out.println("Book Query GET");
-        return "bookQuery";
+        return "Patron/bookQuery";
     }
 
     @RequestMapping(value = "/bookQuery", method = RequestMethod.POST)
@@ -106,7 +105,7 @@ public class HomeController {
         Nwtxdt nwtxdt = new Nwtxdt();
         if(bookCode.equals("") || editionYear.equals("") || barcode.equals("")){
             model.put("returnVoidError", "Invalid Credentials");
-            return "bookQuery";
+            return "Patron/bookQuery";
         }
         nwtxdt.setBarcode(barcode);
         nwtxdt.setEditionYear(editionYear);
@@ -126,12 +125,12 @@ public class HomeController {
             model.put("prevCheckedOutTo", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()).getPrevPidm());
             model.put("dateCheckedIn", bookQueryService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(),nwtxdt.getBarcode()).getPrevDateCheckedIn());
 
-            return "bookQuery";
+            return "Patron/bookQuery";
         } else {
             model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
 
-        return "bookQuery";
+        return "Patron/bookQuery";
     }
 
     @Autowired
@@ -139,7 +138,7 @@ public class HomeController {
     @RequestMapping(value = "/bookDisposition", method = RequestMethod.GET)
     public String bookDisposition(){
         System.out.println("Book Dispostion GET");
-        return "bookDisposition";
+        return "Supervisor/bookDisposition";
     }
 
   @RequestMapping(value = "/bookDisposition", method = RequestMethod.POST)
@@ -155,12 +154,12 @@ public class HomeController {
         Nwtxdt nwtxdt = bookDispositionService.getNwtxdt(bookCode,editionYear,barcode);
         nwtxdt.setDisposition(bookDisposition);
         bookDispositionService.setNwtxdt(nwtxdt);
-        return "bookDisposition";
+        return "Supervisor/bookDisposition";
   }
 
         @RequestMapping("/replaceBarcode")
     public String replaceBarcode(){
-        return "replaceBarcode";
+        return "Supervisor/replaceBarcode";
     }
 
     @Autowired
@@ -168,7 +167,7 @@ public class HomeController {
     @RequestMapping(value = "/queryCourse", method = RequestMethod.GET)
     public String queryCourse(ModelMap model){
         System.out.println("Course Query GET");
-        return "queryCourse";
+        return "Patron/queryCourse";
     }
     @RequestMapping(value = "/queryCourse", method = RequestMethod.POST)
     public String queryCoursePost(ModelMap model,
@@ -178,7 +177,7 @@ public class HomeController {
         Scbcrse scbcrse = new Scbcrse();
         if(courseCode.equals("")){
             model.put("returnVoidError", "Invalid Credentials");
-            return "queryCourse";
+            return "Patron/queryCourse";
         }
         scbcrse.setCrseNumb(courseCode);
 
@@ -189,7 +188,7 @@ public class HomeController {
         } else {
             model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
-        return "queryCourse";
+        return "Patron/queryCourse";
     }
 
     @Autowired
@@ -197,7 +196,7 @@ public class HomeController {
     @RequestMapping(value = "/courseMessage", method = RequestMethod.GET)
     public String courseMessage(){
         System.out.println("Course Message GET");
-        return "courseMessage";
+        return "Patron/courseMessage";
     }
 
     @RequestMapping(value = "/courseMessage", method = RequestMethod.POST)
@@ -207,7 +206,7 @@ public class HomeController {
         System.out.println("Course Message POST");
         if(courseId.equals("")){
             model.put("returnVoidError", "Invalid Credentials");
-            return "courseMessage";
+            return "Patron/courseMessage";
         }
         System.out.println("Querying off of: " + courseId);
         if(courseMessageService.getNwtxcm(courseId) != null){
@@ -216,7 +215,7 @@ public class HomeController {
         } else {
             model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
-        return "courseMessage";
+        return "Patron/courseMessage";
     }
     @RequestMapping(value = "/courseMessage", method = RequestMethod.POST, params="clear")
     public String courseMessageClear(ModelMap model,
@@ -225,7 +224,7 @@ public class HomeController {
         System.out.println("Course Message POST - CLEAR");
         if(courseId.equals("")){
             model.put("returnVoidError", "Invalid Credentials");
-            return "courseMessage";
+            return "Patron/courseMessage";
         }
         System.out.println("Querying off of: " + courseId);
         if(courseMessageService.getNwtxcm(courseId) != null){
@@ -238,7 +237,7 @@ public class HomeController {
         } else {
             model.put("returnVoidError", "No Course Found Off of Given Credentials");
         }
-        return "courseMessage";
+        return "Patron/courseMessage";
     }
 
     @Autowired
@@ -246,7 +245,7 @@ public class HomeController {
     @RequestMapping(value= "/changeBookCode", method = RequestMethod.GET)
     public String changeBookCode(){
         System.out.println("Course Message GET");
-        return "changeBookCode";
+        return "Supervisor/changeBookCode";
     }
 
     @RequestMapping(value= "/changeBookCode", method = RequestMethod.POST)
@@ -260,7 +259,7 @@ public class HomeController {
         if(bookCode.equals("") || editionYear.equals("") || newBookCode.equals("") || newEditionYear.equals("")){
             model.put("returnVoidError", "Invalid Credentials");
             System.out.println("it don't work");
-            return "changeBookCode";
+            return "Supervisor/changeBookCode";
         }
 
         if(changeBookcodeService.getNwtxin(bookCode, editionYear) != null){
@@ -292,7 +291,7 @@ public class HomeController {
             changeBookcodeService.deleteNwtxin(bookCode);
             changeBookcodeService.saveNwtxin(nwtxin);
         }
-        return "changeBookCode";
+        return "Supervisor/changeBookCode";
     }
 
     @Autowired
@@ -300,7 +299,7 @@ public class HomeController {
     @RequestMapping(value= "/Previous-Books", method = RequestMethod.GET)
     public String prevBoooks(){
         System.out.println("Previous Books GET");
-        return "patronPrevBooks";
+        return "Patron/patronPrevBooks";
     }
 
     @RequestMapping(value= "/Previous-Books", method = RequestMethod.POST)
@@ -311,7 +310,7 @@ public class HomeController {
         System.out.println("Previous Books POST");
         if(id.equals("") || prevTerm.equals("")){
             System.out.println("nah dawg");
-            return "patronPrevBooks";
+            return "Patron/patronPrevBooks";
         }
 
         if(previousBooksService.getSpriden(id) != null && previousBooksService.getStvterm(prevTerm) != null){
@@ -321,7 +320,7 @@ public class HomeController {
             model.put("prevBooks",previousBooksService.getNwtxdt(spriden.getPidm(), prevTerm));
         }
 
-        return "patronPrevBooks";
+        return "Patron/patronPrevBooks";
     }
 
     @Autowired
@@ -329,7 +328,7 @@ public class HomeController {
     @RequestMapping(value= "/Sold-Books", method = RequestMethod.GET)
     public String soldBooks(){
         System.out.println("Sold Books GET");
-        return "patronSoldBooks";
+        return "Patron/patronSoldBooks";
     }
 
     @RequestMapping(value= "/Sold-Books", method = RequestMethod.POST)
@@ -337,7 +336,7 @@ public class HomeController {
                                 @RequestParam(value = "id", required = false, defaultValue = "")String id){
         System.out.println("Sold Books Post");
         if(id.equals("")){
-            return "patronSoldBooks";
+            return "Patron/patronSoldBooks";
         }
 
         if(soldBooksService.getSpriden(id) != null){
@@ -349,7 +348,7 @@ public class HomeController {
             model.put("soldBooks",soldBooksService.getNwtxdt(spriden.getPidm()));
         }
 
-        return "patronSoldBooks";
+        return "Patron/patronSoldBooks";
     }
 
     @Autowired
@@ -357,7 +356,7 @@ public class HomeController {
     @RequestMapping(value= "/Student-Schedule", method = RequestMethod.GET)
     public String studentSchedule(){
         System.out.println("Student Schedule GET");
-        return "patronSchedule";
+        return "Patron/patronSchedule";
     }
 
     @RequestMapping(value= "/Student-Schedule", method = RequestMethod.POST)
@@ -368,14 +367,14 @@ public class HomeController {
         System.out.println("Student Schedule POST");
         if(termSeason.equals("") || id.equals("")){
             System.out.println("nah dawg");
-            return "patronSchedule";
+            return "Patron/patronSchedule";
         }
 
         studentScheduleService.getStvterm(termSeason).getDesc();
         System.out.println("Checkpoint 1");
         if(studentScheduleService.getSpriden(id).getPidm().equals("")){
             System.out.println("pidm empty");
-            return "patronSchedule";
+            return "Patron/patronSchedule";
         }
         int pidm = Integer.parseInt(studentScheduleService.getSpriden(id).getPidm());
 
@@ -400,7 +399,7 @@ public class HomeController {
         model.put("outputTimes", outputTimes);
 
 
-        return "patronSchedule";
+        return "Patron/patronSchedule";
     }
 
 }

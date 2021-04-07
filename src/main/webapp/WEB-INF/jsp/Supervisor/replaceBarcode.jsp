@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
     <meta charset="UTF-8">
-    <title>Book Disposition</title>
+    <title>Replace Barcode Form</title>
 </head>
 <body>
-<h1>Textbook Services: Change Book Disposition</h1>
+<h1>Textbook Services: Replace Barcode</h1>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
@@ -32,25 +32,25 @@
         <a href="#">blah</a>
     </div>
 </div>
-<form method = "post">
+<form>
     <fieldset>
         <p>
             <label>Book Code:</label>
             <input type="text"
-                   name="bookCode"/>
+                   id="bookCode"/>
             <label>Book Year:</label>
             <input type="text"
-                   name="editionYear"/>
-            <label>Strike Bar Code:</label>
+                   id="bookYear"/>
+            <label>Strike Barcode:</label>
             <input type="text"
-                   name="barcode"/>
+                   id="strikeBarcode"/>
         </p>
     </fieldset>
-
+</form>
 <div class="container">
     <div class="row">
         <div class="column left">
-
+            <form>
                 <fieldset>
                     <legend>Book Info</legend>
                     <p>
@@ -60,36 +60,25 @@
                     </p>
                     <p>
                         <label>Seq Nr:</label>
-                        <input type="text"
-                               id="seqNr"/>
+                        <input type="number"
+                               id="seqNumber"/>
                     </p>
                     <p>
-                        <label>Current Disposition:</label>
+                        <label>Change Barcode To:</label>
                         <input type="text"
-                               id="bookDisposition"/>
-                    </p>
-                    <p>
-                        <label for="bookDisposition">Change Disposition To:</label>
-                        <select name="bookDisposition" id = "bookDisposition">
-                            <option value="">(No Change)</option>
-                            <option value="I">I</option>
-                            <option value="O">O</option>
-                            <option value="S">S</option>
-                            <option value="N">N</option>
-                        </select>
+                               id="newBarcode"/>
                     </p>
                 </fieldset>
+            </form>
         </div>
         <div class="column right">
             <p>
-                <input type="submit" name="Save"/>
+                <button type="button">Save</button>
             </p>
             <p>
                 <button type="button">Clear</button>
             </p>
         </div>
-
-        </form>
     </div>
 </div>
 </body>

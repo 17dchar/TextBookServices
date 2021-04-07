@@ -5,9 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66a77f85-1bec-4a3c-9c59-6f97abb5ae11" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/StudentEmployee/studentEmployeeView.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Configuration/MaskConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Configuration/MaskConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/TextBookApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/TextBookApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/patronSchedule.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/patronSchedule.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/addBook.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/addBook.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/bookDisposition.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/bookDisposition.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/bookQuery.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/StudentEmployee/bookQuery.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/changeBookCode.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/changeBookCode.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/courseMessage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/StudentEmployee/courseMessage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/createReport.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/StudentEmployee/createReport.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/maintenanceFormView.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/maintenanceFormView.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/patronCheckInOut.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/StudentEmployee/checkInOut.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/patronPrevBooks.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/StudentEmployee/previousBooks.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/patronSchedule.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/StudentEmployee/studentSchedule.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/patronSoldBooks.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/StudentEmployee/soldBooks.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/queryCourse.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/StudentEmployee/queryCourse.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/replaceBarcode.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/replaceBarcode.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/supervisorView.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/supervisorView.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +72,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../project-2-0-1-knapsack-durbin-sugirdorj-2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Patron" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -77,14 +93,15 @@
       <recent name="com.webapp.TextBook.repository" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\webapp\WEB-INF\jsp\Patron" />
       <recent name="C:\Users\s529295\Documents\GitHub\TextBookServices\src\main\webapp\WEB-INF" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\webapp\WEB-INF\jsp\Patron" />
+      <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\webapp\WEB-INF\jsp\Supervisor" />
       <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\controller" />
       <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\repository" />
       <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook" />
-      <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\resources" />
-      <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\Dao" />
     </key>
   </component>
   <component name="RunManager" selected="Maven.TextBook [spring-boot:run]">
