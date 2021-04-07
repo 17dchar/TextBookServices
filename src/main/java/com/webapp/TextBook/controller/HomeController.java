@@ -2,14 +2,19 @@ package com.webapp.TextBook.controller;
 
 //Imported Standard Java Libraries
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
+
+import com.webapp.TextBook.Model.Nwtxin;
+import com.webapp.TextBook.Service.AddBookService;
+import com.webapp.TextBook.Repository.NwtxdtRepository;
+import com.webapp.TextBook.Model.Nwtxdt;
+import com.webapp.TextBook.Service.BookQueryService;
+import com.webapp.TextBook.Service.ReplaceBarcodeService;
 
 //Imported Spring Libraries
-import com.webapp.TextBook.Model.*;
-import com.webapp.TextBook.Repository.SfrstcrRepository;
-import com.webapp.TextBook.Service.*;
+import com.webapp.TextBook.Model.Nwtxcm;
+import com.webapp.TextBook.Model.Nwtxin;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,15 +22,22 @@ import org.springframework.web.bind.annotation.*;
 
 
 //Imported Services
+import com.webapp.TextBook.Service.AddBookService;
+import com.webapp.TextBook.Service.BookQueryService;
+import com.webapp.TextBook.Service.QueryCourseService;
+import com.webapp.TextBook.Service.CourseMessageService;
+import com.webapp.TextBook.Service.ChangeBookcodeService;
 
 
 //Imported Models
+import com.webapp.TextBook.Model.Scbcrse;
+import com.webapp.TextBook.Model.Nwtxdt;
 
 
 @Controller
 public class HomeController {
 
-    @RequestMapping(value="/", method = RequestMethod.GET)
+    @RequestMapping("/")
     public String login(){
         return "login";
     }
@@ -142,6 +154,7 @@ public class HomeController {
         return "bookDisposition";
     }
 
+
   @RequestMapping(value = "/bookDisposition", method = RequestMethod.POST)
   public String bookDispositionPost(ModelMap model,
                                     @RequestParam (value = "bookCode", required = true, defaultValue = "") String bookCode,
@@ -158,10 +171,64 @@ public class HomeController {
         return "bookDisposition";
   }
 
-        @RequestMapping("/replaceBarcode")
-    public String replaceBarcode(){
+    @Autowired
+    ReplaceBarcodeService replaceBarcodeService;
+
+    @RequestMapping(value="/replaceBarcode", method = RequestMethod.GET)
+    public String replaceBarcode(ModelMap model){
+        System.out.println("Replace Barcode GET");
+
         return "replaceBarcode";
     }
+
+
+    @RequestMapping(value="/replaceBarcode", method = RequestMethod.POST)
+    public String replaceBarcodePOST(ModelMap model,
+                              @RequestParam (value = "bookCode",required = false, defaultValue = "")String bookCode,
+                              @RequestParam (value = "bookYear",required = false, defaultValue = "")String editionYear,
+                              @RequestParam (value = "barcode",required = false, defaultValue = "")String barcode,
+                              @RequestParam (value = "newBarcode",required = false, defaultValue = "")String newBarcode,
+                              @RequestParam (value = "bookTitle",required = false, defaultValue = "")String bookTitle)
+            throws ParseException {
+        System.out.println("Replace Barcode POST");
+        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || newBarcode.equals("")) {
+            model.put("returnVoidError", "Invalid Credentials");
+            System.out.println("U missed a line!");
+            return "replaceBarcode";
+        }
+        /*if (barcode.equals("")) {
+            model.put("returnVoidError", "Invalid Credentials");
+            System.out.println("U missed a line!");
+            return "replaceBarcode";
+        }*/
+        if (replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode) != null) {
+            Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode);
+            Nwtxdt nwtxdt = new Nwtxdt();
+
+            nwtxdt.setBookCode(oldNwtxdt.getBookCode());
+            nwtxdt.setEditionYear(oldNwtxdt.getEditionYear());
+            nwtxdt.setSeqNr(oldNwtxdt.getSeqNr());
+            nwtxdt.setBarcode(newBarcode);
+            nwtxdt.setPidm(oldNwtxdt.getPidm());
+            nwtxdt.setTerm(oldNwtxdt.getTerm());
+            nwtxdt.setDateCheckedOut(oldNwtxdt.getDateCheckedOut());
+            nwtxdt.setDisposition(oldNwtxdt.getDisposition());
+            nwtxdt.setBookSalePrice(oldNwtxdt.getBookSalePrice());
+            nwtxdt.setPrevPidm(oldNwtxdt.getPrevPidm());
+            nwtxdt.setPrevDateCheckedIn(oldNwtxdt.getPrevDateCheckedIn());
+            nwtxdt.setActivityDate(oldNwtxdt.getActivityDate());
+            nwtxdt.setBillableFlag(oldNwtxdt.getBillableFlag());
+
+            replaceBarcodeService.deleteNwtxdt(barcode);
+            replaceBarcodeService.saveNwtxdt(nwtxdt);
+        }
+        /*if (replaceBarcodeService.getNwtxin(bookCode, editionYear, bookTitle) != null) {
+            Nwtxin nwtxin = replaceBarcodeService.getNwtxin(bookCode, editionYear, bookTitle);
+            model.put("bookTitle",replaceBarcodeService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear(), nwtxin.getTitle()).getTitle());
+        }*/
+        return "replaceBarcode";
+    }
+
 
     @Autowired
     QueryCourseService queryCourseService;
@@ -234,6 +301,43 @@ public class HomeController {
             nwtxcm.setCmMessage("");
             model.put("courseMessage", "Cleared!");
             courseMessageService.saveNwtxcm(nwtxcm);
+        }
+    }
+
+    @RequestMapping(value = "/courseMessage", method = RequestMethod.POST)
+    public String courseMessagePost(ModelMap model,
+                                    @RequestParam(value = "courseId", required = false, defaultValue = "")String courseId)
+                                    throws ParseException{
+        System.out.println("Course Message POST");
+        if(courseId.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "courseMessage";
+        }
+        System.out.println("Querying off of: " + courseId);
+        if(courseMessageService.getNwtxcm(courseId) != null){
+            model.put("courseMessage", courseMessageService.getNwtxcm((courseId)).getCmMessage());
+
+        } else {
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        }
+        return "courseMessage";
+    }
+    @RequestMapping(value = "/courseMessage", method = RequestMethod.POST, params="clear")
+    public String courseMessageClear(ModelMap model,
+                                    @RequestParam(value = "courseId", required = false, defaultValue = "")String courseId)
+            throws ParseException{
+        System.out.println("Course Message POST - CLEAR");
+        if(courseId.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            return "courseMessage";
+        }
+        System.out.println("Querying off of: " + courseId);
+        if(courseMessageService.getNwtxcm(courseId) != null){
+            Nwtxcm nwtxcm = new Nwtxcm();
+            nwtxcm = courseMessageService.getNwtxcm(courseId);
+            nwtxcm.setCmMessage("");
+            model.put("courseMessage", "Cleared!");
+            courseMessageService.saveNwtxcm(nwtxcm);
 
         } else {
             model.put("returnVoidError", "No Course Found Off of Given Credentials");
@@ -246,6 +350,53 @@ public class HomeController {
     @RequestMapping(value= "/changeBookCode", method = RequestMethod.GET)
     public String changeBookCode(){
         System.out.println("Course Message GET");
+
+        return "changeBookCode";
+    }
+
+    @RequestMapping(value= "/changeBookCode", method = RequestMethod.POST)
+    public String changeBookCodePost(ModelMap model,
+                                     @RequestParam(value = "bookCode", required = false, defaultValue = "")String bookCode,
+                                     @RequestParam(value = "editionYear", required = false, defaultValue = "")String editionYear,
+                                     @RequestParam(value = "newBookCode", required = false, defaultValue = "")String newBookCode,
+                                     @RequestParam(value = "newEditionYear", required = false, defaultValue = "")String newEditionYear)
+                                     throws ParseException{
+        System.out.println("Course Message POST");
+        if(bookCode.equals("") || editionYear.equals("") || newBookCode.equals("") || newEditionYear.equals("")){
+            model.put("returnVoidError", "Invalid Credentials");
+            System.out.println("it don't work");
+            return "changeBookCode";
+        }
+
+        if(changeBookcodeService.getNwtxin(bookCode, editionYear) != null){
+            //Nwtxin Creation of new and old versions
+            Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(bookCode, editionYear);
+            Nwtxin nwtxin = new Nwtxin();
+
+            //Setting all
+            nwtxin.setBookCode(newBookCode);
+            nwtxin.setEditionYear(newEditionYear);
+            nwtxin.setTitle(oldNwtxin.getTitle());
+            nwtxin.setAuthor(oldNwtxin.getAuthor());
+            nwtxin.setPublisher(oldNwtxin.getPublisher());
+            nwtxin.setBookStatus(oldNwtxin.getBookStatus());
+            nwtxin.setCurrentPrice(oldNwtxin.getCurrentPrice());
+            nwtxin.setIsbn(oldNwtxin.getIsbn());
+            nwtxin.setPruchaseDate(oldNwtxin.getPruchaseDate());
+            nwtxin.setFirstUsedDate(oldNwtxin.getFirstUsedDate());
+            nwtxin.setDiscontinuedDate(oldNwtxin.getDiscontinuedDate());
+            nwtxin.setActivityDate(oldNwtxin.getActivityDate());
+            nwtxin.setCrseName(oldNwtxin.getCrseName());
+            nwtxin.setCrse1(oldNwtxin.getCrse1());
+            nwtxin.setCrse2(oldNwtxin.getCrse2());
+            nwtxin.setCrse3(oldNwtxin.getCrse3());
+            nwtxin.setCrse4(oldNwtxin.getCrse4());
+            nwtxin.setCrse5(oldNwtxin.getCrse5());
+            nwtxin.setComment(oldNwtxin.getComment());
+
+            changeBookcodeService.deleteNwtxin(bookCode);
+            changeBookcodeService.saveNwtxin(nwtxin);
+        }
         return "changeBookCode";
     }
 

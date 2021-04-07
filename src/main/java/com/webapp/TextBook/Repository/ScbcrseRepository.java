@@ -11,6 +11,8 @@ import java.util.List;
 public interface ScbcrseRepository extends JpaRepository<Scbcrse, Integer>{
     @Override
     List<Scbcrse> findAll();
+
     List<Scbcrse> findBySubjCodeAndCrseNumb(String subjCode, String crseNumb);
+
     List<Scbcrse> findBySubjCode(@NotEmpty String subjCode);
 }
