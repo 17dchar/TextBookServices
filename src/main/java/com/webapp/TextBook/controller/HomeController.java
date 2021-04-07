@@ -202,7 +202,7 @@ public class HomeController {
     @RequestMapping(value = "/Course-Message", method = RequestMethod.POST)
     public String courseMessagePost(ModelMap model,
                                     @RequestParam(value = "courseId", required = false, defaultValue = "")String courseId)
-                                    throws ParseException{
+                                     throws ParseException{
         System.out.println("Course Message POST");
         if(courseId.equals("")){
             model.put("returnVoidError", "Invalid Credentials");
