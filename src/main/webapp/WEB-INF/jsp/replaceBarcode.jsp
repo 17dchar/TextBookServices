@@ -47,11 +47,11 @@
         </p>
     </fieldset>
     <button type="submit">Save</button>
-</form>
+
 <div class="container">
     <div class="row">
         <div class="column left">
-            <form>
+
                 <fieldset>
                     <legend>Book Info</legend>
                     <p>

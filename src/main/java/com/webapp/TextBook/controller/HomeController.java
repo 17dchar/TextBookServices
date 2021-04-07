@@ -159,9 +159,9 @@ public class HomeController {
                               @RequestParam (value = "bookTitle",required = false, defaultValue = "")String bookTitle)
             throws ParseException {
         System.out.println("Replace Barcode POST");
-        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("")) {
+        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || newBarcode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
-            System.out.println("hmmm bad!");
+            System.out.println("U missed a line!");
             return "replaceBarcode";
         }
         if (replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode) != null) {
