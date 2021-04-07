@@ -128,16 +128,16 @@
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
     <div class="dropdown-content">
-        <a href="patronCheckInOut">Check In/Out</a>
-        <a href="patronSchedule">Patron Schedule</a>
-        <a href="patronPrevBooks">Patrons Previous Books</a>
-        <a href="patronSoldBooks">Patrons Sold Books</a>
+        <a href="Check-In-Out">Check Books In/Out</a>
+        <a href="Student-Schedule">Schedule</a>
+        <a href="Sold-Books">Sold Books</a>
+        <a href="Previous-Books">Previous Books</a>
     </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Reports</button>
     <div class="dropdown-content">
-        <a href="createReport">Create Report</a>
+        <a href="Report">Add Report Here</a>
     </div>
 </div>
 <div class="tenPix"> </div>
