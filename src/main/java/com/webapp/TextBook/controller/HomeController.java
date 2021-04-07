@@ -114,7 +114,7 @@ public class HomeController {
         //Pseudo Regex
         if (bookCode.equals("") || editionYear.equals("") || barcode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
-            return "StudentEmployee/bookQuery";
+            return "Supervisor/bookQuery";
         }
 
         Nwtxdt nwtxdt = bookQueryService.getNwtxdt(bookCode, editionYear, barcode);
@@ -136,7 +136,7 @@ public class HomeController {
             model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
 
-        return "StudentEmployee/bookQuery";
+        return "Supervisor/bookQuery";
     }
 
 
@@ -159,7 +159,7 @@ public class HomeController {
         //Pseudo Regex
         if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || bookDisposition.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
-            return "bookDisposition";
+            return "Supervisor/bookDisposition";
         }else{
             //Wasn't able to find a book off of given credentials
             model.put("returnVoidError", "No Book Found Off of Given Credentials");
@@ -168,7 +168,7 @@ public class HomeController {
         Nwtxdt nwtxdt = bookDispositionService.getNwtxdt(bookCode, editionYear, barcode);
         nwtxdt.setDisposition(bookDisposition);
         bookDispositionService.setNwtxdt(nwtxdt);
-        return "bookDisposition";
+        return "Supervisor/bookDisposition";
     }
 
 
@@ -192,7 +192,7 @@ public class HomeController {
         //Pseudo Regex
         if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || newBarcode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
-            return "replaceBarcode";
+            return "Supervisor/replaceBarcode";
         }
 
         Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode);
@@ -221,7 +221,7 @@ public class HomeController {
             //Wasn't able to find a book off of given credentials
             model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
-        return "replaceBarcode";
+        return "Supervisor/replaceBarcode";
     }
 
 
@@ -230,7 +230,7 @@ public class HomeController {
     @RequestMapping(value = "/Find-Course", method = RequestMethod.GET)
     public String queryCourse(){
         System.out.println("Course Query GET");
-        return "StudentEmployee/queryCourse";
+        return "Supervisor/queryCourse";
     }
     @RequestMapping(value = "/Find-Course", method = RequestMethod.POST)
     public String queryCoursePost(ModelMap model,
@@ -240,7 +240,7 @@ public class HomeController {
         //Pseudo Regex
         if (courseCode.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
-            return "StudentEmployee/queryCourse";
+            return "Supervisor/queryCourse";
         }
 
         Scbcrse scbcrse = queryCourseService.getScbcrse(courseCode);
@@ -250,7 +250,7 @@ public class HomeController {
             //Wasn't able to find a book off of given credentials
             model.put("returnVoidError", "No Courses Found Off of Given Credentials");
         }
-        return "StudentEmployee/queryCourse";
+        return "Supervisor/queryCourse";
     }
 
 
@@ -259,7 +259,7 @@ public class HomeController {
     @RequestMapping(value = "/Course-Message", method = RequestMethod.GET)
     public String courseMessage(){
         System.out.println("Course Message GET");
-        return "StudentEmployee/courseMessage";
+        return "Supervisor/courseMessage";
     }
 
     @RequestMapping(value = "/Course-Message", method = RequestMethod.POST)
@@ -270,7 +270,7 @@ public class HomeController {
         //Pseudo Regex
         if (courseId.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
-            return "StudentEmployee/courseMessage";
+            return "Supervisor/courseMessage";
         }
 
         Nwtxcm nwtxcm = courseMessageService.getNwtxcm(courseId);
@@ -280,7 +280,7 @@ public class HomeController {
             //Wasn't able to find a course off of given credentials
             model.put("returnVoidError", "No Course Found Off of Given Credentials");
         }
-        return "StudentEmployee/courseMessage";
+        return "Supervisor/courseMessage";
     }
     @RequestMapping(value = "/Course-Message", method = RequestMethod.POST, params="clear")
     public String courseMessageClear(ModelMap model,
@@ -290,7 +290,7 @@ public class HomeController {
         //Pseudo Regex
         if (courseId.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
-            return "StudentEmployee/courseMessage";
+            return "Supervisor/courseMessage";
         }
 
         Nwtxcm nwtxcm = courseMessageService.getNwtxcm(courseId);
@@ -302,7 +302,7 @@ public class HomeController {
             //Wasn't able to find a course off of given credentials
             model.put("returnVoidError", "No Course Found Off of Given Credentials");
         }
-        return "StudentEmployee/courseMessage";
+        return "Supervisor/courseMessage";
     }
 
     @Autowired
