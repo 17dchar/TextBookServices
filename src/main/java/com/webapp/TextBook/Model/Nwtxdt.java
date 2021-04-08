@@ -18,6 +18,7 @@ public class Nwtxdt {
     @Column(name = "NWTXDT_SEQ_NR")
     private String seqNr;
     @Id
+    @NotEmpty
     @Column(name = "NWTXDT_BARCODE")
     private String barcode;
     @Column(name = "NWTXDT_PIDM")

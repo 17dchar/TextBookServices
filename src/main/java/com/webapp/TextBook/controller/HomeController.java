@@ -16,6 +16,7 @@ import com.webapp.TextBook.Model.Nwtxin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -25,6 +26,8 @@ import com.webapp.TextBook.Service.*;
 
 //Imported Models
 import com.webapp.TextBook.Model.*;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -68,20 +71,38 @@ public class HomeController {
     }
 
     @RequestMapping(value="/Add-Book", method = RequestMethod.POST)
-    public String addBookPOST(ModelMap model,
-                              @RequestParam(value = "bookCode", required = false, defaultValue = "") String bookCode,
-                              @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
-                              @RequestParam(value = "bookTitle", required = false, defaultValue = "") String bookTitle,
-                              @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
-                              @RequestParam(value = "seqNr", required = false, defaultValue = "") String seqNr)
-                              throws ParseException {
+    public String addBookPOST(@Valid Nwtxdt nwtxdt, BindingResult bindingResult,
+                              ModelMap model
+                              //@RequestParam(value = "bookCode", required = false, defaultValue = "") String bookCode,
+                              //@RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
+                              //@RequestParam(value = "bookTitle", required = false, defaultValue = "") String bookTitle,
+                              //@RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
+                              //@RequestParam(value = "seqNr", required = false, defaultValue = "") String seqNr)
+    )throws ParseException {
         System.out.println("Add Book POST");
+        /*
         //Pseudo Regex
         if (bookCode.equals("") || editionYear.equals("") || bookTitle.equals("") || barcode.equals("") || seqNr.equals("")) {
             model.put("returnVoidError", "Invalid Credentials");
             return "Supervisor/addBook";
         }
 
+         */
+        if(bindingResult.hasErrors()){
+            System.out.println("Has Errors");
+            model.put("returnVoidError", "Invalid Credentials");
+            return "Supervisor/addBook";
+        }
+
+        System.out.println("it works!");
+
+        System.out.println("book code: " +nwtxdt.getBookCode());
+        System.out.println("barcode: " + nwtxdt.getBarcode());
+        System.out.println("year: " + nwtxdt.getEditionYear());
+
+        /*
+        *
+        * Removing for now
         //Model for Nwtxdt Changing
         Nwtxdt nwtxdt = new Nwtxdt();
         nwtxdt.setBarcode(barcode);
@@ -91,6 +112,9 @@ public class HomeController {
 
         //Add Book Service - Save
         addBookService.saveNwtxdt(nwtxdt);
+        return "Supervisor/addBook";
+
+         */
         return "Supervisor/addBook";
     }
 
