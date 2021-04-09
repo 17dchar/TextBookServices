@@ -86,7 +86,7 @@ public class HomeController {
             }
             return "Supervisor/addBook";
         }
-        
+
         //Add Book Service - Save
         addBookService.saveNwtxdt(nwtxdt);
         return "Supervisor/addBook";
@@ -96,26 +96,33 @@ public class HomeController {
     @Autowired
     BookQueryService bookQueryService;
 
-    @RequestMapping(value = "/Find-Book", method = RequestMethod.GET)
+    @GetMapping("/Find-Book")
     public String bookQuery(ModelMap model){
         System.out.println("Book Query GET");
         return "Supervisor/bookQuery";
     }
 
-    @RequestMapping(value = "/Find-Book", method = RequestMethod.POST)
-    public String bookQueryPost(ModelMap model,
-                                @RequestParam(value = "bookCode", required = true, defaultValue = "") String bookCode,
-                                @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
-                                @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode)
+    @PostMapping("/Find-Book")
+    public String bookQueryPost(@Valid Nwtxdt nwtxdt, BindingResult bindingResultNwtxdt,
+                                @Valid Nwtxin nwtxin, BindingResult bindingResultNwtxin,
+                                ModelMap model)
                                 throws ParseException {
         System.out.println("Book Query POST");
-        //Pseudo Regex
-        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("")) {
+        if(bindingResultNwtxdt.hasErrors() || bindingResultNwtxin.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
+            for (Object object : bindingResultNwtxdt.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            for (Object object : bindingResultNwtxin.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
             return "Supervisor/bookQuery";
         }
 
-        Nwtxdt nwtxdt = bookQueryService.getNwtxdt(bookCode, editionYear, barcode);
         if (nwtxdt != null) {
             //Found everything, and putting all needed items to the front page
             model.put("bookTitle",          nwtxdt.getBookCode());
