@@ -3,6 +3,7 @@ package com.webapp.TextBook.Model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -12,8 +13,10 @@ public class Nwtxcm
     @Id
     @Column(name = "NWTXCM_COURSE")
     @NotEmpty
+    @Size(max=9)
     private String course;
     @Column(name = "NWTXCM_MESSAGE")
+    @Size(max = 15)
     private String message;
     @Column(name = "NWTXCM_ACTIVITY_DATE")
     @Temporal(TemporalType.DATE)

@@ -269,19 +269,23 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/Course-Message", method = RequestMethod.POST)
-    public String courseMessagePost(ModelMap model,
-                                    @RequestParam(value = "courseId", required = false, defaultValue = "")String courseId)
+    public String courseMessagePost(ModelMap model, Nwtxcm nwtxcm, BindingResult bindingResult)
                                     throws ParseException{
         System.out.println("Course Message POST");
         //Pseudo Regex
-        if (courseId.equals("")) {
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
-            return "Supervisor/courseMessage";
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            return "Supervisor/queryCourse";
         }
 
-        Nwtxcm nwtxcm = courseMessageService.getNwtxcm(courseId);
-        if (nwtxcm != null) {
-            model.put("courseMessage", nwtxcm.getCmMessage());
+        Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCmCourse());
+        if (oldNwtxcm != null) {
+            model.put("courseMessage", oldNwtxcm.getCmMessage());
         }else{
             //Wasn't able to find a course off of given credentials
             model.put("returnVoidError", "No Course Found Off of Given Credentials");
