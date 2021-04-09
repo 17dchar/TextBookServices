@@ -39,6 +39,7 @@ public class HomeController {
 
     @RequestMapping("/")
     public String login() {
+        System.out.println("Login GET");
         supervisor = false;
         studentEmployee = false;
         return "login";
@@ -49,6 +50,7 @@ public class HomeController {
     public String loginPost(@RequestParam (value = "login",required = false, defaultValue = "")String login,
                             @RequestParam (value = "password",required = false, defaultValue = "")String password)
                             throws ParseException{
+        System.out.println("Login POST");
         if(login.equals("admin") && password.equals("admin")){
             supervisor = true;
             studentEmployee = false;
@@ -59,6 +61,7 @@ public class HomeController {
             return "StudentEmployee/studentEmployeeView";
         }
     }
+
 
     @RequestMapping("/Supervisor-Home")
     public String supervisor(){
@@ -80,7 +83,7 @@ public class HomeController {
     public String addBookPage(){
         System.out.println("Add Book GET");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         return "Supervisor/addBook";
     }
@@ -92,7 +95,7 @@ public class HomeController {
                               ModelMap model) throws ParseException {
         System.out.println("Add Book POST");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         //If There Are Errors Compared To The Model, Then It Will Return Invalid Credentials
         if(bindingResult.hasErrors()){
@@ -120,7 +123,7 @@ public class HomeController {
     public String bookQuery(ModelMap model){
         System.out.println("Book Query GET");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         return "Supervisor/bookQuery";
     }
@@ -134,7 +137,7 @@ public class HomeController {
                                 throws ParseException {
         System.out.println("Book Query POST");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         if(bindingResultNwtxdt.hasErrors() || bindingResultNwtxin.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
@@ -182,7 +185,7 @@ public class HomeController {
     public String bookDisposition(){
         System.out.println("Book Dispostion GET");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         return "Supervisor/bookDisposition";
     }
@@ -195,7 +198,7 @@ public class HomeController {
                                       throws ParseException {
         System.out.println("Book Disposition POST");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
@@ -223,7 +226,7 @@ public class HomeController {
     public String replaceBarcode() {
         System.out.println("Replace Barcode GET");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         return "Supervisor/replaceBarcode";
     }
@@ -236,7 +239,7 @@ public class HomeController {
                                      throws ParseException {
         System.out.println("Replace Barcode POST");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
@@ -285,7 +288,7 @@ public class HomeController {
     public String queryCourse(){
         System.out.println("Course Query GET");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         return "Supervisor/queryCourse";
     }
@@ -297,7 +300,7 @@ public class HomeController {
                                   throws ParseException {
         System.out.println("Course Query POST");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         //Pseudo Regex
         if(bindingResult.hasErrors()){
@@ -330,7 +333,7 @@ public class HomeController {
     public String courseMessage(){
         System.out.println("Course Message GET");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         return "Supervisor/courseMessage";
     }
@@ -342,7 +345,7 @@ public class HomeController {
                                     throws ParseException{
         System.out.println("Course Message POST");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         //Pseudo Regex
         if(bindingResult.hasErrors()){
@@ -372,7 +375,7 @@ public class HomeController {
                                      throws ParseException {
         System.out.println("Course Message POST - CLEAR");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         //Pseudo Regex
         if(bindingResult.hasErrors()){
@@ -406,7 +409,7 @@ public class HomeController {
     public String changeBookCode(){
         System.out.println("Course Message GET");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         return "Supervisor/changeBookCode";
     }
@@ -418,7 +421,7 @@ public class HomeController {
                                      throws ParseException{
         System.out.println("Course Message POST");
         if(!supervisor){
-            login();
+            return "redirect:/";
         }
         //Pseudo Regex
         if(bindingResult.hasErrors()){
@@ -457,9 +460,8 @@ public class HomeController {
         } else if(studentEmployee){
             return "StudentEmployee/previousBooks";
         } else {
-            login();
+            return "redirect:/";
         }
-        return "login";
     }
 
     //Previoius Books POST
@@ -504,9 +506,8 @@ public class HomeController {
         } else if(studentEmployee){
             return "StudentEmployee/soldBooks";
         } else {
-            login();
+            return "redirect:/";
         }
-        return "login";
     }
 
     //Sold Books POST
@@ -547,9 +548,8 @@ public class HomeController {
         } else if(studentEmployee){
             return "StudentEmployee/studentSchedule";
         } else {
-            login();
+            return "redirect:/";
         }
-        return "login";
     }
 
     //Student Schedule POST
@@ -560,7 +560,7 @@ public class HomeController {
                                       throws ParseException{
         System.out.println("Student Schedule POST");
         if(!supervisor && !studentEmployee){
-            return"login";
+            return "redirect:/";
         }
         //Pseudo Regex
         if(termSeason.equals("") || id.equals("")){
@@ -604,6 +604,6 @@ public class HomeController {
         if(supervisor){
             return"Supervisor/studentSchedule";
         }
-            return "StudentEmployee/studentSchedule";
+        return "StudentEmployee/studentSchedule";
     }
 }
