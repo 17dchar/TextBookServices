@@ -156,7 +156,7 @@ public class HomeController {
 
     @PostMapping("/Disposition-Change")
     public String bookDispositionPost(@Valid Nwtxdt nwtxdt, BindingResult bindingResult,
-                                        ModelMap model)
+                                      ModelMap model)
                                       throws ParseException {
         System.out.println("Book Disposition POST");
         if(bindingResult.hasErrors()){
@@ -185,29 +185,27 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/replaceBarcode", method = RequestMethod.POST)
-    public String replaceBarcodePOST(ModelMap model,
-                                     @RequestParam(value = "bookCode", required = false, defaultValue = "") String bookCode,
-                                     @RequestParam(value = "bookYear", required = false, defaultValue = "") String editionYear,
-                                     @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
-                                     @RequestParam(value = "newBarcode", required = false, defaultValue = "") String newBarcode,
-                                     @RequestParam(value = "bookTitle", required = false, defaultValue = "") String bookTitle)
+    public String replaceBarcodePOST(@Valid Nwtxdt nwtxdt, BindingResult bindingResult,
+                                     ModelMap model)
                                      throws ParseException {
         System.out.println("Replace Barcode POST");
-        //Pseudo Regex
-        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || newBarcode.equals("")) {
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
             return "Supervisor/replaceBarcode";
         }
 
-        Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode);
+        Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode());
         if (oldNwtxdt != null) {
-            Nwtxdt nwtxdt = new Nwtxdt();
 
             //Duplicating everything to the new model
             nwtxdt.setBookCode(oldNwtxdt.getBookCode());
             nwtxdt.setEditionYear(oldNwtxdt.getEditionYear());
             nwtxdt.setSeqNr(oldNwtxdt.getSeqNr());
-            nwtxdt.setBarcode(newBarcode); //<-- This is the changed Item
             nwtxdt.setPidm(oldNwtxdt.getPidm());
             nwtxdt.setTerm(oldNwtxdt.getTerm());
             nwtxdt.setDateCheckedOut(oldNwtxdt.getDateCheckedOut());
@@ -218,8 +216,8 @@ public class HomeController {
             nwtxdt.setActivityDate(oldNwtxdt.getActivityDate());
             nwtxdt.setBillableFlag(oldNwtxdt.getBillableFlag());
 
-            //Deletes Old Repository Item and Saves New One
-            replaceBarcodeService.deleteNwtxdt(barcode);
+            // Deletes Old Repository Item and Saves New One
+            replaceBarcodeService.deleteNwtxdt(nwtxdt.getBarcode());
             replaceBarcodeService.saveNwtxdt(nwtxdt);
         }else{
             //Wasn't able to find a book off of given credentials
