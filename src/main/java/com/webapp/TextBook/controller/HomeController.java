@@ -229,25 +229,29 @@ public class HomeController {
 
     @Autowired
     QueryCourseService queryCourseService;
-    @RequestMapping(value = "/Find-Course", method = RequestMethod.GET)
+    @GetMapping("/Find-Course")
     public String queryCourse(){
         System.out.println("Course Query GET");
         return "Supervisor/queryCourse";
     }
-    @RequestMapping(value = "/Find-Course", method = RequestMethod.POST)
-    public String queryCoursePost(ModelMap model,
-                                  @RequestParam(value = "courseCode", required = false, defaultValue = "") String courseCode)
+    @PostMapping("/Find-Course")
+    public String queryCoursePost(ModelMap model, Scbcrse scbcrse,BindingResult bindingResult)
                                   throws ParseException {
         System.out.println("Course Query POST");
         //Pseudo Regex
-        if (courseCode.equals("")) {
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
             return "Supervisor/queryCourse";
         }
 
-        Scbcrse scbcrse = queryCourseService.getScbcrse(courseCode);
-        if (scbcrse != null) {
-            model.put("crseTable", scbcrse);
+        Scbcrse oldScbcrse = queryCourseService.getScbcrse(scbcrse.getSubjCode());
+        if (oldScbcrse != null) {
+            model.put("crseTable", oldScbcrse);
         }else{
             //Wasn't able to find a book off of given credentials
             model.put("returnVoidError", "No Courses Found Off of Given Credentials");
