@@ -3,6 +3,7 @@ package com.webapp.TextBook.Model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -10,30 +11,41 @@ import java.util.Date;
 public class Nwtxdt {
     @Column(name="NWTXDT_BOOK_CODE")
     @NotEmpty
-    //@Pattern(regexp = "{8}")
+    @Size(min=8,max=8)
     private String bookCode;
     @Column(name = "NWTXDT_EDITION_YEAR")
     @NotEmpty
+    @Size(min=4,max=4)
     private String editionYear;
     @Column(name = "NWTXDT_SEQ_NR")
+    @Size(max=5)
+    @Pattern(regexp="^(0|[1-9][0-9]*)$")
     private String seqNr;
-    @Id
     @Column(name = "NWTXDT_BARCODE")
+    @Id
+    @NotEmpty
+    @Size(min=13,max=13)
     private String barcode;
     @Column(name = "NWTXDT_PIDM")
     private String pidm;
+    @Size(max=8)
     @Column(name = "NWTXDT_TERM")
+    @Size(max=6)
     private String term;
     @Column(name = "NWTXDT_DATE_CHECKED_OUT")
     @Temporal(TemporalType.DATE)
     private Date dateCheckedOut;
     @Column(name = "NWTXDT_DISPOSITION")
+    @Size(max = 1)
     private String disposition;
     @Column(name = "NWTXDT_BOOK_SALE_PRICE")
     private String bookSalePrice;
     @Column(name = "NWTXDT_PREV_PIDM")
+    @Size(max = 8)
+    @Pattern(regexp="^(0|[1-9][0-9]*)$")
     private String prevPidm;
     @Column(name = "NWTXDT_PREV_TERM")
+    @Size(max = 6)
     private String prevTerm;
     @Column(name = "NWTXDT_PREV_DATE_CHECKED_IN")
     @Temporal(TemporalType.DATE)
@@ -42,6 +54,7 @@ public class Nwtxdt {
     @Temporal(TemporalType.DATE)
     private Date activityDate;
     @Column(name = "NWTXDT_BILLABLE_FLAG")
+    @Size(max = 1)
     private String billableFlag;
 
     public Nwtxdt(){

@@ -16,6 +16,8 @@ import com.webapp.TextBook.Model.Nwtxin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -25,6 +27,8 @@ import com.webapp.TextBook.Service.*;
 
 //Imported Models
 import com.webapp.TextBook.Model.*;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -70,33 +74,27 @@ public class HomeController {
     @Autowired
     AddBookService addBookService;
 
-    @RequestMapping(value="/Add-Book", method = RequestMethod.GET)
-    public String addBookPage(ModelMap model){
+    @GetMapping("/Add-Book")
+    public String addBookPage(){
         System.out.println("Add Book GET");
         return "Supervisor/addBook";
     }
 
-    @RequestMapping(value="/Add-Book", method = RequestMethod.POST)
-    public String addBookPOST(ModelMap model,
-                              @RequestParam(value = "bookCode", required = false, defaultValue = "") String bookCode,
-                              @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
-                              @RequestParam(value = "bookTitle", required = false, defaultValue = "") String bookTitle,
-                              @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
-                              @RequestParam(value = "seqNr", required = false, defaultValue = "") String seqNr)
-                              throws ParseException {
+    @PostMapping("/Add-Book")
+    public String addBookPOST(@Valid Nwtxdt nwtxdt, BindingResult bindingResult,
+                              ModelMap model) throws ParseException {
         System.out.println("Add Book POST");
-        //Pseudo Regex
-        if (bookCode.equals("") || editionYear.equals("") || bookTitle.equals("") || barcode.equals("") || seqNr.equals("")) {
+
+        //If There Are Errors Compared To The Model, Then It Will Return Invalid Credentials
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
             return "Supervisor/addBook";
         }
-
-        //Model for Nwtxdt Changing
-        Nwtxdt nwtxdt = new Nwtxdt();
-        nwtxdt.setBarcode(barcode);
-        nwtxdt.setEditionYear(editionYear);
-        nwtxdt.setBookCode(bookCode);
-        nwtxdt.setSeqNr(seqNr);
 
         //Add Book Service - Save
         addBookService.saveNwtxdt(nwtxdt);
@@ -107,26 +105,33 @@ public class HomeController {
     @Autowired
     BookQueryService bookQueryService;
 
-    @RequestMapping(value = "/Find-Book", method = RequestMethod.GET)
+    @GetMapping("/Find-Book")
     public String bookQuery(ModelMap model){
         System.out.println("Book Query GET");
         return "Supervisor/bookQuery";
     }
 
-    @RequestMapping(value = "/Find-Book", method = RequestMethod.POST)
-    public String bookQueryPost(ModelMap model,
-                                @RequestParam(value = "bookCode", required = true, defaultValue = "") String bookCode,
-                                @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
-                                @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode)
+    @PostMapping("/Find-Book")
+    public String bookQueryPost(@Valid Nwtxdt nwtxdt, BindingResult bindingResultNwtxdt,
+                                @Valid Nwtxin nwtxin, BindingResult bindingResultNwtxin,
+                                ModelMap model)
                                 throws ParseException {
         System.out.println("Book Query POST");
-        //Pseudo Regex
-        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("")) {
+        if(bindingResultNwtxdt.hasErrors() || bindingResultNwtxin.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
+            for (Object object : bindingResultNwtxdt.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            for (Object object : bindingResultNwtxin.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
             return "Supervisor/bookQuery";
         }
 
-        Nwtxdt nwtxdt = bookQueryService.getNwtxdt(bookCode, editionYear, barcode);
         if (nwtxdt != null) {
             //Found everything, and putting all needed items to the front page
             model.put("bookTitle",          nwtxdt.getBookCode());
@@ -151,32 +156,31 @@ public class HomeController {
 
     @Autowired
     BookDispositionService bookDispositionService;
-    @RequestMapping(value = "/Change-Disposition", method = RequestMethod.GET)
+
+    @GetMapping("/Change-Disposition")
     public String bookDisposition(){
         System.out.println("Book Dispostion GET");
         return "Supervisor/bookDisposition";
     }
 
-    @RequestMapping(value = "/Disposition-Change", method = RequestMethod.POST)
-    public String bookDispositionPost(ModelMap model,
-                                      @RequestParam(value = "bookCode", required = true, defaultValue = "") String bookCode,
-                                      @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
-                                      @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
-                                      @RequestParam(value = "bookDisposition", required = false, defaultValue = "") String bookDisposition)
+    @PostMapping("/Disposition-Change")
+    public String bookDispositionPost(@Valid Nwtxdt nwtxdt, BindingResult bindingResult,
+                                      ModelMap model)
                                       throws ParseException {
         System.out.println("Book Disposition POST");
-        //Pseudo Regex
-        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || bookDisposition.equals("")) {
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
-            return "Supervisor/bookDisposition";
-        }else{
-            //Wasn't able to find a book off of given credentials
-            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            return "Supervisor/addBook";
         }
 
-        Nwtxdt nwtxdt = bookDispositionService.getNwtxdt(bookCode, editionYear, barcode);
-        nwtxdt.setDisposition(bookDisposition);
-        bookDispositionService.setNwtxdt(nwtxdt);
+        Nwtxdt oldNwtxdt = bookDispositionService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode());
+        oldNwtxdt.setDisposition(nwtxdt.getDisposition());
+        bookDispositionService.setNwtxdt(oldNwtxdt);
         return "Supervisor/bookDisposition";
     }
 
@@ -190,29 +194,27 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/replaceBarcode", method = RequestMethod.POST)
-    public String replaceBarcodePOST(ModelMap model,
-                                     @RequestParam(value = "bookCode", required = false, defaultValue = "") String bookCode,
-                                     @RequestParam(value = "bookYear", required = false, defaultValue = "") String editionYear,
-                                     @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
-                                     @RequestParam(value = "newBarcode", required = false, defaultValue = "") String newBarcode,
-                                     @RequestParam(value = "bookTitle", required = false, defaultValue = "") String bookTitle)
+    public String replaceBarcodePOST(@Valid Nwtxdt nwtxdt, BindingResult bindingResult,
+                                     ModelMap model)
                                      throws ParseException {
         System.out.println("Replace Barcode POST");
-        //Pseudo Regex
-        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || newBarcode.equals("")) {
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
             return "Supervisor/replaceBarcode";
         }
 
-        Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(bookCode, editionYear, barcode);
+        Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode());
         if (oldNwtxdt != null) {
-            Nwtxdt nwtxdt = new Nwtxdt();
 
             //Duplicating everything to the new model
             nwtxdt.setBookCode(oldNwtxdt.getBookCode());
             nwtxdt.setEditionYear(oldNwtxdt.getEditionYear());
             nwtxdt.setSeqNr(oldNwtxdt.getSeqNr());
-            nwtxdt.setBarcode(newBarcode); //<-- This is the changed Item
             nwtxdt.setPidm(oldNwtxdt.getPidm());
             nwtxdt.setTerm(oldNwtxdt.getTerm());
             nwtxdt.setDateCheckedOut(oldNwtxdt.getDateCheckedOut());
@@ -223,8 +225,8 @@ public class HomeController {
             nwtxdt.setActivityDate(oldNwtxdt.getActivityDate());
             nwtxdt.setBillableFlag(oldNwtxdt.getBillableFlag());
 
-            //Deletes Old Repository Item and Saves New One
-            replaceBarcodeService.deleteNwtxdt(barcode);
+            // Deletes Old Repository Item and Saves New One
+            replaceBarcodeService.deleteNwtxdt(nwtxdt.getBarcode());
             replaceBarcodeService.saveNwtxdt(nwtxdt);
         }else{
             //Wasn't able to find a book off of given credentials
@@ -236,25 +238,29 @@ public class HomeController {
 
     @Autowired
     QueryCourseService queryCourseService;
-    @RequestMapping(value = "/Find-Course", method = RequestMethod.GET)
+    @GetMapping("/Find-Course")
     public String queryCourse(){
         System.out.println("Course Query GET");
         return "Supervisor/queryCourse";
     }
-    @RequestMapping(value = "/Find-Course", method = RequestMethod.POST)
-    public String queryCoursePost(ModelMap model,
-                                  @RequestParam(value = "courseCode", required = false, defaultValue = "") String courseCode)
+    @PostMapping("/Find-Course")
+    public String queryCoursePost(ModelMap model, Scbcrse scbcrse,BindingResult bindingResult)
                                   throws ParseException {
         System.out.println("Course Query POST");
         //Pseudo Regex
-        if (courseCode.equals("")) {
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
             return "Supervisor/queryCourse";
         }
 
-        Scbcrse scbcrse = queryCourseService.getScbcrse(courseCode);
-        if (scbcrse != null) {
-            model.put("crseTable", scbcrse);
+        Scbcrse oldScbcrse = queryCourseService.getScbcrse(scbcrse.getSubjCode());
+        if (oldScbcrse != null) {
+            model.put("crseTable", oldScbcrse);
         }else{
             //Wasn't able to find a book off of given credentials
             model.put("returnVoidError", "No Courses Found Off of Given Credentials");
@@ -272,19 +278,23 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/Course-Message", method = RequestMethod.POST)
-    public String courseMessagePost(ModelMap model,
-                                    @RequestParam(value = "courseId", required = false, defaultValue = "")String courseId)
+    public String courseMessagePost(ModelMap model, Nwtxcm nwtxcm, BindingResult bindingResult)
                                     throws ParseException{
         System.out.println("Course Message POST");
         //Pseudo Regex
-        if (courseId.equals("")) {
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
-            return "Supervisor/courseMessage";
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            return "Supervisor/queryCourse";
         }
 
-        Nwtxcm nwtxcm = courseMessageService.getNwtxcm(courseId);
-        if (nwtxcm != null) {
-            model.put("courseMessage", nwtxcm.getCmMessage());
+        Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCmCourse());
+        if (oldNwtxcm != null) {
+            model.put("courseMessage", oldNwtxcm.getCmMessage());
         }else{
             //Wasn't able to find a course off of given credentials
             model.put("returnVoidError", "No Course Found Off of Given Credentials");
@@ -292,20 +302,24 @@ public class HomeController {
         return "Supervisor/courseMessage";
     }
     @RequestMapping(value = "/Course-Message", method = RequestMethod.POST, params="clear")
-    public String courseMessageClear(ModelMap model,
-                                     @RequestParam(value = "courseId", required = false, defaultValue = "") String courseId)
+    public String courseMessageClear(ModelMap model, Nwtxcm nwtxcm, BindingResult bindingResult)
                                      throws ParseException {
         System.out.println("Course Message POST - CLEAR");
         //Pseudo Regex
-        if (courseId.equals("")) {
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
-            return "Supervisor/courseMessage";
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            return "Supervisor/queryCourse";
         }
 
-        Nwtxcm nwtxcm = courseMessageService.getNwtxcm(courseId);
-        if (nwtxcm != null) {
-            nwtxcm.setCmMessage("");
-            courseMessageService.saveNwtxcm(nwtxcm);
+        Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCmCourse());
+        if (oldNwtxcm != null) {
+            oldNwtxcm.setCmMessage("");
+            courseMessageService.saveNwtxcm(oldNwtxcm);
             model.put("courseMessage", "Cleared!");
         }else{
             //Wasn't able to find a course off of given credentials
@@ -323,46 +337,29 @@ public class HomeController {
     }
 
     @RequestMapping(value= "/Book-Code-Change", method = RequestMethod.POST)
-    public String changeBookCodePost(ModelMap model,
-                                     @RequestParam(value = "bookCode", required = false, defaultValue = "")String bookCode,
-                                     @RequestParam(value = "editionYear", required = false, defaultValue = "")String editionYear,
-                                     @RequestParam(value = "newBookCode", required = false, defaultValue = "")String newBookCode,
-                                     @RequestParam(value = "newEditionYear", required = false, defaultValue = "")String newEditionYear)
+    public String changeBookCodePost(ModelMap model, Nwtxin nwtxin, BindingResult bindingResult)
                                      throws ParseException{
         System.out.println("Course Message POST");
         //Pseudo Regex
-        if(bookCode.equals("") || editionYear.equals("") || newBookCode.equals("") || newEditionYear.equals("")){
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
-            return "Supervisor/changeBookCode";
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            return "Supervisor/queryCourse";
         }
 
-        Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(bookCode, editionYear);
+        Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear());
         if(oldNwtxin != null){
-            Nwtxin nwtxin = new Nwtxin();
 
             //Duplicating everything to the new model
-            nwtxin.setBookCode(newBookCode); //<-- This is the changed Item
-            nwtxin.setEditionYear(newEditionYear); //<-- This is the changed Item
-            nwtxin.setTitle(oldNwtxin.getTitle());
-            nwtxin.setAuthor(oldNwtxin.getAuthor());
-            nwtxin.setPublisher(oldNwtxin.getPublisher());
-            nwtxin.setBookStatus(oldNwtxin.getBookStatus());
-            nwtxin.setCurrentPrice(oldNwtxin.getCurrentPrice());
-            nwtxin.setIsbn(oldNwtxin.getIsbn());
-            nwtxin.setPruchaseDate(oldNwtxin.getPruchaseDate());
-            nwtxin.setFirstUsedDate(oldNwtxin.getFirstUsedDate());
-            nwtxin.setDiscontinuedDate(oldNwtxin.getDiscontinuedDate());
-            nwtxin.setActivityDate(oldNwtxin.getActivityDate());
-            nwtxin.setCrseName(oldNwtxin.getCrseName());
-            nwtxin.setCrse1(oldNwtxin.getCrse1());
-            nwtxin.setCrse2(oldNwtxin.getCrse2());
-            nwtxin.setCrse3(oldNwtxin.getCrse3());
-            nwtxin.setCrse4(oldNwtxin.getCrse4());
-            nwtxin.setCrse5(oldNwtxin.getCrse5());
-            nwtxin.setComment(oldNwtxin.getComment());
+            //oldNwtxin.setBookCode(newBookCode); //<-- This is the changed Item
+            //oldNwtxin.setEditionYear(newEditionYear); //<-- This is the changed Item
 
             changeBookcodeService.deleteNwtxin(bookCode);
-            changeBookcodeService.saveNwtxin(nwtxin);
+            changeBookcodeService.saveNwtxin(oldNwtxin);
         }
         return "Supervisor/changeBookCode";
     }
