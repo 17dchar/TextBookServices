@@ -138,6 +138,7 @@
         <a href="Report">Add Report Here</a>
     </div>
 </div>
+<a href="/" class = "dropbtn">Log out</a>
 <form class="yearCodeForm" method = "post">
     <fieldset>
         <p>

@@ -30,8 +30,13 @@ import com.webapp.TextBook.Model.*;
 @Controller
 public class HomeController {
 
+    Boolean supervisor = false;
+    Boolean studentEmployee = false;
+
     @RequestMapping("/")
     public String login() {
+        supervisor = false;
+        studentEmployee = false;
         return "login";
     }
 
@@ -41,8 +46,12 @@ public class HomeController {
                             @RequestParam (value = "password",required = false, defaultValue = "")String password)
                             throws ParseException{
         if(login.equals("admin") && password.equals("admin")){
+            supervisor = true;
+            studentEmployee = false;
             return "Supervisor/supervisorView";
         } else{
+            studentEmployee = true;
+            supervisor = false;
             return "StudentEmployee/studentEmployeeView";
         }
     }

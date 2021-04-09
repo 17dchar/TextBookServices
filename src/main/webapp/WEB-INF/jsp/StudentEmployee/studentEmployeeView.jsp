@@ -19,6 +19,7 @@
         <a href="Student-Schedule">Schedule</a>
         <a href="Sold-Books">Sold Books</a>
         <a href="Previous-Books">Previous Books</a>
+        <a href="/">Log out</a>
     </div>
 </div>
 </body>

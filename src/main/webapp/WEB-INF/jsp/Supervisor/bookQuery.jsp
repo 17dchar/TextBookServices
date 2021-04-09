@@ -38,6 +38,7 @@
         <a href="#">blah</a>
     </div>
 </div>
+<a href="/" class = "dropbtn">Log out</a>
 <form method="post">
     <fieldset>
         <p>

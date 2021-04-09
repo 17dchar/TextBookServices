@@ -139,6 +139,7 @@
         <a href="Report">Add Report Here</a>
     </div>
 </div>
+<a href="/" class = "dropbtn">Log out</a>
 <div class="tenPix"></div>
 <div class="container">
     <form class="courseMessageForm" method = post>

@@ -40,5 +40,6 @@
         <a href="Report">Add Report Here</a>
     </div>
 </div>
+<a href="/" class = "dropbtn">Log out</a>
 </body>
 </html>
