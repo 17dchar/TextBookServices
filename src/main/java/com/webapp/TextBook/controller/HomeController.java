@@ -154,6 +154,7 @@ public class HomeController {
             return "Supervisor/bookQuery";
         }
 
+        nwtxdt = bookQueryService.getNwtxdt(nwtxdt.getBookCode(),nwtxdt.getEditionYear(), nwtxdt.getBarcode());
         if (nwtxdt != null) {
             //Found everything, and putting all needed items to the front page
             model.put("bookTitle",          nwtxdt.getBookCode());
@@ -166,7 +167,7 @@ public class HomeController {
             model.put("prevCheckedOutTo",   nwtxdt.getPrevPidm());
             model.put("dateCheckedIn",      nwtxdt.getPrevDateCheckedIn());
 
-            return "StudentEmployee/bookQuery";
+            return "Supervisor/bookQuery";
         } else {
             //Wasn't able to find a book off of given credentials
             model.put("returnVoidError", "No Book Found Off of Given Credentials");
@@ -207,10 +208,11 @@ public class HomeController {
                     System.out.println((FieldError) object);
                 }
             }
-            return "Supervisor/addBook";
+            return "Supervisor/bookDisposition";
         }
 
         Nwtxdt oldNwtxdt = bookDispositionService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode());
+        System.out.println(nwtxdt.getDisposition());
         oldNwtxdt.setDisposition(nwtxdt.getDisposition());
         bookDispositionService.setNwtxdt(oldNwtxdt);
         return "Supervisor/bookDisposition";
@@ -233,7 +235,7 @@ public class HomeController {
 
     //Replace Barcode POST
     //SUPERVISOR ONLY
-    @RequestMapping(value = "/replaceBarcode", method = RequestMethod.POST)
+    @RequestMapping(value = "/Change-Barcode", method = RequestMethod.POST)
     public String replaceBarcodePOST(@Valid Nwtxdt nwtxdt, BindingResult bindingResult,
                                      ModelMap model)
                                      throws ParseException {
@@ -269,7 +271,7 @@ public class HomeController {
             nwtxdt.setBillableFlag(oldNwtxdt.getBillableFlag());
 
             // Deletes Old Repository Item and Saves New One
-            replaceBarcodeService.deleteNwtxdt(nwtxdt.getBarcode());
+            replaceBarcodeService.deleteNwtxdt(oldNwtxdt.getBarcode());
             replaceBarcodeService.saveNwtxdt(nwtxdt);
         }else{
             //Wasn't able to find a book off of given credentials
@@ -296,7 +298,7 @@ public class HomeController {
     //Find Course POST
     //SUPERVISOR ONLY
     @PostMapping("/Find-Course")
-    public String queryCoursePost(ModelMap model, Scbcrse scbcrse,BindingResult bindingResult)
+    public String queryCoursePost(ModelMap model, @Valid Scbcrse scbcrse, BindingResult bindingResult)
                                   throws ParseException {
         System.out.println("Course Query POST");
         if(!supervisor){
@@ -313,9 +315,9 @@ public class HomeController {
             return "Supervisor/queryCourse";
         }
 
-        Scbcrse oldScbcrse = queryCourseService.getScbcrse(scbcrse.getSubjCode());
-        if (oldScbcrse != null) {
-            model.put("crseTable", oldScbcrse);
+        scbcrse = queryCourseService.getScbcrse(scbcrse.getSubjCode());
+        if (scbcrse != null) {
+            model.put("crseTable", scbcrse);
         }else{
             //Wasn't able to find a book off of given credentials
             model.put("returnVoidError", "No Courses Found Off of Given Credentials");
@@ -329,7 +331,7 @@ public class HomeController {
 
     //Course Message GET
     //SUPERVISOR ONLY
-    @RequestMapping(value = "/Course-Message", method = RequestMethod.GET)
+    @GetMapping("/Course-Message")
     public String courseMessage(){
         System.out.println("Course Message GET");
         if(!supervisor){
@@ -340,8 +342,8 @@ public class HomeController {
 
     //Course Message POST
     //SUPERVISOR ONLY
-    @RequestMapping(value = "/Course-Message", method = RequestMethod.POST)
-    public String courseMessagePost(ModelMap model, Nwtxcm nwtxcm, BindingResult bindingResult)
+    @PostMapping("/Course-Message")
+    public String courseMessagePost(@Valid Nwtxcm nwtxcm, BindingResult bindingResult, ModelMap model)
                                     throws ParseException{
         System.out.println("Course Message POST");
         if(!supervisor){
@@ -359,6 +361,7 @@ public class HomeController {
         }
 
         Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCmCourse());
+        System.out.println(nwtxcm.getCmCourse());
         if (oldNwtxcm != null) {
             model.put("courseMessage", oldNwtxcm.getCmMessage());
         }else{
@@ -416,8 +419,8 @@ public class HomeController {
 
     //Change Book Code POST
     //SUPERVISOR ONLY
-    @RequestMapping(value= "/Book-Code-Change", method = RequestMethod.POST)
-    public String changeBookCodePost(ModelMap model, Nwtxin nwtxin, BindingResult bindingResult)
+    @RequestMapping(value= "/Change-Book-Code", method = RequestMethod.POST)
+    public String changeBookCodePost(@Valid Nwtxin nwtxin, BindingResult bindingResult, ModelMap model)
                                      throws ParseException{
         System.out.println("Course Message POST");
         if(!supervisor){
@@ -431,7 +434,7 @@ public class HomeController {
                     System.out.println((FieldError) object);
                 }
             }
-            return "Supervisor/queryCourse";
+            return "Supervisor/changeBookCode";
         }
 
         Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear());

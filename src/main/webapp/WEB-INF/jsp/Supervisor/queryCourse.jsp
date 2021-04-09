@@ -137,7 +137,10 @@
         <p>
             <label>Course:</label>
             <input type = "text"
-                   name = "courseCode" />
+                   name = "subjCode" />
+            <label>Number:</label>
+            <input type = "text"
+                   name = "crseNumb" />
         </p>
         <p>
             <input type="submit" name="Save"/>

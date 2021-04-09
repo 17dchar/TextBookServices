@@ -74,7 +74,7 @@
                     </p>
                     <p>
                         <label for="bookDisposition">Change Disposition To:</label>
-                        <select name="bookDisposition" id = "bookDisposition">
+                        <select name="disposition">
                             <option value="">(No Change)</option>
                             <option value="I">I</option>
                             <option value="O">O</option>

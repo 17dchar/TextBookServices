@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html lang="en">
@@ -142,27 +143,25 @@
 <a href="/" class = "dropbtn">Log out</a>
 <div class="tenPix"></div>
 <div class="container">
-    <form class="courseMessageForm" method = post>
+    <form class="courseMessageForm" method = "post">
         <fieldset>
             <p>
                 <div class="form-group">
-                <label>Course:</label>
-                <input type = "text"
-                       name = "courseId"
+                    <label>Course:</label>
+                    <input type = "text"
+                       name = "course"
                        class="form-control"/>
-                <label>Message:</label>
+                    <label>Message:</label>
                 <!--
                 <input type = "text"
                        id = "courseMessage"
                        class="form-control"/>
                 -->
-                <p class="form-control">
-                    ${courseMessage}
-                </p>
-                <label>New Message:</label>
-                <input type = "text"
-                       id = "newCourseMessage"
-                       class="form-control"/>
+            <!--
+                    <p class="form-control">
+                        ${courseMessage}
+                        -->
+                    </p>
                 </div>
             </p>
         </fieldset>

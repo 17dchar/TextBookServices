@@ -44,7 +44,7 @@
                    name="bookCode"/>
             <label>Book Year:</label>
             <input type="text"
-                   name="bookYear"/>
+                   name="editionYear"/>
             <label>Strike Barcode:</label>
             <input type="text"
                    name="barcode"/>
