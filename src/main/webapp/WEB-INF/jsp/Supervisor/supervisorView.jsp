@@ -11,7 +11,8 @@
     <title>Supervisor View</title>
 </head>
 <body>
-<h1>Textbook Services: Supervisor Access</h1>
+<h1 class="TBSHeader">Textbook Services</h1>
+<h2 class="BookCodeYearTitle">Supervisor Access</h2>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">

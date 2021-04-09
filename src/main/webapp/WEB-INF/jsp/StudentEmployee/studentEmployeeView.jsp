@@ -11,7 +11,8 @@
     <title>Employee Home</title>
 </head>
 <body>
-<h1>Textbook Services: Employee Home</h1>
+<h1 class="TBSHeader">Textbook Services</h1>
+<h2 class="BookCodeYearTitle">Employee Home</h2>
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
     <div class="dropdown-content">

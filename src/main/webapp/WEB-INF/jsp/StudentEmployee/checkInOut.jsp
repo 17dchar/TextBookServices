@@ -6,108 +6,11 @@
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <style>
-        .TBSHeader {
-            width: 100%;
-            height: 30vh;
-            background-size: cover;
-            background-image: url('https://www.nwmissouri.edu/images/header-img/drone campus august fall2018 tw 02069.jpg');
-            background-position-y:center;
-            text-align: center;
-            color: #f1f1f1;
-            -webkit-text-stroke-width: .5pt;
-            -webkit-text-stroke-color: #000000;
-            font-family: "Oswald", Arial, sans-serif;
-            text-transform: uppercase;
-            font-size: 56px;
-            font-weight: bolder;
-            line-height: 2em;
-            border-bottom: #006747;
-            border-bottom-style: inset;
-            border-bottom-width: 45px;
-            margin-bottom: -126.5px;
-            text-shadow: #006747;
-        }
-        .BookCodeYearTitle {
-            text-align: center;
-            height: 102px;
-            font-weight: bolder;
-            text-shadow: #000000;
-            font-family: "Oswald", Arial, sans-serif;
-            color: #f1f1f1;
-            font-size: 36px;
-            -webkit-text-stroke-width: .5pt;
-            -webkit-text-stroke-color: #000000;
-            line-height: 1em;
-            padding-bottom: 10px;
-            margin-bottom: -20px;
-        }
-        .btnCol {
-            background-color: #006747;
-            outline-color: black;
-        }
-        .btnCol:hover { background-color: #014811}
-
-        .form-control:focus {
-            border-color: #006747;
-            box-shadow: 0 0 0 1.5px rgb(0, 103, 71);
-        }
-        .has-error .form-control:focus{
-            box-shadow: none;
-            -webkit-box-shadow: none;}
-
-        .column {float: left;}
-        .left {width: 60%;}
-        .middle {width: 30%;}
-        .right {width: 10%;}
-
-        .row:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-        .dropbtn {
-            background-color: #006747;
-            color: #f1f1f1;
-            padding: 10px;
-            font-size: 16px;
-            border: #f1f1f1;
-        }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            margin-left: 20px;
-            margin-bottom: 6px;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #006747;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            margin-left: 2px;
-        }
-        .dropdown-content a {
-            color: #f1f1f1;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {background-color: #014811;}
-        .dropdown:hover .dropdown-content {display: block;}
-        .dropdown:hover .dropbtn {background-color: #006747;}
-        .container {
-            margin-top: 15px;
-            margin-left: 20px;
-            float: left;
-        }
-        .tenPix {
-            height: 10px;
-            width: 100%;
-        }
-    </style>
-    <title>Check In/Out</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Check In Out</title>
 </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>
@@ -126,33 +29,33 @@
 <div class="container">
     <form class="yearCodeForm">
         <fieldset>
-            <p>
-            <div class="form-group">
+            <div class="form-group form-inline border rounded">
                 <label>Term:</label>
                 <input type = "text"
                        id = "termSeason"
-                       class="form-control"/>
+                       class="form-control middle pattinBetween"/>
                 <input type = "text"
                        id = "termYear"
-                       class="form-control"/>
-        </div>
-              <div class="form-group">
-                <label>ID:</label>
+                       class="form-control middle"/>
+            </div>
+            <span class="betweenForm">
+                <p></p>
+            </span>
+            <div class="form-group form-inline border rounded">
+                <label style="padding-right: 20px">ID:</label>
                 <input type = "text"
                        id = "bookID1"
-                       class="form-control"/>
+                       class="form-control middle pattinBetween"/>
                 <input type = "text"
                        id = "bookID2"
                        class="form-control"/>
-              </div>
-            <div class="form-group">
-
-            <label>Bag#:</label>
+            </div>
+            <div class="form-group form-inline border rounded">
+                <label>Bag#:</label>
                 <input type = "text"
                        id = "bagNumber"
-                       class="form-control"/>
+                       class="form-control middle pattinBetween"/>
             </div>
-            </p>
         </fieldset>
     </form>
 
