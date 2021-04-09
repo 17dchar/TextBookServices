@@ -293,20 +293,24 @@ public class HomeController {
         return "Supervisor/courseMessage";
     }
     @RequestMapping(value = "/Course-Message", method = RequestMethod.POST, params="clear")
-    public String courseMessageClear(ModelMap model,
-                                     @RequestParam(value = "courseId", required = false, defaultValue = "") String courseId)
+    public String courseMessageClear(ModelMap model, Nwtxcm nwtxcm, BindingResult bindingResult)
                                      throws ParseException {
         System.out.println("Course Message POST - CLEAR");
         //Pseudo Regex
-        if (courseId.equals("")) {
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
-            return "Supervisor/courseMessage";
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            return "Supervisor/queryCourse";
         }
 
-        Nwtxcm nwtxcm = courseMessageService.getNwtxcm(courseId);
-        if (nwtxcm != null) {
-            nwtxcm.setCmMessage("");
-            courseMessageService.saveNwtxcm(nwtxcm);
+        Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCmCourse());
+        if (oldNwtxcm != null) {
+            oldNwtxcm.setCmMessage("");
+            courseMessageService.saveNwtxcm(oldNwtxcm);
             model.put("courseMessage", "Cleared!");
         }else{
             //Wasn't able to find a course off of given credentials
@@ -324,46 +328,29 @@ public class HomeController {
     }
 
     @RequestMapping(value= "/Book-Code-Change", method = RequestMethod.POST)
-    public String changeBookCodePost(ModelMap model,
-                                     @RequestParam(value = "bookCode", required = false, defaultValue = "")String bookCode,
-                                     @RequestParam(value = "editionYear", required = false, defaultValue = "")String editionYear,
-                                     @RequestParam(value = "newBookCode", required = false, defaultValue = "")String newBookCode,
-                                     @RequestParam(value = "newEditionYear", required = false, defaultValue = "")String newEditionYear)
+    public String changeBookCodePost(ModelMap model, Nwtxin nwtxin, BindingResult bindingResult)
                                      throws ParseException{
         System.out.println("Course Message POST");
         //Pseudo Regex
-        if(bookCode.equals("") || editionYear.equals("") || newBookCode.equals("") || newEditionYear.equals("")){
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
-            return "Supervisor/changeBookCode";
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            return "Supervisor/queryCourse";
         }
 
-        Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(bookCode, editionYear);
+        Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear());
         if(oldNwtxin != null){
-            Nwtxin nwtxin = new Nwtxin();
 
             //Duplicating everything to the new model
-            nwtxin.setBookCode(newBookCode); //<-- This is the changed Item
-            nwtxin.setEditionYear(newEditionYear); //<-- This is the changed Item
-            nwtxin.setTitle(oldNwtxin.getTitle());
-            nwtxin.setAuthor(oldNwtxin.getAuthor());
-            nwtxin.setPublisher(oldNwtxin.getPublisher());
-            nwtxin.setBookStatus(oldNwtxin.getBookStatus());
-            nwtxin.setCurrentPrice(oldNwtxin.getCurrentPrice());
-            nwtxin.setIsbn(oldNwtxin.getIsbn());
-            nwtxin.setPruchaseDate(oldNwtxin.getPruchaseDate());
-            nwtxin.setFirstUsedDate(oldNwtxin.getFirstUsedDate());
-            nwtxin.setDiscontinuedDate(oldNwtxin.getDiscontinuedDate());
-            nwtxin.setActivityDate(oldNwtxin.getActivityDate());
-            nwtxin.setCrseName(oldNwtxin.getCrseName());
-            nwtxin.setCrse1(oldNwtxin.getCrse1());
-            nwtxin.setCrse2(oldNwtxin.getCrse2());
-            nwtxin.setCrse3(oldNwtxin.getCrse3());
-            nwtxin.setCrse4(oldNwtxin.getCrse4());
-            nwtxin.setCrse5(oldNwtxin.getCrse5());
-            nwtxin.setComment(oldNwtxin.getComment());
+            //oldNwtxin.setBookCode(newBookCode); //<-- This is the changed Item
+            //oldNwtxin.setEditionYear(newEditionYear); //<-- This is the changed Item
 
             changeBookcodeService.deleteNwtxin(bookCode);
-            changeBookcodeService.saveNwtxin(nwtxin);
+            changeBookcodeService.saveNwtxin(oldNwtxin);
         }
         return "Supervisor/changeBookCode";
     }
