@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -64,57 +65,30 @@ public class HomeController {
     @Autowired
     AddBookService addBookService;
 
-    @RequestMapping(value="/Add-Book", method = RequestMethod.GET)
-    public String addBookPage(ModelMap model){
+    @GetMapping("/Add-Book")
+    public String addBookPage(){
         System.out.println("Add Book GET");
         return "Supervisor/addBook";
     }
 
-    @RequestMapping(value="/Add-Book", method = RequestMethod.POST)
+    @PostMapping("/Add-Book")
     public String addBookPOST(@Valid Nwtxdt nwtxdt, BindingResult bindingResult,
-                              ModelMap model
-                              //@RequestParam(value = "bookCode", required = false, defaultValue = "") String bookCode,
-                              //@RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
-                              //@RequestParam(value = "bookTitle", required = false, defaultValue = "") String bookTitle,
-                              //@RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
-                              //@RequestParam(value = "seqNr", required = false, defaultValue = "") String seqNr)
-    )throws ParseException {
+                              ModelMap model) throws ParseException {
         System.out.println("Add Book POST");
-        /*
-        //Pseudo Regex
-        if (bookCode.equals("") || editionYear.equals("") || bookTitle.equals("") || barcode.equals("") || seqNr.equals("")) {
-            model.put("returnVoidError", "Invalid Credentials");
-            return "Supervisor/addBook";
-        }
 
-         */
+        //If There Are Errors Compared To The Model, Then It Will Return Invalid Credentials
         if(bindingResult.hasErrors()){
-            System.out.println("Has Errors");
             model.put("returnVoidError", "Invalid Credentials");
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
             return "Supervisor/addBook";
         }
-
-        System.out.println("it works!");
-
-        System.out.println("book code: " +nwtxdt.getBookCode());
-        System.out.println("barcode: " + nwtxdt.getBarcode());
-        System.out.println("year: " + nwtxdt.getEditionYear());
-
-        /*
-        *
-        * Removing for now
-        //Model for Nwtxdt Changing
-        Nwtxdt nwtxdt = new Nwtxdt();
-        nwtxdt.setBarcode(barcode);
-        nwtxdt.setEditionYear(editionYear);
-        nwtxdt.setBookCode(bookCode);
-        nwtxdt.setSeqNr(seqNr);
-
+        
         //Add Book Service - Save
         addBookService.saveNwtxdt(nwtxdt);
-        return "Supervisor/addBook";
-
-         */
         return "Supervisor/addBook";
     }
 
