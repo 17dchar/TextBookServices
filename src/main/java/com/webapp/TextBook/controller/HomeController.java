@@ -147,32 +147,31 @@ public class HomeController {
 
     @Autowired
     BookDispositionService bookDispositionService;
-    @RequestMapping(value = "/Change-Disposition", method = RequestMethod.GET)
+
+    @GetMapping("/Change-Disposition")
     public String bookDisposition(){
         System.out.println("Book Dispostion GET");
         return "Supervisor/bookDisposition";
     }
 
-    @RequestMapping(value = "/Disposition-Change", method = RequestMethod.POST)
-    public String bookDispositionPost(ModelMap model,
-                                      @RequestParam(value = "bookCode", required = true, defaultValue = "") String bookCode,
-                                      @RequestParam(value = "editionYear", required = false, defaultValue = "") String editionYear,
-                                      @RequestParam(value = "barcode", required = false, defaultValue = "") String barcode,
-                                      @RequestParam(value = "bookDisposition", required = false, defaultValue = "") String bookDisposition)
+    @PostMapping("/Disposition-Change")
+    public String bookDispositionPost(@Valid Nwtxdt nwtxdt, BindingResult bindingResult,
+                                        ModelMap model)
                                       throws ParseException {
         System.out.println("Book Disposition POST");
-        //Pseudo Regex
-        if (bookCode.equals("") || editionYear.equals("") || barcode.equals("") || bookDisposition.equals("")) {
+        if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
-            return "Supervisor/bookDisposition";
-        }else{
-            //Wasn't able to find a book off of given credentials
-            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+            for (Object object : bindingResult.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            return "Supervisor/addBook";
         }
 
-        Nwtxdt nwtxdt = bookDispositionService.getNwtxdt(bookCode, editionYear, barcode);
-        nwtxdt.setDisposition(bookDisposition);
-        bookDispositionService.setNwtxdt(nwtxdt);
+        Nwtxdt oldNwtxdt = bookDispositionService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode());
+        oldNwtxdt.setDisposition(nwtxdt.getDisposition());
+        bookDispositionService.setNwtxdt(oldNwtxdt);
         return "Supervisor/bookDisposition";
     }
 
