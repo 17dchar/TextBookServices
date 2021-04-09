@@ -3,77 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Query Course</title>
-    <style>
-        .column {float: left;}
-        .left {width: 90%;}
-        .right {width: 10%;}
-
-        .row:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-        .dropbtn {
-            background-color: lightgrey;
-            color: darkgreen;
-            padding: 10px;
-            font-size: 16px;
-            border: darkgreen;
-        }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-        .dropdown-content a {
-            color: darkgreen;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {background-color: #ddd;}
-        .dropdown:hover .dropdown-content {display: block;}
-        .dropdown:hover .dropbtn {background-color: grey;}
-
-        #tableDiv{
-            height: 500px;
-            width: 100%;
-
-            border-style: ridge;
-            border-width: thick;
-            border-color: ForestGreen;
-        }
-        table{
-            border_collapse:collapse;
-            }
-        tr{
-            width: 100px;
-            padding: 50px;
-        }
-        tr:nth-child(even){
-            background-color: lightgrey;
-        }
-        th{
-            text-align: left;
-            width: 100px;
-            padding: 0px 15px;
-        }
-        td{
-            width: 100px;
-            padding: 0px 15px;
-        }
-        #tdTitle{
-            width: 100%;
-            padding: 0px 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
     <!--
     <script>
         let bookData = [
@@ -102,7 +36,8 @@
     -->
 </head>
 <body>
-<h1>Textbook Services: Query a Course</h1>
+<h1 class="TBSHeader">Textbook Services</h1>
+<h2 class="BookCodeYearTitle">Query a Course</h2>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
