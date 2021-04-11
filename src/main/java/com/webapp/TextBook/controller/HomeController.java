@@ -55,21 +55,45 @@ public class HomeController {
             supervisor = true;
             studentEmployee = false;
             return "Supervisor/supervisorView";
-        } else{
+        } else if (login.equals("student") && password.equals("student")){
             studentEmployee = true;
             supervisor = false;
             return "StudentEmployee/studentEmployeeView";
+        } else{
+            return "login";
         }
     }
 
-
+    //Supervisor Home
+    //SUPERVISOR ACCESS ONLY
     @RequestMapping("/Supervisor-Home")
     public String supervisor(){
+        if(!supervisor){
+            return "redirect:/";
+        }
         return "Supervisor/supervisorView";
     }
 
-    @RequestMapping("/Maintenance-Form")
+
+    @Autowired
+    MaintenanceService maintenanceService;
+
+    //Maintenance-Form GET
+    //SUPERVISOR ACCESS ONLY
+    @GetMapping("/Maintenance")
     public String maintenance(){
+        System.out.println("Maintenance GET");
+        if(!supervisor){
+            return "redirect:/";
+        }
+        return "Supervisor/maintenanceFormView";
+    }
+
+    //Maintenance POST
+    //SUPERVISOR ACCESS ONLY
+    @PostMapping("/Maintenance")
+    public String maintenancePost(ModelMap model){
+        System.out.println("Maintenance POST");
         return "Supervisor/maintenanceFormView";
     }
 
@@ -608,5 +632,30 @@ public class HomeController {
             return"Supervisor/studentSchedule";
         }
         return "StudentEmployee/studentSchedule";
+    }
+
+
+    //@Autowired
+    //MaintenanceService maintenanceService;
+
+    //Check-In-Out GET
+    @GetMapping("/Check-In-Out")
+    public String checkInOut(){
+        System.out.println("Check In Out GET");
+        if(supervisor){
+            return"Supervisor/checkInOut";
+        } else if(studentEmployee){
+            return "StudentEmployee/checkInOut";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+
+    //Check-In-Out POST
+    @PostMapping("/Check-In-Out")
+    public String checkInOutPost(ModelMap model){
+        System.out.println("Check In Out POST");
+        return "Supervisor/maintenanceFormView";
     }
 }
