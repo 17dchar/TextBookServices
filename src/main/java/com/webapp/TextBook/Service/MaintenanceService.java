@@ -31,7 +31,7 @@ public class MaintenanceService {
     }
     public List<Nwtxin> getNwtxinList(String bookCode) {
         //Create a list of all repositories under given credentials
-        List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCode(bookCode);
+        List<Nwtxin> nwtxinList = nwtxinRepository.findDistinctEditionYearByBookCode(bookCode);
 
         //If there is at least 1 model under given credentials, return the first
         //Else, return nothing

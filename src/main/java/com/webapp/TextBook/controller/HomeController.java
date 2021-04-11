@@ -81,7 +81,7 @@ public class HomeController {
 
     //Maintenance-Form GET
     //SUPERVISOR ACCESS ONLY
-    @GetMapping("/Maintenance")
+    @GetMapping("/Maintenance-Form")
     public String maintenance(){
         System.out.println("Maintenance GET");
         if(!supervisor){
@@ -92,8 +92,8 @@ public class HomeController {
 
     //Maintenance POST
     //SUPERVISOR ACCESS ONLY
-    @PostMapping("/Maintenance")
-    public String maintenancePost(@Valid Nwtxin nwtxin, BindingResult bindingResult,
+    @PostMapping("/Maintenance-Form")
+    public String maintenancePost(@Valid @ModelAttribute Nwtxin nwtxin, BindingResult bindingResult,
                                   ModelMap model){
         System.out.println("Maintenance POST");
         if(!supervisor){
@@ -106,10 +106,23 @@ public class HomeController {
                 //check for specific errors
             }
         }
+        System.out.println(nwtxin.getBookCode());
         List<Nwtxin> nwtxinList = maintenanceService.getNwtxinList(nwtxin.getBookCode());
         if(nwtxinList != null){
             //Get stats of book with most recent edition year
+            int mostRecent = 0;
+            for(int i = 0; i < nwtxinList.size(); i++){
+                if(i > 0){
+                    System.out.println("wow");
+                    System.out.println(nwtxinList.get(i).getEditionYear());
+                    if(Integer.parseInt(nwtxinList.get(i).getEditionYear()) > Integer.parseInt(nwtxinList.get(i-1).getEditionYear())){
+                        mostRecent= i;
+                        System.out.println("change made");
+                    }
+                }
 
+            }
+            System.out.println(nwtxinList.get(mostRecent).getEditionYear());
             //Get stats of course name 1
         } else {
             //Wasn't able to find a book off of given credentials

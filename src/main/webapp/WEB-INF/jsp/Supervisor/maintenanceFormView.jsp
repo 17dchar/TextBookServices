@@ -46,10 +46,10 @@
         <p>
             <label>Book Code:</label>
             <input type="text"
-                   id="bookCode"/>
+                   name="bookCode"/>
             <label>Book Year:</label>
             <input type="text"
-                   id="bookYear"/>
+                   name="editionYear"/>
         </p>
     </fieldset>
 <div class="container">

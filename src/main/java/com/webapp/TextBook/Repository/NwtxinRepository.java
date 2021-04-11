@@ -15,6 +15,9 @@ public interface NwtxinRepository extends JpaRepository<Nwtxin, String>{
     List<Nwtxin> findAll();
     List<Nwtxin> findByBookCodeAndEditionYear(String bookCode, String editionYear);
     List<Nwtxin> findByBookCode(String bookCode);
+    //@Modifying
+    //@Query(value = "SELECT * FROM Nwtxin WHERE NWTXIN_BOOK_CODE = :bookCode", nativeQuery = true)
+    List<Nwtxin> findDistinctEditionYearByBookCode(String bookCode);
     @Modifying
     @Query(value = "DELETE FROM NWTXIN WHERE NWTXIN_BOOK_CODE = :id",nativeQuery = true)
     void deleteById(@Param("id")String id);

@@ -8,13 +8,13 @@ import java.util.Date;
 @Entity
 @Table(name = "NWTXIN")
 public class Nwtxin {
-    @Id
     @Column(name = "NWTXIN_BOOK_CODE")
     @NotEmpty
     private String bookCode;
     @Column (name = "NWTXIN_EDITION_YEAR")
     @NotEmpty
     private String editionYear;
+    @Id
     @Column (name = "NWTXIN_TITLE")
     private String title;
     @Column(name = "NWTXIN_AUTHOR")
