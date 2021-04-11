@@ -1,6 +1,8 @@
 package com.webapp.TextBook.Service;
 
 //Spring Dependencies
+import com.webapp.TextBook.Model.Nwtxin;
+import com.webapp.TextBook.Repository.NwtxinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -13,23 +15,31 @@ import com.webapp.TextBook.Model.Nwtxcm;
 @Service
 public class MaintenanceService {
 
-    @Autowired private NwtxcmRepository nwtxcmRepository;
-    public Nwtxcm getNwtxcm(String courseId) {
+    @Autowired
+    private NwtxinRepository nwtxinRepository;
+    public Nwtxin getNwtxin(String bookCode) {
         //Create a list of all repositories under given credentials
-        List<Nwtxcm> nwtxcmList = nwtxcmRepository.findByCourse(courseId);
+        List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCode(bookCode);
 
         //If there is at least 1 model under given credentials, return the first
         //Else, return nothing
-        if (nwtxcmList.size() > 0) {
-            return nwtxcmList.get(0);
+        if (nwtxinList.size() > 0) {
+            return nwtxinList.get(0);
+        }else{
+            return null;
+        }
+    }
+    public List<Nwtxin> getNwtxinList(String bookCode) {
+        //Create a list of all repositories under given credentials
+        List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCode(bookCode);
+
+        //If there is at least 1 model under given credentials, return the first
+        //Else, return nothing
+        if (nwtxinList.size() > 0) {
+            return nwtxinList;
         }else{
             return null;
         }
     }
 
-    public Nwtxcm saveNwtxcm(Nwtxcm nwtxcm){
-        System.out.println("Saving Added Repository");
-        return nwtxcmRepository.save(nwtxcm);
-
-    }
 }

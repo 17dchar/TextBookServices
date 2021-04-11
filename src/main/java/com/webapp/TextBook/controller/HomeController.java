@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -92,8 +93,30 @@ public class HomeController {
     //Maintenance POST
     //SUPERVISOR ACCESS ONLY
     @PostMapping("/Maintenance")
-    public String maintenancePost(ModelMap model){
+    public String maintenancePost(@Valid Nwtxin nwtxin, BindingResult bindingResult,
+                                  ModelMap model){
         System.out.println("Maintenance POST");
+        if(!supervisor){
+            return "redirect:/";
+        }
+        //If There Are Errors Compared To The Model, Then It Will Return Invalid Credentials
+        if(bindingResult.hasErrors()){
+            model.put("returnVoidError", "Invalid Credentials");
+            for (ObjectError object : bindingResult.getAllErrors()) {
+                //check for specific errors
+            }
+        }
+        List<Nwtxin> nwtxinList = maintenanceService.getNwtxinList(nwtxin.getBookCode());
+        if(nwtxinList != null){
+            //Get stats of book with most recent edition year
+
+            //Get stats of course name 1
+        } else {
+            //Wasn't able to find a book off of given credentials
+            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        }
+
+        //If edits made, make those changes
         return "Supervisor/maintenanceFormView";
     }
 

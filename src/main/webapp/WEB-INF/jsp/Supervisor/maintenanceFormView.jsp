@@ -41,7 +41,7 @@
     </div>
 </div>
 <a href="/" class = "dropbtn">Log out</a>
-<form>
+<form method = post>
     <fieldset>
         <p>
             <label>Book Code:</label>
@@ -52,7 +52,6 @@
                    id="bookYear"/>
         </p>
     </fieldset>
-</form>
 <div class="container">
     <div class="row">
         <div class="column left">
@@ -104,8 +103,6 @@
                                id="bookDateComment"/>
                     </p>
                 </fieldset>
-            </form>
-            <form>
                 <fieldset>
                     <legend>Course Info</legend>
                     <p>
@@ -135,10 +132,8 @@
                                id="courseThree"/>
                     </p>
                 </fieldset>
-            </form>
         </div>
         <div class="column middle">
-            <form>
                 <fieldset>
                     <legend>Book Stats</legend>
                     <p>
@@ -184,17 +179,19 @@
                                value=0/>
                     </p>
                 </fieldset>
-            </form>
+
         </div>
         <div class="column right">
             <p>
-                <button type="button">Save</button>
+                <input type="submit">Save</input>
             </p>
             <p>
                 <button type="button">Clear</button>
             </p>
         </div>
+
     </div>
 </div>
+</form>
 </body>
 </html>
