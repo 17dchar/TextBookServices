@@ -8,32 +8,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
-    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        let bookData = [
-        { title: 'book1', code: '1010', year: '2000'},
-        { title: 'book2', code: '1020', year: '2000'},
-        { title: 'book3', code: '1030', year: '2000'},
-        { title: 'database thing here', code: 'Durban', year: 'do the'}
-        ];
+        $(document).ready(function() {
+            $('#subjCode').keypress(function (e) {
+                console.log("i'm going thorugh this")
+                var data = {};
+                data["subjCode"] = $("#subjCode").val();
 
-        window.onload = () => {
-            loadTableData(bookData);
-        };
+                $.ajax({
+                    type: "POST",
+                    url: "/Find-Course",
+                    data: JSON.stringify(data),
+                    dataType: 'json',
+                    timeout: 6000000,
+                    success: function (data) {
 
-        function loadTableData(bookData) {
-            const tableBody = document.getElementById('tableData');
-            let dataHtml = '';
+                        var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                            + JSON.stringify(data, null, 4) + "&lt;/pre&gt;";
 
-        for(let book of bookData) {
-            dataHtml += '<tr><td>'+book.code+'</td><td>'+book.year+'</td><td id = "tdTitle">'+book.title+'</td></tr>';
-            }
-            console.log(dataHtml)
-            tableBody.innerHTML = dataHtml;
-        }
+                        console.log("SUCCESS");
+                    }
+                })
+            });
+        });
 
     </script>
-    -->
 </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>
@@ -72,7 +72,9 @@
         <p>
             <label>Course:</label>
             <input type = "text"
-                   name = "subjCode" />
+                   id = "subjCode"
+                    name = "subjCode"
+                    onchange="changeWorks()"/>
             <label>Number:</label>
             <input type = "text"
                    name = "crseNumb" />

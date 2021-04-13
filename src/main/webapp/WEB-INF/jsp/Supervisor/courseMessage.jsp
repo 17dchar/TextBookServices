@@ -11,6 +11,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#course').keypress(function (e) {
+                console.log("i'm going thorugh this")
+                var data = {};
+                data["subjCode"] = $("#course").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Course-Message",
+                    data: JSON.stringify(data),
+                    dataType: 'json',
+                    timeout: 6000000,
+                    success: function (data) {
+
+                        var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                            + JSON.stringify(data, null, 4) + "&lt;/pre&gt;";
+
+                        console.log("SUCCESS");
+                    }
+                })
+            });
+        });
+
+    </script>
 </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>
@@ -53,6 +79,7 @@
                     <label>Course:</label>
                     <input type = "text"
                        name = "course"
+                           id="course"
                        class="form-control"/>
             <!--
         <label>Message:</label>

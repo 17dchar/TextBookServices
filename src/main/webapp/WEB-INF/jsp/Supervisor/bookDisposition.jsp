@@ -81,10 +81,11 @@
                         <label for="bookDisposition">Change Disposition To:</label>
                         <select name="disposition">
                             <option value="">(No Change)</option>
-                            <option value="I">I</option>
-                            <option value="O">O</option>
-                            <option value="S">S</option>
-                            <option value="N">N</option>
+                            <option value="I">Checked In</option>
+                            <option value="O">Checked Out</option>
+                            <option value="S">Sold</option>
+                            <option value="N">Not Returned</option>
+                            <option value="U">Unrepairable</option>
                         </select>
                     </p>
                 </fieldset>
