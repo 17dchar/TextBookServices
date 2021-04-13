@@ -41,7 +41,7 @@
     </div>
 </div>
 <div class="tenPix"></div>
-<div class="border rounded" style="width: 60%; margin: auto;">
+<div class="border rounded" style="width: 60%; margin-left: 15px;">
     <form class="yearCodeForm" method = "post">
         <fieldset>
             <p>
