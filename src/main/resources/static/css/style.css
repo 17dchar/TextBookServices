@@ -9,11 +9,12 @@
 .loginform {
     display: block;
     margin: auto;
-    width: 15%;
-    background-color: rgba(34, 139, 34, .2);
+    width: auto;
+    height: auto;
+    background-color: #f1f1f1;
     border-style: ridge;
     border-width: thick;
-    border-color: ForestGreen
+    border-color: #014811;
 }
 .loginlabel, .logininput[type="text"] {
     display: block;
