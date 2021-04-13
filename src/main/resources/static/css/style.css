@@ -160,5 +160,10 @@
     width: 75%;
     height: 30px;
 }
-
+.center {
+    width: 400px;
+    display: flex;
+    position: center;
+    height: 250px;
+}
 
