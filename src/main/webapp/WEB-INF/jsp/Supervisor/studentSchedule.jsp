@@ -43,12 +43,14 @@
         <form class="yearCodeForm" method="post">
             <fieldset>
                 <p>
-                <div class="form-group">
-                <label>Term:</label>
-                    <input type = "text"
-                           name = "termSeason"
-                           class="form-control fiftyWidth"/>
-                    </div></p>
+                    <label>Terms:</label>
+                    <select name="selectedTerm">
+                        <option value="">Select from List</option>
+                        <c:forEach var="description" items="${term}">
+                            <option value="${description.getCode()}">${description.getDesc()}</option>
+                        </c:forEach>
+                    </select>
+                </p>
                 </fieldset>
                 <fieldset>
                     <p>

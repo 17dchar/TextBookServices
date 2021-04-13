@@ -19,9 +19,11 @@
                 var data = {};
                 data["subjCode"] = $("#course").val();
 
+                console.log(JSON.stringify(data));
                 $.ajax({
+
                     type: "POST",
-                    url: "/Course-Message",
+                    url: '${home}/Course-Message',
                     data: JSON.stringify(data),
                     dataType: 'json',
                     timeout: 6000000,
@@ -30,8 +32,9 @@
                         var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
                             + JSON.stringify(data, null, 4) + "&lt;/pre&gt;";
 
-                        console.log("SUCCESS");
-                    }
+                        console.log(data);
+                    },
+
                 })
             });
         });

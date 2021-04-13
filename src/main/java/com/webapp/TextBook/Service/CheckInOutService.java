@@ -51,7 +51,7 @@ public class CheckInOutService {
         List<Nwtxdt> bookInfo = nwtxdtRepository.findByBarcode(barcode);
         if(bookInfo.size() > 0){
             Nwtxdt nwtxdt = bookInfo.get(0);
-            if(bookInfo.get(0).getPidm() !=null){
+            if(nwtxdt.getPidm() !=null){
                 if(nwtxdt.getPidm().equals(spriden.getPidm())){
                     nwtxdt.setPrevPidm(nwtxdt.getPidm());
                     nwtxdt.setPrevTerm(nwtxdt.getTerm());

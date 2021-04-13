@@ -60,7 +60,7 @@
               </div>
             <div class="form-group">
 
-            <label>Book:</label>
+            <label>Book Barcode:</label>
                 <input type = "text"
                        name = "barCode"
                        class="form-control"/>

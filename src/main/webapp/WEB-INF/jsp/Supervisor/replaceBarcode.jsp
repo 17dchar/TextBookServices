@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +41,7 @@
     </div>
 </div>
 <a href="/" class = "dropbtn">Log out</a>
-<form method="post">
+<form:form method="post">
     <fieldset>
         <p>
             <label>Book Code:</label>
@@ -78,7 +79,7 @@
                                name="newBarcode"/>
                     </p>
                 </fieldset>
-            </form>
+            </form:form>
         </div>
         <div class="column right">
             <p>

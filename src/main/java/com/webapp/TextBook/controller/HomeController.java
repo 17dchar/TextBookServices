@@ -413,7 +413,6 @@ public class HomeController {
                     System.out.println((FieldError) object);
                 }
             }
-            return "Supervisor/courseMessage";
         }
 
         Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCmCourse());
@@ -600,9 +599,10 @@ public class HomeController {
 
     //Student Schedule GET
     @RequestMapping(value= "/Student-Schedule", method = RequestMethod.GET)
-    public String studentSchedule(){
+    public String studentSchedule(ModelMap model){
         System.out.println("Student Schedule GET");
         if(supervisor){
+            model.put("term", studentScheduleService.getLatestTerms());
             return"Supervisor/studentSchedule";
         } else if(studentEmployee){
             return "StudentEmployee/studentSchedule";
@@ -614,7 +614,7 @@ public class HomeController {
     //Student Schedule POST
     @RequestMapping(value= "/Student-Schedule", method = RequestMethod.POST)
     public String studentSchedulePost(ModelMap model,
-                                      @RequestParam(value = "termSeason", required = false, defaultValue = "")String termSeason,
+                                      @RequestParam(value = "selectedTerm", required = false, defaultValue = "")String termSeason,
                                       @RequestParam(value = "id", required = false, defaultValue = "")String id)
                                       throws ParseException{
         System.out.println("Student Schedule POST");
@@ -698,6 +698,8 @@ public class HomeController {
         System.out.println("Check In Out POST");
         Spriden spriden = checkInOutService.getStudent(id);
         System.out.println(spriden.getFirstName());
+        List<Stvterm> terms = checkInOutService.getLatestTerms();
+        model.put("term", terms);
         //Checks the availability of the book
         //0 = Book couldn't be found by given barcode
         //1 = Book isn't currently checked out to anyone
