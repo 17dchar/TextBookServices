@@ -45,15 +45,13 @@
 </div>
 <a href="/" class = "dropbtn">Log out</a>
 <div class="tenPix"></div>
-<div class="container">
-    <form class="courseMessageForm" method = "post">
+<div class="container left column border rounded">
+    <form class="courseMessageForm" method="post">
         <fieldset>
             <p>
-                <div class="form-group">
-                    <label>Course:</label>
-                    <input type = "text"
-                       name = "course"
-                       class="form-control"/>
+            </p><div class="form-group">
+            <label>Course:</label>
+            <input type="text" name="courseId" class="form-control">
             <!--
         <label>Message:</label>
 
@@ -62,24 +60,21 @@
                    class="form-control"/>
 
                 <p class="form-control">
-                    ${courseMessage}
+
                 </p>
             -->
-                <label>New Message:</label>
-                <input type = "text"
-                       id = "newCourseMessage"
-                       class="form-control"/>
-                </div>
-            </p>
+            <label>New Message:</label>
+            <input type="text" id="newCourseMessage" class="form-control">
+        </div>
+            <p></p>
         </fieldset>
 
-        <input type="submit" class="btn btn-primary btnCol" name="Save"></input>
+        <input type="submit" class="btn btn-primary btnCol" name="Save">
         <button type="submit" class="btn btn-primary btnCol" name="clear">Clear Message</button>
     </form>
     <p>
-        ${returnVoidError}
+
     </p>
 </div>
-
 </body>
 </html>
