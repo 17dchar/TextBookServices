@@ -667,16 +667,21 @@ public class HomeController {
     }
 
 
-    //@Autowired
-    //MaintenanceService maintenanceService;
+    @Autowired
+    CheckInOutService checkInOutService;
 
     //Check-In-Out GET
     @GetMapping("/Check-In-Out")
-    public String checkInOut(){
+    public String checkInOut(ModelMap model){
         System.out.println("Check In Out GET");
+
         if(supervisor){
+            List<Stvterm> terms = checkInOutService.getLatestTerms();
+            model.put("term", terms);
             return"Supervisor/checkInOut";
         } else if(studentEmployee){
+            List<Stvterm> terms = checkInOutService.getLatestTerms();
+            model.put("term", terms);
             return "StudentEmployee/checkInOut";
         } else {
             return "redirect:/";
@@ -686,9 +691,34 @@ public class HomeController {
 
     //Check-In-Out POST
     @PostMapping("/Check-In-Out")
-    public String checkInOutPost(ModelMap model){
+    public String checkInOutPost(ModelMap model,
+                                 @RequestParam(value = "id", required = false, defaultValue = "")String id,
+                                 @RequestParam(value = "barCode", required = false, defaultValue = "")String barCode,
+                                 @RequestParam(value = "selectedTerm", required = false, defaultValue = "")String term){
         System.out.println("Check In Out POST");
-        return "Supervisor/maintenanceFormView";
+        Spriden spriden = checkInOutService.getStudent(id);
+        System.out.println(spriden.getFirstName());
+        //Checks the availability of the book
+        //0 = Book couldn't be found by given barcode
+        //1 = Book isn't currently checked out to anyone
+        //2 = Book is currently checked out to someone
+        //3 = Book is currently checked out to this current person
+        int availability = checkInOutService.checkAvailability(barCode, spriden, term);
+        if(availability == 0){
+            System.out.println("nah dawg");
+        } else if(availability == 1){
+            System.out.println("Not checked out to anyone");
+        } else if(availability == 2){
+            System.out.println("book was checked out to someone");
+        } else{
+            System.out.println("book was checked out to this person");
+
+        }
+        model.put("barCode", barCode);
+        model.put("id", id);
+        model.put("selectedTerm", term);
+
+        return "Supervisor/checkInOut";
     }
     /*
     $$When a barcode is scanned on the check in/check out screen we know the

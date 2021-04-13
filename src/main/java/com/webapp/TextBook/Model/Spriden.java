@@ -7,10 +7,10 @@ import java.util.Date;
 @Entity
 @Table(name="SPRIDEN")
 public class Spriden {
-    @Id
     @Column(name = "SPRIDEN_ID")
     @NotEmpty
     private String id;
+    @Id
     @Column(name = "SPRIDEN_PIDM")
     @NotEmpty
     private String pidm;

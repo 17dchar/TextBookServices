@@ -40,36 +40,36 @@
 <a href="/" class = "dropbtn">Log out</a>
 <div class="tenPix"> </div>
 <div class="container">
-    <form class="yearCodeForm">
+    <form class="yearCodeForm" method="post">
         <fieldset>
             <p>
+            <p>
+                <label>Terms:</label>
+                <select name="selectedTerm">
+                    <option value="">Select from List</option>
+                    <c:forEach var="description" items="${term}">
+                        <option value="${description.getCode()}">${description.getDesc()}</option>
+                    </c:forEach>
+                </select>
+            </p>
             <div class="form-group">
-                <label>Term:</label>
+                <label>919:</label>
                 <input type = "text"
-                       id = "termSeason"
-                       class="form-control"/>
-                <input type = "text"
-                       id = "termYear"
-                       class="form-control"/>
-        </div>
-              <div class="form-group">
-                <label>ID:</label>
-                <input type = "text"
-                       id = "bookID1"
-                       class="form-control"/>
-                <input type = "text"
-                       id = "bookID2"
+                       name = "id"
                        class="form-control"/>
               </div>
             <div class="form-group">
 
-            <label>Bag#:</label>
+            <label>Book:</label>
                 <input type = "text"
-                       id = "bagNumber"
+                       name = "barCode"
                        class="form-control"/>
             </div>
             </p>
+
         </fieldset>
+        <input type="submit" class="btn btn-primary btnCol column" name="Save"/>
+
     </form>
 
     <button type="button" class="btn btn-primary btnCol">New ID</button>
