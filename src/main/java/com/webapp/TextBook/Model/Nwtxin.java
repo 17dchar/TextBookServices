@@ -29,7 +29,7 @@ public class Nwtxin {
     private String isbn;
     @Column(name = "NWTXIN_PURCHASE_DATE")
     @Temporal(TemporalType.DATE)
-    private Date pruchaseDate;
+    private Date purchaseDate;
     @Column(name= "NWTXIN_FIRST_USED_DATE")
     @Temporal(TemporalType.DATE)
     private Date firstUsedDate;
@@ -119,11 +119,11 @@ public class Nwtxin {
     }
 
     public Date getPruchaseDate() {
-        return pruchaseDate;
+        return purchaseDate;
     }
 
     public void setPruchaseDate(Date pruchaseDate) {
-        this.pruchaseDate = pruchaseDate;
+        this.purchaseDate = pruchaseDate;
     }
 
     public Date getFirstUsedDate() {

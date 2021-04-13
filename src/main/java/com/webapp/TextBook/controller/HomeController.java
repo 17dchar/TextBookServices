@@ -106,23 +106,19 @@ public class HomeController {
                 //check for specific errors
             }
         }
-        System.out.println(nwtxin.getBookCode());
         List<Nwtxin> nwtxinList = maintenanceService.getNwtxinList(nwtxin.getBookCode());
         if(nwtxinList != null){
             //Get stats of book with most recent edition year
             int mostRecent = 0;
             for(int i = 0; i < nwtxinList.size(); i++){
                 if(i > 0){
-                    System.out.println("wow");
                     System.out.println(nwtxinList.get(i).getEditionYear());
                     if(Integer.parseInt(nwtxinList.get(i).getEditionYear()) > Integer.parseInt(nwtxinList.get(i-1).getEditionYear())){
                         mostRecent= i;
-                        System.out.println("change made");
                     }
                 }
-
             }
-            System.out.println(nwtxinList.get(mostRecent).getEditionYear());
+            model.put("ok",nwtxinList.get(mostRecent));
             //Get stats of course name 1
         } else {
             //Wasn't able to find a book off of given credentials
@@ -694,4 +690,15 @@ public class HomeController {
         System.out.println("Check In Out POST");
         return "Supervisor/maintenanceFormView";
     }
+    /*
+    $$When a barcode is scanned on the check in/check out screen we know the
+    $$user is Checking in a book or check out a book.  If the book is checked out to the ID
+    $$we will check the book in.  If the book is checked out to someone else we will check the
+    $$book in for the other person and display a message.  If the book is not checked out we
+    $$assume they are wanting to check the book out for the ID
+    $$
+    $$If employee user clicks onthe book status, nothing will happen
+    $$If the supervisor clicks on the book status a new screen will appear to either sell
+    $$the book or reverse charges.
+     */
 }

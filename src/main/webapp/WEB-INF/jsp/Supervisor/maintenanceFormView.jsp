@@ -61,46 +61,46 @@
                     <p>
                         <label>Title:</label>
                         <input type="text"
-                               id="bookTitle"/>
+                               name="title"/>
                     </p>
                     <p>
                         <label>Author:</label>
                         <input type="text"
-                               id="bookAuthor"/>
+                               name="author"/>
                     </p>
                     <p>
                         <label>Publisher:</label>
                         <input type="text"
-                               id="bookPublisher"/>
+                               name="publisher"/>
                     </p>
                     <p>
                         <label>ISBN #:</label>
                         <input type="text"
-                               id="bookISBN"/>
+                               name="isbn"/>
                         <label>Cost:</label>
                         <input type="text"
-                               id="bookCost"/>
+                               name="currentPrice"/>
                     </p>
                     <p>
                         <label>Status:</label>
                         <input type="text"
-                               id="bookStatus"/>
+                               name="bookStatus"/>
                         <label>Purchase Date:</label>
                         <input type="date"
-                               id="bookPurchaseDate"/>
+                               name="purchaseDate"/>
                     </p>
                     <p>
                         <label>Discontinued:</label>
                         <input type="text"
-                               id="bookDiscontinued"/>
+                               name="discontinuedDate"/>
                         <label>First Used Date:</label>
                         <input type="date"
-                               id="bookFirstUsed"/>
+                               id="firstUsedDate"/>
                     </p>
                     <p>
                         <label>Date Comment:</label>
                         <input type="text"
-                               id="bookDateComment"/>
+                               name="comment"/>
                     </p>
                 </fieldset>
                 <fieldset>
@@ -108,28 +108,28 @@
                     <p>
                         <label>Course Title:</label>
                         <input type="text"
-                               id="courseTitle"/>
+                               id="crseName"/>
                     </p>
                     <p>
                         <label>Course 1:</label>
                         <input type="text"
-                               id="courseOne"/>
+                               id="crse1"/>
                         <label>Course 4:</label>
                         <input type="text"
-                               id="courseFour"/>
+                               id="crse4"/>
                     </p>
                     <p>
                         <label>Course 2:</label>
                         <input type="text"
-                               id="courseTwo"/>
+                               id="crse2"/>
                         <label>Course 5:</label>
                         <input type="text"
-                               id="courseFive"/>
+                               id="ccrse5"/>
                     </p>
                     <p>
                         <label>Course 3:</label>
                         <input type="text"
-                               id="courseThree"/>
+                               id="crse3"/>
                     </p>
                 </fieldset>
         </div>
