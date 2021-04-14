@@ -41,18 +41,24 @@
     </div>
 </div>
 <a href="/" class = "dropbtn">Log out</a>
-<form method = post>
+<p class="tenPix"></p>
+<form method = post class="addlmargin">
+    <div class="border rounded form-group">
     <fieldset>
-        <p>
-            <label>Book Code:</label>
+        <span class="col-xs-4">
+            <label>Book Code</label>
             <input type="text"
-                   name="bookCode"/>
-            <label>Book Year:</label>
+                   name="bookCode"
+                   class="form-control"/></span>
+        <span class="col-xs-4">
+            <label>Book Year</label>
             <input type="text"
-                   name="editionYear"/>
-        </p>
+                   name="editionYear"
+                   class="form-control"/></span>
     </fieldset>
-<div class="container">
+    </div>
+    <div class="marginftn">
+    <div class="container">
     <div class="row">
         <div class="column left">
             <form>
@@ -60,138 +66,111 @@
                     <legend>Book Info</legend>
                     <p>
                         <label>Title:</label>
-                        <input type="text"
-                               name="title"/>
+                        <input type="text" id="bookTitle" class="form-control width85">
                     </p>
                     <p>
                         <label>Author:</label>
-                        <input type="text"
-                               name="author"/>
+                        <input type="text" id="bookAuthor" class="form-control width85">
                     </p>
                     <p>
                         <label>Publisher:</label>
-                        <input type="text"
-                               name="publisher"/>
+                        <input type="text" id="bookPublisher" class="form-control width85">
                     </p>
                     <p>
                         <label>ISBN #:</label>
-                        <input type="text"
-                               name="isbn"/>
+                        <input type="text" id="bookISBN" class="form-control width85">
                         <label>Cost:</label>
-                        <input type="text"
-                               name="currentPrice"/>
+                        <input type="text" id="bookCost" class="form-control width85">
                     </p>
                     <p>
                         <label>Status:</label>
-                        <input type="text"
-                               name="bookStatus"/>
+                        <input type="text" id="bookStatus" class="form-control">
                         <label>Purchase Date:</label>
-                        <input type="date"
-                               name="purchaseDate"/>
+                        <input type="date" id="bookPurchaseDate" class="form-control">
                     </p>
                     <p>
                         <label>Discontinued:</label>
-                        <input type="text"
-                               name="discontinuedDate"/>
+                        <input type="text" id="bookDiscontinued" class="form-control">
                         <label>First Used Date:</label>
-                        <input type="date"
-                               id="firstUsedDate"/>
+                        <input type="date" id="bookFirstUsed" class="form-control">
                     </p>
                     <p>
                         <label>Date Comment:</label>
-                        <input type="text"
-                               name="comment"/>
+                        <input type="text" id="bookDateComment" class="form-control">
                     </p>
                 </fieldset>
+            </form>
+            <form>
                 <fieldset>
                     <legend>Course Info</legend>
                     <p>
                         <label>Course Title:</label>
-                        <input type="text"
-                               id="crseName"/>
+                        <input type="text" id="courseTitle" class="form-control">
                     </p>
                     <p>
                         <label>Course 1:</label>
-                        <input type="text"
-                               id="crse1"/>
+                        <input type="text" id="courseOne" class="form-control">
                         <label>Course 4:</label>
-                        <input type="text"
-                               id="crse4"/>
+                        <input type="text" id="courseFour" class="form-control">
                     </p>
                     <p>
                         <label>Course 2:</label>
-                        <input type="text"
-                               id="crse2"/>
+                        <input type="text" id="courseTwo" class="form-control">
                         <label>Course 5:</label>
-                        <input type="text"
-                               id="ccrse5"/>
+                        <input type="text" id="courseFive" class="form-control">
                     </p>
                     <p>
                         <label>Course 3:</label>
-                        <input type="text"
-                               id="crse3"/>
+                        <input type="text" id="courseThree" class="form-control">
                     </p>
                 </fieldset>
+            </form>
         </div>
         <div class="column middle">
+            <form>
                 <fieldset>
                     <legend>Book Stats</legend>
                     <p>
                         <label>Books Purchased:</label>
-                        <input type="number"
-                               id="booksPurchased"
-                               value=0/>
+                        <input type="number" id="booksPurchased" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Books Sold:</label>
-                        <input type="number"
-                               id="booksSold"
-                               value=0/>
+                        <input type="number" id="booksSold" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Books Unrepairable:</label>
-                        <input type="number"
-                               id="booksUnrepairable"
-                               value=0/>
+                        <input type="number" id="booksUnrepairable" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Books Nonreturned:</label>
-                        <input type="number"
-                               id="booksNonreturned"
-                               value=0/>
+                        <input type="number" id="booksNonreturned" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Books In Inventory:</label>
-                        <input type="number"
-                               id="booksInInventory"
-                               value=0/>
+                        <input type="number" id="booksInInventory" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Books Checked Out:</label>
-                        <input type="number"
-                               id="booksCheckedOut"
-                               value=0/>
+                        <input type="number" id="booksCheckedOut" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Last Seq. No.:</label>
-                        <input type="number" u0
-                               id="lastSeqNo"
-                               value=0/>
+                        <input type="number" u0="" id="lastSeqNo" value="0" class="form-control">
                     </p>
                 </fieldset>
-
+            </form>
         </div>
         <div class="column right">
             <p>
-                <input type="submit">Save</input>
+                <button type="button" class="btn btn-primary btnCol">Save</button>
             </p>
             <p>
-                <button type="button">Clear</button>
+                <button type="button" class="btn btn-primary btnCol">Clear</button>
             </p>
         </div>
-
     </div>
-</div>
-</form>
+    </div></form>
+    </div>
 </body>
 </html>
