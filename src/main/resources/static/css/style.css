@@ -90,9 +90,19 @@ label {
     border-color: #006747;
     box-shadow: 0 0 0 1.5px rgb(0, 103, 71);
 }
+
 .has-error .form-control:focus {
     box-shadow: none;
     -webkit-box-shadow: none;
+}
+select option:checked,
+select option:hover {
+    border-color: #014811;
+    outline:none;
+    box-shadow: 0 0 10px 100px #006747 inset;
+}
+select:focus > option:checked {
+    background: #006747 !important;
 }
 
 .column {
