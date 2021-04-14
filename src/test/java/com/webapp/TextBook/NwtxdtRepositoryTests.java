@@ -3,6 +3,7 @@ package com.webapp.TextBook;
 
 import com.webapp.TextBook.Model.Nwtxdt;
 import com.webapp.TextBook.Repository.NwtxdtRepository;
+import org.junit.Test;
 import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,11 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.junit.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,6 +28,8 @@ public class NwtxdtRepositoryTests {
         @Bean
         public NwtxdtRepository nwtxdtRepository(){
             return new NwtxdtRepository(){
+
+
                 @Override
                 public <S extends Nwtxdt> S save(S s) {
                     return null;
@@ -46,7 +52,11 @@ public class NwtxdtRepositoryTests {
 
                 @Override
                 public List<Nwtxdt> findAll() {
-                    return null;
+                    List<Nwtxdt> nwtxdtList = new ArrayList<Nwtxdt>();
+                    Nwtxdt nwtxdt = new Nwtxdt();
+                    nwtxdt.setPidm("73753");
+                    nwtxdtList.add(nwtxdt);
+                    return nwtxdtList;
                 }
 
                 @Override
