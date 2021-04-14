@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66a77f85-1bec-4a3c-9c59-6f97abb5ae11" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_7_0.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/NwtxinRepositoryTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/NwtxmsRepositoryTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TextBook.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TextBook.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/NwtxdtRepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/NwtxdtRepositoryTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Repository/NwtxinRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Repository/NwtxinRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/NwtxdtRepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/NwtxdtRepositoryTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/SmokeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/SmokeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/TestsContextConfiguration.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +51,6 @@
     <option name="flattenPackages" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
-    <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="oracle" />
@@ -75,7 +78,7 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="inlay.hints" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -95,10 +98,11 @@
       <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\repository" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.webapp.TextBook.Repository" />
       <recent name="com.webapp.TextBook" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.NwtxdtRepositoryTests.testFindAll">
+  <component name="RunManager" selected="JUnit.NwtxmsRepositoryTests">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -110,22 +114,45 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NwtxdtRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in TextBook" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TextBook" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NwtxinRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.webapp.TextBook.*" />
+          <option name="PATTERN" value="com.webapp.TextBook.Repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.webapp.TextBook" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.NwtxdtRepositoryTests" />
+      <option name="PACKAGE_NAME" value="com.webapp.TextBook.Repository" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.NwtxinRepositoryTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NwtxdtRepositoryTests.testFindAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="NwtxmsRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TextBook" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.webapp.TextBook.Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.webapp.TextBook.Repository" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.NwtxmsRepositoryTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SmokeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
@@ -134,9 +161,22 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.webapp.TextBook" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.NwtxdtRepositoryTests" />
-      <option name="METHOD_NAME" value="testFindAll" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.SmokeTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.webapp.TextBook.Repository in TextBook" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TextBook" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.webapp.TextBook.Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.webapp.TextBook.Repository" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -173,10 +213,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Maven.TextBook [spring-boot:run]" />
+      <item itemvalue="JUnit.NwtxinRepositoryTests" />
+      <item itemvalue="JUnit.NwtxmsRepositoryTests" />
+      <item itemvalue="JUnit.com.webapp.TextBook.Repository in TextBook" />
+      <item itemvalue="JUnit.All in TextBook" />
+      <item itemvalue="JUnit.SmokeTest" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.NwtxdtRepositoryTests.testFindAll" />
-        <item itemvalue="JUnit.NwtxdtRepositoryTests" />
+        <item itemvalue="JUnit.NwtxmsRepositoryTests" />
+        <item itemvalue="JUnit.SmokeTest" />
+        <item itemvalue="JUnit.All in TextBook" />
+        <item itemvalue="JUnit.com.webapp.TextBook.Repository in TextBook" />
+        <item itemvalue="JUnit.NwtxinRepositoryTests" />
       </list>
     </recent_temporary>
   </component>

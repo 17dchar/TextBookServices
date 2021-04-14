@@ -1,4 +1,4 @@
-package com.webapp.TextBook;
+package com.webapp.TextBook.Repository;
 
 
 import com.webapp.TextBook.Model.Nwtxdt;
@@ -29,7 +29,6 @@ public class NwtxdtRepositoryTests {
         public NwtxdtRepository nwtxdtRepository(){
             return new NwtxdtRepository(){
 
-
                 @Override
                 public <S extends Nwtxdt> S save(S s) {
                     return null;
@@ -54,7 +53,7 @@ public class NwtxdtRepositoryTests {
                 public List<Nwtxdt> findAll() {
                     List<Nwtxdt> nwtxdtList = new ArrayList<Nwtxdt>();
                     Nwtxdt nwtxdt = new Nwtxdt();
-                    nwtxdt.setPidm("73753");
+                    nwtxdt.setPrevPidm("73753");
                     nwtxdtList.add(nwtxdt);
                     return nwtxdtList;
                 }
@@ -71,27 +70,47 @@ public class NwtxdtRepositoryTests {
 
                 @Override
                 public List<Nwtxdt> findByBookCode(String bookCode) {
-                    return null;
+                    List<Nwtxdt> nwtxdtList = new ArrayList<Nwtxdt>();
+                    Nwtxdt nwtxdt = new Nwtxdt();
+                    nwtxdt.setPrevPidm("73753");
+                    nwtxdtList.add(nwtxdt);
+                    return nwtxdtList;
                 }
 
                 @Override
                 public List<Nwtxdt> findByBarcode(String barcode) {
-                    return null;
+                    List<Nwtxdt> nwtxdtList = new ArrayList<Nwtxdt>();
+                    Nwtxdt nwtxdt = new Nwtxdt();
+                    nwtxdt.setPrevPidm("73753");
+                    nwtxdtList.add(nwtxdt);
+                    return nwtxdtList;
                 }
 
                 @Override
                 public List<Nwtxdt> findByPidm(String pidm) {
-                    return null;
+                    List<Nwtxdt> nwtxdtList = new ArrayList<Nwtxdt>();
+                    Nwtxdt nwtxdt = new Nwtxdt();
+                    nwtxdt.setPrevPidm("73753");
+                    nwtxdtList.add(nwtxdt);
+                    return nwtxdtList;
                 }
 
                 @Override
                 public List<Nwtxdt> findByPidmAndPrevTerm(String pidm, String prevTerm) {
-                    return null;
+                    List<Nwtxdt> nwtxdtList = new ArrayList<Nwtxdt>();
+                    Nwtxdt nwtxdt = new Nwtxdt();
+                    nwtxdt.setPrevPidm("73753");
+                    nwtxdtList.add(nwtxdt);
+                    return nwtxdtList;
                 }
 
                 @Override
                 public List<Nwtxdt> findByBookCodeAndEditionYearAndBarcode(String BookCode, String editionYear, String barcode) {
-                    return null;
+                    List<Nwtxdt> nwtxdtList = new ArrayList<Nwtxdt>();
+                    Nwtxdt nwtxdt = new Nwtxdt();
+                    nwtxdt.setPrevPidm("73753");
+                    nwtxdtList.add(nwtxdt);
+                    return nwtxdtList;
                 }
 
                 @Override
@@ -134,29 +153,33 @@ public class NwtxdtRepositoryTests {
         assertEquals(prevPidm,modelList.get(0).getPrevPidm());
     }
 
+    @Test
     public void testFindByBookCode(){
         List<Nwtxdt> modelList = nwtxdtRepository.findByBookCode(bookCode);
         assertEquals(prevPidm,modelList.get(0).getPrevPidm());
     }
 
+    @Test
     public void testFindByBarcode(){
         List<Nwtxdt> modelList = nwtxdtRepository.findByBarcode(barCode);
         assertEquals(prevPidm,modelList.get(0).getPrevPidm());
     }
 
+    @Test
     public void testFindByPidm(){
         List<Nwtxdt> modelList = nwtxdtRepository.findByPidm(pidm);
         assertEquals(prevPidm,modelList.get(0).getPrevPidm());
     }
 
+    @Test
     public void testFindByPidmAndPrevTerm(){
         List<Nwtxdt> modelList = nwtxdtRepository.findByPidmAndPrevTerm(pidm,prevTerm);
         assertEquals(prevPidm,modelList.get(0).getPrevPidm());
     }
 
+    @Test
     public void testFindByBookCodeAndEditionYearAndBarcode(){
         List<Nwtxdt> modelList = nwtxdtRepository.findByBookCodeAndEditionYearAndBarcode(bookCode,editionYear,barCode);
         assertEquals(prevPidm,modelList.get(0).getPrevPidm());
     }
-
 }

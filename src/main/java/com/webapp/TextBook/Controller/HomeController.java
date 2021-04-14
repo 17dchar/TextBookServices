@@ -1,4 +1,4 @@
-package com.webapp.TextBook.controller;
+package com.webapp.TextBook.Controller;
 
 //Imported Standard Java Libraries
 import java.text.ParseException;
@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.webapp.TextBook.Model.*;
 import com.webapp.TextBook.Service.*;
-import com.webapp.TextBook.Repository.NwtxdtRepository;
 
 //Imported Spring Libraries
 import com.webapp.TextBook.Model.Nwtxin;
@@ -23,11 +22,9 @@ import org.springframework.web.bind.annotation.*;
 
 
 //Imported Services
-import com.webapp.TextBook.Service.*;
 
 
 //Imported Models
-import com.webapp.TextBook.Model.*;
 
 import javax.validation.Valid;
 
