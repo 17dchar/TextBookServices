@@ -16,7 +16,6 @@ public interface NwtxdtRepository extends CrudRepository<Nwtxdt, String> {
 
     @Override
     List<Nwtxdt> findAll();
-
     List<Nwtxdt> findByBookCode(String bookCode);
     List<Nwtxdt> findByBarcode(String barcode);
     List<Nwtxdt> findByPidm(String pidm);
