@@ -33,13 +33,16 @@
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
     <div class="dropdown-content">
-        <a href="#">blah</a>
+        <a href="Check-In-Out">Check Books In/Out</a>
+        <a href="Student-Schedule">Schedule</a>
+        <a href="Sold-Books">Sold Books</a>
+        <a href="Previous-Books">Previous Books</a>
     </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Reports</button>
     <div class="dropdown-content">
-        <a href="#">blah</a>
+        <a href="Report">Add Report Here</a>
     </div>
 </div>
 <a href="/" class = "dropbtn">Log out</a>
