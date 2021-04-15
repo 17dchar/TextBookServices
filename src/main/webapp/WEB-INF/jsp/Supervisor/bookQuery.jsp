@@ -33,38 +33,49 @@
 <div class="dropdown">
     <button class="dropbtn">Patron</button>
     <div class="dropdown-content">
-        <a href="#">blah</a>
+        <a href="Check-In-Out">Check Books In/Out</a>
+        <a href="Student-Schedule">Schedule</a>
+        <a href="Sold-Books">Sold Books</a>
+        <a href="Previous-Books">Previous Books</a>
     </div>
 </div>
 <div class="dropdown">
     <button class="dropbtn">Reports</button>
     <div class="dropdown-content">
-        <a href="#">blah</a>
+        <a href="Report">Add Report Here</a>
     </div>
 </div>
-<a href="/" class = "dropbtn">Log out</a>
+<div class="dropdown">
+<a href="/" class = "dropdown-content">Log out</a>
+</div>
+<div class="border rounded form-group" style="width: 75%; margin-left: 20px; margin: 15px;">
 <form method="post">
     <fieldset>
         <p>
             <label>Book Code:</label>
             <input type="text"
-                   name="bookCode"/>
+                   name="bookCode"
+                   class="form-control"/>
             <label>Book Year:</label>
             <input type="text"
-                   name="editionYear"/>
+                   name="editionYear"
+                   class="form-control"/>
             <label>Strike Bar Code:</label>
             <input type="text"
-                   name="barcode"/>
+                   name="barcode"
+                   class="form-control"/>
         </p>
+
         <p>
-            <input type="submit" name="Save"/>
-            <button type="button">Clear</button>
+            <input type="submit" name="Save" class="btn btn-primary btnCol column"/>
+            <button type="button" class="btn btn-primary btnCol column" style="margin: 5px">Clear</button>
         </p>
     </fieldset>
 </form>
-<div class="container">
+</div>
+<div class="pattinBetween border rounded" style="margin-left: 15px;">
     <div class="row">
-        <div class="column left">
+        <div class="column left form-group">
             <form>
                 <fieldset>
                     <legend>Book Info</legend>
@@ -135,12 +146,12 @@
                 </fieldset>
             </form>
         </div>
-        <div class="column right">
+        <div class="column left marginftn">
             <p>
-                <button type="button">Save</button>
+                <button type="button" class="btn btn-primary btnCol column" style="margin: 5px;">Save</button>
             </p>
             <p>
-                <button type="button">Clear</button>
+                <button type="button" class="btn btn-primary btnCol column" style="margin-top: -4.75px;">Clear</button>
             </p>
         </div>
     </div>

@@ -42,40 +42,53 @@
     </div>
 </div>
 <a href="/" class = "dropbtn">Log out</a>
-<form method="post">
-    <fieldset>
+<form method="post" class="addlmargin" style="width: 75%;">
+    <div class="border rounded form-group" style="width: auto; margin-left: 20px; margin: 15px;">
         <fieldset>
-            <p>
-                <label>Book Code: </label>
-                <input type="text" name="bookCode">
-                <label>Year: </label>
-                <input type="text" name="editionYear">
+            <span class="col-xs-4">
+            <label>Book Code</label>
+            <input type="text"
+                   name="bookCode"
+                   class="form-control"/></span>
+            <span class="col-xs-4">
+            <label>Book Year</label>
+            <input type="text"
+                   name="editionYear"
+                   class="form-control"/></span>
+            <span class="col-xs-4">
             </p>
         </fieldset>
+        <div class="tenPix"></div>
         <fieldset>
+            <legend class="legend">Book Info</legend>
             <p>
-                <label>Title: </label>
-                <input type="text" name="bookTitle">
-                <label>Sequence Number:</label>
-                <input type="text" name="seqNr">
-            </p>
-            <p>
-                <label>Strike Bar Code:</label>
+                <label>Title</label>
                 <input type="text"
-                       name="barcode"/>
+                       name="bookTitle"
+                       class="form-control left"/>
+            </p>
+            <p>
+                <label>Seq Nr</label>
+                <input type="number"
+                       name="seqNumber"
+                       class="form-control left"/>
+            </p>
+            <p>
+                <label>Strike Barcode</label>
+                <input type="text"
+                       name="barcode"
+                       class="form-control left"/></span>
             </p>
         </fieldset>
-    </fieldset>
-    <p>
-        ${returnVoidError}
-    </p>
-    <div class="column right">
-        <p>
-            <input type="submit" name="Save"/>
-            <button type="button">Clear</button>
-        </p>
     </div>
-</form>
+
+
+    <span class="addlmargin">
+        <button type="button" class="btn btn-primary btnCol">Save</button>
+        <button type="submit" class="btn btn-primary btnCol" name="clear">Clear</button>
+    </span>
+
+</form></div>
 
 
 <!--

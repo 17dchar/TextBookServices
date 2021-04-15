@@ -10,14 +10,23 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body>
+
 <h1 class="loginh1">Log In:</h1>
-<form class="loginform" method="post">
+<body style="background-size: cover;
+    background-image: url('https://www.nwmissouri.edu/images/header-img/drone%20campus%20august%20fall2018%20tw%2002069.jpg');
+    background-position-y: center;
+    background-repeat: no-repeat;
+    background-size: 100%;">
+<div class="marginftn">
+<form method="post" class="loginform">
+    <span class="marginAuto width85">
     <label class="loginlabel">Username:</label>
     <input class="logininput" type="text" name="login"/>
     <label class="loginlabel">Password:</label>
     <input class="logininput" type="text" name="password"/>
-    <input class="logininput" type="submit" value="Submit" id="loginBtn">
+    <input class="btn btn-primary btnCol" type="submit" value="Submit" id="loginBtn" style="color: #f1f1f1">
+    </span>
 </form>
+</div>
 </body>
 </html>

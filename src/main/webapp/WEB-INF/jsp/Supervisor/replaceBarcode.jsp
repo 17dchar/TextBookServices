@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/style.css">    <meta charset="UTF-8">
     <title>Replace Barcode Form</title>
 </head>
-<body>
+<body class="body">
 <h1 class="TBSHeader">Textbook Services</h1>
 <h2 class="BookCodeYearTitle">Replace Barcode</h2>
 <div class="dropdown">
@@ -41,55 +41,58 @@
     </div>
 </div>
 <a href="/" class = "dropbtn">Log out</a>
-<form:form method="post">
+    <div class="marginftn">
+<form method="post" style="width: 75%;">
+    <div class="border rounded form-group" style="width: auto; margin-left: 20px; margin: 15px;">
     <fieldset>
-        <p>
-            <label>Book Code:</label>
+            <span class="col-xs-4">
+            <label>Book Code</label>
             <input type="text"
-                   name="bookCode"/>
-            <label>Book Year:</label>
+                   name="bookCode"
+                   class="form-control"/></span>
+        <span class="col-xs-4">
+            <label>Book Year</label>
             <input type="text"
-                   name="editionYear"/>
-            <label>Strike Barcode:</label>
+                   name="editionYear"
+                   class="form-control"/></span>
+        <span class="col-xs-4">
+            <label>Strike Barcode</label>
             <input type="text"
-                   name="barcode"/>
+                   name="barcode"
+                   class="form-control"/></span>
+
         </p>
     </fieldset>
-    <button type="submit">Save</button>
-
-<div class="container">
-    <div class="row">
-        <div class="column left">
-
-                <fieldset>
-                    <legend>Book Info</legend>
-                    <p>
-                        <label>Title:</label>
-                        <input type="text"
-                               name="bookTitle"/>
-                    </p>
-                    <p>
-                        <label>Seq Nr:</label>
-                        <input type="number"
-                               name="seqNumber"/>
-                    </p>
-                    <p>
-                        <label>Change Barcode To:</label>
-                        <input type="text"
-                               name="newBarcode"/>
-                    </p>
-                </fieldset>
-            </form:form>
-        </div>
-        <div class="column right">
-            <p>
-                <button type="button">Save</button>
-            </p>
-            <p>
-                <button type="button">Clear</button>
-            </p>
-        </div>
+<div class="tenPix"></div>
+<fieldset>
+        <legend class="legend">Book Info</legend>
+        <p>
+            <label>Title</label>
+            <input type="text"
+                   name="bookTitle"
+                   class="form-control left"/>
+        </p>
+        <p>
+            <label>Seq Nr</label>
+            <input type="number"
+                   name="seqNumber"
+                   class="form-control left"/>
+        </p>
+        <p>
+            <label>Change Barcode To</label>
+            <input type="text"
+                   name="newBarcode"
+                   class="form-control left"/>
+        </p>
+    </fieldset>
     </div>
-</div>
+
+
+    <span class="addlmargin">
+        <input type="submit" class="btn btn-primary btnCol" name="Save">
+        <button type="submit" class="btn btn-primary btnCol" name="clear">Clear</button>
+    </span>
+
+</form></div>
 </body>
 </html>

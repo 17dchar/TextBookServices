@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="3">
-
     <title>Change Book Code/Year</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -42,11 +40,12 @@
         <a href="Report">Add Report Here</a>
     </div>
 </div>
-<div class="container">
+<div class="tenPix"></div>
+<div class="border rounded" style="width: 60%; margin-left: 15px;">
     <form class="yearCodeForm" method = "post">
         <fieldset>
             <p>
-            <div class="left column border rounded">
+            <div class="border rounded">
                 <label>Book Code:</label>
                 <input type = "text"
                        name = "bookCode"
@@ -56,8 +55,8 @@
                        name = "editionYear"
                        class="form-control"/>
             </div>
-
-            <div class="left column border rounded">
+            <div class="tenPix"></div>
+            <div class="border rounded">
                 <label>New Book Code:</label>
                 <input type = "text"
                        name = "newBookCode"
@@ -71,7 +70,7 @@
             </div>
             <div class="tenPix">
             </div>
-            <input type="submit" class="btn btn-primary btnCol column" name="Save"/>
+            <input type="submit" class="btn btn-primary btnCol column" name="Save" style="width: 100%; align-self: center;"/>
         </fieldset>
     </form>
 </div>

@@ -93,7 +93,7 @@
 </div>
 <a href="/" class = "dropbtn">Log out</a>
 <div class="tenPix"></div>
-<div class="container">
+<div class="container left column border rounded">
     <form:form class="courseMessageForm" method = "post" action="Course-Message" modelAttribute="inputNwtxcm">
         <p>
             <div class="form-group">
@@ -111,6 +111,5 @@
         </p>
     </form:form>
 </div>
-
 </body>
 </html>
