@@ -14,7 +14,9 @@ import com.webapp.TextBook.Repository.NwtxdtRepository;
 import com.webapp.TextBook.Model.Nwtxin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -29,6 +31,8 @@ import com.webapp.TextBook.Service.*;
 //Imported Models
 import com.webapp.TextBook.Model.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 
@@ -388,8 +392,9 @@ public class HomeController {
     //Course Message GET
     //SUPERVISOR ONLY
     @GetMapping("/Course-Message")
-    public String courseMessage(){
+    public String courseMessage(ModelMap model){
         System.out.println("Course Message GET");
+        model.addAttribute("inputNwtxcm", new Nwtxcm());
         if(!supervisor){
             return "redirect:/";
         }
@@ -399,22 +404,28 @@ public class HomeController {
     //Course Message POST
     //SUPERVISOR ONLY
     @PostMapping("/Course-Message")
-    public String courseMessagePost(@Valid Nwtxcm nwtxcm, BindingResult bindingResult, ModelMap model)
+    public @ResponseBody Nwtxcm courseMessagePost(@RequestBody @ModelAttribute("inputNwtxcm") @Valid Nwtxcm nwtxcm, BindingResult bindingResult, ModelMap model)
                                     throws ParseException{
         System.out.println("Course Message POST");
         if(!supervisor){
-            return "redirect:/";
+            return nwtxcm;
         }
         //Pseudo Regex
         if(bindingResult.hasErrors()){
-            model.put("returnVoidError", "Invalid Credentials");
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }
             }
+            if(nwtxcm.getCourse() == null){
+                nwtxcm.setCourse("Course Cannot Be Empty (They're All 9 Characters Long)");
+            } else if(nwtxcm.getCourse().length() != 9){
+                nwtxcm.setCourse("Course Has to Be 9 Characters Long");
+            }
+            return nwtxcm;
         }
-
+        System.out.println("Passed Data Validation");
+/*
         Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCmCourse());
         System.out.println(nwtxcm.getCmCourse());
         if (oldNwtxcm != null) {
@@ -423,7 +434,10 @@ public class HomeController {
             //Wasn't able to find a course off of given credentials
             model.put("returnVoidError", "No Course Found Off of Given Credentials");
         }
-        return "Supervisor/courseMessage";
+
+ */
+        nwtxcm.setMessage("returning the spirits of vangrazila");
+        return nwtxcm;
     }
 
     //Course Message CLEAR
@@ -446,9 +460,9 @@ public class HomeController {
             return "Supervisor/courseMessage";
         }
 
-        Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCmCourse());
+        Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCourse());
         if (oldNwtxcm != null) {
-            oldNwtxcm.setCmMessage("");
+            oldNwtxcm.setMessage("");
             courseMessageService.saveNwtxcm(oldNwtxcm);
             model.put("courseMessage", "Cleared!");
         }else{

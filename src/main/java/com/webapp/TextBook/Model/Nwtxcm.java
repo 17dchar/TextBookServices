@@ -13,7 +13,7 @@ public class Nwtxcm
     @Id
     @Column(name = "NWTXCM_COURSE")
     @NotEmpty
-    @Size(max=9)
+    @Size(min = 9, max=9)
     private String course;
     @Column(name = "NWTXCM_MESSAGE")
     @Size(max = 15)
@@ -22,19 +22,19 @@ public class Nwtxcm
     @Temporal(TemporalType.DATE)
     private Date acDate;
 
-    public String getCmCourse() {
+    public String getCourse() {
         return course;
     }
 
-    public void setCmCourse(String cmCourse) {
+    public void setCourse(String cmCourse) {
         this.course = cmCourse;
     }
 
-    public String getCmMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setCmMessage(String cmMessage) {
+    public void setMessage(String cmMessage) {
         this.message = cmMessage;
     }
 

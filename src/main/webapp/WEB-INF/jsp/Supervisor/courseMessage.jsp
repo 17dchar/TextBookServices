@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,32 +13,51 @@
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        var delayman;
         $(document).ready(function() {
-            $('#course').keypress(function (e) {
-                console.log("i'm going thorugh this")
-                var data = {};
-                data["subjCode"] = $("#course").val();
-
-                console.log(JSON.stringify(data));
+            function queryMessage(){
+                var string = $("#course").serialize();
+                console.log("Attempting Query With " + string);
                 $.ajax({
-
                     type: "POST",
-                    url: '${home}/Course-Message',
-                    data: JSON.stringify(data),
+                    url: '/Course-Message',
+                    data: string,
                     dataType: 'json',
                     timeout: 6000000,
                     success: function (data) {
+                        if (data.course !== document.getElementById('output').innerHTML){
+                            data.message = data.course;
+                        } else{
 
-                        var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
-                            + JSON.stringify(data, null, 4) + "&lt;/pre&gt;";
-
-                        console.log(data);
+                        }
+                        document.getElementById('output').innerHTML = data.message;
+                        console.log("SUCCESS");
                     },
+                    error: function (data) {
+                        console.log("FAILURE");
+                    }
 
                 })
+            }
+            $('#course').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            $('#course').keyup(function(){
+                document.getElementById('output').innerHTML ="";
+                clearTimeout(delayman);
+                if(document.getElementById('course').value.length===9){
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        console.log("Checking Anyway!");
+                        queryMessage();
+                    }, 3000);
+                }
             });
         });
-
     </script>
 </head>
 <body>
@@ -75,40 +94,22 @@
 <a href="/" class = "dropbtn">Log out</a>
 <div class="tenPix"></div>
 <div class="container">
-    <form class="courseMessageForm" method = "post">
-        <fieldset>
-            <p>
-                <div class="form-group">
-                    <label>Course:</label>
-                    <input type = "text"
-                       name = "course"
-                           id="course"
-                       class="form-control"/>
-            <!--
-        <label>Message:</label>
-
-        <input type = "text"
-                   id = "courseMessage"
-                   class="form-control"/>
-
-                <p class="form-control">
-                    ${courseMessage}
-                </p>
-            -->
-                <label>New Message:</label>
-                <input type = "text"
-                       id = "newCourseMessage"
-                       class="form-control"/>
-                </div>
-            </p>
-        </fieldset>
-
-        <input type="submit" class="btn btn-primary btnCol" name="Save"></input>
-        <button type="submit" class="btn btn-primary btnCol" name="clear">Clear Message</button>
-    </form>
-    <p>
-        ${returnVoidError}
-    </p>
+    <form:form class="courseMessageForm" method = "post" action="Course-Message" modelAttribute="inputNwtxcm">
+        <p>
+            <div class="form-group">
+                <form:label path="course">Course Number:</form:label>
+                <form:input
+                        id="course"
+                    path="course"
+                    class="form-control"
+                    autocomplete="off"/>
+                <form:errors path="course"></form:errors>
+            </div>
+        <div class="form-group">
+            <p id = 'output' class="form-control"></p>
+        </div>
+        </p>
+    </form:form>
 </div>
 
 </body>
