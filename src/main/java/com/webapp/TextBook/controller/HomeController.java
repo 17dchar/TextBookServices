@@ -320,40 +320,19 @@ public class HomeController {
         System.out.println("Passed Data Validation");
         Nwtxdt oldNwtxdt = new Nwtxdt();
         if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
-            oldNwtxdt = replaceBarcodeService.getNwtxdtByBookCode(nwtxdt.getBookCode());
-            System.out.println(oldNwtxdt.getBarcode());
-        } else if(nwtxdt.getBarcode() != null){
-
+            oldNwtxdt = replaceBarcodeService.getMostRecentNwtxdt(nwtxdt.getBookCode());
+        } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
+            oldNwtxdt = replaceBarcodeService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
+        }
+        else if(nwtxdt.getBarcode() != ""){
+            oldNwtxdt = replaceBarcodeService.getNwtxdtByBarcode(nwtxdt.getBarcode());
         } else{
             System.out.println("How did we get here?");
         }
-        //Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode());
-        /*
-        if (oldNwtxdt != null) {
-
-            //Duplicating everything to the new model
-            nwtxdt.setBookCode(oldNwtxdt.getBookCode());
-            nwtxdt.setEditionYear(oldNwtxdt.getEditionYear());
-            nwtxdt.setSeqNr(oldNwtxdt.getSeqNr());
-            nwtxdt.setPidm(oldNwtxdt.getPidm());
-            nwtxdt.setTerm(oldNwtxdt.getTerm());
-            nwtxdt.setDateCheckedOut(oldNwtxdt.getDateCheckedOut());
-            nwtxdt.setDisposition(oldNwtxdt.getDisposition());
-            nwtxdt.setBookSalePrice(oldNwtxdt.getBookSalePrice());
-            nwtxdt.setPrevPidm(oldNwtxdt.getPrevPidm());
-            nwtxdt.setPrevDateCheckedIn(oldNwtxdt.getPrevDateCheckedIn());
-            nwtxdt.setActivityDate(oldNwtxdt.getActivityDate());
-            nwtxdt.setBillableFlag(oldNwtxdt.getBillableFlag());
-
-            // Deletes Old Repository Item and Saves New One
-            replaceBarcodeService.deleteNwtxdt(oldNwtxdt.getBarcode());
-            replaceBarcodeService.saveNwtxdt(nwtxdt);
-        }else{
-            //Wasn't able to find a book off of given credentials
-            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        if(oldNwtxdt == null){
+            nwtxdt.setBookCode("We Couldn't Find a Book Off of Given Credentials");
+            nwtxdt.setBarcode("We Couldn't Find a Book Off of Given Credentials");
         }
-
-         */
         return oldNwtxdt;
     }
 
