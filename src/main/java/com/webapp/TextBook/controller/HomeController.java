@@ -285,7 +285,8 @@ public class HomeController {
     //Replace Barcode GET
     //SUPERVISOR ONLY
     @RequestMapping(value = "/Change-Barcode", method = RequestMethod.GET)
-    public String replaceBarcode() {
+    public String replaceBarcode(ModelMap model) {
+        model.addAttribute("inputNwtxin", new Nwtxin());
         System.out.println("Replace Barcode GET");
         if(!supervisor){
             return "redirect:/";
@@ -296,24 +297,38 @@ public class HomeController {
     //Replace Barcode POST
     //SUPERVISOR ONLY
     @RequestMapping(value = "/Change-Barcode", method = RequestMethod.POST)
-    public String replaceBarcodePOST(@Valid Nwtxdt nwtxdt, BindingResult bindingResult,
+    public @ResponseBody Nwtxdt replaceBarcodePOST(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
                                      ModelMap model)
                                      throws ParseException {
         System.out.println("Replace Barcode POST");
         if(!supervisor){
-            return "redirect:/";
+            return nwtxdt;
         }
+        //Pseudo Regex
         if(bindingResult.hasErrors()){
-            model.put("returnVoidError", "Invalid Credentials");
+            System.out.println("ope, there were errors");
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }
             }
-            return "Supervisor/replaceBarcode";
+            if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
+                nwtxdt.setBookCode("We Need at Least a Book Code or a Barcode");
+                return nwtxdt;
+            }
         }
+        System.out.println("Passed Data Validation");
+        Nwtxdt oldNwtxdt = new Nwtxdt();
+        if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
+            oldNwtxdt = replaceBarcodeService.getNwtxdtByBookCode(nwtxdt.getBookCode());
+            System.out.println(oldNwtxdt.getBarcode());
+        } else if(nwtxdt.getBarcode() != null){
 
-        Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode());
+        } else{
+            System.out.println("How did we get here?");
+        }
+        //Nwtxdt oldNwtxdt = replaceBarcodeService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode());
+        /*
         if (oldNwtxdt != null) {
 
             //Duplicating everything to the new model
@@ -337,7 +352,9 @@ public class HomeController {
             //Wasn't able to find a book off of given credentials
             model.put("returnVoidError", "No Book Found Off of Given Credentials");
         }
-        return "Supervisor/replaceBarcode";
+
+         */
+        return oldNwtxdt;
     }
 
 
@@ -417,7 +434,7 @@ public class HomeController {
                     System.out.println((FieldError) object);
                 }
             }
-            if(nwtxcm.getCourse() == null){
+            if(nwtxcm.getCourse() == ""){
                 nwtxcm.setCourse("Course Cannot Be Empty (They're All 9 Characters Long)");
             } else if(nwtxcm.getCourse().length() != 9){
                 nwtxcm.setCourse("Course Has to Be 9 Characters Long");
@@ -425,18 +442,16 @@ public class HomeController {
             return nwtxcm;
         }
         System.out.println("Passed Data Validation");
-/*
-        Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCmCourse());
-        System.out.println(nwtxcm.getCmCourse());
+
+        Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCourse());
+        System.out.println(nwtxcm.getCourse());
         if (oldNwtxcm != null) {
-            model.put("courseMessage", oldNwtxcm.getCmMessage());
+            model.put("courseMessage", oldNwtxcm.getMessage());
+            nwtxcm.setMessage(oldNwtxcm.getMessage());
         }else{
             //Wasn't able to find a course off of given credentials
-            model.put("returnVoidError", "No Course Found Off of Given Credentials");
+            nwtxcm.setMessage("**No Course Found Off of Given Credentials**");
         }
-
- */
-        nwtxcm.setMessage("returning the spirits of vangrazila");
         return nwtxcm;
     }
 
@@ -478,7 +493,8 @@ public class HomeController {
     //Change Book Code GET
     //SUPERVISOR ONLY
     @RequestMapping(value= "/Change-Book-Code", method = RequestMethod.GET)
-    public String changeBookCode(){
+    public String changeBookCode(ModelMap model){
+        model.addAttribute("inputNwtxin", new Nwtxin());
         System.out.println("Course Message GET");
         if(!supervisor){
             return "redirect:/";
@@ -489,7 +505,7 @@ public class HomeController {
     //Change Book Code POST
     //SUPERVISOR ONLY
     @RequestMapping(value= "/Change-Book-Code", method = RequestMethod.POST)
-    public String changeBookCodePost(@Valid Nwtxin nwtxin, BindingResult bindingResult, ModelMap model)
+    public @ResponseBody String changeBookCodePost(@Valid @RequestBody @ModelAttribute("inputNwtxin") Nwtxin nwtxin, BindingResult bindingResult, ModelMap model)
                                      throws ParseException{
         System.out.println("Course Message POST");
         if(!supervisor){

@@ -34,6 +34,14 @@ public class ReplaceBarcodeService {
             return null;
         }
     }
+    public Nwtxdt getNwtxdtByBookCode(String bookCode){
+        List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByBookCode(bookCode);
+        if(nwtxdtList.size() >0){
+            return nwtxdtList.get(0);
+        } else{
+            return null;
+        }
+    }
 
     public void deleteNwtxdt(String barcode) {
         //If there is at least 1 model under given credentials, delete them

@@ -16,7 +16,7 @@
             var x = document.getElementById("messageChanging");
             x.style.display = "none";
             function queryMessage(){
-                var string = $("#course").serialize();
+                var string = $("#bookCode").serialize();
                 console.log("Attempting Query With " + string);
                 $.ajax({
                     type: "POST",
@@ -95,12 +95,13 @@
 </div>
 <div class="tenPix"></div>
 <div class="border rounded" style="width: 60%; margin-left: 15px;">
-    <form class="yearCodeForm" method = "post">
+    <form:form  class="yearCodeForm" method = "post" action="Change-Barcode" modelAttribute="inputNwtxdt">
         <fieldset>
             <p>
             <div class="border rounded">
                 <label>Book Code:</label>
-                <input type = "text"
+                <input id="bookCode"
+                        type = "text"
                        name = "bookCode"
                        class="form-control"/>
                 <label>Edition Year:</label>
@@ -109,7 +110,7 @@
                        class="form-control"/>
             </div>
             <div class="tenPix"></div>
-            <div class="border rounded">
+            <div class="border rounded" id="messageChanging">
                 <label>New Book Code:</label>
                 <input type = "text"
                        name = "newBookCode"
@@ -125,7 +126,7 @@
             </div>
             <input type="submit" class="btn btn-primary btnCol column" name="Save" style="width: 100%; align-self: center;"/>
         </fieldset>
-    </form>
+    </form:form>
 </div>
 </body>
 </html>

@@ -16,22 +16,25 @@
             var x = document.getElementById("messageChanging");
             x.style.display = "none";
             function queryMessage(){
-                var string = $("#course").serialize();
+                var string = $("#bookCode").serialize();
                 console.log("Attempting Query With " + string);
                 $.ajax({
                     type: "POST",
-                    url: '/Course-Message',
+                    url: '/Change-Barcode',
                     data: string,
                     dataType: 'json',
                     timeout: 6000000,
                     success: function (data) {
-                        if (data.course !== document.getElementById("course").value){
-                            data.message = data.course;
+                        if (data.bookCode !== document.getElementById("bookCode").value){
+                            console.log("there were errors, do the popups");
+                            //data.message = data.bookCode;
                         }else if(!attempt){
+                            if(document.getElementById("editionYear").value === ""){
+                                document.getElementById("editionYear").placeholder = data.editionYear;
+                            }
                             attempt = true;
                             x.style.display = "block";
                         }
-                        document.getElementById('output').innerHTML = data.message;
                         console.log("SUCCESS");
                     },
                     error: function (data) {
@@ -39,18 +42,18 @@
                     }
                 })
             }
-            $('#course').keydown(function (e) {
+            $('#bookCode').keydown(function (e) {
                 if (e.keyCode == 13) {
                     e.preventDefault();
                     return false;
                 }
             });
-            $('#course').keyup(function(){
+            $('#bookCode').keyup(function(){
                 x.style.display = "none";
                 attempt = false;
-                document.getElementById('output').innerHTML ="";
+                //document.getElementById('output').innerHTML ="";
                 clearTimeout(delayman);
-                if(document.getElementById('course').value.length===9){
+                if(document.getElementById('bookCode').value.length===9){
                     queryMessage();
                 } else{
                     delayman =setTimeout(() => {
@@ -95,17 +98,19 @@
 </div>
 <a href="/" class = "dropbtn">Log out</a>
     <div class="marginftn">
-<form method="post" style="width: 75%;">
+<form:form method="post" action="Change-Barcode"  modelAttribute="inputNwtxdt" style="width: 75%;">
     <div class="border rounded form-group" style="width: auto; margin-left: 20px; margin: 15px;">
     <fieldset>
             <span class="col-xs-4">
             <label>Book Code</label>
-            <input type="text"
+            <input id="bookCode"
+                    type="text"
                    name="bookCode"
                    class="form-control"/></span>
         <span class="col-xs-4">
             <label>Book Year</label>
-            <input type="text"
+            <input id="editionYear"
+                    type="text"
                    name="editionYear"
                    class="form-control"/></span>
         <span class="col-xs-4">
@@ -117,7 +122,7 @@
         </p>
     </fieldset>
 <div class="tenPix"></div>
-<fieldset>
+<fieldset id="messageChanging">
         <legend class="legend">Book Info</legend>
         <p>
             <label>Title</label>
@@ -146,6 +151,6 @@
         <button type="submit" class="btn btn-primary btnCol" name="clear">Clear</button>
     </span>
 
-</form></div>
+</form:form></div>
 </body>
 </html>
