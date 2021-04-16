@@ -191,49 +191,43 @@ public class HomeController {
     //Find-Book POST
     //SUPERVISOR ONLY
     @PostMapping("/Find-Book")
-    public String bookQueryPost(@Valid Nwtxdt nwtxdt, BindingResult bindingResultNwtxdt,
-                                @Valid Nwtxin nwtxin, BindingResult bindingResultNwtxin,
+    public Nwtxin bookQueryPost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
                                 ModelMap model)
                                 throws ParseException {
         System.out.println("Book Query POST");
         if(!supervisor){
-            return "redirect:/";
+            return null;
         }
-        if(bindingResultNwtxdt.hasErrors() || bindingResultNwtxin.hasErrors()){
-            model.put("returnVoidError", "Invalid Credentials");
-            for (Object object : bindingResultNwtxdt.getAllErrors()) {
+        //If There Are Errors Compared To The Model, Then We'll Check for Invalid Inputs
+        if(bindingResult.hasErrors()){
+            System.out.println("ope, there were errors");
+            for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }
             }
-            for (Object object : bindingResultNwtxin.getAllErrors()) {
-                if(object instanceof FieldError) {
-                    System.out.println((FieldError) object);
-                }
+            if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
+                nwtxdt.setBookCode("We Need at Least a Book Code or a Barcode");
+                //return nwtxdt;
             }
-            return "Supervisor/bookQuery";
         }
-
-        nwtxdt = bookQueryService.getNwtxdt(nwtxdt.getBookCode(),nwtxdt.getEditionYear(), nwtxdt.getBarcode());
-        if (nwtxdt != null) {
-            //Found everything, and putting all needed items to the front page
-            model.put("bookTitle",          nwtxdt.getBookCode());
-            model.put("seqNr",              nwtxdt.getSeqNr());
-            model.put("prevTerm",           nwtxdt.getPrevTerm());
-            model.put("bookDisposition",    nwtxdt.getDisposition());
-            model.put("termCheckedOut",     nwtxdt.getTerm());
-            model.put("checkedOutTo",       nwtxdt.getPidm());
-            model.put("dateCheckedOut",     nwtxdt.getDateCheckedOut());
-            model.put("prevCheckedOutTo",   nwtxdt.getPrevPidm());
-            model.put("dateCheckedIn",      nwtxdt.getPrevDateCheckedIn());
-
-            return "Supervisor/bookQuery";
-        } else {
-            //Wasn't able to find a book off of given credentials
-            model.put("returnVoidError", "No Book Found Off of Given Credentials");
+        System.out.println("Passed Data Validation");
+        Nwtxin returningNwtxin = new Nwtxin();
+        if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
+            returningNwtxin = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
+        } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
+            returningNwtxin = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
         }
-
-        return "Supervisor/bookQuery";
+        else if(nwtxdt.getBarcode() != ""){
+            returningNwtxin = bookQueryService.getNwtxdtByBarcode(nwtxdt.getBarcode());
+        } else{
+            System.out.println("How did we get here?");
+        }
+        if(returningNwtxin == null){
+            nwtxdt.setBookCode("We Couldn't Find a Book Off of Given Credentials");
+            nwtxdt.setBarcode("We Couldn't Find a Book Off of Given Credentials");
+        }
+        return returningNwtxin;
     }
 
 
