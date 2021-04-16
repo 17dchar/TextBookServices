@@ -15,6 +15,9 @@
     <script>
         var delayman;
         $(document).ready(function() {
+            var attempt = false;
+            var x = document.getElementById("messageChanging");
+            x.style.display = "none";
             function queryMessage(){
                 var string = $("#course").serialize();
                 console.log("Attempting Query With " + string);
@@ -25,10 +28,11 @@
                     dataType: 'json',
                     timeout: 6000000,
                     success: function (data) {
-                        if (data.course !== document.getElementById('output').innerHTML){
+                        if (data.course !== document.getElementById("course").value){
                             data.message = data.course;
-                        } else{
-
+                        }else if(!attempt){
+                            attempt = true;
+                            x.style.display = "block";
                         }
                         document.getElementById('output').innerHTML = data.message;
                         console.log("SUCCESS");
@@ -36,7 +40,6 @@
                     error: function (data) {
                         console.log("FAILURE");
                     }
-
                 })
             }
             $('#course').keydown(function (e) {
@@ -46,6 +49,8 @@
                 }
             });
             $('#course').keyup(function(){
+                x.style.display = "none";
+                attempt = false;
                 document.getElementById('output').innerHTML ="";
                 clearTimeout(delayman);
                 if(document.getElementById('course').value.length===9){
@@ -102,11 +107,16 @@
                         id="course"
                     path="course"
                     class="form-control"
-                    autocomplete="off"/>
+                    autocomplete="off"
+                    placeholder="Lmoadawg"/>
                 <form:errors path="course"></form:errors>
             </div>
-        <div class="form-group">
-            <p id = 'output' class="form-control"></p>
+        <div class="form-group" id = 'outputDiv'>
+            <p id = 'output' class="form-control" ></p>
+        </div>
+        <div class="form-group" id="messageChanging">
+            <form:label path="message"> Change Course Message To:</form:label>
+            <form:input path="message"></form:input>
         </div>
         </p>
     </form:form>
