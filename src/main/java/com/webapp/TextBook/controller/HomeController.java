@@ -343,7 +343,8 @@ public class HomeController {
     //Find Course GET
     //SUPERVISOR ONLY
     @GetMapping("/Find-Course")
-    public String queryCourse(){
+    public String queryCourse(ModelMap model){
+        model.addAttribute("inputNwtxin", new Nwtxin());
         System.out.println("Course Query GET");
         if(!supervisor){
             return "redirect:/";
@@ -354,31 +355,35 @@ public class HomeController {
     //Find Course POST
     //SUPERVISOR ONLY
     @PostMapping("/Find-Course")
-    public String queryCoursePost(ModelMap model, @Valid Scbcrse scbcrse, BindingResult bindingResult)
+    public @ResponseBody List<String> queryCoursePost(ModelMap model, @Valid @RequestBody @ModelAttribute("inputNwtxin")  Nwtxin nwtxin, BindingResult bindingResult)
                                   throws ParseException {
         System.out.println("Course Query POST");
         if(!supervisor){
-            return "redirect:/";
+            return null;
         }
         //Pseudo Regex
+
+        List<String> stringList = new ArrayList<>();
         if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
+                }if(nwtxin.getBookCode().length() != 8){
+                    stringList.add("These Are All 8 Characters Long");
+                    return stringList;
                 }
             }
-            return "Supervisor/queryCourse";
         }
 
-        scbcrse = queryCourseService.getScbcrse(scbcrse.getSubjCode());
-        if (scbcrse != null) {
-            model.put("crseTable", scbcrse);
+        stringList = queryCourseService.getAllCourses(nwtxin.getBookCode());
+        if (stringList != null) {
+            return stringList;
         }else{
             //Wasn't able to find a book off of given credentials
-            model.put("returnVoidError", "No Courses Found Off of Given Credentials");
+            stringList.add("No Courses Were Found with Given Credentials");
+            return stringList;
         }
-        return "Supervisor/queryCourse";
     }
 
 
