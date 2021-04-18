@@ -9,6 +9,59 @@
     <link rel="stylesheet" href="/css/style.css">
     <meta charset="UTF-8">
     <title>Supervisor View</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var delayman;
+        $(document).ready(function() {
+            var attempt = false;
+            var x = document.getElementById("messageChanging");
+            x.style.display = "none";
+            function queryMessage(){
+                var string = $("#course").serialize();
+                console.log("Attempting Query With " + string);
+                $.ajax({
+                    type: "POST",
+                    url: '/Course-Message',
+                    data: string,
+                    dataType: 'json',
+                    timeout: 6000000,
+                    success: function (data) {
+                        if (data.course !== document.getElementById("course").value){
+                            data.message = data.course;
+                        }else if(!attempt){
+                            attempt = true;
+                            x.style.display = "block";
+                        }
+                        document.getElementById('output').innerHTML = data.message;
+                        console.log("SUCCESS");
+                    },
+                    error: function (data) {
+                        console.log("FAILURE");
+                    }
+                })
+            }
+            $('#course').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            $('#course').keyup(function(){
+                x.style.display = "none";
+                attempt = false;
+                document.getElementById('output').innerHTML ="";
+                clearTimeout(delayman);
+                if(document.getElementById('course').value.length===9){
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        console.log("Checking Anyway!");
+                        queryMessage();
+                    }, 3000);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>

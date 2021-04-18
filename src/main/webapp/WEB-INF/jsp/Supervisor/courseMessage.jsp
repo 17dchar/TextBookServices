@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,70 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var delayman;
+        $(document).ready(function() {
+            var attempt = false;
+            function queryMessage(){
+                var obj;
+                if(attempt){
+                    obj = '{ "course" : "' + document.getElementById("course").value +
+                        '", "message" : "' + document.getElementById("output").value + '"}';
+                } else{
+                    obj = '{ "course" : "' + document.getElementById("course").value +'"}';
+                }
+                var string = JSON.parse(obj);
+                console.log("Attempting Query With " + string);
+                $.ajax({
+                    type: "POST",
+                    url: '/Course-Message',
+                    data: string,
+                    dataType: 'json',
+                    timeout: 6000000,
+                    success: function (data) {
+                        if (data.course !== document.getElementById("course").value){
+                            data.message = data.course;
+                        }else if(!attempt){
+                            attempt = true;
+                        }
+                        document.getElementById('output').placeholder = data.message;
+                        document.getElementById('output').value = null;
+                        console.log("SUCCESS");
+                    },
+                    error: function (data) {
+                        console.log("FAILURE");
+                    }
+                })
+            }
+            $('#course').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            $('#output').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    queryMessage();
+                    return false;
+                }
+            });
+            $('#course').keyup(function(){
+                attempt = false;
+                document.getElementById('output').innerHTML =" ";
+                clearTimeout(delayman);
+                if(document.getElementById('course').value.length===9){
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        console.log("Checking Anyway!");
+                        queryMessage();
+                    }, 3000);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>
@@ -45,41 +109,25 @@
 </div>
 <a href="/" class = "dropbtn">Log out</a>
 <div class="tenPix"></div>
-<div class="container">
-    <form class="courseMessageForm" method = "post">
-        <fieldset>
-            <p>
-                <div class="form-group">
-                    <label>Course:</label>
-                    <input type = "text"
-                       name = "course"
-                       class="form-control"/>
-            <!--
-        <label>Message:</label>
-
-        <input type = "text"
-                   id = "courseMessage"
-                   class="form-control"/>
-
-                <p class="form-control">
-                    ${courseMessage}
-                </p>
-            -->
-                <label>New Message:</label>
-                <input type = "text"
-                       id = "newCourseMessage"
-                       class="form-control"/>
-                </div>
-            </p>
-        </fieldset>
-
-        <input type="submit" class="btn btn-primary btnCol" name="Save"></input>
-        <button type="submit" class="btn btn-primary btnCol" name="clear">Clear Message</button>
-    </form>
-    <p>
-        ${returnVoidError}
-    </p>
+<div class="container left column border rounded">
+    <form:form class="courseMessageForm" method = "post" action="Course-Message" modelAttribute="inputNwtxcm">
+        <p>
+            <div class="form-group">
+                <form:label path="course">Course Number:</form:label>
+                <form:input
+                        id="course"
+                    path="course"
+                    class="form-control"
+                    autocomplete="off"
+                    placeholder=""/>
+                <form:errors path="course"></form:errors>
+            </div>
+        <div class="form-group" id = 'outputDiv'>
+            <form:label path="message">Course Message:</form:label>
+            <form:input path="message" id = 'output' class="form-control"  style="height:30px" ></form:input>
+        </div>
+        </p>
+    </form:form>
 </div>
-
 </body>
 </html>

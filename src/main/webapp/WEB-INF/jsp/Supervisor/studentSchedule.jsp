@@ -10,6 +10,59 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var delayman;
+        $(document).ready(function() {
+            var attempt = false;
+            var x = document.getElementById("messageChanging");
+            x.style.display = "none";
+            function queryMessage(){
+                var string = $("#course").serialize();
+                console.log("Attempting Query With " + string);
+                $.ajax({
+                    type: "POST",
+                    url: '/Course-Message',
+                    data: string,
+                    dataType: 'json',
+                    timeout: 6000000,
+                    success: function (data) {
+                        if (data.course !== document.getElementById("course").value){
+                            data.message = data.course;
+                        }else if(!attempt){
+                            attempt = true;
+                            x.style.display = "block";
+                        }
+                        document.getElementById('output').innerHTML = data.message;
+                        console.log("SUCCESS");
+                    },
+                    error: function (data) {
+                        console.log("FAILURE");
+                    }
+                })
+            }
+            $('#course').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            $('#course').keyup(function(){
+                x.style.display = "none";
+                attempt = false;
+                document.getElementById('output').innerHTML ="";
+                clearTimeout(delayman);
+                if(document.getElementById('course').value.length===9){
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        console.log("Checking Anyway!");
+                        queryMessage();
+                    }, 3000);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>
@@ -43,12 +96,14 @@
         <form class="yearCodeForm" method="post">
             <fieldset>
                 <p>
-                <div class="form-group">
-                <label>Term:</label>
-                    <input type = "text"
-                           name = "termSeason"
-                           class="form-control fiftyWidth"/>
-                    </div></p>
+                    <label>Terms:</label>
+                    <select name="selectedTerm">
+                        <option value="">Select from List</option>
+                        <c:forEach var="description" items="${term}">
+                            <option value="${description.getCode()}">${description.getDesc()}</option>
+                        </c:forEach>
+                    </select>
+                </p>
                 </fieldset>
                 <fieldset>
                     <p>

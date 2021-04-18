@@ -5,6 +5,7 @@ import com.webapp.TextBook.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -19,6 +20,20 @@ public class StudentScheduleService {
         } else{
             return null;
         }
+    }
+    public List<Stvterm> getLatestTerms(){
+        Calendar cal = Calendar.getInstance();
+        int currentMonth = cal.get(Calendar.MONTH)+1;
+        int currentYear = cal.get(Calendar.YEAR);
+        List<Stvterm> stvtermList;
+        if(currentMonth <5){
+            stvtermList= stvtermRepository.findByCodeOrCodeOrCode(Integer.toString(currentYear)+"10",Integer.toString(currentYear)+"20",Integer.toString(currentYear)+"30");
+        } else if(currentMonth < 8){
+            stvtermList= stvtermRepository.findByCodeOrCodeOrCode(Integer.toString(currentYear)+"20",Integer.toString(currentYear)+"30",Integer.toString(currentYear+1)+"10");
+        } else{
+            stvtermList= stvtermRepository.findByCodeOrCodeOrCode(Integer.toString(currentYear)+"30",Integer.toString(currentYear+1)+"10",Integer.toString(currentYear+1)+"20");
+        }
+        return stvtermList;
     }
 
     @Autowired

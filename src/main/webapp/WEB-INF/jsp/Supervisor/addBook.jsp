@@ -8,6 +8,59 @@
     <link rel="stylesheet" href="/css/style.css">
     <meta charset="UTF-8">
     <title>Add a Book</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var delayman;
+        $(document).ready(function() {
+            var attempt = false;
+            var x = document.getElementById("messageChanging");
+            x.style.display = "none";
+            function queryMessage(){
+                var string = $("#course").serialize();
+                console.log("Attempting Query With " + string);
+                $.ajax({
+                    type: "POST",
+                    url: '/Course-Message',
+                    data: string,
+                    dataType: 'json',
+                    timeout: 6000000,
+                    success: function (data) {
+                        if (data.course !== document.getElementById("course").value){
+                            data.message = data.course;
+                        }else if(!attempt){
+                            attempt = true;
+                            x.style.display = "block";
+                        }
+                        document.getElementById('output').innerHTML = data.message;
+                        console.log("SUCCESS");
+                    },
+                    error: function (data) {
+                        console.log("FAILURE");
+                    }
+                })
+            }
+            $('#course').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            $('#course').keyup(function(){
+                x.style.display = "none";
+                attempt = false;
+                document.getElementById('output').innerHTML ="";
+                clearTimeout(delayman);
+                if(document.getElementById('course').value.length===9){
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        console.log("Checking Anyway!");
+                        queryMessage();
+                    }, 3000);
+                }
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -42,40 +95,53 @@
     </div>
 </div>
 <a href="/" class = "dropbtn">Log out</a>
-<form method="post">
-    <fieldset>
+<form method="post" class="addlmargin" style="width: 75%;">
+    <div class="border rounded form-group" style="width: auto; margin-left: 20px; margin: 15px;">
         <fieldset>
-            <p>
-                <label>Book Code: </label>
-                <input type="text" name="bookCode">
-                <label>Year: </label>
-                <input type="text" name="editionYear">
+            <span class="col-xs-4">
+            <label>Book Code</label>
+            <input type="text"
+                   name="bookCode"
+                   class="form-control"/></span>
+            <span class="col-xs-4">
+            <label>Book Year</label>
+            <input type="text"
+                   name="editionYear"
+                   class="form-control"/></span>
+            <span class="col-xs-4">
             </p>
         </fieldset>
+        <div class="tenPix"></div>
         <fieldset>
+            <legend class="legend">Book Info</legend>
             <p>
-                <label>Title: </label>
-                <input type="text" name="bookTitle">
-                <label>Sequence Number:</label>
-                <input type="text" name="seqNr">
-            </p>
-            <p>
-                <label>Strike Bar Code:</label>
+                <label>Title</label>
                 <input type="text"
-                       name="barcode"/>
+                       name="bookTitle"
+                       class="form-control left"/>
+            </p>
+            <p>
+                <label>Seq Nr</label>
+                <input type="number"
+                       name="seqNumber"
+                       class="form-control left"/>
+            </p>
+            <p>
+                <label>Strike Barcode</label>
+                <input type="text"
+                       name="barcode"
+                       class="form-control left"/></span>
             </p>
         </fieldset>
-    </fieldset>
-    <p>
-        ${returnVoidError}
-    </p>
-    <div class="column right">
-        <p>
-            <input type="submit" name="Save"/>
-            <button type="button">Clear</button>
-        </p>
     </div>
-</form>
+
+
+    <span class="addlmargin">
+        <button type="button" class="btn btn-primary btnCol">Save</button>
+        <button type="submit" class="btn btn-primary btnCol" name="clear">Clear</button>
+    </span>
+
+</form></div>
 
 
 <!--

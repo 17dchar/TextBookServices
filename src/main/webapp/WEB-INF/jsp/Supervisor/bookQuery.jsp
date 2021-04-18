@@ -13,6 +13,66 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">    <meta charset="UTF-8">
     <title>Query a Book</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var delayman;
+        $(document).ready(function() {
+            var attempt = false;
+            var x = document.getElementById("messageChanging");
+            x.style.display = "none";
+            function queryMessage(){
+                var obj;
+                if(attempt){
+                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
+                        '", "message" : "' + document.getElementById("output").value + '"}';
+                } else{
+                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +'"}';
+                }
+                var string = JSON.parse(obj);
+                console.log("Attempting Query With " + string);
+                $.ajax({
+                    type: "POST",
+                    url: '/Course-Message',
+                    data: string,
+                    dataType: 'json',
+                    timeout: 6000000,
+                    success: function (data) {
+                        if (data.course !== document.getElementById("course").value){
+                            data.message = data.course;
+                        }else if(!attempt){
+                            attempt = true;
+                            x.style.display = "block";
+                        }
+                        document.getElementById('output').innerHTML = data.message;
+                        console.log("SUCCESS");
+                    },
+                    error: function (data) {
+                        console.log("FAILURE");
+                    }
+                })
+            }
+            $('#course').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            $('#course').keyup(function(){
+                x.style.display = "none";
+                attempt = false;
+                document.getElementById('output').innerHTML ="";
+                clearTimeout(delayman);
+                if(document.getElementById('course').value.length===9){
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        console.log("Checking Anyway!");
+                        queryMessage();
+                    }, 3000);
+                }
+            });
+        });
+    </script>
     </head>
 <body>
 <h1 class="TBSHeader">Textbook Services</h1>
@@ -45,29 +105,40 @@
         <a href="Report">Add Report Here</a>
     </div>
 </div>
-<a href="/" class = "dropbtn">Log out</a>
+<div class="dropdown">
+<a href="/" class = "dropdown-content">Log out</a>
+</div>
+<div class="border rounded form-group" style="width: 75%; margin-left: 20px; margin: 15px;">
 <form method="post">
     <fieldset>
         <p>
             <label>Book Code:</label>
-            <input type="text"
-                   name="bookCode"/>
+            <input id="bookCode"
+                    type="text"
+                   name="bookCode"
+                   class="form-control"/>
             <label>Book Year:</label>
-            <input type="text"
-                   name="editionYear"/>
+            <input id="editionYear"
+                    type="text"
+                   name="editionYear"
+                   class="form-control"/>
             <label>Strike Bar Code:</label>
-            <input type="text"
-                   name="barcode"/>
+            <input id="barcode"
+                    type="text"
+                   name="barcode"
+                   class="form-control"/>
         </p>
+
         <p>
-            <input type="submit" name="Save"/>
-            <button type="button">Clear</button>
+            <input type="submit" name="Save" class="btn btn-primary btnCol column"/>
+            <button type="button" class="btn btn-primary btnCol column" style="margin: 5px">Clear</button>
         </p>
     </fieldset>
 </form>
-<div class="container">
+</div>
+<div class="pattinBetween border rounded" style="margin-left: 15px;">
     <div class="row">
-        <div class="column left">
+        <div class="column left form-group">
             <form>
                 <fieldset>
                     <legend>Book Info</legend>
@@ -138,12 +209,12 @@
                 </fieldset>
             </form>
         </div>
-        <div class="column right">
+        <div class="column left marginftn">
             <p>
-                <button type="button">Save</button>
+                <button type="button" class="btn btn-primary btnCol column" style="margin: 5px;">Save</button>
             </p>
             <p>
-                <button type="button">Clear</button>
+                <button type="button" class="btn btn-primary btnCol column" style="margin-top: -4.75px;">Clear</button>
             </p>
         </div>
     </div>
