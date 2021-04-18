@@ -35,6 +35,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 
 @Controller
 public class HomeController {
@@ -191,13 +193,15 @@ public class HomeController {
     //Find-Book POST
     //SUPERVISOR ONLY
     @PostMapping("/Find-Book")
-    public Nwtxin bookQueryPost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
+    public @ResponseBody Nwtxin bookQueryPost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
                                 ModelMap model)
                                 throws ParseException {
         System.out.println("Book Query POST");
         if(!supervisor){
             return null;
         }
+
+        Nwtxin returningNwtxin = new Nwtxin();
         //If There Are Errors Compared To The Model, Then We'll Check for Invalid Inputs
         if(bindingResult.hasErrors()){
             System.out.println("ope, there were errors");
@@ -206,13 +210,14 @@ public class HomeController {
                     System.out.println((FieldError) object);
                 }
             }
+            System.out.println(nwtxdt.getBookCode());
+            System.out.println(nwtxdt.getEditionYear());
             if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
-                nwtxdt.setBookCode("We Need at Least a Book Code or a Barcode");
-                //return nwtxdt;
+                returningNwtxin.setBookCode("We Need at Least a Book Code or a Barcode");
+                return returningNwtxin;
             }
         }
         System.out.println("Passed Data Validation");
-        Nwtxin returningNwtxin = new Nwtxin();
         if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
             returningNwtxin = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
         } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
@@ -416,53 +421,26 @@ public class HomeController {
                 nwtxcm.setCourse("Course Cannot Be Empty (They're All 9 Characters Long)");
             } else if(nwtxcm.getCourse().length() != 9){
                 nwtxcm.setCourse("Course Has to Be 9 Characters Long");
+            } else if(nwtxcm.getMessage().length() > 15){
+                nwtxcm.setCourse("Message is too long!");
             }
             return nwtxcm;
         }
-        System.out.println("Passed Data Validation");
 
         Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCourse());
         System.out.println(nwtxcm.getCourse());
         if (oldNwtxcm != null) {
-            model.put("courseMessage", oldNwtxcm.getMessage());
-            nwtxcm.setMessage(oldNwtxcm.getMessage());
+            if (nwtxcm.getMessage() == null) {
+                nwtxcm.setMessage(oldNwtxcm.getMessage());
+            } else if(!nwtxcm.getMessage().equals(oldNwtxcm.getMessage())) {
+                courseMessageService.saveNwtxcm(nwtxcm);
+                nwtxcm.setCourse("Message Saved!");
+            }
         }else{
             //Wasn't able to find a course off of given credentials
-            nwtxcm.setMessage("**No Course Found Off of Given Credentials**");
+            nwtxcm.setCourse("**No Course Found Off of Given Credentials**");
         }
         return nwtxcm;
-    }
-
-    //Course Message CLEAR
-    //SUPERVISOR ONLY
-    @RequestMapping(value = "/Course-Message", method = RequestMethod.POST, params="clear")
-    public String courseMessageClear(ModelMap model, Nwtxcm nwtxcm, BindingResult bindingResult)
-                                     throws ParseException {
-        System.out.println("Course Message POST - CLEAR");
-        if(!supervisor){
-            return "redirect:/";
-        }
-        //Pseudo Regex
-        if(bindingResult.hasErrors()){
-            model.put("returnVoidError", "Invalid Credentials");
-            for (Object object : bindingResult.getAllErrors()) {
-                if(object instanceof FieldError) {
-                    System.out.println((FieldError) object);
-                }
-            }
-            return "Supervisor/courseMessage";
-        }
-
-        Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCourse());
-        if (oldNwtxcm != null) {
-            oldNwtxcm.setMessage("");
-            courseMessageService.saveNwtxcm(oldNwtxcm);
-            model.put("courseMessage", "Cleared!");
-        }else{
-            //Wasn't able to find a course off of given credentials
-            model.put("returnVoidError", "No Course Found Off of Given Credentials");
-        }
-        return "Supervisor/courseMessage";
     }
 
     @Autowired

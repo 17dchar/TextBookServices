@@ -21,7 +21,14 @@
             var x = document.getElementById("messageChanging");
             x.style.display = "none";
             function queryMessage(){
-                var string = $("#course").serialize();
+                var obj;
+                if(attempt){
+                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
+                        '", "message" : "' + document.getElementById("output").value + '"}';
+                } else{
+                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +'"}';
+                }
+                var string = JSON.parse(obj);
                 console.log("Attempting Query With " + string);
                 $.ajax({
                     type: "POST",
@@ -106,15 +113,18 @@
     <fieldset>
         <p>
             <label>Book Code:</label>
-            <input type="text"
+            <input id="bookCode"
+                    type="text"
                    name="bookCode"
                    class="form-control"/>
             <label>Book Year:</label>
-            <input type="text"
+            <input id="editionYear"
+                    type="text"
                    name="editionYear"
                    class="form-control"/>
             <label>Strike Bar Code:</label>
-            <input type="text"
+            <input id="barcode"
+                    type="text"
                    name="barcode"
                    class="form-control"/>
         </p>

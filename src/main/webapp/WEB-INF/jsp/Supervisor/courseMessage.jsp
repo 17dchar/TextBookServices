@@ -16,10 +16,15 @@
         var delayman;
         $(document).ready(function() {
             var attempt = false;
-            var x = document.getElementById("messageChanging");
-            x.style.display = "none";
             function queryMessage(){
-                var string = $("#course").serialize();
+                var obj;
+                if(attempt){
+                    obj = '{ "course" : "' + document.getElementById("course").value +
+                        '", "message" : "' + document.getElementById("output").value + '"}';
+                } else{
+                    obj = '{ "course" : "' + document.getElementById("course").value +'"}';
+                }
+                var string = JSON.parse(obj);
                 console.log("Attempting Query With " + string);
                 $.ajax({
                     type: "POST",
@@ -32,9 +37,9 @@
                             data.message = data.course;
                         }else if(!attempt){
                             attempt = true;
-                            x.style.display = "block";
                         }
-                        document.getElementById('output').innerHTML = data.message;
+                        document.getElementById('output').placeholder = data.message;
+                        document.getElementById('output').value = null;
                         console.log("SUCCESS");
                     },
                     error: function (data) {
@@ -48,10 +53,16 @@
                     return false;
                 }
             });
+            $('#output').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    queryMessage();
+                    return false;
+                }
+            });
             $('#course').keyup(function(){
-                x.style.display = "none";
                 attempt = false;
-                document.getElementById('output').innerHTML ="";
+                document.getElementById('output').innerHTML =" ";
                 clearTimeout(delayman);
                 if(document.getElementById('course').value.length===9){
                     queryMessage();
@@ -108,15 +119,12 @@
                     path="course"
                     class="form-control"
                     autocomplete="off"
-                    placeholder="Lmoadawg"/>
+                    placeholder=""/>
                 <form:errors path="course"></form:errors>
             </div>
         <div class="form-group" id = 'outputDiv'>
-            <p id = 'output' class="form-control" ></p>
-        </div>
-        <div class="form-group" id="messageChanging">
-            <form:label path="message"> Change Course Message To:</form:label>
-            <form:input path="message"></form:input>
+            <form:label path="message">Course Message:</form:label>
+            <form:input path="message" id = 'output' class="form-control"  style="height:30px" ></form:input>
         </div>
         </p>
     </form:form>
