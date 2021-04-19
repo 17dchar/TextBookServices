@@ -193,7 +193,7 @@ public class HomeController {
     //Find-Book POST
     //SUPERVISOR ONLY
     @PostMapping("/Find-Book")
-    public @ResponseBody Nwtxin bookQueryPost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
+    public @ResponseBody FindBookInfo bookQueryPost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
                                 ModelMap model)
                                 throws ParseException {
         System.out.println("Book Query POST");
@@ -201,10 +201,10 @@ public class HomeController {
             return null;
         }
 
+        FindBookInfo findBookInfo = new FindBookInfo();
         Nwtxin returningNwtxin = new Nwtxin();
         //If There Are Errors Compared To The Model, Then We'll Check for Invalid Inputs
         if(bindingResult.hasErrors()){
-            System.out.println("ope, there were errors");
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
@@ -213,26 +213,33 @@ public class HomeController {
             System.out.println(nwtxdt.getBookCode());
             System.out.println(nwtxdt.getEditionYear());
             if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
-                returningNwtxin.setBookCode("We Need at Least a Book Code or a Barcode");
-                return returningNwtxin;
+                findBookInfo.setErrors(true);
+                findBookInfo.setErrorMessage("We Need at Least a Book Code or a Barcode");
+                return findBookInfo;
             }
         }
+        findBookInfo.setErrors(false);
         System.out.println("Passed Data Validation");
         if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
-            returningNwtxin = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
+            findBookInfo.setBookCode(nwtxdt.getBookCode());
+            findBookInfo.setEditionYear("2020");
+            //returningNwtxin = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
         } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
-            returningNwtxin = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
+            findBookInfo.setBookCode(nwtxdt.getBookCode());
+            findBookInfo.setEditionYear(nwtxdt.getEditionYear());
+            //returningNwtxin = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
         }
         else if(nwtxdt.getBarcode() != ""){
-            returningNwtxin = bookQueryService.getNwtxdtByBarcode(nwtxdt.getBarcode());
+            findBookInfo.setBookCode("barcode set");
+            findBookInfo.setEditionYear("barcode set");
+            returningNwtxin = returningNwtxin;//bookQueryService.getNwtxdtByBarcode(nwtxdt.getBarcode());
         } else{
             System.out.println("How did we get here?");
         }
         if(returningNwtxin == null){
-            nwtxdt.setBookCode("We Couldn't Find a Book Off of Given Credentials");
-            nwtxdt.setBarcode("We Couldn't Find a Book Off of Given Credentials");
+            findBookInfo.setBookCode("We Couldn't Find a Book Off of Given Credentials");
         }
-        return returningNwtxin;
+        return findBookInfo;
     }
 
 

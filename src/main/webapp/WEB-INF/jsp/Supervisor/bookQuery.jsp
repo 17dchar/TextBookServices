@@ -18,8 +18,6 @@
         var delayman;
         $(document).ready(function() {
             var attempt = false;
-            var x = document.getElementById("messageChanging");
-            x.style.display = "none";
             function queryMessage(){
                 var obj;
                 if(attempt){
@@ -32,18 +30,29 @@
                 console.log("Attempting Query With " + string);
                 $.ajax({
                     type: "POST",
-                    url: '/Course-Message',
+                    url: '/Find-Book',
                     data: string,
                     dataType: 'json',
                     timeout: 6000000,
                     success: function (data) {
-                        if (data.course !== document.getElementById("course").value){
-                            data.message = data.course;
+                        if (data.errors){
+                            //document.getElementById('output').innerHTML = data.message;
                         }else if(!attempt){
                             attempt = true;
-                            x.style.display = "block";
+                            //x.style.display = "block";
+                            //document.getElementById('output').innerHTML = data.message;
+                            console.log(data);
+                            document.getElementById('editionYear').placeholder = data.editionYear;
+                            document.getElementById('title').innerHTML = data.title;
+                            document.getElementById('seqNr').innerHTML = data.seqNr;
+                            document.getElementById('currentDisposition').innerHTML = data.currentDisposition;
+                            document.getElementById('currentTermCheckOut').innerHTML = data.currentTermCheckOut;
+                            document.getElementById('currentCheckedOutTo').innerHTML = data.currentCheckedOutTo;
+                            document.getElementById('currentDateCheckedOut').innerHTML = data.currentDateCheckedOut;
+                            document.getElementById('previousTermCheckedOut').innerHTML = data.previousTermCheckedOut;
+                            document.getElementById('previousCheckedOutTo').innerHTML = data.previousTermCheckedOut;
+                            document.getElementById('previousDateCheckedIn').innerHTML = data.previousDateCheckedIn;
                         }
-                        document.getElementById('output').innerHTML = data.message;
                         console.log("SUCCESS");
                     },
                     error: function (data) {
@@ -51,18 +60,17 @@
                     }
                 })
             }
-            $('#course').keydown(function (e) {
+            $('#bookCode').keydown(function (e) {
                 if (e.keyCode == 13) {
                     e.preventDefault();
                     return false;
                 }
             });
-            $('#course').keyup(function(){
-                x.style.display = "none";
+            $('#bookCode').keyup(function(){
                 attempt = false;
-                document.getElementById('output').innerHTML ="";
+                //document.getElementById('output').innerHTML ="";
                 clearTimeout(delayman);
-                if(document.getElementById('course').value.length===9){
+                if(document.getElementById('bookCode').value.length===8){
                     queryMessage();
                 } else{
                     delayman =setTimeout(() => {
@@ -139,83 +147,63 @@
 <div class="pattinBetween border rounded" style="margin-left: 15px;">
     <div class="row">
         <div class="column left form-group">
-            <form>
                 <fieldset>
                     <legend>Book Info</legend>
                     <p>
-                        <label>Title:</label>
-                        <!--
-                        <input type="text"
-                               id="bookTitle"/>
-                        -->
-                        ${bookTitle}
+                        <label style = "display: inline-block;">Title:</label>
+                        <p id ='title'></p>
+                        <!--${bookTitle}-->
                     </p>
                     <p>
 
                         <label>Seq Nr:</label>
-                        <!--
-                        <input type="text"
-                               id="seqNr"/>
-                        -->
-                        ${seqNr}
+                        <p id ='seqNr'></p>
+                        <!--${seqNr}-->
                     </p>
                 </fieldset>
-                <p>
-                    ${returnVoidError}
-                </p>
-            </form>
-            <form>
                 <fieldset>
                     <legend>Current Info</legend>
                     <p>
                         <label>Current Disposition:</label>
-                        <!--
-                        <input type="text"
-                               id="bookDisposition"/>
-                        -->
-                        ${bookDisposition}
+                        <p id ='currentDisposition'></p>
+                        <!--${bookDisposition}-->
                     </p>
                     <p>
                         <label>Term Checked Out:</label>
-                        ${termCheckedOut}
+                        <p id ='currentTermCheckOut'></p>
+                        <!--${termCheckedOut}-->
                     </p>
                     <p>
                         <label>Checked Out To:</label>
-                        ${checkedOutTo}
+                        <p id ='currentCheckedOutTo'></p>
+                        <!--${checkedOutTo}-->
                     </p>
                     <p>
                         <label>Date Checked Out:</label>
-                        ${dateCheckedOut}
+                        <p id ='currentDateCheckedOut'></p>
+                        <!--${dateCheckedOut}-->
                     </p>
                 </fieldset>
-            </form>
         </div>
         <div class="column middle">
-            <form>
                 <fieldset>
                     <legend>Previous Info</legend>
                     <p>
                         <label>Previous Term Check Out:</label>
-                        ${prevTerm}
+                        <p id ='previousTermCheckedOut'></p>
+                        <!--${prevTerm}-->
                     </p>
                     <p>
                         <label>Previously Checked Out To:</label>
-                        ${prevCheckedOutTo}
+                        <p id ='previousCheckedOutTo'></p>
+                        <!--${prevCheckedOutTo}-->
                     </p>
                     <p>
                         <label>Date Checked In:</label>
-                        ${dateCheckedIn}
+                        <p id ='previousDateCheckedIn'></p>
+                        <!--${dateCheckedIn}-->
                     </p>
                 </fieldset>
-            </form>
-        </div>
-        <div class="column left marginftn">
-            <p>
-                <button type="button" class="btn btn-primary btnCol column" style="margin: 5px;">Save</button>
-            </p>
-            <p>
-                <button type="button" class="btn btn-primary btnCol column" style="margin-top: -4.75px;">Clear</button>
-            </p>
         </div>
     </div>
 </div>
