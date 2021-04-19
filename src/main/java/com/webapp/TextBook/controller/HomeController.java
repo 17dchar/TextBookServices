@@ -315,12 +315,12 @@ public class HomeController {
     //Replace Barcode POST
     //SUPERVISOR ONLY
     @RequestMapping(value = "/Change-Barcode", method = RequestMethod.POST)
-    public @ResponseBody Nwtxdt replaceBarcodePOST(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
+    public @ResponseBody Nwtxin replaceBarcodePOST(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
                                      ModelMap model)
                                      throws ParseException {
         System.out.println("Replace Barcode POST");
         if(!supervisor){
-            return nwtxdt;
+            return null;
         }
         //Pseudo Regex
         if(bindingResult.hasErrors()){
@@ -332,26 +332,26 @@ public class HomeController {
             }
             if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
                 nwtxdt.setBookCode("We Need at Least a Book Code or a Barcode");
-                return nwtxdt;
+                return null;
             }
         }
         System.out.println("Passed Data Validation");
-        Nwtxdt oldNwtxdt = new Nwtxdt();
+        Nwtxin replacementNwtxin = new Nwtxin();
         if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
-            oldNwtxdt = replaceBarcodeService.getMostRecentNwtxdt(nwtxdt.getBookCode());
+            replacementNwtxin = replaceBarcodeService.getMostRecentNwtxdt(nwtxdt.getBookCode());
         } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
-            oldNwtxdt = replaceBarcodeService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
+            replacementNwtxin = replaceBarcodeService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
         }
         else if(nwtxdt.getBarcode() != ""){
-            oldNwtxdt = replaceBarcodeService.getNwtxdtByBarcode(nwtxdt.getBarcode());
+            replacementNwtxin = replaceBarcodeService.getNwtxdtByBarcode(nwtxdt.getBarcode());
         } else{
             System.out.println("How did we get here?");
         }
-        if(oldNwtxdt == null){
+        if(replacementNwtxin == null){
             nwtxdt.setBookCode("We Couldn't Find a Book Off of Given Credentials");
             nwtxdt.setBarcode("We Couldn't Find a Book Off of Given Credentials");
         }
-        return oldNwtxdt;
+        return replacementNwtxin;
     }
 
 
@@ -373,7 +373,7 @@ public class HomeController {
     //Find Course POST
     //SUPERVISOR ONLY
     @PostMapping("/Find-Course")
-    public @ResponseBody List<String> queryCoursePost(ModelMap model, @Valid @RequestBody @ModelAttribute("inputNwtxin")  Nwtxin nwtxin, BindingResult bindingResult)
+    public @ResponseBody List<Nwtxin> queryCoursePost(ModelMap model, @Valid @RequestBody @ModelAttribute("inputNwtxin")  Nwtxin nwtxin, BindingResult bindingResult)
                                   throws ParseException {
         System.out.println("Course Query POST");
         if(!supervisor){
@@ -381,25 +381,25 @@ public class HomeController {
         }
         //Pseudo Regex
 
-        List<String> stringList = new ArrayList<>();
+        List<Nwtxin> stringList = new ArrayList<Nwtxin>();
         if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }if(nwtxin.getBookCode().length() != 8){
-                    stringList.add("These Are All 8 Characters Long");
+                    //stringList.add("These Are All 8 Characters Long");
                     return stringList;
                 }
             }
         }
 
-        stringList = queryCourseService.getAllCourses(nwtxin.getBookCode());
+        //stringList = queryCourseService.getAllCourses(nwtxin.getBookCode());
         if (stringList != null) {
             return stringList;
         }else{
             //Wasn't able to find a book off of given credentials
-            stringList.add("No Courses Were Found with Given Credentials");
+            //stringList.add("No Courses Were Found with Given Credentials");
             return stringList;
         }
     }

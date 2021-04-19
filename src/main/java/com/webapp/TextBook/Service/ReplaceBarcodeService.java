@@ -14,59 +14,50 @@ import java.util.List;
 
 @Service
 public class ReplaceBarcodeService {
-    @Autowired
-    private NwtxdtRepository nwtxdtRepository;
-    //private NwtxinRepository nwtxinRepository;
+    @Autowired private NwtxdtRepository nwtxdtRepository;
+    @Autowired private NwtxinRepository nwtxinRepository;
 
-    public Nwtxdt saveNwtxdt(Nwtxdt nwtxdt) {
-        return nwtxdtRepository.save(nwtxdt);
-    }
-
-    public Nwtxdt getNwtxdtByBarcode(String barcode){
+    public Nwtxin getNwtxdtByBarcode(String barcode){
         //Create a list of all repositories under given credentials
         List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByBarcode(barcode);
 
         //If there is at least 1 model under given credentials, return the first
         //Else, return nothing
         if (nwtxdtList.size() > 0) {
-            return nwtxdtList.get(0);
-        }else{
-            return null;
+            List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCodeAndEditionYear(nwtxdtList.get(0).getBookCode(),nwtxdtList.get(0).getEditionYear());
+            if(nwtxinList.size() > 0){
+                return nwtxinList.get(0);
+            }
         }
+        return null;
     }
-    public Nwtxdt getMostRecentNwtxdt(String bookCode){
-        List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByBookCode(bookCode);
-        if(nwtxdtList.size() >0){
+
+    public Nwtxin getMostRecentNwtxdt(String bookCode){
+        List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCode(bookCode);
+        if(nwtxinList.size() >0){
             int mostRecent = 0;
-            for(int i = 0; i < nwtxdtList.size(); i++){
+            for(int i = 0; i < nwtxinList.size(); i++){
                 if(i > 0){
-                    System.out.println(nwtxdtList.get(i).getEditionYear());
-                    if(Integer.parseInt(nwtxdtList.get(i).getEditionYear()) > Integer.parseInt(nwtxdtList.get(i-1).getEditionYear())){
+                    System.out.println(nwtxinList.get(i).getEditionYear());
+                    if(Integer.parseInt(nwtxinList.get(i).getEditionYear()) > Integer.parseInt(nwtxinList.get(i-1).getEditionYear())){
                         mostRecent= i;
                     }
                 }
             }
-            return nwtxdtList.get(mostRecent);
+            return nwtxinList.get(mostRecent);
+        } else{
+            return null;
+        }
+    }
+    public Nwtxin getNwtxdtByBookCodeAndYear(String bookCode, String editionYear){
+        List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCodeAndEditionYear(bookCode, editionYear);
+        if(nwtxinList.size() >0){
+            return nwtxinList.get(0);
         } else{
             return null;
         }
     }
 
-    public Nwtxdt getNwtxdtByBookCodeAndYear(String bookCode, String editionYear){
-        List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByBookCode(bookCode);
-        if(nwtxdtList.size() >0){
-            return nwtxdtList.get(0);
-        } else{
-            return null;
-        }
-    }
-
-    public void deleteNwtxdt(String barcode) {
-        //If there is at least 1 model under given credentials, delete them
-        if (nwtxdtRepository.findByBarcode(barcode) != null) {
-            nwtxdtRepository.deleteById(barcode);
-        }
-    }
 }
 
 
