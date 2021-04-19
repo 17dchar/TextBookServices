@@ -17,17 +17,20 @@
     <script>
         var delayman;
         $(document).ready(function() {
-            var attempt = false;
+            var withEditionYear = false;
+            var withBarcode = false;
             function queryMessage(){
                 var obj;
-                if(attempt){
+                if(withEditionYear){
                     obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
                         '", "message" : "' + document.getElementById("output").value + '"}';
+                } else if(withBarcode) {
+                    obj = '{ "barCode" : "' + document.getElementById("barcode").value +'"}';
                 } else{
                     obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +'"}';
                 }
                 var string = JSON.parse(obj);
-                console.log("Attempting Query With " + string);
+                console.log("withEditionYearing Query With " + string);
                 $.ajax({
                     type: "POST",
                     url: '/Find-Book',
@@ -36,9 +39,10 @@
                     timeout: 6000000,
                     success: function (data) {
                         if (data.errors){
+                            console.log(data);
                             //document.getElementById('output').innerHTML = data.message;
-                        }else if(!attempt){
-                            attempt = true;
+                        }else if(!withEditionYear){
+                            withEditionYear = true;
                             //x.style.display = "block";
                             //document.getElementById('output').innerHTML = data.message;
                             console.log(data);
@@ -67,7 +71,7 @@
                 }
             });
             $('#bookCode').keyup(function(){
-                attempt = false;
+                withEditionYear = false;
                 //document.getElementById('output').innerHTML ="";
                 clearTimeout(delayman);
                 if(document.getElementById('bookCode').value.length===8){
@@ -75,6 +79,36 @@
                 } else{
                     delayman =setTimeout(() => {
                         console.log("Checking Anyway!");
+                        queryMessage();
+                    }, 3000);
+                }
+            });
+            $('#editionYear').keyup(function(){
+                withEditionYear = false;
+                //document.getElementById('output').innerHTML ="";
+                clearTimeout(delayman);
+                if(document.getElementById('editionYear').value.length===4){
+                    withEditionYear = true;
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        console.log("Checking Anyway!");
+                        withEditionYear = true;
+                        queryMessage();
+                    }, 3000);
+                }
+            });
+            $('#barcode').keyup(function(){
+                withBarcode = false;
+                //document.getElementById('output').innerHTML ="";
+                clearTimeout(delayman);
+                if(document.getElementById('barcode').value.length===13){
+                    withBarcode = true;
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        console.log("Checking Anyway!");
+                        withBarcode = true;
                         queryMessage();
                     }, 3000);
                 }

@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table()
-public class FindBookInfo
+public class OutputBookInformationModel
 {
     Boolean errors;
     String errorMessage;

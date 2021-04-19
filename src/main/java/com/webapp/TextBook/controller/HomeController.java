@@ -8,15 +8,12 @@ import java.util.List;
 
 import com.webapp.TextBook.Model.*;
 import com.webapp.TextBook.Service.*;
-import com.webapp.TextBook.Repository.NwtxdtRepository;
 
 //Imported Spring Libraries
 import com.webapp.TextBook.Model.Nwtxin;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -25,17 +22,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 //Imported Services
-import com.webapp.TextBook.Service.*;
 
 
 //Imported Models
-import com.webapp.TextBook.Model.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
-import static org.springframework.http.HttpStatus.CREATED;
 
 
 @Controller
@@ -193,15 +184,16 @@ public class HomeController {
     //Find-Book POST
     //SUPERVISOR ONLY
     @PostMapping("/Find-Book")
-    public @ResponseBody FindBookInfo bookQueryPost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
-                                ModelMap model)
+    public @ResponseBody
+    OutputBookInformationModel bookQueryPost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
+                                             ModelMap model)
                                 throws ParseException {
         System.out.println("Book Query POST");
         if(!supervisor){
             return null;
         }
 
-        FindBookInfo findBookInfo = new FindBookInfo();
+        OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
         Nwtxin returningNwtxin = new Nwtxin();
         //If There Are Errors Compared To The Model, Then We'll Check for Invalid Inputs
         if(bindingResult.hasErrors()){
@@ -213,33 +205,33 @@ public class HomeController {
             System.out.println(nwtxdt.getBookCode());
             System.out.println(nwtxdt.getEditionYear());
             if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
-                findBookInfo.setErrors(true);
-                findBookInfo.setErrorMessage("We Need at Least a Book Code or a Barcode");
-                return findBookInfo;
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
+                return outputBookInformationModel;
             }
         }
-        findBookInfo.setErrors(false);
+        outputBookInformationModel.setErrors(false);
         System.out.println("Passed Data Validation");
         if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
-            findBookInfo.setBookCode(nwtxdt.getBookCode());
-            findBookInfo.setEditionYear("2020");
+            outputBookInformationModel.setBookCode(nwtxdt.getBookCode());
+            outputBookInformationModel.setEditionYear("2020");
             //returningNwtxin = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
         } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
-            findBookInfo.setBookCode(nwtxdt.getBookCode());
-            findBookInfo.setEditionYear(nwtxdt.getEditionYear());
+            outputBookInformationModel.setBookCode(nwtxdt.getBookCode());
+            outputBookInformationModel.setEditionYear(nwtxdt.getEditionYear());
             //returningNwtxin = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
         }
         else if(nwtxdt.getBarcode() != ""){
-            findBookInfo.setBookCode("barcode set");
-            findBookInfo.setEditionYear("barcode set");
+            outputBookInformationModel.setBookCode("barcode set");
+            outputBookInformationModel.setEditionYear("barcode set");
             returningNwtxin = returningNwtxin;//bookQueryService.getNwtxdtByBarcode(nwtxdt.getBarcode());
         } else{
             System.out.println("How did we get here?");
         }
         if(returningNwtxin == null){
-            findBookInfo.setBookCode("We Couldn't Find a Book Off of Given Credentials");
+            outputBookInformationModel.setBookCode("We Couldn't Find a Book Off of Given Credentials");
         }
-        return findBookInfo;
+        return outputBookInformationModel;
     }
 
 
@@ -260,13 +252,16 @@ public class HomeController {
     //Change Disposition POST
     //SUPERVISOR ONLY
     @PostMapping("/Change-Disposition")
-    public String bookDispositionPost(@Valid Nwtxdt nwtxdt, BindingResult bindingResult,
+    public @ResponseBody
+    OutputBookInformationModel bookDispositionPost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
                                       ModelMap model)
                                       throws ParseException {
         System.out.println("Book Disposition POST");
         if(!supervisor){
-            return "redirect:/";
+            return null;
         }
+        OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
+        Nwtxin returningNwtxin = new Nwtxin();
         if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
             for (Object object : bindingResult.getAllErrors()) {
@@ -274,14 +269,31 @@ public class HomeController {
                     System.out.println((FieldError) object);
                 }
             }
-            return "Supervisor/bookDisposition";
+            //return outputBookInformationModel;
         }
+        System.out.println("Passed Data Validation");
+        if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
+            outputBookInformationModel.setBookCode(nwtxdt.getBookCode());
+            outputBookInformationModel.setEditionYear("2020");
+            //returningNwtxin = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
+        } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
+            outputBookInformationModel.setBookCode(nwtxdt.getBookCode());
+            outputBookInformationModel.setEditionYear(nwtxdt.getEditionYear());
+            //returningNwtxin = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
+        }
+        else if(nwtxdt.getBarcode() != ""){
+            outputBookInformationModel.setBookCode("barcode set");
+            outputBookInformationModel.setEditionYear("barcode set");
+            returningNwtxin = returningNwtxin;//bookQueryService.getNwtxdtByBarcode(nwtxdt.getBarcode());
+        } else{
+            System.out.println("How did we get here?");
+        }
+        if(returningNwtxin == null){
+            outputBookInformationModel.setBookCode("We Couldn't Find a Book Off of Given Credentials");
+        } //else if(returningNwtxin)
 
-        Nwtxdt oldNwtxdt = bookDispositionService.getNwtxdt(nwtxdt.getBookCode(), nwtxdt.getEditionYear(), nwtxdt.getBarcode());
-        System.out.println(nwtxdt.getDisposition());
-        oldNwtxdt.setDisposition(nwtxdt.getDisposition());
-        bookDispositionService.setNwtxdt(oldNwtxdt);
-        return "Supervisor/bookDisposition";
+        //Check if code is same as previous
+        return outputBookInformationModel;
     }
 
 
