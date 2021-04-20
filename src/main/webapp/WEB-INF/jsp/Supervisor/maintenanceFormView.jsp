@@ -12,26 +12,47 @@
     <script>
         var delayman;
         $(document).ready(function() {
-            var attempt = false;
-            var x = document.getElementById("messageChanging");
-            x.style.display = "none";
+            var withEditionYear = false;
+            var withBarcode = false;
             function queryMessage(){
-                var string = $("#course").serialize();
-                console.log("Attempting Query With " + string);
+                var obj;
+                if(withEditionYear){
+                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
+                        '", "editionYear" : "' + document.getElementById("editionYear").value + '"}';
+                } else{
+                    console.log("this one");
+                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +'"}';
+                }
+                var string = JSON.parse(obj);
+                console.log("Query With " + string);
                 $.ajax({
                     type: "POST",
-                    url: '/Course-Message',
+                    url: '/Maintenance-Form',
                     data: string,
                     dataType: 'json',
                     timeout: 6000000,
                     success: function (data) {
-                        if (data.course !== document.getElementById("course").value){
-                            data.message = data.course;
-                        }else if(!attempt){
-                            attempt = true;
-                            x.style.display = "block";
+                        console.log("why");
+                        if (data.errors){
+                            console.log(data);
+                        }else if(!withEditionYear) {
+                            document.getElementById('editionYear').placeholder = data.editionYear;
                         }
-                        document.getElementById('output').innerHTML = data.message;
+                        console.log(data)
+                        document.getElementById('title').placeholder = data.title;
+                        document.getElementById('publisher').placeholder = data.publisher;
+                        document.getElementById('author').placeholder = data.author;
+                        document.getElementById('bookStatus').placeholder = data.bookStatus;
+                        document.getElementById('comment').placeholder = data.comment;
+                        document.getElementById('firstUsedDate').placeholder = data.firstUsedDate;
+                        document.getElementById('isbn').placeholder = data.isbn;
+                        document.getElementById('purchaseDate').placeholder = data.purchaseDate;
+                        document.getElementById('crse1').placeholder = data.crse1;
+                        document.getElementById('crse2').placeholder = data.crse2;
+                        document.getElementById('crse3').placeholder = data.crse3;
+                        document.getElementById('crse4').placeholder = data.crse4;
+                        document.getElementById('crse5').placeholder = data.crse5;
+                        document.getElementById('crseName').placeholder = data.crseName;
                         console.log("SUCCESS");
                     },
                     error: function (data) {
@@ -39,23 +60,40 @@
                     }
                 })
             }
-            $('#course').keydown(function (e) {
+            $('#bookCode').keydown(function (e) {
                 if (e.keyCode == 13) {
                     e.preventDefault();
                     return false;
                 }
             });
-            $('#course').keyup(function(){
-                x.style.display = "none";
-                attempt = false;
-                document.getElementById('output').innerHTML ="";
+            $('#bookCode').keyup(function(){
+                withEditionYear = false;
+                //document.getElementById('output').innerHTML ="";
                 clearTimeout(delayman);
-                if(document.getElementById('course').value.length===9){
+                if(document.getElementById('bookCode').value.length===8){
                     queryMessage();
                 } else{
                     delayman =setTimeout(() => {
-                        console.log("Checking Anyway!");
-                        queryMessage();
+                        if(document.getElementById('bookCode').value.length!==0) {
+                            console.log("Checking Anyway With Only Book Code!");
+                            queryMessage();
+                        }
+                    }, 3000);
+                }
+            });
+            $('#editionYear').keyup(function(){
+                withEditionYear = false;
+                clearTimeout(delayman);
+                if(document.getElementById('editionYear').value.length===4){
+                    withEditionYear = true;
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        if(document.getElementById('editionYear').value.length!==0) {
+                            console.log("Checking Anyway With Edition Year And Book Code!");
+                            withEditionYear = true;
+                            queryMessage();
+                        }
                     }, 3000);
                 }
             });
@@ -100,12 +138,14 @@
     <fieldset>
         <span class="col-xs-4">
             <label>Book Code</label>
-            <input type="text"
+            <input id="bookCode"
+                    type="text"
                    name="bookCode"
                    class="form-control"/></span>
         <span class="col-xs-4">
             <label>Book Year</label>
-            <input type="text"
+            <input id="editionYear"
+                    type="text"
                    name="editionYear"
                    class="form-control"/></span>
     </fieldset>
@@ -119,37 +159,37 @@
                     <legend>Book Info</legend>
                     <p>
                         <label>Title:</label>
-                        <input type="text" id="bookTitle" class="form-control width85">
+                        <input type="text" id="title" name ="title" class="form-control width85">
                     </p>
                     <p>
                         <label>Author:</label>
-                        <input type="text" id="bookAuthor" class="form-control width85">
+                        <input type="text" id="author" name = "author" class="form-control width85">
                     </p>
                     <p>
                         <label>Publisher:</label>
-                        <input type="text" id="bookPublisher" class="form-control width85">
+                        <input type="text" id="publisher" name="publisher" class="form-control width85">
                     </p>
                     <p>
                         <label>ISBN #:</label>
-                        <input type="text" id="bookISBN" class="form-control width85">
+                        <input type="text" id="isbn" name = "isbn" class="form-control width85">
                         <label>Cost:</label>
                         <input type="text" id="bookCost" class="form-control width85">
                     </p>
                     <p>
                         <label>Status:</label>
-                        <input type="text" id="bookStatus" class="form-control">
+                        <input type="text" id="bookStatus" name="bookStatus" class="form-control">
                         <label>Purchase Date:</label>
-                        <input type="date" id="bookPurchaseDate" class="form-control">
+                        <input type="date" id="purchaseDate" name="purchaseDate" class="form-control">
                     </p>
                     <p>
                         <label>Discontinued:</label>
-                        <input type="text" id="bookDiscontinued" class="form-control">
+                        <input type="text" id="discontinuedDate" name="discontinuedDate" class="form-control">
                         <label>First Used Date:</label>
-                        <input type="date" id="bookFirstUsed" class="form-control">
+                        <input type="date" id="firstUsedDate" name="firstUsedDate" class="form-control">
                     </p>
                     <p>
                         <label>Date Comment:</label>
-                        <input type="text" id="bookDateComment" class="form-control">
+                        <input type="text" id="comment" name="comment" class="form-control">
                     </p>
                 </fieldset>
             </form>
@@ -158,23 +198,23 @@
                     <legend>Course Info</legend>
                     <p>
                         <label>Course Title:</label>
-                        <input type="text" id="courseTitle" class="form-control">
+                        <input type="text" id="crseName" name="crseName" class="form-control">
                     </p>
                     <p>
                         <label>Course 1:</label>
-                        <input type="text" id="courseOne" class="form-control">
+                        <input type="text" id="crse1" name="crse1" class="form-control">
                         <label>Course 4:</label>
-                        <input type="text" id="courseFour" class="form-control">
+                        <input type="text" id="crse4" name="crse4" class="form-control">
                     </p>
                     <p>
                         <label>Course 2:</label>
-                        <input type="text" id="courseTwo" class="form-control">
+                        <input type="text" id="crse2" name="crse2" class="form-control">
                         <label>Course 5:</label>
-                        <input type="text" id="courseFive" class="form-control">
+                        <input type="text" id="crse5" name="crse5" class="form-control">
                     </p>
                     <p>
                         <label>Course 3:</label>
-                        <input type="text" id="courseThree" class="form-control">
+                        <input type="text" id="crse3" name="crse3" class="form-control">
                     </p>
                 </fieldset>
             </form>

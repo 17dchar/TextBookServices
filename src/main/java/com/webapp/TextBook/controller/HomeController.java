@@ -90,40 +90,23 @@ public class HomeController {
     //Maintenance POST
     //SUPERVISOR ACCESS ONLY
     @PostMapping("/Maintenance-Form")
-    public String maintenancePost(@Valid @ModelAttribute Nwtxin nwtxin, BindingResult bindingResult,
+    public @ResponseBody Nwtxin maintenancePost(@Valid @RequestBody @ModelAttribute("inputNwtxin") Nwtxin nwtxin, BindingResult bindingResult,
                                   ModelMap model){
         System.out.println("Maintenance POST");
         if(!supervisor){
-            return "redirect:/";
+            return null;
         }
         //If There Are Errors Compared To The Model, Then It Will Return Invalid Credentials
         if(bindingResult.hasErrors()){
-            model.put("returnVoidError", "Invalid Credentials");
             for (ObjectError object : bindingResult.getAllErrors()) {
                 //check for specific errors
             }
         }
+        System.out.println(nwtxin.getBookCode());
         List<Nwtxin> nwtxinList = maintenanceService.getNwtxinList(nwtxin.getBookCode());
-        if(nwtxinList != null){
-            //Get stats of book with most recent edition year
-            int mostRecent = 0;
-            for(int i = 0; i < nwtxinList.size(); i++){
-                if(i > 0){
-                    System.out.println(nwtxinList.get(i).getEditionYear());
-                    if(Integer.parseInt(nwtxinList.get(i).getEditionYear()) > Integer.parseInt(nwtxinList.get(i-1).getEditionYear())){
-                        mostRecent= i;
-                    }
-                }
-            }
-            model.put("ok",nwtxinList.get(mostRecent));
-            //Get stats of course name 1
-        } else {
-            //Wasn't able to find a book off of given credentials
-            model.put("returnVoidError", "No Book Found Off of Given Credentials");
-        }
 
-        //If edits made, make those changes
-        return "Supervisor/maintenanceFormView";
+        System.out.println(nwtxinList.get(0).getTitle());
+        return nwtxinList.get(0);
     }
 
 
