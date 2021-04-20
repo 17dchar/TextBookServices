@@ -366,7 +366,8 @@ public class HomeController {
     //Find Course POST
     //SUPERVISOR ONLY
     @PostMapping("/Find-Course")
-    public @ResponseBody List<Nwtxin> queryCoursePost(ModelMap model, @Valid @RequestBody @ModelAttribute("inputNwtxin")  Nwtxin nwtxin, BindingResult bindingResult)
+    //public @ResponseBody List<Nwtxin> queryCoursePost(ModelMap model, @Valid @RequestBody @ModelAttribute("inputNwtxin")  Nwtxin nwtxin, BindingResult bindingResult)
+    public @ResponseBody List<Nwtxin> queryCoursePost(ModelMap model, @Valid @RequestParam  String course, BindingResult bindingResult)
                                   throws ParseException {
         System.out.println("Course Query POST");
         if(!supervisor){
@@ -374,26 +375,27 @@ public class HomeController {
         }
         //Pseudo Regex
 
-        List<Nwtxin> stringList = new ArrayList<Nwtxin>();
+        List<Nwtxin> nwtxinList = new ArrayList<Nwtxin>();
         if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
-                }if(nwtxin.getBookCode().length() != 8){
-                    //stringList.add("These Are All 8 Characters Long");
-                    return stringList;
+                }if(course.length() != 8){
+                    //nwtxinList.add("These Are All 8 Characters Long");
+                    return nwtxinList;
                 }
             }
         }
 
-        //stringList = queryCourseService.getAllCourses(nwtxin.getBookCode());
-        if (stringList != null) {
-            return stringList;
+        nwtxinList = queryCourseService.getAllBooksForCourse(course);
+        if (nwtxinList != null) {
+            return nwtxinList;
         }else{
+            
             //Wasn't able to find a book off of given credentials
-            //stringList.add("No Courses Were Found with Given Credentials");
-            return stringList;
+            //nwtxinList.add("No Courses Were Found with Given Credentials");
+            return nwtxinList;
         }
     }
 

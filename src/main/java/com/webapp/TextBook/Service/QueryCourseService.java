@@ -31,28 +31,33 @@ public class QueryCourseService {
     }
 
     @Autowired private NwtxinRepository nwtxinRepository;
-    public List<String> getAllCourses(String bookCode){
-        List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCode(bookCode);
-        List<String> stringList = new ArrayList<>();
+    public List<Nwtxin> getAllBooksForCourse(String course){
+        List<Nwtxin> nwtxinList = nwtxinRepository.findByCrse1OrCrse2OrCrse3OrCrse4OrCrse5(course, course, course, course, course);
+        List<Nwtxin> nwtxinListFiltered = new ArrayList<Nwtxin>();
         if (nwtxinList.size() >0){
-            if(nwtxinList.get(0).getBookStatus().equals("C") || nwtxinList.get(0).getBookStatus() == null)
-            if(nwtxinList.get(0).getCrse1() != null){
-                stringList.add(nwtxinList.get(0).getCrse1());
+            for(Nwtxin nwtxin: nwtxinList){
+                if(nwtxin.getBookStatus().equals("C") || nwtxinList.get(0).getBookStatus() == null){
+                    if(nwtxin.getCrse1() != course){
+                        nwtxinListFiltered.add(nwtxin);
+                    }
+                    if(nwtxin.getCrse2() != course){
+                        nwtxinListFiltered.add(nwtxin);
+                    }
+                    if(nwtxin.getCrse3() != course){
+                        nwtxinListFiltered.add(nwtxin);
+                    }
+                    if(nwtxin.getCrse4() != course){
+                        nwtxinListFiltered.add(nwtxin);
+                    }
+                    if(nwtxin.getCrse5() != course){
+                        nwtxinListFiltered.add(nwtxin);
+                    }
+                }
+
             }
-            if(nwtxinList.get(0).getCrse2() != null){
-                stringList.add(nwtxinList.get(0).getCrse2());
-            }
-            if(nwtxinList.get(0).getCrse3() != null){
-                stringList.add(nwtxinList.get(0).getCrse3());
-            }
-            if(nwtxinList.get(0).getCrse4() != null){
-                stringList.add(nwtxinList.get(0).getCrse4());
-            }
-            if(nwtxinList.get(0).getCrse5() != null){
-                stringList.add(nwtxinList.get(0).getCrse5());
-            }
+
         }
-        return stringList;
+        return nwtxinListFiltered;
     }
 
 }
