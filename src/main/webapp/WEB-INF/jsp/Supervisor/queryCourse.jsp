@@ -12,26 +12,27 @@
     <script>
         var delayman;
         $(document).ready(function() {
-            var attempt = false;
-            var x = document.getElementById("messageChanging");
-            x.style.display = "none";
             function queryMessage(){
-                var string = $("#course").serialize();
-                console.log("Attempting Query With " + string);
+                var obj;
+                    obj = '{ "course" : "' + document.getElementById("course").value + '"}';
+                var string = JSON.parse(obj);
+                console.log("Query With " + string);
                 $.ajax({
                     type: "POST",
-                    url: '/Course-Message',
+                    url: '/Find-Course',
                     data: string,
                     dataType: 'json',
                     timeout: 6000000,
                     success: function (data) {
-                        if (data.course !== document.getElementById("course").value){
-                            data.message = data.course;
-                        }else if(!attempt){
-                            attempt = true;
-                            x.style.display = "block";
-                        }
-                        document.getElementById('output').innerHTML = data.message;
+                        console.log(data);
+                        $.each(data, function (i, item){
+                            var $tr = $('<tr>').append(
+                                $('<td>').text(item.bookCode),
+                                $('<td>').text(item.editionYear),
+                                $('<td>').text(item.title)
+
+                            ).appendTo('#bookTable');
+                        });
                         console.log("SUCCESS");
                     },
                     error: function (data) {
@@ -46,16 +47,15 @@
                 }
             });
             $('#course').keyup(function(){
-                x.style.display = "none";
-                attempt = false;
-                document.getElementById('output').innerHTML ="";
                 clearTimeout(delayman);
                 if(document.getElementById('course').value.length===9){
                     queryMessage();
                 } else{
                     delayman =setTimeout(() => {
-                        console.log("Checking Anyway!");
-                        queryMessage();
+                        if(document.getElementById('course').value.length!==0){
+                            console.log("Checking Anyway!");
+                            queryMessage();
+                        }
                     }, 3000);
                 }
             });
@@ -75,30 +75,6 @@
         { title: 'book10', code: '1011', year: '2019'},
 
         ];
-    
-        $(document).ready(function() {
-            $('#subjCode').keypress(function (e) {
-                console.log("i'm going thorugh this")
-                var data = {};
-                data["subjCode"] = $("#subjCode").val();
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Find-Course",
-                    data: JSON.stringify(data),
-                    dataType: 'json',
-                    timeout: 6000000,
-                    success: function (data) {
-
-                        var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
-                            + JSON.stringify(data, null, 4) + "&lt;/pre&gt;";
-
-                        console.log("SUCCESS");
-                    }
-                })
-            });
-        });
-
     </script>
 </head>
 <body>
@@ -139,14 +115,9 @@
         <p>
             <label>Course:</label>
             <input type = "text"
-                   id = "subjCode"
+                   id = "course"
                     name = "subjCode"
-                    onchange="changeWorks()"
                     class="form-control"/>
-            <label>Number:</label>
-            <input type = "text"
-                   name = "crseNumb"
-                   class="form-control"/>
         </p>
         <p>
             <input type="submit" name="Save" class="btn btn-primary btnCol column"/>
@@ -156,17 +127,16 @@
 </form>
 </div>
 <p>
-    ${returnVoidError}
-    ${crseNumb}
 </p>
 <div id = 'tableDiv' class="border rounded form-group" style="width: 75%; margin-left: 20px; margin: 15px;">
 <table class="table">
     <thead>
-        <tr>
+        <tr id = "bookTable">
             <th scope="col">Course Code</th>
             <th scope="col">Course Year</th>
             <th scope="col">Title</th>
         </tr>
+        <!--
         <c:forEach items="${crseTable}" var="crseTable">
             <tr>
                 <td>${crseTable.subjCode}</td>
@@ -174,6 +144,7 @@
                 <td>${crseTable.title}</td>
             </tr>
         </c:forEach>
+        -->
     </thead>
     <tbody id="tableData"></tbody>
 </table>

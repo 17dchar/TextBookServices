@@ -28,7 +28,7 @@
                 console.log("Query With " + string);
                 $.ajax({
                     type: "POST",
-                    url: '/Find-Book',
+                    url: '/Change-Disposition',
                     data: string,
                     dataType: 'json',
                     timeout: 6000000,

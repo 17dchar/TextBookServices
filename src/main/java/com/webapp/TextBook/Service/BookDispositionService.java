@@ -32,6 +32,7 @@ public class BookDispositionService {
         if (nwtxdtList.size() > 0) {
             List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCodeAndEditionYear(nwtxdtList.get(0).getBookCode(),nwtxdtList.get(0).getEditionYear());
             if(nwtxinList.size() > 0){
+                System.out.println("ok what");
                 List<Spriden> currentPersonSpriden = spridenRepository.findByPidm(nwtxdtList.get(0).getPidm());
                 List<Spriden> previousPersonSpriden = spridenRepository.findByPidm(nwtxdtList.get(0).getPrevPidm());
                 List<Stvterm> currentTerm = stvtermRepository.findByCode(nwtxdtList.get(0).getTerm());

@@ -36,26 +36,25 @@ public class QueryCourseService {
         List<Nwtxin> nwtxinListFiltered = new ArrayList<Nwtxin>();
         if (nwtxinList.size() >0){
             for(Nwtxin nwtxin: nwtxinList){
-                if(nwtxin.getBookStatus().equals("C") || nwtxinList.get(0).getBookStatus() == null){
-                    if(nwtxin.getCrse1() != course){
+                if(nwtxin.getBookStatus() == null || nwtxin.getBookStatus().equals("C")){
+                    System.out.println("through here");
+                    if(nwtxin.getCrse1() != null && nwtxin.getCrse1().equals(course)){
                         nwtxinListFiltered.add(nwtxin);
                     }
-                    if(nwtxin.getCrse2() != course){
+                    if(nwtxin.getCrse2() != null && nwtxin.getCrse2().equals(course)){
                         nwtxinListFiltered.add(nwtxin);
                     }
-                    if(nwtxin.getCrse3() != course){
+                    if(nwtxin.getCrse3() != null && nwtxin.getCrse3().equals(course)){
                         nwtxinListFiltered.add(nwtxin);
                     }
-                    if(nwtxin.getCrse4() != course){
+                    if(nwtxin.getCrse4() != null && nwtxin.getCrse4().equals(course)){
                         nwtxinListFiltered.add(nwtxin);
                     }
-                    if(nwtxin.getCrse5() != course){
+                    if(nwtxin.getCrse5() != null && nwtxin.getCrse5().equals(course)){
                         nwtxinListFiltered.add(nwtxin);
                     }
                 }
-
             }
-
         }
         return nwtxinListFiltered;
     }

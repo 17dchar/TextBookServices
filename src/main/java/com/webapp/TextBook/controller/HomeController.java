@@ -367,7 +367,7 @@ public class HomeController {
     //SUPERVISOR ONLY
     @PostMapping("/Find-Course")
     //public @ResponseBody List<Nwtxin> queryCoursePost(ModelMap model, @Valid @RequestBody @ModelAttribute("inputNwtxin")  Nwtxin nwtxin, BindingResult bindingResult)
-    public @ResponseBody List<Nwtxin> queryCoursePost(ModelMap model, @Valid @RequestParam  String course, BindingResult bindingResult)
+    public @ResponseBody List<Nwtxin> queryCoursePost(ModelMap model, @RequestParam("course")  String course)
                                   throws ParseException {
         System.out.println("Course Query POST");
         if(!supervisor){
@@ -376,17 +376,6 @@ public class HomeController {
         //Pseudo Regex
 
         List<Nwtxin> nwtxinList = new ArrayList<Nwtxin>();
-        if(bindingResult.hasErrors()){
-            model.put("returnVoidError", "Invalid Credentials");
-            for (Object object : bindingResult.getAllErrors()) {
-                if(object instanceof FieldError) {
-                    System.out.println((FieldError) object);
-                }if(course.length() != 8){
-                    //nwtxinList.add("These Are All 8 Characters Long");
-                    return nwtxinList;
-                }
-            }
-        }
 
         nwtxinList = queryCourseService.getAllBooksForCourse(course);
         if (nwtxinList != null) {
