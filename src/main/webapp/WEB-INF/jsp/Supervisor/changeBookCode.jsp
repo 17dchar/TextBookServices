@@ -12,26 +12,46 @@
     <script>
         var delayman;
         $(document).ready(function() {
-            var attempt = false;
-            var x = document.getElementById("messageChanging");
-            x.style.display = "none";
+            var withEditionYear = false;
+            var withBarcode = false;
             function queryMessage(){
-                var string = $("#bookCode").serialize();
-                console.log("Attempting Query With " + string);
+                var obj;
+                if(withEditionYear){
+                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
+                        '", "editionYear" : "' + document.getElementById("editionYear").value + '"}';
+                } else if(withBarcode) {
+                    obj = '{ "barcode" : "' + document.getElementById("barcode").value +'"}';
+                } else{
+                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +'"}';
+                }
+                var string = JSON.parse(obj);
+                console.log("Query With " + string);
                 $.ajax({
                     type: "POST",
-                    url: '/Course-Message',
+                    url: '/Find-Book',
                     data: string,
                     dataType: 'json',
                     timeout: 6000000,
                     success: function (data) {
-                        if (data.course !== document.getElementById("course").value){
-                            data.message = data.course;
-                        }else if(!attempt){
-                            attempt = true;
-                            x.style.display = "block";
+                        if (data.errors){
+                            console.log(data);
+                        }else if(!withEditionYear) {
+                            document.getElementById('editionYear').placeholder = data.editionYear;
                         }
-                        document.getElementById('output').innerHTML = data.message;
+                        if(withBarcode){
+                            document.getElementById('bookCode').placeholder = data.bookCode;
+                            document.getElementById('editionYear').placeholder = data.editionYear;
+                        }
+                        document.getElementById('title').innerHTML = data.title;
+                        document.getElementById('seqNr').innerHTML = data.seqNr;
+                        document.getElementById('currentDisposition').innerHTML = data.currentDisposition;
+                        document.getElementById('currentTermCheckOut').innerHTML = data.currentTermCheckOut;
+                        document.getElementById('currentCheckedOutTo').innerHTML = data.currentCheckedOutTo;
+                        document.getElementById('currentDateCheckedOut').innerHTML = data.currentDateCheckedOut;
+                        document.getElementById('previousTermCheckedOut').innerHTML = data.previousTermCheckedOut;
+                        document.getElementById('previousCheckedOutTo').innerHTML = data.previousTermCheckedOut;
+                        document.getElementById('previousDateCheckedIn').innerHTML = data.previousDateCheckedIn;
+
                         console.log("SUCCESS");
                     },
                     error: function (data) {
@@ -39,26 +59,62 @@
                     }
                 })
             }
-            $('#course').keydown(function (e) {
+            $('#bookCode').keydown(function (e) {
                 if (e.keyCode == 13) {
                     e.preventDefault();
                     return false;
                 }
             });
-            $('#course').keyup(function(){
-                x.style.display = "none";
-                attempt = false;
-                document.getElementById('output').innerHTML ="";
+            $('#bookCode').keyup(function(){
+                withEditionYear = false;
+                //document.getElementById('output').innerHTML ="";
                 clearTimeout(delayman);
-                if(document.getElementById('course').value.length===9){
+                if(document.getElementById('bookCode').value.length===8){
                     queryMessage();
                 } else{
                     delayman =setTimeout(() => {
-                        console.log("Checking Anyway!");
-                        queryMessage();
+                        if(document.getElementById('bookCode').value.length!==0) {
+                            console.log("Checking Anyway With Only Book Code!");
+                            queryMessage();
+                        }
                     }, 3000);
                 }
             });
+            $('#editionYear').keyup(function(){
+                withEditionYear = false;
+                clearTimeout(delayman);
+                if(document.getElementById('editionYear').value.length===4){
+                    withEditionYear = true;
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        if(document.getElementById('editionYear').value.length!==0) {
+                            console.log("Checking Anyway With Edition Year And Book Code!");
+                            withEditionYear = true;
+                            queryMessage();
+                        }
+                    }, 3000);
+                }
+            });
+            $('#barcode').unbind().bind('keyup',(function(){
+                withBarcode = false;
+                //document.getElementById('output').innerHTML ="";
+                clearTimeout(delayman);
+                if(document.getElementById('barcode').value.length===13 || document.getElementById('barcode').value.length===12){
+                    console.log("Length Met. Will Check With Only Barcode");
+                    withBarcode = true;
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        if(document.getElementById('barcode').value.length!==0){
+                            console.log("Checking Anyway With Barcode!");
+                            console.log(document.getElementById('barcode').value);
+                            withBarcode = true;
+                            queryMessage();
+                        }
+                    }, 3000);
+                }
+            }));
         });
     </script>
 </head>

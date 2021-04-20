@@ -475,34 +475,44 @@ public class HomeController {
     //Change Book Code POST
     //SUPERVISOR ONLY
     @RequestMapping(value= "/Change-Book-Code", method = RequestMethod.POST)
-    public @ResponseBody String changeBookCodePost(@Valid @RequestBody @ModelAttribute("inputNwtxin") Nwtxin nwtxin, BindingResult bindingResult, ModelMap model)
+    public @ResponseBody OutputBookInformationModel changeBookCodePost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult, ModelMap model)
                                      throws ParseException{
         System.out.println("Course Message POST");
         if(!supervisor){
-            return "redirect:/";
+            return null;
         }
-        //Pseudo Regex
+        OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
+        //If There Are Errors Compared To The Model, Then We'll Check for Invalid Inputs
         if(bindingResult.hasErrors()){
-            model.put("returnVoidError", "Invalid Credentials");
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }
             }
-            return "Supervisor/changeBookCode";
+            if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
+                return outputBookInformationModel;
+            }
         }
-
-        Nwtxin oldNwtxin = changeBookcodeService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear());
-        if(oldNwtxin != null){
-
-            //Duplicating everything to the new model
-            //oldNwtxin.setBookCode(newBookCode); //<-- This is the changed Item
-            //oldNwtxin.setEditionYear(newEditionYear); //<-- This is the changed Item
-
-            //changeBookcodeService.deleteNwtxin(bookCode);
-            changeBookcodeService.saveNwtxin(oldNwtxin);
+        outputBookInformationModel.setErrors(false);
+        System.out.println("Passed Data Validation");
+        if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
+            outputBookInformationModel = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
+        } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
+            outputBookInformationModel = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
         }
-        return "Supervisor/changeBookCode";
+        else if(!nwtxdt.getBarcode().equals("")){
+            outputBookInformationModel = bookQueryService.getNwtxdtByBarcode(nwtxdt.getBarcode());
+        } else{
+            System.out.println("How did we get here?");
+        }
+        if(outputBookInformationModel == null){
+            outputBookInformationModel = new OutputBookInformationModel();
+            outputBookInformationModel.setErrors(true);
+            outputBookInformationModel.setErrorMessage("We Couldn't Find a Book Off of Given Credentials");
+        }
+        return outputBookInformationModel;
     }
 
 
