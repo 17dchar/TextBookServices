@@ -61,7 +61,7 @@ public class StudentScheduleService {
     @Autowired
     private SfrverfRepository sfrverfRepository;
     public List<Sfrverf> getSfrverf(String pidm, String term){
-        return sfrverfRepository.findByPidmAndTermCode(pidm, term);
+        return sfrverfRepository.findByPidmAndTermCode(Integer.parseInt(pidm), term);
     }
 
     @Autowired

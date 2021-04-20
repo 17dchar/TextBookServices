@@ -5,10 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66a77f85-1bec-4a3c-9c59-6f97abb5ae11" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/ScbcrseRepositoryTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SfrstcrRepositoryTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SfrverfRepositoryTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SgbstdnRepositoryTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SsbsectRepositoryTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SsrmeetRepositoryTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/StvtermRepositoryTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/NwtxcmRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/NwtxcmRepositoryTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Repository/SfrverfRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Repository/SfrverfRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Service/StudentScheduleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Service/StudentScheduleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SfrstcrRepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SfrstcrRepositoryTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +100,7 @@
       <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.SfrstcrRepositoryTests">
+  <component name="RunManager" selected="JUnit.StvtermRepositoryTests">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -108,7 +114,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NwtxbnRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SfrverfRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
@@ -117,13 +123,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.webapp.TextBook.Repository" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.NwtxbnRepositoryTests" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.SfrverfRepositoryTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NwtxcmRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SgbstdnRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
@@ -132,13 +138,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.webapp.TextBook.Repository" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.NwtxcmRepositoryTests" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.SgbstdnRepositoryTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NwtxinRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SsbsectRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
@@ -147,13 +153,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.webapp.TextBook.Repository" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.NwtxinRepositoryTests" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.SsbsectRepositoryTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ScbcrseRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SsrmeetRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
@@ -162,13 +168,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.webapp.TextBook.Repository" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.ScbcrseRepositoryTests" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.SsrmeetRepositoryTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SfrstcrRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="StvtermRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
@@ -177,7 +183,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.webapp.TextBook.Repository" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.SfrstcrRepositoryTests" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.StvtermRepositoryTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -216,21 +222,21 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.NwtxbnRepositoryTests" />
-      <item itemvalue="JUnit.NwtxinRepositoryTests" />
       <item itemvalue="Maven.TextBook [spring-boot:run]" />
       <item itemvalue="Spring Boot.TextBookApplication" />
-      <item itemvalue="JUnit.NwtxcmRepositoryTests" />
-      <item itemvalue="JUnit.ScbcrseRepositoryTests" />
-      <item itemvalue="JUnit.SfrstcrRepositoryTests" />
+      <item itemvalue="JUnit.SfrverfRepositoryTests" />
+      <item itemvalue="JUnit.SgbstdnRepositoryTests" />
+      <item itemvalue="JUnit.SsbsectRepositoryTests" />
+      <item itemvalue="JUnit.SsrmeetRepositoryTests" />
+      <item itemvalue="JUnit.StvtermRepositoryTests" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.SfrstcrRepositoryTests" />
-        <item itemvalue="JUnit.ScbcrseRepositoryTests" />
-        <item itemvalue="JUnit.NwtxinRepositoryTests" />
-        <item itemvalue="JUnit.NwtxcmRepositoryTests" />
-        <item itemvalue="JUnit.NwtxbnRepositoryTests" />
+        <item itemvalue="JUnit.StvtermRepositoryTests" />
+        <item itemvalue="JUnit.SsrmeetRepositoryTests" />
+        <item itemvalue="JUnit.SsbsectRepositoryTests" />
+        <item itemvalue="JUnit.SgbstdnRepositoryTests" />
+        <item itemvalue="JUnit.SfrverfRepositoryTests" />
       </list>
     </recent_temporary>
   </component>

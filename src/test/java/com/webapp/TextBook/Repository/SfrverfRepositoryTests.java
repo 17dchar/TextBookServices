@@ -1,7 +1,7 @@
 package com.webapp.TextBook.Repository;
 
 import com.webapp.TextBook.Model.Nwtxbn;
-import com.webapp.TextBook.Model.Sfrstcr;
+import com.webapp.TextBook.Model.Sfrverf;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +13,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SfrstcrRepositoryTests {
+public class SfrverfRepositoryTests {
 
-    final String termCode = "200510";
-    final Integer pidm = 74720;
-    final String crn = "10905";
+    final int pidm = 492534;
+    final String termCode = "202030";
 
     @Autowired
-    private SfrstcrRepository sfrstcrRepository;
+    private SfrverfRepository sfrverfRepository;
 
     @Test
     public void testFindAll(){
-        List<Sfrstcr> models = sfrstcrRepository.findAll();
-        assertEquals(crn, models.get(0).getCrn());
+        List<Sfrverf> models = sfrverfRepository.findAll();
+        assertEquals(termCode, models.get(0).getTermCode());
     }
 
     @Test
-    public void testFindAllByTermCodeAndPidm(){
-        List<Sfrstcr> models = sfrstcrRepository.findAllByTermCodeAndPidm(termCode, pidm);
-        assertEquals(crn, models.get(0).getCrn());
+    public void testFindByPidmAndTermCode(){
+        List<Sfrverf> models = sfrverfRepository.findByPidmAndTermCode(pidm, termCode);
+        assertEquals(termCode, models.get(0).getTermCode());
     }
 
 }
