@@ -187,14 +187,13 @@ public class HomeController {
     public @ResponseBody
     OutputBookInformationModel bookQueryPost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
                                              ModelMap model)
-                                throws ParseException {
+                                             throws ParseException {
         System.out.println("Book Query POST");
         if(!supervisor){
             return null;
         }
 
         OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
-        Nwtxin returningNwtxin = new Nwtxin();
         //If There Are Errors Compared To The Model, Then We'll Check for Invalid Inputs
         if(bindingResult.hasErrors()){
             for (Object object : bindingResult.getAllErrors()) {
@@ -202,8 +201,6 @@ public class HomeController {
                     System.out.println((FieldError) object);
                 }
             }
-            System.out.println(nwtxdt.getBookCode());
-            System.out.println(nwtxdt.getEditionYear());
             if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
@@ -213,23 +210,19 @@ public class HomeController {
         outputBookInformationModel.setErrors(false);
         System.out.println("Passed Data Validation");
         if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
-            outputBookInformationModel.setBookCode(nwtxdt.getBookCode());
-            outputBookInformationModel.setEditionYear("2020");
-            //returningNwtxin = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
+            outputBookInformationModel = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
         } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
-            outputBookInformationModel.setBookCode(nwtxdt.getBookCode());
-            outputBookInformationModel.setEditionYear(nwtxdt.getEditionYear());
-            //returningNwtxin = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
+            outputBookInformationModel = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
         }
-        else if(nwtxdt.getBarcode() != ""){
-            outputBookInformationModel.setBookCode("barcode set");
-            outputBookInformationModel.setEditionYear("barcode set");
-            returningNwtxin = returningNwtxin;//bookQueryService.getNwtxdtByBarcode(nwtxdt.getBarcode());
+        else if(!nwtxdt.getBarcode().equals("")){
+            outputBookInformationModel = bookQueryService.getNwtxdtByBarcode(nwtxdt.getBarcode());
         } else{
             System.out.println("How did we get here?");
         }
-        if(returningNwtxin == null){
-            outputBookInformationModel.setBookCode("We Couldn't Find a Book Off of Given Credentials");
+        if(outputBookInformationModel == null){
+            outputBookInformationModel = new OutputBookInformationModel();
+            outputBookInformationModel.setErrors(true);
+            outputBookInformationModel.setErrorMessage("We Couldn't Find a Book Off of Given Credentials");
         }
         return outputBookInformationModel;
     }

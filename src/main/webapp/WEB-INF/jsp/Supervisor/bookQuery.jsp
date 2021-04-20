@@ -23,14 +23,14 @@
                 var obj;
                 if(withEditionYear){
                     obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
-                        '", "message" : "' + document.getElementById("output").value + '"}';
+                        '", "editionYear" : "' + document.getElementById("editionYear").value + '"}';
                 } else if(withBarcode) {
-                    obj = '{ "barCode" : "' + document.getElementById("barcode").value +'"}';
+                    obj = '{ "barcode" : "' + document.getElementById("barcode").value +'"}';
                 } else{
                     obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +'"}';
                 }
                 var string = JSON.parse(obj);
-                console.log("withEditionYearing Query With " + string);
+                console.log("Query With " + string);
                 $.ajax({
                     type: "POST",
                     url: '/Find-Book',
@@ -40,13 +40,13 @@
                     success: function (data) {
                         if (data.errors){
                             console.log(data);
-                            //document.getElementById('output').innerHTML = data.message;
-                        }else if(!withEditionYear){
-                            withEditionYear = true;
-                            //x.style.display = "block";
-                            //document.getElementById('output').innerHTML = data.message;
-                            console.log(data);
+                        }else if(!withEditionYear) {
                             document.getElementById('editionYear').placeholder = data.editionYear;
+                        }
+                        if(withBarcode){
+                            document.getElementById('bookCode').placeholder = data.bookCode;
+                            document.getElementById('editionYear').placeholder = data.editionYear;
+                        }
                             document.getElementById('title').innerHTML = data.title;
                             document.getElementById('seqNr').innerHTML = data.seqNr;
                             document.getElementById('currentDisposition').innerHTML = data.currentDisposition;
@@ -56,7 +56,7 @@
                             document.getElementById('previousTermCheckedOut').innerHTML = data.previousTermCheckedOut;
                             document.getElementById('previousCheckedOutTo').innerHTML = data.previousTermCheckedOut;
                             document.getElementById('previousDateCheckedIn').innerHTML = data.previousDateCheckedIn;
-                        }
+
                         console.log("SUCCESS");
                     },
                     error: function (data) {
@@ -78,41 +78,48 @@
                     queryMessage();
                 } else{
                     delayman =setTimeout(() => {
-                        console.log("Checking Anyway!");
-                        queryMessage();
+                        if(document.getElementById('bookCode').value.length!==0) {
+                            console.log("Checking Anyway With Only Book Code!");
+                            queryMessage();
+                        }
                     }, 3000);
                 }
             });
             $('#editionYear').keyup(function(){
                 withEditionYear = false;
-                //document.getElementById('output').innerHTML ="";
                 clearTimeout(delayman);
                 if(document.getElementById('editionYear').value.length===4){
                     withEditionYear = true;
                     queryMessage();
                 } else{
                     delayman =setTimeout(() => {
-                        console.log("Checking Anyway!");
-                        withEditionYear = true;
-                        queryMessage();
+                        if(document.getElementById('editionYear').value.length!==0) {
+                            console.log("Checking Anyway With Edition Year And Book Code!");
+                            withEditionYear = true;
+                            queryMessage();
+                        }
                     }, 3000);
                 }
             });
-            $('#barcode').keyup(function(){
+            $('#barcode').unbind().bind('keyup',(function(){
                 withBarcode = false;
                 //document.getElementById('output').innerHTML ="";
                 clearTimeout(delayman);
-                if(document.getElementById('barcode').value.length===13){
+                if(document.getElementById('barcode').value.length===13 || document.getElementById('barcode').value.length===12){
+                    console.log("Length Met. Will Check With Only Barcode");
                     withBarcode = true;
                     queryMessage();
                 } else{
                     delayman =setTimeout(() => {
-                        console.log("Checking Anyway!");
-                        withBarcode = true;
-                        queryMessage();
+                        if(document.getElementById('barcode').value.length!==0){
+                            console.log("Checking Anyway With Barcode!");
+                            console.log(document.getElementById('barcode').value);
+                            withBarcode = true;
+                            queryMessage();
+                        }
                     }, 3000);
                 }
-            });
+            }));
         });
     </script>
     </head>
