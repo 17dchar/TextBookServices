@@ -28,7 +28,7 @@
                 console.log("Query With " + string);
                 $.ajax({
                     type: "POST",
-                    url: '/Find-Book',
+                    url: '/Add-Book',
                     data: string,
                     dataType: 'json',
                     timeout: 6000000,
@@ -42,15 +42,8 @@
                             document.getElementById('bookCode').placeholder = data.bookCode;
                             document.getElementById('editionYear').placeholder = data.editionYear;
                         }
-                        document.getElementById('title').innerHTML = data.title;
-                        document.getElementById('seqNr').innerHTML = data.seqNr;
-                        document.getElementById('currentDisposition').innerHTML = data.currentDisposition;
-                        document.getElementById('currentTermCheckOut').innerHTML = data.currentTermCheckOut;
-                        document.getElementById('currentCheckedOutTo').innerHTML = data.currentCheckedOutTo;
-                        document.getElementById('currentDateCheckedOut').innerHTML = data.currentDateCheckedOut;
-                        document.getElementById('previousTermCheckedOut').innerHTML = data.previousTermCheckedOut;
-                        document.getElementById('previousCheckedOutTo').innerHTML = data.previousTermCheckedOut;
-                        document.getElementById('previousDateCheckedIn').innerHTML = data.previousDateCheckedIn;
+                        document.getElementById('title').placeholder = data.title;
+                        document.getElementById('seqNr').placeholder = data.lastSeqNr;
 
                         console.log("SUCCESS");
                     },
@@ -96,25 +89,6 @@
                     }, 3000);
                 }
             });
-            $('#barcode').unbind().bind('keyup',(function(){
-                withBarcode = false;
-                //document.getElementById('output').innerHTML ="";
-                clearTimeout(delayman);
-                if(document.getElementById('barcode').value.length===13 || document.getElementById('barcode').value.length===12){
-                    console.log("Length Met. Will Check With Only Barcode");
-                    withBarcode = true;
-                    queryMessage();
-                } else{
-                    delayman =setTimeout(() => {
-                        if(document.getElementById('barcode').value.length!==0){
-                            console.log("Checking Anyway With Barcode!");
-                            console.log(document.getElementById('barcode').value);
-                            withBarcode = true;
-                            queryMessage();
-                        }
-                    }, 3000);
-                }
-            }));
         });
     </script>
 </head>
@@ -156,15 +130,16 @@
         <fieldset>
             <span class="col-xs-4">
             <label>Book Code</label>
-            <input type="text"
+            <input id="bookCode"
+                    type="text"
                    name="bookCode"
                    class="form-control"/></span>
             <span class="col-xs-4">
             <label>Book Year</label>
-            <input type="text"
+            <input id="editionYear"
+                    type="text"
                    name="editionYear"
                    class="form-control"/></span>
-            <span class="col-xs-4">
             </p>
         </fieldset>
         <div class="tenPix"></div>
@@ -172,19 +147,22 @@
             <legend class="legend">Book Info</legend>
             <p>
                 <label>Title</label>
-                <input type="text"
+                <input id="title"
+                        type="text"
                        name="bookTitle"
                        class="form-control left"/>
             </p>
             <p>
                 <label>Seq Nr</label>
-                <input type="number"
+                <input id="seqNr"
+                        type="number"
                        name="seqNumber"
                        class="form-control left"/>
             </p>
             <p>
                 <label>Strike Barcode</label>
-                <input type="text"
+                <input id="barcode"
+                        type="text"
                        name="barcode"
                        class="form-control left"/></span>
             </p>

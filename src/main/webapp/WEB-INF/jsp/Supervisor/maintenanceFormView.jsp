@@ -47,21 +47,19 @@
                         document.getElementById('firstUsedDate').placeholder = data.firstUsedDate;
                         document.getElementById('isbn').placeholder = data.isbn;
                         document.getElementById('purchaseDate').placeholder = data.purchaseDate;
-                        document.getElementById('crse1').placeholder = data.crse1;
-                        document.getElementById('crse2').placeholder = data.crse2;
-                        document.getElementById('crse3').placeholder = data.crse3;
-                        document.getElementById('crse4').placeholder = data.crse4;
-                        document.getElementById('crse5').placeholder = data.crse5;
-                        document.getElementById('crseName').placeholder = data.crseName;
-                        document.getElementById('crseName').placeholder = data.crseName;
-                        document.getElementById('crseName').placeholder = data.crseName;
-                        document.getElementById('crseName').placeholder = data.crseName;
-                        document.getElementById('crseName').placeholder = data.crseName;
-                        document.getElementById('crseName').placeholder = data.crseName;
-                        document.getElementById('crseName').placeholder = data.crseName;
-                        document.getElementById('crseName').placeholder = data.crseName;
-                        document.getElementById('crseName').placeholder = data.crseName;
-                        document.getElementById('crseName').placeholder = data.crseName;
+                        document.getElementById('crse1').placeholder = data.course1;
+                        document.getElementById('crse2').placeholder = data.course2;
+                        document.getElementById('crse3').placeholder = data.course3;
+                        document.getElementById('crse4').placeholder = data.course4;
+                        document.getElementById('crse5').placeholder = data.course5;
+                        document.getElementById('crseName').placeholder = data.courseTitle;
+                        document.getElementById('booksPurchased').innerHTML = data.booksPurchased;
+                        document.getElementById('booksSold').innerHTML = data.booksSold;
+                        document.getElementById('booksUnrepairable').innerHTML = data.booksUnrepairable;
+                        document.getElementById('booksNonreturned').innerHTML = data.booksNonreturned;
+                        document.getElementById('booksInInventory').innerHTML = data.booksinInventory;
+                        document.getElementById('booksCheckedOut').innerHTML = data.booksCheckedOut;
+                        document.getElementById('lastSeqNo').innerHTML = data.lastSeqNr;
                         console.log("SUCCESS");
                     },
                     error: function (data) {
@@ -234,31 +232,31 @@
                     <legend>Book Stats</legend>
                     <p>
                         <label>Books Purchased:</label>
-                        <input type="number" id="booksPurchased" value="0" class="form-control">
+                        <p type="number" id="booksPurchased" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Books Sold:</label>
-                        <input type="number" id="booksSold" value="0" class="form-control">
+                        <p type="number" id="booksSold" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Books Unrepairable:</label>
-                        <input type="number" id="booksUnrepairable" value="0" class="form-control">
+                        <p type="number" id="booksUnrepairable" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Books Nonreturned:</label>
-                        <input type="number" id="booksNonreturned" value="0" class="form-control">
+                        <p type="number" id="booksNonreturned" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Books In Inventory:</label>
-                        <input type="number" id="booksInInventory" value="0" class="form-control">
+                        <p type="number" id="booksInInventory" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Books Checked Out:</label>
-                        <input type="number" id="booksCheckedOut" value="0" class="form-control">
+                        <p type="number" id="booksCheckedOut" value="0" class="form-control">
                     </p>
                     <p>
                         <label>Last Seq. No.:</label>
-                        <input type="number" u0="" id="lastSeqNo" value="0" class="form-control">
+                        <p type="number" u0="" id="lastSeqNo" value="0" class="form-control">
                     </p>
                 </fieldset>
             </form>

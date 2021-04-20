@@ -151,8 +151,22 @@ public class HomeController {
         outputBookInformationModel.setBooksUnrepairable(booksUnrepairable);
         outputBookInformationModel.setBooksSold(booksSold);
         outputBookInformationModel.setLastSeqNr(largestSeqNr);
+        outputBookInformationModel.setEditionYear(nwtxdtList.get(0).getEditionYear());
+        outputBookInformationModel.setTitle(nwtxin.getTitle());
+        //outputBookInformationModel.setAuthor(nwtxin.getAuthor());
 
-        System.out.println(nwtxin.getTitle());
+        Nwtxin inputNwtxin = maintenanceService.getNwtxin(nwtxin.getBookCode(), nwtxdtList.get(0).getEditionYear());
+        outputBookInformationModel.setAuthor(nwtxin.getAuthor());
+        outputBookInformationModel.setPublisher(nwtxin.getPublisher());
+        outputBookInformationModel.setIsbn(nwtxin.getIsbn());
+        //outputBookInformationModel.setPurchaseDate(nwtxin.getPruchaseDate());
+        //outputBookInformationModel.setDiscontinued(nwtxin.getDiscontinuedDate());
+        outputBookInformationModel.setCourseTitle(nwtxin.getCrseName());
+        outputBookInformationModel.setCourse1(nwtxin.getCrse1());
+        outputBookInformationModel.setCourse2(nwtxin.getCrse2());
+        outputBookInformationModel.setCourse3(nwtxin.getCrse3());
+        outputBookInformationModel.setCourse4(nwtxin.getCrse4());
+        outputBookInformationModel.setCourse5(nwtxin.getCrse5());
         return outputBookInformationModel;
     }
 
@@ -212,8 +226,12 @@ public class HomeController {
         }
         if(nwtxdt.getBarcode() != ""){
             System.out.println("saving this!");
+            nwtxdt.setEditionYear(outputBookInformationModel.getEditionYear());
+            nwtxdt.setSeqNr(String.valueOf(outputBookInformationModel.getLastSeqNr()+1));
+
             addBookService.saveNwtxdt(nwtxdt);
         }
+        outputBookInformationModel.setLastSeqNr(outputBookInformationModel.getLastSeqNr()+1);
         return outputBookInformationModel;
     }
 
