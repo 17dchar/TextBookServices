@@ -1,7 +1,9 @@
 package com.webapp.TextBook.Service;
 
 //Spring Dependencies
+import com.webapp.TextBook.Model.Nwtxdt;
 import com.webapp.TextBook.Model.Nwtxin;
+import com.webapp.TextBook.Repository.NwtxdtRepository;
 import com.webapp.TextBook.Repository.NwtxinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,20 @@ public class MaintenanceService {
         //Else, return nothing
         if (nwtxinList.size() > 0) {
             return nwtxinList;
+        }else{
+            return null;
+        }
+    }
+
+    private NwtxdtRepository nwtxdtRepository;
+    public List<Nwtxdt> getNwtxdtList(String bookCode) {
+        //Create a list of all repositories under given credentials
+        List<Nwtxdt> nwtxdtList = nwtxdtRepository.findDistinctEditionYearByBookCode(bookCode);
+
+        //If there is at least 1 model under given credentials, return the first
+        //Else, return nothing
+        if (nwtxdtList.size() > 0) {
+            return nwtxdtList;
         }else{
             return null;
         }

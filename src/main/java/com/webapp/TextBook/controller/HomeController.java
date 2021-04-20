@@ -7,6 +7,7 @@ import java.util.List;
 
 
 import com.webapp.TextBook.Model.*;
+import com.webapp.TextBook.Repository.NwtxdtRepository;
 import com.webapp.TextBook.Service.*;
 
 //Imported Spring Libraries
@@ -90,12 +91,13 @@ public class HomeController {
     //Maintenance POST
     //SUPERVISOR ACCESS ONLY
     @PostMapping("/Maintenance-Form")
-    public @ResponseBody Nwtxin maintenancePost(@Valid @RequestBody @ModelAttribute("inputNwtxin") Nwtxin nwtxin, BindingResult bindingResult,
+    public @ResponseBody OutputBookInformationModel maintenancePost(@Valid @RequestBody @ModelAttribute("inputNwtxin") Nwtxin nwtxin, BindingResult bindingResult,
                                   ModelMap model){
         System.out.println("Maintenance POST");
         if(!supervisor){
             return null;
         }
+        OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
         //If There Are Errors Compared To The Model, Then It Will Return Invalid Credentials
         if(bindingResult.hasErrors()){
             for (ObjectError object : bindingResult.getAllErrors()) {
@@ -103,10 +105,55 @@ public class HomeController {
             }
         }
         System.out.println(nwtxin.getBookCode());
-        List<Nwtxin> nwtxinList = maintenanceService.getNwtxinList(nwtxin.getBookCode());
+        nwtxin = maintenanceService.getNwtxinList(nwtxin.getBookCode()).get(0);
+        List<Nwtxdt> nwtxdtList = maintenanceService.getNwtxdtList(nwtxin.getBookCode());
+        int largestSeqNr = 0;
+        int booksPurchased = 0;
+        int booksSold = 0;
+        int booksUnrepairable = 0;
+        int booksNotReturned = 0;
+        int booksInInventory = 0;
+        int booksCheckedIn = 0;
+        int booksCheckedOut = 0;
+        int count = 1;
+        for(Nwtxdt nwtxdt: nwtxdtList){
+            booksPurchased++;
+            if(Integer.parseInt(nwtxdt.getSeqNr()) > largestSeqNr){
+                largestSeqNr = Integer.parseInt(nwtxdt.getSeqNr());
+            }
+            if(nwtxdt.getDisposition() != null){
+                if(nwtxdt.getDisposition().equals("S")){
+                    booksSold++;
+                }
+                if(nwtxdt.getDisposition().equals("U")){
+                    booksUnrepairable++;
+                }
+                if(nwtxdt.getDisposition().equals("N")){
+                    booksNotReturned++;
+                }
+                if(nwtxdt.getDisposition().equals("I") || nwtxdt.getDisposition().equals("O") ){
+                    booksInInventory++;
+                }
+                if(nwtxdt.getDisposition().equals("O")){
+                    booksCheckedOut++;
+                }
+                if(nwtxdt.getDisposition().equals("I") ){
+                    booksCheckedIn++;
+                }
+                count++;
+            }
+        }
+        outputBookInformationModel.setBooksCheckedIn(booksCheckedIn);
+        outputBookInformationModel.setBooksCheckedOut(booksCheckedOut);
+        outputBookInformationModel.setBooksinInventory(booksInInventory);
+        outputBookInformationModel.setBooksNonreturned(booksNotReturned);
+        outputBookInformationModel.setBooksPurchased(booksPurchased);
+        outputBookInformationModel.setBooksUnrepairable(booksUnrepairable);
+        outputBookInformationModel.setBooksSold(booksSold);
+        outputBookInformationModel.setLastSeqNr(largestSeqNr);
 
-        System.out.println(nwtxinList.get(0).getTitle());
-        return nwtxinList.get(0);
+        System.out.println(nwtxin.getTitle());
+        return outputBookInformationModel;
     }
 
 

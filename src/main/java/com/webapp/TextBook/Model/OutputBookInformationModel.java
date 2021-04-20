@@ -25,6 +25,79 @@ public class OutputBookInformationModel
     String previousTermCheckedOut;
     String previousCheckedOutTo;
     String previousDateCheckedIn;
+    int booksPurchased;
+    int booksSold;
+    int booksUnrepairable;
+    int booksNonreturned;
+    int booksinInventory;
+    int booksCheckedOut;
+
+    public int getBooksPurchased() {
+        return booksPurchased;
+    }
+
+    public void setBooksPurchased(int booksPurchased) {
+        this.booksPurchased = booksPurchased;
+    }
+
+    public int getBooksSold() {
+        return booksSold;
+    }
+
+    public void setBooksSold(int booksSold) {
+        this.booksSold = booksSold;
+    }
+
+    public int getBooksUnrepairable() {
+        return booksUnrepairable;
+    }
+
+    public void setBooksUnrepairable(int booksUnrepairable) {
+        this.booksUnrepairable = booksUnrepairable;
+    }
+
+    public int getBooksNonreturned() {
+        return booksNonreturned;
+    }
+
+    public void setBooksNonreturned(int booksNonreturned) {
+        this.booksNonreturned = booksNonreturned;
+    }
+
+    public int getBooksinInventory() {
+        return booksinInventory;
+    }
+
+    public void setBooksinInventory(int booksinInventory) {
+        this.booksinInventory = booksinInventory;
+    }
+
+    public int getBooksCheckedOut() {
+        return booksCheckedOut;
+    }
+
+    public void setBooksCheckedOut(int booksCheckedOut) {
+        this.booksCheckedOut = booksCheckedOut;
+    }
+
+    public int getBooksCheckedIn() {
+        return booksCheckedIn;
+    }
+
+    public void setBooksCheckedIn(int booksCheckedIn) {
+        this.booksCheckedIn = booksCheckedIn;
+    }
+
+    public int getLastSeqNr() {
+        return lastSeqNr;
+    }
+
+    public void setLastSeqNr(int lastSeqNr) {
+        this.lastSeqNr = lastSeqNr;
+    }
+
+    int booksCheckedIn;
+    int lastSeqNr;
 
     public String getBookCode() {
         return bookCode;

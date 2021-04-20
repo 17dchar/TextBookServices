@@ -53,6 +53,15 @@
                         document.getElementById('crse4').placeholder = data.crse4;
                         document.getElementById('crse5').placeholder = data.crse5;
                         document.getElementById('crseName').placeholder = data.crseName;
+                        document.getElementById('crseName').placeholder = data.crseName;
+                        document.getElementById('crseName').placeholder = data.crseName;
+                        document.getElementById('crseName').placeholder = data.crseName;
+                        document.getElementById('crseName').placeholder = data.crseName;
+                        document.getElementById('crseName').placeholder = data.crseName;
+                        document.getElementById('crseName').placeholder = data.crseName;
+                        document.getElementById('crseName').placeholder = data.crseName;
+                        document.getElementById('crseName').placeholder = data.crseName;
+                        document.getElementById('crseName').placeholder = data.crseName;
                         console.log("SUCCESS");
                     },
                     error: function (data) {
