@@ -743,12 +743,12 @@ public class HomeController {
         System.out.println("Check In Out GET");
 
         if(supervisor){
-            List<Stvterm> terms = checkInOutService.getLatestTerms();
-            model.put("term", terms);
+            //List<Stvterm> terms = checkInOutService.getLatestTerms();
+            //model.put("term", terms);
             return"Supervisor/checkInOut";
         } else if(studentEmployee){
-            List<Stvterm> terms = checkInOutService.getLatestTerms();
-            model.put("term", terms);
+            //List<Stvterm> terms = checkInOutService.getLatestTerms();
+            //model.put("term", terms);
             return "StudentEmployee/checkInOut";
         } else {
             return "redirect:/";
