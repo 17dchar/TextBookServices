@@ -25,57 +25,15 @@ public class ChangeBookcodeService {
     @Autowired private SpridenRepository spridenRepository;
     @Autowired private StvtermRepository stvtermRepository;
 
-    public OutputBookInformationModel getNwtxdtByBarcode(String barcode){
-        //Create a list of all repositories under given credentials
-        List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByBarcode(barcode);
-        //If there is at least 1 model under given credentials, return the first
-        //Else, return nothing
-        if (nwtxdtList.size() > 0) {
-            List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCodeAndEditionYear(nwtxdtList.get(0).getBookCode(),nwtxdtList.get(0).getEditionYear());
-            if(nwtxinList.size() > 0){
-                List<Spriden> currentPersonSpriden = spridenRepository.findByPidm(nwtxdtList.get(0).getPidm());
-                List<Spriden> previousPersonSpriden = spridenRepository.findByPidm(nwtxdtList.get(0).getPrevPidm());
-                List<Stvterm> currentTerm = stvtermRepository.findByCode(nwtxdtList.get(0).getTerm());
-                List<Stvterm> previousTerm = stvtermRepository.findByCode(nwtxdtList.get(0).getPrevTerm());
-                OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
-                outputBookInformationModel.setBookCode(nwtxdtList.get(0).getBookCode());
-                outputBookInformationModel.setBarcode(nwtxdtList.get(0).getBarcode());
-                outputBookInformationModel.setEditionYear(nwtxdtList.get(0).getEditionYear());
-                if(currentPersonSpriden.size()>0){
-                    outputBookInformationModel.setCurrentCheckedOutTo(currentPersonSpriden.get(0).getFirstName() + " " + currentPersonSpriden.get(0).getMiddleInitial() + " " + currentPersonSpriden.get(0).getLastName());
-                } else{
-                    outputBookInformationModel.setCurrentCheckedOutTo("Currently Isn't Checked Out To Anyone");
-                }
-                if(previousPersonSpriden.size()>0){
-                    outputBookInformationModel.setPreviousCheckedOutTo(previousPersonSpriden.get(0).getFirstName() + " " + previousPersonSpriden.get(0).getMiddleInitial() + " " + previousPersonSpriden.get(0).getLastName());
-                } else{
-                    outputBookInformationModel.setPreviousCheckedOutTo("No Previous Person Checked Out To");
-                }
-                outputBookInformationModel.setTitle(nwtxinList.get(0).getTitle());
-                outputBookInformationModel.setCurrentDisposition(nwtxdtList.get(0).getDisposition());
-                outputBookInformationModel.setSeqNr(nwtxdtList.get(0).getSeqNr());
-                DateFormat df = new SimpleDateFormat("MMM/dd/yyyy");
-                if(nwtxdtList.get(0).getDateCheckedOut() != null){
-                    outputBookInformationModel.setCurrentDateCheckedOut(df.format(nwtxdtList.get(0).getDateCheckedOut()));
-                }
-                if(currentTerm.size() > 0){
-                    outputBookInformationModel.setCurrentTermCheckOut(currentTerm.get(0).getDesc());
-                } else{
-                    outputBookInformationModel.setCurrentTermCheckOut("Couldn't Find a Term Description for: " + nwtxdtList.get(0).getTerm());
-                }
-                if(previousTerm.size() > 0){
-                    outputBookInformationModel.setPreviousTermCheckedOut(previousTerm.get(0).getDesc());
-                } else{
-                    outputBookInformationModel.setPreviousTermCheckedOut("Couldn't Find a Term Description for: " + nwtxdtList.get(0).getPrevTerm());
-                }
-                if(nwtxdtList.get(0).getPrevDateCheckedIn() != null){
-                    outputBookInformationModel.setPreviousDateCheckedIn(df.format(nwtxdtList.get(0).getPrevDateCheckedIn()));
-                }
-                outputBookInformationModel.setBookCode(nwtxdtList.get(0).getBookCode());
-                return outputBookInformationModel;
-            }
+    public void changeByBookCodeAndEditionYear(String bookCode, String editionYear, String newBookCode, String newEditionYear){
+        List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCodeAndEditionYear(bookCode, editionYear);
+        if( nwtxinList.size() > 0 ){
+            System.out.println("found one");
+            nwtxinList.get(0).setBookCode(newBookCode);
+            nwtxinList.get(0).setEditionYear(newEditionYear);
+            //nwtxinRepository.deleteByBookCodeAndEditionYearAndTitle(bookCode,editionYear, nwtxinList.get(0).getTitle());
+            nwtxinRepository.save(nwtxinList.get(0));
         }
-        return null;
     }
 
     public OutputBookInformationModel getMostRecentNwtxdt(String bookCode){

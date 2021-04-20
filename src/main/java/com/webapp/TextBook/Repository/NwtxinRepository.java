@@ -21,6 +21,10 @@ public interface NwtxinRepository extends JpaRepository<Nwtxin, String>{
     @Modifying
     @Query(value = "DELETE FROM NWTXIN WHERE NWTXIN_BOOK_CODE = :id",nativeQuery = true)
     void deleteById(@Param("id")String id);
+
+    @Modifying
+    @Query(value = "DELETE FROM NWTXIN WHERE NWTXIN_BOOK_CODE = :bookCode AND NWTXIN_EDITION_YEAR = :editionYear AND NWTXIN_TITLE = :title" , nativeQuery = true)
+    void deleteByBookCodeAndEditionYearAndTitle(@Param("bookCode") String bookCode, @Param("editionYear") String editionYear, @Param("title") String title);
     
     List<Nwtxin> findByCrse1OrCrse2OrCrse3OrCrse4OrCrse5(String course1,String course2,String course3,String course4,String course5);
 

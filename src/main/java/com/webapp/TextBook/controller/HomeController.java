@@ -475,7 +475,7 @@ public class HomeController {
     //Change Book Code POST
     //SUPERVISOR ONLY
     @RequestMapping(value= "/Change-Book-Code", method = RequestMethod.POST)
-    public @ResponseBody OutputBookInformationModel changeBookCodePost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult, ModelMap model)
+    public @ResponseBody OutputBookInformationModel changeBookCodePost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") ChangingVariableModel changingVariableModel, BindingResult bindingResult, ModelMap model)
                                      throws ParseException{
         System.out.println("Course Message POST");
         if(!supervisor){
@@ -489,28 +489,45 @@ public class HomeController {
                     System.out.println((FieldError) object);
                 }
             }
-            if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
+            if(changingVariableModel.getCurrentBookCode() == ""){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
                 return outputBookInformationModel;
             }
         }
         outputBookInformationModel.setErrors(false);
+        System.out.println(changingVariableModel.getCurrentBookCode());
+        System.out.println(changingVariableModel.getCurrentEditionYear());
+        System.out.println(changingVariableModel.getChangingBookCode());
+        System.out.println(changingVariableModel.getChangingEditionYear());
         System.out.println("Passed Data Validation");
-        if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
-            outputBookInformationModel = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
-        } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
-            outputBookInformationModel = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
-        }
-        else if(!nwtxdt.getBarcode().equals("")){
-            outputBookInformationModel = bookQueryService.getNwtxdtByBarcode(nwtxdt.getBarcode());
-        } else{
+        if(changingVariableModel.getCurrentEditionYear() == null){
+            outputBookInformationModel = changeBookcodeService.getMostRecentNwtxdt(changingVariableModel.getCurrentBookCode());
+        } else if(changingVariableModel.getCurrentEditionYear() != null){
+            outputBookInformationModel = changeBookcodeService.getNwtxdtByBookCodeAndYear(changingVariableModel.getCurrentBookCode(), changingVariableModel.getCurrentEditionYear());
+        }else{
             System.out.println("How did we get here?");
         }
         if(outputBookInformationModel == null){
             outputBookInformationModel = new OutputBookInformationModel();
             outputBookInformationModel.setErrors(true);
             outputBookInformationModel.setErrorMessage("We Couldn't Find a Book Off of Given Credentials");
+            return outputBookInformationModel;
+        }
+        if(changingVariableModel.getCurrentEditionYear() == null){
+            changingVariableModel.setCurrentEditionYear(outputBookInformationModel.getEditionYear());
+        }
+        if(changingVariableModel.getChangingBookCode() != null && changingVariableModel.getChangingEditionYear() !=null){
+            System.out.println("Chaning both book code and edition year");
+            changeBookcodeService.changeByBookCodeAndEditionYear(changingVariableModel.getCurrentBookCode(),changingVariableModel.getCurrentEditionYear(),changingVariableModel.getChangingBookCode(),changingVariableModel.getChangingEditionYear());
+        } else if(changingVariableModel.getChangingBookCode() != null && changingVariableModel.getChangingEditionYear() ==null){
+            System.out.println(outputBookInformationModel.getEditionYear());
+            System.out.println("changing only book code");
+        } else if(changingVariableModel.getChangingBookCode() == null && changingVariableModel.getChangingEditionYear() !=null){
+            System.out.println(outputBookInformationModel.getEditionYear());
+            System.out.println("changing only edition year");
+        } else{
+            System.out.println("Detected no changes");
         }
         return outputBookInformationModel;
     }

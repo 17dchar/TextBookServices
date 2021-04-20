@@ -13,22 +13,48 @@
         var delayman;
         $(document).ready(function() {
             var withEditionYear = false;
-            var withBarcode = false;
+            var changingBookCode = false;
+            var changingEditionYear = false;
             function queryMessage(){
                 var obj;
                 if(withEditionYear){
-                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
-                        '", "editionYear" : "' + document.getElementById("editionYear").value + '"}';
-                } else if(withBarcode) {
-                    obj = '{ "barcode" : "' + document.getElementById("barcode").value +'"}';
-                } else{
-                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +'"}';
+                    if(changingBookCode  && changingEditionYear){
+                        obj = '{ "currentBookCode" : "' + document.getElementById("bookCode").value +
+                            '", "currentEditionYear" : "' + document.getElementById("editionYear").value +
+                            '", "changingBookCode" : "' + document.getElementById("newBookCode").value +
+                            '", "changingEditionYear" : "' + document.getElementById("newEditionYear").value + '"}';
+                    } else if(changingBookCode && !changingEditionYear){
+                        obj = '{ "currentBookCode" : "' + document.getElementById("bookCode").value +
+                            '", "currentEditionYear" : "' + document.getElementById("editionYear").value +
+                            '", "changingBookCode" : "' + document.getElementById("newBookCode").value + '"}';
+                    } else if(!changingBookCode && changingEditionYear){
+                        obj = '{ "currentBookCode" : "' + document.getElementById("bookCode").value +
+                            '", "currentEditionYear" : "' + document.getElementById("editionYear").value +
+                            '", "changingEditionYear" : "' + document.getElementById("newEditionYear").value + '"}';
+                    } else{
+                        obj = '{ "currentBookCode" : "' + document.getElementById("bookCode").value +
+                            '", "currentEditionYear" : "' + document.getElementById("editionYear").value + '"}';
+                    }
+                }else{
+                    if(changingBookCode  && changingEditionYear){
+                        obj = '{ "currentBookCode" : "' + document.getElementById("bookCode").value +
+                            '", "changingBookCode" : "' + document.getElementById("newBookCode").value +
+                            '", "changingEditionYear" : "' + document.getElementById("newEditionYear").value + '"}';
+                    } else if(changingBookCode && !changingEditionYear){
+                        obj = '{ "currentBookCode" : "' + document.getElementById("bookCode").value +
+                            '", "changingBookCode" : "' + document.getElementById("newBookCode").value + '"}';
+                    } else if(!changingBookCode && changingEditionYear){
+                        obj = '{ "currentBookCode" : "' + document.getElementById("bookCode").value +
+                            '", "changingEditionYear" : "' + document.getElementById("newEditionYear").value + '"}';
+                    } else{
+                        obj = '{ "currentBookCode" : "' + document.getElementById("bookCode").value + '"}';
+                    }
                 }
                 var string = JSON.parse(obj);
                 console.log("Query With " + string);
                 $.ajax({
                     type: "POST",
-                    url: '/Find-Book',
+                    url: '/Change-Book-Code',
                     data: string,
                     dataType: 'json',
                     timeout: 6000000,
@@ -38,20 +64,6 @@
                         }else if(!withEditionYear) {
                             document.getElementById('editionYear').placeholder = data.editionYear;
                         }
-                        if(withBarcode){
-                            document.getElementById('bookCode').placeholder = data.bookCode;
-                            document.getElementById('editionYear').placeholder = data.editionYear;
-                        }
-                        document.getElementById('title').innerHTML = data.title;
-                        document.getElementById('seqNr').innerHTML = data.seqNr;
-                        document.getElementById('currentDisposition').innerHTML = data.currentDisposition;
-                        document.getElementById('currentTermCheckOut').innerHTML = data.currentTermCheckOut;
-                        document.getElementById('currentCheckedOutTo').innerHTML = data.currentCheckedOutTo;
-                        document.getElementById('currentDateCheckedOut').innerHTML = data.currentDateCheckedOut;
-                        document.getElementById('previousTermCheckedOut').innerHTML = data.previousTermCheckedOut;
-                        document.getElementById('previousCheckedOutTo').innerHTML = data.previousTermCheckedOut;
-                        document.getElementById('previousDateCheckedIn').innerHTML = data.previousDateCheckedIn;
-
                         console.log("SUCCESS");
                     },
                     error: function (data) {
@@ -67,6 +79,7 @@
             });
             $('#bookCode').keyup(function(){
                 withEditionYear = false;
+                changingVariables = false;
                 //document.getElementById('output').innerHTML ="";
                 clearTimeout(delayman);
                 if(document.getElementById('bookCode').value.length===8){
@@ -82,6 +95,8 @@
             });
             $('#editionYear').keyup(function(){
                 withEditionYear = false;
+                changingBookCode = false;
+                changingEditionYear = false;
                 clearTimeout(delayman);
                 if(document.getElementById('editionYear').value.length===4){
                     withEditionYear = true;
@@ -96,25 +111,19 @@
                     }, 3000);
                 }
             });
-            $('#barcode').unbind().bind('keyup',(function(){
-                withBarcode = false;
-                //document.getElementById('output').innerHTML ="";
-                clearTimeout(delayman);
-                if(document.getElementById('barcode').value.length===13 || document.getElementById('barcode').value.length===12){
-                    console.log("Length Met. Will Check With Only Barcode");
-                    withBarcode = true;
+            $('#newEditionYear').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    if(document.getElementById('newEditionYear').value.length!==0){
+                        changingEditionYear = true;
+                    }
+                    if(document.getElementById('newBookCode').value.length!==0){
+                        changingBookCode = true;
+                    }
                     queryMessage();
-                } else{
-                    delayman =setTimeout(() => {
-                        if(document.getElementById('barcode').value.length!==0){
-                            console.log("Checking Anyway With Barcode!");
-                            console.log(document.getElementById('barcode').value);
-                            withBarcode = true;
-                            queryMessage();
-                        }
-                    }, 3000);
+                    return false;
                 }
-            }));
+            });
         });
     </script>
 </head>
@@ -161,26 +170,31 @@
                        name = "bookCode"
                        class="form-control"/>
                 <label>Edition Year:</label>
-                <input type = "text"
+                <input id="editionYear"
+                        type = "text"
                        name = "editionYear"
                        class="form-control"/>
             </div>
             <div class="tenPix"></div>
             <div class="border rounded" id="messageChanging">
                 <label>New Book Code:</label>
-                <input type = "text"
+                <input id="newBookCode"
+                        type = "text"
                        name = "newBookCode"
                        class="form-control"/>
                 <label>New Book year:</label>
-                <input type = "text"
+                <input id="newEditionYear"
+                        type = "text"
                        name = "newEditionYear"
                        class="form-control"/>
 
                 </p>
             </div>
+            <!--
             <div class="tenPix">
             </div>
             <input type="submit" class="btn btn-primary btnCol column" name="Save" style="width: 100%; align-self: center;"/>
+            -->
         </fieldset>
     </form:form>
 </div>
