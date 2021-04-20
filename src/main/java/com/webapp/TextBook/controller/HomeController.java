@@ -174,7 +174,7 @@ public class HomeController {
     //Add-Book POST
     //SUPERVISOR ACCESS ONLY
     @PostMapping("/Add-Book")
-    public @ResponseBody OutputBookInformationModel addBookPOST(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxin nwtxin, BindingResult bindingResult,
+    public @ResponseBody OutputBookInformationModel addBookPOST(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
                               ModelMap model) throws ParseException {
         System.out.println("Add Book POST");
         if(!supervisor){
@@ -189,7 +189,7 @@ public class HomeController {
                     System.out.println((FieldError) object);
                 }
             }
-            if(nwtxin.getBookCode() == ""){
+            if(nwtxdt.getBookCode() == ""){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
                 return outputBookInformationModel;
@@ -197,10 +197,10 @@ public class HomeController {
         }
         outputBookInformationModel.setErrors(false);
         System.out.println("Passed Data Validation");
-        if(nwtxin.getEditionYear() == ""){
-            outputBookInformationModel = bookQueryService.getMostRecentNwtxdt(nwtxin.getBookCode());
-        } else if(nwtxin.getEditionYear() != ""){
-            outputBookInformationModel = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxin.getBookCode(), nwtxin.getEditionYear());
+        if(nwtxdt.getEditionYear() == ""){
+            outputBookInformationModel = addBookService.getMostRecentNwtxdt(nwtxdt.getBookCode());
+        } else if(nwtxdt.getEditionYear() != ""){
+            outputBookInformationModel = addBookService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
         }else{
             System.out.println("How did we get here?");
         }
@@ -208,6 +208,11 @@ public class HomeController {
             outputBookInformationModel = new OutputBookInformationModel();
             outputBookInformationModel.setErrors(true);
             outputBookInformationModel.setErrorMessage("We Couldn't Find a Book Off of Given Credentials");
+            return outputBookInformationModel;
+        }
+        if(nwtxdt.getBarcode() != ""){
+            System.out.println("saving this!");
+            addBookService.saveNwtxdt(nwtxdt);
         }
         return outputBookInformationModel;
     }
