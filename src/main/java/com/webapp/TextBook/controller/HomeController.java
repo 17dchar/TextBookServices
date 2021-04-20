@@ -262,30 +262,29 @@ public class HomeController {
                     System.out.println((FieldError) object);
                 }
             }
-            //return outputBookInformationModel;
+            if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
+                return outputBookInformationModel;
+            }
         }
+        outputBookInformationModel.setErrors(false);
         System.out.println("Passed Data Validation");
         if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
-            outputBookInformationModel.setBookCode(nwtxdt.getBookCode());
-            outputBookInformationModel.setEditionYear("2020");
-            //returningNwtxin = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
+            outputBookInformationModel = bookDispositionService.getMostRecentNwtxdt(nwtxdt.getBookCode());
         } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
-            outputBookInformationModel.setBookCode(nwtxdt.getBookCode());
-            outputBookInformationModel.setEditionYear(nwtxdt.getEditionYear());
-            //returningNwtxin = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
+            outputBookInformationModel = bookDispositionService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
         }
-        else if(nwtxdt.getBarcode() != ""){
-            outputBookInformationModel.setBookCode("barcode set");
-            outputBookInformationModel.setEditionYear("barcode set");
-            returningNwtxin = returningNwtxin;//bookQueryService.getNwtxdtByBarcode(nwtxdt.getBarcode());
+        else if(!nwtxdt.getBarcode().equals("")){
+            outputBookInformationModel = bookDispositionService.getNwtxdtByBarcode(nwtxdt.getBarcode());
         } else{
             System.out.println("How did we get here?");
         }
-        if(returningNwtxin == null){
-            outputBookInformationModel.setBookCode("We Couldn't Find a Book Off of Given Credentials");
-        } //else if(returningNwtxin)
-
-        //Check if code is same as previous
+        if(outputBookInformationModel == null){
+            outputBookInformationModel = new OutputBookInformationModel();
+            outputBookInformationModel.setErrors(true);
+            outputBookInformationModel.setErrorMessage("We Couldn't Find a Book Off of Given Credentials");
+        }
         return outputBookInformationModel;
     }
 

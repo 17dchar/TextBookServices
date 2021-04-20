@@ -12,26 +12,62 @@
     <script>
         var delayman;
         $(document).ready(function() {
-            var attempt = false;
-            var x = document.getElementById("messageChanging");
-            x.style.display = "none";
+            var withEditionYear = false;
+            var withBarcode = false;
             function queryMessage(){
-                var string = $("#course").serialize();
-                console.log("Attempting Query With " + string);
+                var obj;
+                if(withBarcode) {
+                    obj = '{ "barcode" : "' + document.getElementById("barcode").value +'"}';
+                } else if(withEditionYear){
+                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
+                        '", "editionYear" : "' + document.getElementById("editionYear").value + '"}';
+                } else{
+                    obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +'"}';
+                }
+                var string = JSON.parse(obj);
+                console.log("Query With " + string);
                 $.ajax({
                     type: "POST",
-                    url: '/Course-Message',
+                    url: '/Find-Book',
                     data: string,
                     dataType: 'json',
                     timeout: 6000000,
                     success: function (data) {
-                        if (data.course !== document.getElementById("course").value){
-                            data.message = data.course;
-                        }else if(!attempt){
-                            attempt = true;
-                            x.style.display = "block";
+                        if (data.errors){
+                            console.log(data);
+                        }else if(!withEditionYear) {
+                            document.getElementById('editionYear').placeholder = data.editionYear;
                         }
-                        document.getElementById('output').innerHTML = data.message;
+                        if(withBarcode){
+                            document.getElementById('bookCode').placeholder = data.bookCode;
+                            document.getElementById('editionYear').placeholder = data.editionYear;
+                        }
+                        document.getElementById('title').innerHTML = data.title;
+                        document.getElementById('seqNr').innerHTML = data.seqNr;
+                        /*
+                        <option value="I" class="custom-option">Checked In</option>
+                        <option value="O" class="custom-option">Checked Out</option>
+                        <option value="S" class="custom-option">Sold</option>
+                        <option value="N" class="custom-option">Not Retruned</option>
+                        <option value="U">Unrepairable</option>
+                         */
+                        if(data.currentDisposition === "I"){
+                            document.getElementById('currentDisposition').innerHTML = "Checked In";
+                        } else if(data.currentDisposition === "O"){
+                            document.getElementById('currentDisposition').innerHTML = "Checked Out";
+                        } else if(data.currentDisposition === "S"){
+                            document.getElementById('currentDisposition').innerHTML = "Sold";
+                        } else if(data.currentDisposition === "N"){
+                            document.getElementById('currentDisposition').innerHTML = "Not Returned";
+                        } else if(data.currentDisposition === "U"){
+                            document.getElementById('currentDisposition').innerHTML = "Unrepairable";
+                        } else if(data.currentDisposition === null){
+                            document.getElementById('currentDisposition').innerHTML = "No Disposition Given";
+                        } else{
+                            document.getElementById('currentDisposition').innerHTML = "Error: Disposition Value Doesn't Fit Known Dispotions Values";
+
+                        }
+
                         console.log("SUCCESS");
                     },
                     error: function (data) {
@@ -39,26 +75,62 @@
                     }
                 })
             }
-            $('#course').keydown(function (e) {
+            $('#bookCode').keydown(function (e) {
                 if (e.keyCode == 13) {
                     e.preventDefault();
                     return false;
                 }
             });
-            $('#course').keyup(function(){
-                x.style.display = "none";
-                attempt = false;
-                document.getElementById('output').innerHTML ="";
+            $('#bookCode').keyup(function(){
+                withEditionYear = false;
+                //document.getElementById('output').innerHTML ="";
                 clearTimeout(delayman);
-                if(document.getElementById('course').value.length===9){
+                if(document.getElementById('bookCode').value.length===8){
                     queryMessage();
                 } else{
                     delayman =setTimeout(() => {
-                        console.log("Checking Anyway!");
-                        queryMessage();
+                        if(document.getElementById('bookCode').value.length!==0) {
+                            console.log("Checking Anyway With Only Book Code!");
+                            queryMessage();
+                        }
                     }, 3000);
                 }
             });
+            $('#editionYear').keyup(function(){
+                withEditionYear = false;
+                clearTimeout(delayman);
+                if(document.getElementById('editionYear').value.length===4){
+                    withEditionYear = true;
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        if(document.getElementById('editionYear').value.length!==0) {
+                            console.log("Checking Anyway With Edition Year And Book Code!");
+                            withEditionYear = true;
+                            queryMessage();
+                        }
+                    }, 3000);
+                }
+            });
+            $('#barcode').unbind().bind('keyup',(function(){
+                withBarcode = false;
+                //document.getElementById('output').innerHTML ="";
+                clearTimeout(delayman);
+                if(document.getElementById('barcode').value.length===13 || document.getElementById('barcode').value.length===12){
+                    console.log("Length Met. Will Check With Only Barcode");
+                    withBarcode = true;
+                    queryMessage();
+                } else{
+                    delayman =setTimeout(() => {
+                        if(document.getElementById('barcode').value.length!==0){
+                            console.log("Checking Anyway With Barcode!");
+                            console.log(document.getElementById('barcode').value);
+                            withBarcode = true;
+                            queryMessage();
+                        }
+                    }, 3000);
+                }
+            }));
         });
     </script>
 </head>
@@ -100,16 +172,19 @@
             <span class="col-xs-4">
             <label>Book Code</label>
             <input type="text"
+                   id="bookCode"
                    name="bookCode"
                    class="form-control"/></span>
                 <span class="col-xs-4">
             <label>Book Year</label>
             <input type="text"
+                   id="editionYear"
                    name="editionYear"
                    class="form-control"/></span>
                 <span class="col-xs-4">
             <label>Strike Barcode</label>
             <input type="text"
+                   id="barcode"
                    name="barcode"
                    class="form-control"/></span>
 
@@ -120,24 +195,26 @@
                 <legend class="legend">Book Info</legend>
                 <p>
                     <label>Title</label>
-                    <input type="text"
-                           name="bookTitle"
-                           class="form-control left"/>
+                    <p type="text"
+                           id="title"
+                           name="title"
+                       class="form-control left"> </p>
                 </p>
                 <p>
                     <label>Seq Nr</label>
-                    <input type="number"
-                           name="seqNumber"
-                           class="form-control left"/>
+                    <p type="number"
+                           id="seqNr"
+                           name="seqNr"
+                       class="form-control left"> </p>
                 </p>
                 <p>
                     <label>Current Disposition:</label>
-                    <input type="text"
-                           id="bookDisposition"
+                    <p type="text"
+                           id="currentDisposition"
                            class="form-control left">
                 </p>
                 <p>
-                    <label for="bookDisposition">Change Disposition To:</label>
+                    <label for="currentDisposition">Change Disposition To:</label>
                     <select name="disposition" class="custom-select select">
                         <option selected value="" class="custom-option">(No Change)</option>
                         <option value="I" class="custom-option">Checked In</option>
