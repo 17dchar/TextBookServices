@@ -18,6 +18,7 @@ public class OutputBookInformationModel
     String barcode;
     String title;
     String seqNr;
+    String author;
     String currentDisposition;
     String currentTermCheckOut;
     String currentCheckedOutTo;
@@ -25,6 +26,132 @@ public class OutputBookInformationModel
     String previousTermCheckedOut;
     String previousCheckedOutTo;
     String previousDateCheckedIn;
+    String publisher;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public String getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(String purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public String getDiscontinued() {
+        return discontinued;
+    }
+
+    public void setDiscontinued(String discontinued) {
+        this.discontinued = discontinued;
+    }
+
+    public String getFirstDateUsed() {
+        return firstDateUsed;
+    }
+
+    public void setFirstDateUsed(String firstDateUsed) {
+        this.firstDateUsed = firstDateUsed;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getCourseTitle() {
+        return courseTitle;
+    }
+
+    public void setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
+    }
+
+    public String getCourse1() {
+        return course1;
+    }
+
+    public void setCourse1(String course1) {
+        this.course1 = course1;
+    }
+
+    public String getCourse2() {
+        return course2;
+    }
+
+    public void setCourse2(String course2) {
+        this.course2 = course2;
+    }
+
+    public String getCourse3() {
+        return course3;
+    }
+
+    public void setCourse3(String course3) {
+        this.course3 = course3;
+    }
+
+    public String getCourse4() {
+        return course4;
+    }
+
+    public void setCourse4(String course4) {
+        this.course4 = course4;
+    }
+
+    public String getCourse5() {
+        return course5;
+    }
+
+    public void setCourse5(String course5) {
+        this.course5 = course5;
+    }
+
+    String isbn;
+    String cost;
+    String purchaseDate;
+    String discontinued;
+    String firstDateUsed;
+    String comment;
+    String courseTitle;
+    String course1;
+    String course2;
+    String course3;
+    String course4;
+    String course5;
     int booksPurchased;
     int booksSold;
     int booksUnrepairable;
