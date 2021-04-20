@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class NwtxcmRepositoryTest {
+public class NwtxcmRepositoryTests {
 
     final String course = "THEA408**";
     final String message = "GIVE THEA 407 ";
