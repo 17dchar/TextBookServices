@@ -141,7 +141,12 @@
             </div>
         </div>
         <a href="/" class = "dropbtn">Log out</a>
-        <div class = "page-body">
+        <div class = "page-body" style="
+
+ background-image: linear-gradient(135deg,#808080d5,#505050ff);
+
+
+">
             <form method = post class="addlmargin">
                 <div class="border rounded form-group">
                     <fieldset>

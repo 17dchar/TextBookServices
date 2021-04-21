@@ -272,6 +272,12 @@ select:focus > option:checked {
 .page-body{
     display:inline-block;
     background-image: linear-gradient(135deg,#000000b5,#000000ff);
+
+/*
+    testing backgrounds
+    background-image: linear-gradient(247deg,#707070b5,#404040ff,#404040ff,#404040ff,#40f040ff);
+
+ */
     width:100%;
 }
 

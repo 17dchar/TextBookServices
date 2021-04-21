@@ -275,14 +275,6 @@ select:focus > option:checked {
     width:100%;
 }
 
-
-.enableBlur>* {
-    filter: blur(8px);
-}
-
-.disableBlur {
-    filter: blur(0);
-}
 .marginftn {
     margin: 15px;
 }
