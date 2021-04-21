@@ -108,8 +108,10 @@
     </script>
 </head>
 <body>
-<h1 class="TBSHeader">Textbook Services</h1>
-<h2 class="BookCodeYearTitle">Maintenance</h2>
+<div class="TBSHeader">
+    <h1 class="page-title" >Maintenance</h1>
+</div>
+<h2 class="BookCodeYearTitle"></h2>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
@@ -139,138 +141,138 @@
     </div>
 </div>
 <a href="/" class = "dropbtn">Log out</a>
-<p class="tenPix"></p>
-<form method = post class="addlmargin">
-    <div class="border rounded form-group">
-    <fieldset>
-        <span class="col-xs-4">
-            <label>Book Code</label>
-            <input id="bookCode"
-                    type="text"
-                   name="bookCode"
-                   class="form-control"/></span>
-        <span class="col-xs-4">
-            <label>Book Year</label>
-            <input id="editionYear"
-                    type="text"
-                   name="editionYear"
-                   class="form-control"/></span>
-    </fieldset>
-    </div>
-    <div class="marginftn">
-    <div class="container">
-    <div class="row">
-        <div class="column left">
-            <form>
-                <fieldset>
-                    <legend>Book Info</legend>
-                    <p>
-                        <label>Title:</label>
-                        <input type="text" id="title" name ="title" class="form-control width85">
-                    </p>
-                    <p>
-                        <label>Author:</label>
-                        <input type="text" id="author" name = "author" class="form-control width85">
-                    </p>
-                    <p>
-                        <label>Publisher:</label>
-                        <input type="text" id="publisher" name="publisher" class="form-control width85">
-                    </p>
-                    <p>
-                        <label>ISBN #:</label>
-                        <input type="text" id="isbn" name = "isbn" class="form-control width85">
-                        <label>Cost:</label>
-                        <input type="text" id="bookCost" class="form-control width85">
-                    </p>
-                    <p>
-                        <label>Status:</label>
-                        <input type="text" id="bookStatus" name="bookStatus" class="form-control">
-                        <label>Purchase Date:</label>
-                        <input type="date" id="purchaseDate" name="purchaseDate" class="form-control">
-                    </p>
-                    <p>
-                        <label>Discontinued:</label>
-                        <input type="text" id="discontinuedDate" name="discontinuedDate" class="form-control">
-                        <label>First Used Date:</label>
-                        <input type="date" id="firstUsedDate" name="firstUsedDate" class="form-control">
-                    </p>
-                    <p>
-                        <label>Date Comment:</label>
-                        <input type="text" id="comment" name="comment" class="form-control">
-                    </p>
-                </fieldset>
-            </form>
-            <form>
-                <fieldset>
-                    <legend>Course Info</legend>
-                    <p>
-                        <label>Course Title:</label>
-                        <input type="text" id="crseName" name="crseName" class="form-control">
-                    </p>
-                    <p>
-                        <label>Course 1:</label>
-                        <input type="text" id="crse1" name="crse1" class="form-control">
-                        <label>Course 4:</label>
-                        <input type="text" id="crse4" name="crse4" class="form-control">
-                    </p>
-                    <p>
-                        <label>Course 2:</label>
-                        <input type="text" id="crse2" name="crse2" class="form-control">
-                        <label>Course 5:</label>
-                        <input type="text" id="crse5" name="crse5" class="form-control">
-                    </p>
-                    <p>
-                        <label>Course 3:</label>
-                        <input type="text" id="crse3" name="crse3" class="form-control">
-                    </p>
-                </fieldset>
-            </form>
+<div class = "page-body">
+    <form method = post class="addlmargin">
+        <div class="border rounded form-group">
+            <fieldset>
+                <span class="col-xs-4">
+                    <label>Book Code</label>
+                    <input id="bookCode"
+                            type="text"
+                           name="bookCode"
+                           class="form-control"/>
+                </span>
+                <span class="col-xs-4">
+                    <label>Book Year</label>
+                    <input id="editionYear"
+                            type="text"
+                           name="editionYear"
+                           class="form-control"/>
+                </span>
+            </fieldset>
         </div>
-        <div class="column middle">
-            <form>
-                <fieldset>
-                    <legend>Book Stats</legend>
-                    <p>
-                        <label>Books Purchased:</label>
-                        <p type="number" id="booksPurchased" value="0" class="form-control">
-                    </p>
-                    <p>
-                        <label>Books Sold:</label>
-                        <p type="number" id="booksSold" value="0" class="form-control">
-                    </p>
-                    <p>
-                        <label>Books Unrepairable:</label>
-                        <p type="number" id="booksUnrepairable" value="0" class="form-control">
-                    </p>
-                    <p>
-                        <label>Books Nonreturned:</label>
-                        <p type="number" id="booksNonreturned" value="0" class="form-control">
-                    </p>
-                    <p>
-                        <label>Books In Inventory:</label>
-                        <p type="number" id="booksInInventory" value="0" class="form-control">
-                    </p>
-                    <p>
-                        <label>Books Checked Out:</label>
-                        <p type="number" id="booksCheckedOut" value="0" class="form-control">
-                    </p>
-                    <p>
-                        <label>Last Seq. No.:</label>
-                        <p type="number" u0="" id="lastSeqNo" value="0" class="form-control">
-                    </p>
-                </fieldset>
-            </form>
+        <div class="marginftn">
+            <div class="container">
+                <div class="row">
+                    <div class="column left">
+                        <fieldset>
+                            <legend>Book Info</legend>
+                            <p>
+                                <label>Title:</label>
+                                <input type="text" id="title" name ="title" class="form-control width85">
+                            </p>
+                            <p>
+                                <label>Author:</label>
+                                <input type="text" id="author" name = "author" class="form-control width85">
+                            </p>
+                            <p>
+                                <label>Publisher:</label>
+                                <input type="text" id="publisher" name="publisher" class="form-control width85">
+                            </p>
+                            <p>
+                                <label>ISBN #:</label>
+                                <input type="text" id="isbn" name = "isbn" class="form-control width85">
+                                <label>Cost:</label>
+                                <input type="text" id="bookCost" class="form-control width85">
+                            </p>
+                            <p>
+                                <label>Status:</label>
+                                <input type="text" id="bookStatus" name="bookStatus" class="form-control">
+                                <label>Purchase Date:</label>
+                                <input type="date" id="purchaseDate" name="purchaseDate" class="form-control">
+                            </p>
+                            <p>
+                                <label>Discontinued:</label>
+                                <input type="text" id="discontinuedDate" name="discontinuedDate" class="form-control">
+                                <label>First Used Date:</label>
+                                <input type="date" id="firstUsedDate" name="firstUsedDate" class="form-control">
+                            </p>
+                            <p>
+                                <label>Date Comment:</label>
+                                <input type="text" id="comment" name="comment" class="form-control">
+                            </p>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Course Info</legend>
+                            <p>
+                                <label>Course Title:</label>
+                                <input type="text" id="crseName" name="crseName" class="form-control">
+                            </p>
+                            <p>
+                                <label>Course 1:</label>
+                                <input type="text" id="crse1" name="crse1" class="form-control">
+                                <label>Course 4:</label>
+                                <input type="text" id="crse4" name="crse4" class="form-control">
+                            </p>
+                            <p>
+                                <label>Course 2:</label>
+                                <input type="text" id="crse2" name="crse2" class="form-control">
+                                <label>Course 5:</label>
+                                <input type="text" id="crse5" name="crse5" class="form-control">
+                            </p>
+                            <p>
+                                <label>Course 3:</label>
+                                <input type="text" id="crse3" name="crse3" class="form-control">
+                            </p>
+                        </fieldset>
+                    </div>
+                    <div class="column middle">
+                        <fieldset>
+                            <legend>Book Stats</legend>
+                            <p>
+                                <label>Books Purchased:</label>
+                                <p type="number" id="booksPurchased" value="0" class="form-control">
+                            </p>
+                            <p>
+                                <label>Books Sold:</label>
+                                <p type="number" id="booksSold" value="0" class="form-control">
+                            </p>
+                            <p>
+                                <label>Books Unrepairable:</label>
+                                <p type="number" id="booksUnrepairable" value="0" class="form-control">
+                            </p>
+                            <p>
+                                <label>Books Nonreturned:</label>
+                                <p type="number" id="booksNonreturned" value="0" class="form-control">
+                            </p>
+                            <p>
+                                <label>Books In Inventory:</label>
+                                <p type="number" id="booksInInventory" value="0" class="form-control">
+                            </p>
+                            <p>
+                                <label>Books Checked Out:</label>
+                                <p type="number" id="booksCheckedOut" value="0" class="form-control">
+                            </p>
+                            <p>
+                                <label>Last Seq. No.:</label>
+                                <p type="number" u0="" id="lastSeqNo" value="0" class="form-control">
+                            </p>
+                        </fieldset>
+                    </div>
+                    <div class="column right">
+                        <p>
+                            <button type="button" class="btn btn-primary btnCol">Save</button>
+                        </p>
+                        <p>
+                            <button type="button" class="btn btn-primary btnCol">Clear</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="column right">
-            <p>
-                <button type="button" class="btn btn-primary btnCol">Save</button>
-            </p>
-            <p>
-                <button type="button" class="btn btn-primary btnCol">Clear</button>
-            </p>
-        </div>
-    </div>
-    </div></form>
-    </div>
+    </form>
+</div>
+
+
 </body>
 </html>

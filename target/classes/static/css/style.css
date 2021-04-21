@@ -8,12 +8,27 @@
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     font-size: 6vw;
-    padding-top: 15vh;
+    padding-top: 12vh;
     width:100%
 }
 .body{
     background: #e1e1da;
 }
+
+.top-ribbon{
+    width: 100%;
+    background-image: linear-gradient(-45deg,#00402a,#006747);
+    padding:15px;
+}
+
+.bottom-ribbon{
+    width: 100%;
+    background-image: linear-gradient(-45deg,#003020,#005737);
+    padding:15px;
+    position:absolute;
+    bottom:0;
+}
+
 .login-form {
     display: block;
     margin: 0 auto;
@@ -55,12 +70,12 @@
     box-sizing: border-box;
 }
 legend {
-    color: #006747;
+    color: #f1f1f1;
     margin-left: 5px;
     text-decoration: none;
 }
 label {
-    color: #006747;
+    color: #f1f1f1;
     margin-left: 5px;
     text-decoration: none;
 }
@@ -71,10 +86,14 @@ body {
     ), url('https://www.nwmissouri.edu/images/header-img/drone%20campus%20august%20fall2018%20tw%2002069.jpg');
     background-position-y: center;
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     background-attachment: fixed;
     background-color: #006747;
     height: 100%;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 .TBSHeader {
@@ -87,7 +106,7 @@ body {
     border-bottom-width: 45px;
     margin-bottom: -126.5px;
     font-size: 6vw;
-    height:20vw;
+    height:200px;
     margin-top: 0px;
 
 }
@@ -168,12 +187,14 @@ select:focus > option:checked {
 .right {
     width: 10%;
 }
-
+/*
 .row:after {
     content: "";
     display: table;
     clear: both;
 }
+
+ */
 .dropbtn {
     background-color: #006747;
     color: #f1f1f1;
@@ -185,7 +206,7 @@ select:focus > option:checked {
     position: relative;
     display: inline-block;
     margin-left: 20px;
-    margin-bottom: 6px;
+    margin-bottom: 0px;
 }
 .dropdown-content {
     display: none;
@@ -246,7 +267,21 @@ select:focus > option:checked {
     height: 250px;
 }
 .addlmargin {
-    margin-left: 20px;
+    padding-left: 20px;
+}
+.page-body{
+    display:inline-block;
+    background-image: linear-gradient(135deg,#000000b5,#000000ff);
+    width:100%;
+}
+
+
+.enableBlur>* {
+    filter: blur(8px);
+}
+
+.disableBlur {
+    filter: blur(0);
 }
 .marginftn {
     margin: 15px;

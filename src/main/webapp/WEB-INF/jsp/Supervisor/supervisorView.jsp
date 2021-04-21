@@ -51,7 +51,7 @@
     </div>
 </div>
 <a href="/" class = "dropbtn">Log out</a>
-<div style="height:100%; background-color:white">High there! You look great today!</div>
+<div style="height:100%;">Hi there! You look great today!</div>
 
 </body>
 </html>

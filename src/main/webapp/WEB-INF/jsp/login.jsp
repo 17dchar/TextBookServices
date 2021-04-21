@@ -11,7 +11,7 @@
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
-<h1 class="loginh1">Welcome to Textbook Services</h1>
+<h1 class="loginh1" style="padding-top:7vh;">Welcome to Textbook Services</h1>
 <div class="marginftn" style="margin: 0 auto;">
 <form method="post" class="login-form">
     <span class="marginAuto width85">

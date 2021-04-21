@@ -5,15 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66a77f85-1bec-4a3c-9c59-6f97abb5ae11" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SfrverfRepositoryTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SgbstdnRepositoryTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SsbsectRepositoryTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SsrmeetRepositoryTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/StvtermRepositoryTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Repository/SfrverfRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Repository/SfrverfRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Service/StudentScheduleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Service/StudentScheduleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SfrstcrRepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/SfrstcrRepositoryTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/addBook.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/addBook.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/maintenanceFormView.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/maintenanceFormView.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/supervisorView.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/supervisorView.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,7 +98,7 @@
       <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.StvtermRepositoryTests">
+  <component name="RunManager" selected="Maven.TextBook [spring-boot:run]">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -222,13 +220,13 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Maven.TextBook [spring-boot:run]" />
-      <item itemvalue="Spring Boot.TextBookApplication" />
       <item itemvalue="JUnit.SfrverfRepositoryTests" />
       <item itemvalue="JUnit.SgbstdnRepositoryTests" />
       <item itemvalue="JUnit.SsbsectRepositoryTests" />
       <item itemvalue="JUnit.SsrmeetRepositoryTests" />
       <item itemvalue="JUnit.StvtermRepositoryTests" />
+      <item itemvalue="Maven.TextBook [spring-boot:run]" />
+      <item itemvalue="Spring Boot.TextBookApplication" />
     </list>
     <recent_temporary>
       <list>
