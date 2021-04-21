@@ -10,17 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body style="
-    background-image: linear-gradient(-45deg,
-      rgba(0, 0, 0, 0.7),
-      rgba(0, 0, 0, 0)
-    ), url('https://www.nwmissouri.edu/images/header-img/drone%20campus%20august%20fall2018%20tw%2002069.jpg');
-    background-position-y: center;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-color: #006747;
-    height: 100%
-">
+<body>
 <h1 class="loginh1">Welcome to Textbook Services</h1>
 <div class="marginftn" style="margin: 0 auto;">
 <form method="post" class="login-form">

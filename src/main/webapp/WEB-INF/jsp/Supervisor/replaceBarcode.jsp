@@ -118,9 +118,11 @@
         });
     </script>
 </head>
-<body class="body">
-<h1 class="TBSHeader">Textbook Services</h1>
-<h2 class="BookCodeYearTitle">Replace Barcode</h2>
+<body>
+<div class="TBSHeader">
+    <h1 class="page-title" >Replace Barcode</h1>
+</div>
+<h2 class="BookCodeYearTitle"></h2>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">

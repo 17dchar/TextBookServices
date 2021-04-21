@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <meta charset="UTF-8">
     <title>Supervisor View</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -17,25 +17,12 @@
         });
     </script>
 </head>
-<style>
-    #list a{
-        transition: transform 250ms;
-    }
-    #list {
-        background: aqua;
-        transition: transform 250ms;
-    }
-    #list hover{
-        transform: translateY(5px);
-    }
-    #list a:hover{
-        transform: translateX(5px);
-    }
-</style>
 <body>
-<h1 class="TBSHeader">Textbook Services</h1>
-<h2 class="BookCodeYearTitle">Supervisor Access</h2>
-<div class="dropdown" id="list">
+<div class="TBSHeader">
+    <h1 class="page-title" >Supervisor View</h1>
+</div>
+<h2 class="BookCodeYearTitle"></h2>
+<div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
         <a href="Maintenance-Form">Maintenance</a>
@@ -64,6 +51,7 @@
     </div>
 </div>
 <a href="/" class = "dropbtn">Log out</a>
-<div style=>High there! You look great today!</div>
+<div style="height:100%; background-color:white">High there! You look great today!</div>
+
 </body>
 </html>
