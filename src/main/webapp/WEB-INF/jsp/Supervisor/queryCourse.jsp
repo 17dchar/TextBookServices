@@ -14,7 +14,7 @@
             $(document).ready(function() {
                 function queryMessage(){
                     var obj;
-                        obj = '{ "course" : "' + document.getElementById("course").value + '"}';
+                    obj = '{ "course" : "' + document.getElementById("course").value + '"}';
                     var string = JSON.parse(obj);
                     console.log("Query With " + string);
                     $.ajax({
@@ -59,22 +59,35 @@
                         }, 3000);
                     }
                 });
+
+                //mock json
+
+
+                let bookData = [
+                    { title: 'book1', code: '1010', year: '2014'},
+                    { title: 'book2', code: '1020', year: '2013'},
+                    { title: 'book3', code: '1030', year: '2012'},
+                    { title: 'book4', code: '1040', year: '2008'},
+                    { title: 'book5', code: '1050', year: '2007'},
+                    { title: 'book6', code: '1060', year: '2009'},
+                    { title: 'book7', code: '1070', year: '2011'},
+                    { title: 'book8', code: '1080', year: '2010'},
+                    { title: 'book9', code: '1090', year: '2020'},
+                    { title: 'book10', code: '1011', year: '2019'},
+
+                ];
+                $.each(bookData, function (i, item){
+                    var $tr = $('<tr>').append(
+                        $('<td>').text(item.bookCode),
+                        $('<td>').text(item.editionYear),
+                        $('<td>').text(item.title)
+
+                    ).appendTo('#bookTable');
+                });
             });
+
         </script>
         <script>
-            let bookData = [
-            { title: 'book1', code: '1010', year: '2014'},
-            { title: 'book2', code: '1020', year: '2013'},
-            { title: 'book3', code: '1030', year: '2012'},
-            { title: 'book4', code: '1040', year: '2008'},
-            { title: 'book5', code: '1050', year: '2007'},
-            { title: 'book6', code: '1060', year: '2009'},
-            { title: 'book7', code: '1070', year: '2011'},
-            { title: 'book8', code: '1080', year: '2010'},
-            { title: 'book9', code: '1090', year: '2020'},
-            { title: 'book10', code: '1011', year: '2019'},
-
-            ];
         </script>
     </head>
     <body>
@@ -133,8 +146,8 @@
                 <table class="table">
                     <thead>
                         <tr id = "bookTable">
-                            <th scope="col">Course Code</th>
-                            <th scope="col">Course Year</th>
+                            <th scope="col">Book Code</th>
+                            <th scope="col">Edition Year</th>
                             <th scope="col">Title</th>
                         </tr>
                         <!--
