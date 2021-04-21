@@ -28,7 +28,7 @@ public class AddBookService {
     @Autowired private StvtermRepository stvtermRepository;
     public OutputBookInformationModel getMostRecentNwtxdt(String bookCode){
         List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCode(bookCode);
-        if(nwtxinList.size() >0){
+        if(nwtxinList.size() > 0){
             int mostRecent = 0;
             for(int i = 0; i < nwtxinList.size(); i++){
                 if(i > 0){

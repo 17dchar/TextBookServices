@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66a77f85-1bec-4a3c-9c59-6f97abb5ae11" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Service/AddBookServiceTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/addBook.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/addBook.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/maintenanceFormView.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/maintenanceFormView.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/supervisorView.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Supervisor/supervisorView.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Service/AddBookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/Service/AddBookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/NwtxarRepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/NwtxarRepositoryTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/NwtxdtRepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/webapp/TextBook/Repository/NwtxdtRepositoryTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
     </list>
@@ -97,31 +96,32 @@
       <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\controller" />
       <recent name="C:\Users\s529395\Documents\GitHub\TextBookServices\src\main\java\com\webapp\TextBook\repository" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.webapp.TextBook.Service" />
+    </key>
   </component>
-  <component name="RunManager" selected="Maven.TextBook [spring-boot:run]">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.AddBookServiceTests">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SfrverfRepositoryTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AddBookServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.webapp.TextBook.Repository.*" />
+          <option name="PATTERN" value="com.webapp.TextBook.Service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.webapp.TextBook.Repository" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Repository.SfrverfRepositoryTests" />
+      <option name="PACKAGE_NAME" value="com.webapp.TextBook.Service" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.TextBook.Service.AddBookServiceTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -131,7 +131,7 @@
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.webapp.TextBook.Repository.*" />
+          <option name="PATTERN" value="com.webapp.TextBook.Service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -146,7 +146,7 @@
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.webapp.TextBook.Repository.*" />
+          <option name="PATTERN" value="com.webapp.TextBook.Service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -161,7 +161,7 @@
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.webapp.TextBook.Repository.*" />
+          <option name="PATTERN" value="com.webapp.TextBook.Service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -176,7 +176,7 @@
       <module name="TextBook" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.webapp.TextBook.Repository.*" />
+          <option name="PATTERN" value="com.webapp.TextBook.Service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -220,21 +220,21 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.SfrverfRepositoryTests" />
       <item itemvalue="JUnit.SgbstdnRepositoryTests" />
       <item itemvalue="JUnit.SsbsectRepositoryTests" />
       <item itemvalue="JUnit.SsrmeetRepositoryTests" />
       <item itemvalue="JUnit.StvtermRepositoryTests" />
       <item itemvalue="Maven.TextBook [spring-boot:run]" />
       <item itemvalue="Spring Boot.TextBookApplication" />
+      <item itemvalue="JUnit.AddBookServiceTests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AddBookServiceTests" />
         <item itemvalue="JUnit.StvtermRepositoryTests" />
         <item itemvalue="JUnit.SsrmeetRepositoryTests" />
         <item itemvalue="JUnit.SsbsectRepositoryTests" />
         <item itemvalue="JUnit.SgbstdnRepositoryTests" />
-        <item itemvalue="JUnit.SfrverfRepositoryTests" />
       </list>
     </recent_temporary>
   </component>
@@ -278,6 +278,7 @@
       <workItem from="1618329591594" duration="491000" />
       <workItem from="1618540752844" duration="5840000" />
       <workItem from="1618704888176" duration="9805000" />
+      <workItem from="1619021333743" duration="4947000" />
     </task>
     <servers />
   </component>

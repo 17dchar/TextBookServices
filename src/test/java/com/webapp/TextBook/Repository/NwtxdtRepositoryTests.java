@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class NwtxdtRepositoryTests {
+class NwtxdtRepositoryTests {
 
     final String bookCode = "GEOL1140";
     final String editionYear = "2018";
