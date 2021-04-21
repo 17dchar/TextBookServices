@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<html lang="en">
+<html lang="en" style = "height: 100%">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
-
-<h1 class="loginh1">Log In:</h1>
-<body style="background-size: cover;
-    background-image: url('https://www.nwmissouri.edu/images/header-img/drone%20campus%20august%20fall2018%20tw%2002069.jpg');
+<body style="
+    background-image: linear-gradient(-45deg,
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0)
+    ), url('https://www.nwmissouri.edu/images/header-img/drone%20campus%20august%20fall2018%20tw%2002069.jpg');
     background-position-y: center;
     background-repeat: no-repeat;
-    background-size: 100%;">
-<div class="marginftn">
-<form method="post" class="loginform">
+    background-size: 100%;
+    background-color: #006747;
+    height: 100%
+">
+<h1 class="loginh1">Welcome to Textbook Services</h1>
+<div class="marginftn" style="margin: 0 auto;">
+<form method="post" class="login-form">
     <span class="marginAuto width85">
-    <label class="loginlabel">Username:</label>
-    <input class="logininput" type="text" name="login"/>
-    <label class="loginlabel">Password:</label>
-    <input class="logininput" type="text" name="password"/>
-    <input class="btn btn-primary btnCol" type="submit" value="Submit" id="loginBtn" style="color: #f1f1f1">
+        <div class="login-cluster">
+            <label class="loginlabel">Username:</label>
+            <input class="logininput" autocomplete="off" type="text" name="login"/>
+        </div>
+        <div class="login-cluster">
+            <label class="loginlabel">Password:</label>
+            <input class="logininput" type="password"  name="password"/>
+        </div>
+        <div class="login-cluster">
+            <input class="btn btn-primary btnCol" type="submit" value="Log In" id="loginBtn">
+        </div>
     </span>
 </form>
 </div>
