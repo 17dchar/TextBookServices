@@ -10,4 +10,5 @@ public interface SfrverfRepository extends JpaRepository<Sfrverf, Integer> {
     @Override
     List<Sfrverf> findAll();
     List<Sfrverf> findByPidmAndTermCode(Integer pidm, String termCode);
+    List<Sfrverf> findByPidm(Integer pidm);
 }

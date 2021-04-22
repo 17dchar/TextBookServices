@@ -804,21 +804,37 @@ public class HomeController {
 
     //Check-In-Out POST
     @PostMapping("/Check-In-Out")
-    public String checkInOutPost(ModelMap model,
-                                 @RequestParam(value = "id", required = false, defaultValue = "")String id,
-                                 @RequestParam(value = "barCode", required = false, defaultValue = "")String barCode,
-                                 @RequestParam(value = "selectedTerm", required = false, defaultValue = "")String term){
+    public @ResponseBody OutputStudentInformationModel changeBookCodePost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model){
         System.out.println("Check In Out POST");
-        Spriden spriden = checkInOutService.getStudent(id);
+        System.out.println(spriden.getId());
         System.out.println(spriden.getFirstName());
-        List<Stvterm> terms = checkInOutService.getLatestTerms();
-        model.put("term", terms);
+        spriden = checkInOutService.getStudent(spriden.getId());
+        System.out.println(spriden.getFirstName());
+        Stvterm term = checkInOutService.getLatestTerm(spriden.getPidm());
+
+        System.out.println("here");
+        String bagNumber = checkInOutService.getBag(spriden.getPidm());
+
+        if(bagNumber != null){
+
+        }
+        OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
+        outputStudentInformationModel.setBagNumber(bagNumber);
+
+        outputStudentInformationModel.setTerm(term.getDesc());
+        outputStudentInformationModel.setFirstName(spriden.getFirstName());
+        outputStudentInformationModel.setMiddleInitial(spriden.getMiddleInitial());
+        outputStudentInformationModel.setLastName(spriden.getLastName());
+
+        List<Nwtxdt> nwtxdtList = checkInOutService.getBooks(spriden.getPidm(), term.getCode());
+        System.out.println(nwtxdtList.size());
+        outputStudentInformationModel.setNwtxdtList(nwtxdtList);
         //Checks the availability of the book
         //0 = Book couldn't be found by given barcode
         //1 = Book isn't currently checked out to anyone
         //2 = Book is currently checked out to someone
         //3 = Book is currently checked out to this current person
-        int availability = checkInOutService.checkAvailability(barCode, spriden, term);
+        int availability = 0;//checkInOutService.checkAvailability(barCode, spriden, term);
         if(availability == 0){
             System.out.println("nah dawg");
         } else if(availability == 1){
@@ -829,12 +845,9 @@ public class HomeController {
             System.out.println("book was checked out to this person");
 
         }
-        model.put("barCode", barCode);
-        model.put("id", id);
-        model.put("selectedTerm", term);
         model.put("bagNumber", checkInOutService.getBag(spriden.getPidm()));
 
-        return "Supervisor/checkInOut";
+        return outputStudentInformationModel;
     }
     /*
     $$When a barcode is scanned on the check in/check out screen we know the
