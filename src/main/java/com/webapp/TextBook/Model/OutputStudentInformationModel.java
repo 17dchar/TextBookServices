@@ -60,6 +60,26 @@ public class OutputStudentInformationModel {
     }
 
 
+    private List<Ssbsect> ssbsectList;
+
+    public List<Ssbsect> getSsbsectList() {
+        return ssbsectList;
+    }
+
+    public void setSsbsectList(List<Ssbsect> ssbsectList) {
+        this.ssbsectList = ssbsectList;
+    }
+
+    public List<Scbcrse> getScbcrseList() {
+        return scbcrseList;
+    }
+
+    public void setScbcrseList(List<Scbcrse> scbcrseList) {
+        this.scbcrseList = scbcrseList;
+    }
+
+    private List<Scbcrse> scbcrseList;
+
     public List<Nwtxin> getNwtxinList() {
         return nwtxinList;
     }

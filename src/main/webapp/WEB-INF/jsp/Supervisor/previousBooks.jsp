@@ -16,11 +16,14 @@
             $(document).ready(function() {
                 var attempt = false;
                 function queryMessage(){
-                    var string = $("#course").serialize();
+
+                    var obj;
+                    obj = '{ "id" : "' + document.getElementById("id").value + '"}';
+                    var string = JSON.parse(obj);
                     console.log("Attempting Query With " + string);
                     $.ajax({
                         type: "POST",
-                        url: '/Course-Message',
+                        url: '/Previous-Books',
                         data: string,
                         dataType: 'json',
                         timeout: 6000000,
@@ -83,6 +86,10 @@
                         $(this).val("");
                     });
                 });
+                $('#makeChanges').click(function (){
+                    console.log("click");
+                    queryMessage();
+                });
             });
         </script>
     </head>
@@ -130,15 +137,10 @@
                                     <div class="form-group">
                                         <label>ID:</label>
                                         <input type = "text"
+                                               id="id"
                                            name = "id"
                                            class="form-control"/>
                                         <input type="submit" name="Find Them!"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Bag#:</label>
-                                        <input type = "text"
-                                           id = "bagNumber"
-                                           class="form-control"/>
                                     </div>
                                 </p>
                             </fieldset>

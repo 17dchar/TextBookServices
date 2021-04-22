@@ -65,4 +65,31 @@ public class PreviousBooksService {
             return null;
         }
     }
+
+    public List<Nwtxdt> getNwtxdt(String pidm){
+        //If there is at least 1 model under given credentials, return the first
+        //Else, return nothing
+        List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByPidm(pidm);
+        if(nwtxdtList.size() >0){
+            return nwtxdtList;
+        } else{
+            //Create a list of all repositories under given credentials
+            return null;
+        }
+    }
+
+    @Autowired
+    private NwtxinRepository nwtxinRepository;
+    public List<Nwtxin> getTitles(List<Nwtxdt> nwtxdtList){
+        List<Nwtxin> nwtxinList = new ArrayList<Nwtxin>();
+        for(Nwtxdt nwtxdt :nwtxdtList){
+            List<Nwtxin> tempList = nwtxinRepository.findByBookCodeAndEditionYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
+            if(tempList.size() > 0){
+                nwtxinList.add(tempList.get(0));
+            } else {
+                nwtxinList.add(null);
+            }
+        }
+        return nwtxinList;
+    }
 }

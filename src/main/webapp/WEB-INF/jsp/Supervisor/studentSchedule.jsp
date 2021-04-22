@@ -19,19 +19,12 @@
                 var withBarcode = false;
                 function queryMessage(){
                     var obj;
-                    if(withEditionYear){
-                        obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
-                            '", "editionYear" : "' + document.getElementById("editionYear").value + '"}';
-                    } else if(withBarcode) {
-                        obj = '{ "barcode" : "' + document.getElementById("barcode").value +'"}';
-                    } else{
-                        obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +'"}';
-                    }
+                    obj = '{ "id" : "' + document.getElementById("id").value + '"}';
                     var string = JSON.parse(obj);
                     console.log("Query With " + string);
                     $.ajax({
                         type: "POST",
-                        url: '/Find-Book',
+                        url: '/Student-Schedule',
                         data: string,
                         dataType: 'json',
                         timeout: 6000000,
@@ -39,23 +32,8 @@
                             if(data.errors){
                                 alert(data.errorMessage);
                                 return;
-                            }else if(!withEditionYear) {
-                                document.getElementById('editionYear').placeholder = data.editionYear;
                             }
-                            if(withBarcode){
-                                document.getElementById('bookCode').placeholder = data.bookCode;
-                                document.getElementById('editionYear').placeholder = data.editionYear;
-                            }
-                            document.getElementById('title').innerHTML = data.title;
-                            document.getElementById('seqNr').innerHTML = data.seqNr;
-                            document.getElementById('currentDisposition').innerHTML = data.currentDisposition;
-                            document.getElementById('currentTermCheckOut').innerHTML = data.currentTermCheckOut;
-                            document.getElementById('currentCheckedOutTo').innerHTML = data.currentCheckedOutTo;
-                            document.getElementById('currentDateCheckedOut').innerHTML = data.currentDateCheckedOut;
-                            document.getElementById('previousTermCheckedOut').innerHTML = data.previousTermCheckedOut;
-                            document.getElementById('previousCheckedOutTo').innerHTML = data.previousTermCheckedOut;
-                            document.getElementById('previousDateCheckedIn').innerHTML = data.previousDateCheckedIn;
-
+                            console.log(data);
                             console.log("SUCCESS");
                         },
                         error: function (data) {
@@ -138,6 +116,10 @@
                         $(this).val("");
                     });
                 });
+                $('#makeChanges').click(function (){
+                    console.log("click");
+                    queryMessage();
+                });
             });
         </script>
     </head>
@@ -189,12 +171,12 @@
                             <p>
                                 <div class="form-group">
                                     <label>ID:</label>
-                                    <input type = "text"
+                                    <input id="id"
+                                            type = "text"
                                            name = "id"
                                            class="form-control fiftyWidth"/>
                                 </div>
                             </p>
-                                <input type="submit" name="Save"/>
                         </fieldset>
                         <p>
                             <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>

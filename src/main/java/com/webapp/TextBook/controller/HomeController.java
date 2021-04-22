@@ -637,31 +637,25 @@ public class HomeController {
 
     //Previoius Books POST
     @RequestMapping(value= "/Previous-Books", method = RequestMethod.POST)
-    public String prevBooksPost(ModelMap model,
-                                @RequestParam(value = "id", required = false, defaultValue = "")String id,
-                                @RequestParam(value = "prevTerm", required = false, defaultValue = "")String prevTerm)
+    public @ResponseBody OutputStudentInformationModel previousBooksPost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model)
                                 throws ParseException{
         System.out.println("Previous Books POST");
         //Pseudo Regex
-        if(id.equals("") || prevTerm.equals("")){
-            System.out.println("nah dawg");
-            //Supervisor Privileges
-            if(supervisor){
-                return"Supervisor/previousBooks";
-            }
-            return "StudentEmployee/previousBooks";
-        }
 
-        Spriden spriden = previousBooksService.getSpriden(id);
-        Stvterm stvterm = previousBooksService.getStvterm(prevTerm);
-        if(spriden != null && stvterm != null){
-            model.put("prevBooks",previousBooksService.getNwtxdt(spriden.getPidm(), prevTerm));
+        spriden = previousBooksService.getSpriden(spriden.getId());
+        OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
+        outputStudentInformationModel.setLastName(spriden.getLastName());
+        if(spriden != null){
+            List<Nwtxdt> nwtxdtList =  previousBooksService.getNwtxdt(spriden.getPidm());
+            List<Nwtxin> nwtxinList = previousBooksService.getTitles(nwtxdtList);
+            outputStudentInformationModel.setNwtxinList(nwtxinList);
+            outputStudentInformationModel.setNwtxdtList(nwtxdtList);
         }
         //Supervisor Privileges
         if(supervisor){
-            return"Supervisor/previousBooks";
+            return outputStudentInformationModel;
         }
-        return "StudentEmployee/previousBooks";
+        return outputStudentInformationModel;
     }
 
 
@@ -729,13 +723,12 @@ public class HomeController {
             return null;
         }
         //Pseudo Regex
-
+        spriden = previousBooksService.getSpriden(spriden.getId());
         OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
+        outputStudentInformationModel.setLastName(spriden.getLastName());
+        Stvterm term = studentScheduleService.getLatestTerm(spriden.getPidm());
 
-        int pidm = Integer.parseInt(studentScheduleService.getSpriden(spriden.getId()).getPidm());
-        Stvterm term = studentScheduleService.getLatestTerm(Integer.toString(pidm));
-
-        List<Sfrstcr> sfrstcr = studentScheduleService.getSfrstcr(pidm, term.getCode());
+        List<Sfrstcr> sfrstcr = studentScheduleService.getSfrstcr(Integer.parseInt(spriden.getPidm()), term.getCode());
         List<Ssbsect> output = new ArrayList<>();
         List<String> outputTitle = new ArrayList<>();
         List<Ssrmeet> outputTimes = new ArrayList<>();
@@ -748,6 +741,8 @@ public class HomeController {
                 outputTitle.add(scbcrse.getTitle());
             }
         }
+
+        outputStudentInformationModel.setSsbsectList(output);
         model.put("output", output);
         model.put("outputTitle", outputTitle);
         model.put("outputTimes", outputTimes);
