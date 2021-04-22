@@ -63,7 +63,7 @@
                 //mock json
 
 
-                let bookData = [
+                /*let bookData = [
                     { title: 'book1', code: '1010', year: '2014'},
                     { title: 'book2', code: '1020', year: '2013'},
                     { title: 'book3', code: '1030', year: '2012'},
@@ -78,12 +78,12 @@
                 ];
                 $.each(bookData, function (i, item){
                     var $tr = $('<tr>').append(
-                        $('<td>').text(item.bookCode),
-                        $('<td>').text(item.editionYear),
+                        $('<td>').text(item.code),
+                        $('<td>').text(item.year),
                         $('<td>').text(item.title)
 
                     ).appendTo('#bookTable');
-                });
+                });*/
             });
 
         </script>
@@ -91,6 +91,10 @@
         </script>
     </head>
     <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <body onLoad="buildHtmlTable('#excelDataTable')">
+    </body>
         <div class="TBSHeader">
             <h1 class="page-title" >Find Course</h1>
         </div>
@@ -143,13 +147,69 @@
                 </form>
             </div>
             <div id = 'tableDiv' class="border rounded form-group" style="width: 75%; margin-left: 20px; margin: 15px;">
-                <table class="table">
+                <table class="table" id="excelDataTable" border="1">
                     <thead>
                         <tr id = "bookTable">
                             <th scope="col">Book Code</th>
                             <th scope="col">Edition Year</th>
                             <th scope="col">Title</th>
                         </tr>
+                        <script>
+                        let bookData = [
+                        { title: 'book1', code: '1010', year: '2014'},
+                        { title: 'book2', code: '1020', year: '2013'},
+                        { title: 'book3', code: '1030', year: '2012'},
+                        { title: 'book4', code: '1040', year: '2008'},
+                        { title: 'book5', code: '1050', year: '2007'},
+                        { title: 'book6', code: '1060', year: '2009'},
+                        { title: 'book7', code: '1070', year: '2011'},
+                        { title: 'book8', code: '1080', year: '2010'},
+                        { title: 'book9', code: '1090', year: '2020'},
+                        { title: 'book10', code: '1011', year: '2019'},
+
+                        ];
+                        /*$.each(bookData, function (i, item){
+                        var $tr = $('<tr>').append(
+                            $('<td>').text(item.code),
+                                $('<td>').text(item.year),
+                                $('<td>').text(item.title)
+
+                                ).appendTo('#bookTable');
+                                });*/
+
+                        function buildHtmlTable(selector) {
+                            var columns = addAllColumnHeaders(bookData, selector);
+
+                            for (var i = 0; i < bookData.length; i++) {
+                                var row$ = $('<tr/>');
+                                for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+                                    var cellValue = bookData[i][columns[colIndex]];
+                                    if (cellValue == null) cellValue = "";
+                                    row$.append($('<td/>').html(cellValue));
+                                }
+                                $(selector).append(row$);
+
+                            }
+                        }
+
+                        function addAllColumnHeaders(bookData, selector) {
+                            var columnSet = [];
+                            var headerTr$ = $('<tr/>');
+
+                            for (var i = 0; i < bookData.length; i++) {
+                                var rowHash = bookData[i];
+                                for (var key in rowHash) {
+                                    if ($.inArray(key, columnSet) == -1) {
+                                    columnSet.push(key);
+                                }
+                            }
+                        }
+                        $(selector).append(headerTr$);
+
+                        return columnSet;
+
+                        }
+                        </script>
                         <!--
                         <c:forEach items="${crseTable}" var="crseTable">
                             <tr>
