@@ -18,6 +18,10 @@ import java.util.List;
 @Service
 public class AddBookService {
 
+    public AddBookService(NwtxinRepository nwtxinRepository){
+        this.nwtxinRepository = nwtxinRepository;
+    }
+
     @Autowired private NwtxdtRepository nwtxdtRepository;
     public Nwtxdt saveNwtxdt(Nwtxdt nwtxdt) {
         return nwtxdtRepository.save(nwtxdt);
