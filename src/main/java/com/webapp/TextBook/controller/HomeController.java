@@ -1,7 +1,9 @@
 package com.webapp.TextBook.controller;
 
 //Imported Standard Java Libraries
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,8 +107,13 @@ public class HomeController {
             }
         }
         System.out.println(nwtxin.getBookCode());
-        nwtxin = maintenanceService.getNwtxinList(nwtxin.getBookCode()).get(0);
-        List<Nwtxdt> nwtxdtList = maintenanceService.getNwtxdtList(nwtxin.getBookCode());
+        if(nwtxin.getEditionYear() != null){
+            nwtxin = maintenanceService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear());
+        } else{
+            nwtxin = maintenanceService.getMostRecentNwtxin(nwtxin.getBookCode());
+
+        }
+        List<Nwtxdt> nwtxdtList = maintenanceService.getNwtxdtList(nwtxin.getBookCode(), nwtxin.getEditionYear());
         int largestSeqNr = 0;
         int booksPurchased = 0;
         int booksSold = 0;
@@ -143,6 +150,7 @@ public class HomeController {
                 count++;
             }
         }
+        outputBookInformationModel.setStatus(nwtxin.getBookStatus());
         outputBookInformationModel.setBooksCheckedIn(booksCheckedIn);
         outputBookInformationModel.setBooksCheckedOut(booksCheckedOut);
         outputBookInformationModel.setBooksinInventory(booksInInventory);
@@ -154,13 +162,20 @@ public class HomeController {
         outputBookInformationModel.setEditionYear(nwtxdtList.get(0).getEditionYear());
         outputBookInformationModel.setTitle(nwtxin.getTitle());
         //outputBookInformationModel.setAuthor(nwtxin.getAuthor());
-
-        Nwtxin inputNwtxin = maintenanceService.getNwtxin(nwtxin.getBookCode(), nwtxdtList.get(0).getEditionYear());
+        //Nwtxin inputNwtxin = maintenanceService.getNwtxin(nwtxin.getBookCode(), nwtxdtList.get(0).getEditionYear());
         outputBookInformationModel.setAuthor(nwtxin.getAuthor());
         outputBookInformationModel.setPublisher(nwtxin.getPublisher());
         outputBookInformationModel.setIsbn(nwtxin.getIsbn());
-        //outputBookInformationModel.setPurchaseDate(nwtxin.getPruchaseDate());
-        //outputBookInformationModel.setDiscontinued(nwtxin.getDiscontinuedDate());
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        outputBookInformationModel.setPurchaseDate(df.format(nwtxin.getPruchaseDate()));
+        if(nwtxin.getDiscontinuedDate() != null){
+            outputBookInformationModel.setDiscontinued(df.format(nwtxin.getDiscontinuedDate()));
+        }
+        if(nwtxin.getFirstUsedDate() != null){
+            outputBookInformationModel.setFirstDateUsed(df.format(nwtxin.getFirstUsedDate()));
+        }
+        outputBookInformationModel.setPrice(nwtxin.getCurrentPrice());
         outputBookInformationModel.setCourseTitle(nwtxin.getCrseName());
         outputBookInformationModel.setCourse1(nwtxin.getCrse1());
         outputBookInformationModel.setCourse2(nwtxin.getCrse2());
@@ -804,6 +819,7 @@ public class HomeController {
         model.put("barCode", barCode);
         model.put("id", id);
         model.put("selectedTerm", term);
+        model.put("bagNumber", checkInOutService.getBag(spriden.getPidm()));
 
         return "Supervisor/checkInOut";
     }

@@ -44,9 +44,12 @@
                             document.getElementById('author').placeholder = data.author;
                             document.getElementById('bookStatus').placeholder = data.bookStatus;
                             document.getElementById('comment').placeholder = data.comment;
-                            document.getElementById('firstUsedDate').placeholder = data.firstUsedDate;
                             document.getElementById('isbn').placeholder = data.isbn;
-                            document.getElementById('purchaseDate').placeholder = data.purchaseDate;
+                            document.getElementById('bookStatus').placeholder = data.status;
+                            document.getElementById('bookCost').placeholder = data.price;
+                            $('#purchaseDate').val(data.purchaseDate);
+                            $('#discontinuedDate').val(data.discontinued);
+                            $('#firstUsedDate').val(data.firstDateUsed);
                             document.getElementById('crse1').placeholder = data.course1;
                             document.getElementById('crse2').placeholder = data.course2;
                             document.getElementById('crse3').placeholder = data.course3;
@@ -59,6 +62,7 @@
                             document.getElementById('booksNonreturned').innerHTML = data.booksNonreturned;
                             document.getElementById('booksInInventory').innerHTML = data.booksinInventory;
                             document.getElementById('booksCheckedOut').innerHTML = data.booksCheckedOut;
+                            document.getElementById('booksCheckedIn').innerHTML = data.booksCheckedIn;
                             document.getElementById('lastSeqNo').innerHTML = data.lastSeqNr;
                             console.log("SUCCESS");
                         },
@@ -104,12 +108,24 @@
                         }, 3000);
                     }
                 });
+                $('#makeChanges').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        if($(this).attr('id') !== 'editionYear' && $(this).attr('id') !== 'bookCode'){
+                            var text_value=$(this).val();
+                            if(text_value!==''){
+                                console.log("there was a change here!");
+                                console.log($(this).attr('id'))
+                            }
+                        }
+                    })
+                });
             });
         </script>
     </head>
     <body>
         <div class="TBSHeader">
-            <h1 class="page-title" style="font-size: 60px" >Maintenance-Maintenance</h1>
+            <h1 class="page-title">Maintenance-Maintenance</h1>
         </div>
         <h2 class="BookCodeYearTitle"></h2>
         <div class="dropdown">
@@ -141,12 +157,7 @@
             </div>
         </div>
         <a href="/" class = "dropbtn">Log out</a>
-        <div class = "page-body" style="
-
- background-image: linear-gradient(135deg,#808080d5,#505050ff);
-
-
-">
+        <div class = "page-body">
             <form method = post class="addlmargin">
                 <div class="border rounded form-group">
                     <fieldset>
@@ -198,7 +209,7 @@
                                     </p>
                                     <p>
                                         <label>Discontinued:</label>
-                                        <input type="text" id="discontinuedDate" name="discontinuedDate" class="form-control">
+                                        <input type="date" id="discontinuedDate" name="discontinuedDate" class="form-control">
                                         <label>First Used Date:</label>
                                         <input type="date" id="firstUsedDate" name="firstUsedDate" class="form-control">
                                     </p>
@@ -255,18 +266,22 @@
                                         <p type="number" id="booksInInventory" value="0" class="form-control">
                                     </p>
                                     <p>
+                                        <label>Books Checked In:</label>
+                                    <p type="number" id="booksCheckedIn" value="0" class="form-control">
+                                    </p>
+                                    <p>
                                         <label>Books Checked Out:</label>
                                         <p type="number" id="booksCheckedOut" value="0" class="form-control">
                                     </p>
                                     <p>
                                         <label>Last Seq. No.:</label>
-                                        <p type="number" u0="" id="lastSeqNo" value="0" class="form-control">
+                                        <p type="number" id="lastSeqNo" value="0" class="form-control">
                                     </p>
                                 </fieldset>
                             </div>
                             <div class="column right">
                                 <p>
-                                    <button type="button" class="btn btn-primary btnCol">Save</button>
+                                    <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
                                 </p>
                                 <p>
                                     <button type="button" class="btn btn-primary btnCol">Clear</button>

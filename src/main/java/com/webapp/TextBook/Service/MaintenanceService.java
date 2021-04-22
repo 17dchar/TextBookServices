@@ -8,6 +8,7 @@ import com.webapp.TextBook.Repository.NwtxinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,27 @@ public class MaintenanceService {
 
     @Autowired
     private NwtxinRepository nwtxinRepository;
+    public Nwtxin getMostRecentNwtxin(String bookCode) {
+        //Create a list of all repositories under given credentials
+        List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCode(bookCode);
+
+        //If there is at least 1 model under given credentials, return the first
+        //Else, return nothing
+        if (nwtxinList.size() > 0) {
+            int mostRecent = 0;
+            for(int i = 0; i < nwtxinList.size(); i++){
+                if(i > 0){
+                    if(Integer.parseInt(nwtxinList.get(i).getEditionYear()) > Integer.parseInt(nwtxinList.get(i-1).getEditionYear())){
+                        mostRecent= i;
+                    }
+                }
+            }
+            System.out.println(nwtxinList.get(mostRecent).getEditionYear());
+            return nwtxinList.get(mostRecent);
+        }else{
+            return null;
+        }
+    }
     public Nwtxin getNwtxin(String bookCode, String editionYear) {
         //Create a list of all repositories under given credentials
         List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCodeAndEditionYear(bookCode, editionYear);
@@ -28,7 +50,16 @@ public class MaintenanceService {
         //If there is at least 1 model under given credentials, return the first
         //Else, return nothing
         if (nwtxinList.size() > 0) {
-            return nwtxinList.get(0);
+            int mostRecent = 0;
+            for(int i = 0; i < nwtxinList.size(); i++){
+                if(i > 0){
+                    if(Integer.parseInt(nwtxinList.get(i).getEditionYear()) > Integer.parseInt(nwtxinList.get(i-1).getEditionYear())){
+                        mostRecent= i;
+                    }
+                }
+            }
+            System.out.println(nwtxinList.get(mostRecent).getEditionYear());
+            return nwtxinList.get(mostRecent);
         }else{
             return null;
         }
@@ -48,30 +79,13 @@ public class MaintenanceService {
 
     @Autowired
     private NwtxdtRepository nwtxdtRepository;
-    public List<Nwtxdt> getNwtxdtList(String bookCode) {
+    public List<Nwtxdt> getNwtxdtList(String bookCode, String editionYear) {
         //Create a list of all repositories under given credentials
-        List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByBookCode(bookCode);
-        int mostRecent = 0;
-        for(int i = 0; i < nwtxdtList.size(); i++){
-            if(i > 0){
-                System.out.println(nwtxdtList.get(i).getEditionYear());
-                if(Integer.parseInt(nwtxdtList.get(i).getEditionYear()) > Integer.parseInt(nwtxdtList.get(i-1).getEditionYear())){
-                    mostRecent= i;
-                }
-            }
-        }
-        int mostRecentYear = Integer.parseInt(nwtxdtList.get(mostRecent).getEditionYear());
-        List<Nwtxdt> nwtxdtListFiltered = new ArrayList<Nwtxdt>();
-        for(Nwtxdt nwtxdt: nwtxdtList){
-            if(Integer.parseInt(nwtxdt.getEditionYear()) == mostRecentYear){
-                nwtxdtListFiltered.add(nwtxdt);
-            }
-        }
+        List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByBookCodeAndEditionYear(bookCode, editionYear);
         //If there is at least 1 model under given credentials, return the first
         //Else, return nothing
-        System.out.println(mostRecentYear);
-        if (nwtxdtListFiltered.size() > 0) {
-            return nwtxdtListFiltered;
+        if (nwtxdtList.size() > 0) {
+            return nwtxdtList;
         }else{
             return null;
         }

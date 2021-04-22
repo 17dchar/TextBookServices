@@ -159,7 +159,7 @@
         <div class="dropdown">
         <a href="/" class = "dropdown-content">Log out</a>
         </div>
-        <div class="page-body">
+        <div class="page-body" style="height:10%;">
             <div class="border rounded form-group" style="width: 75%; margin-left: 20px; margin: 15px;">
                 <form method="post">
                     <fieldset>
@@ -187,7 +187,7 @@
                     </fieldset>
                 </form>
             </div>
-            <div class="pattinBetween border rounded" style="margin-left: 15px;">
+            <div class="pattinBetween border rounded" style="margin-left: 15px; height: auto; display:flex; flex-direction: column; flex-grow: 1;">
                 <div class="row">
                     <div class="column left form-group">
                         <fieldset>

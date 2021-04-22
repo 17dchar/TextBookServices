@@ -12,13 +12,25 @@ public class OutputBookInformationModel
 {
     Boolean errors;
     String errorMessage;
+    String successMessage;
     String bookCode;
     String editionYear;
     @Id
     String barcode;
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    String price;
     String title;
     String seqNr;
     String author;
+    String status;
     String currentDisposition;
     String currentTermCheckOut;
     String currentCheckedOutTo;
@@ -338,4 +350,19 @@ public class OutputBookInformationModel
         this.errorMessage = errorMessage;
     }
 
+    public String getSuccessMessage() {
+        return successMessage;
+    }
+
+    public void setSuccessMessage(String successMessage) {
+        this.successMessage = successMessage;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

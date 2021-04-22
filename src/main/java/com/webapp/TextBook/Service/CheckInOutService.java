@@ -1,12 +1,8 @@
 package com.webapp.TextBook.Service;
 
 //Spring Dependencies
-import com.webapp.TextBook.Model.Nwtxdt;
-import com.webapp.TextBook.Model.Spriden;
-import com.webapp.TextBook.Model.Stvterm;
-import com.webapp.TextBook.Repository.NwtxdtRepository;
-import com.webapp.TextBook.Repository.SpridenRepository;
-import com.webapp.TextBook.Repository.StvtermRepository;
+import com.webapp.TextBook.Model.*;
+import com.webapp.TextBook.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +11,9 @@ import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 //Textbook Services Dependencies
-import com.webapp.TextBook.Repository.NwtxcmRepository;
-import com.webapp.TextBook.Model.Nwtxcm;
 
 
 @Service
@@ -75,6 +70,16 @@ public class CheckInOutService {
             }
         } else{
             return 0;
+        }
+    }
+    @Autowired
+    private NwtxbnRepository nwtxbnRepository;
+    public String getBag(String pidm){
+        List<Nwtxbn> nwtxbnList = nwtxbnRepository.findByPidm(pidm);
+        if(nwtxbnList.size() > 0){
+            return nwtxbnList.get(0).getBagNum();
+        } else{
+            return null;
         }
     }
 }
