@@ -38,8 +38,9 @@
                         dataType: 'json',
                         timeout: 6000000,
                         success: function (data) {
-                            if (data.errors){
-                                console.log(data);
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
                             }else if(!withEditionYear) {
                                 document.getElementById('editionYear').placeholder = data.editionYear;
                             }
@@ -120,6 +121,30 @@
                         }, 3000);
                     }
                 }));
+
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
+                });
+                $('#makeChanges').click(function (){
+                    console.log("click");
+                    queryMessage();
+                });
             });
         </script>
         </head>
@@ -181,8 +206,8 @@
                                    class="form-control"/>
                         </p>
                         <p>
-                            <input type="submit" name="Save" class="btn btn-primary btnCol column"/>
-                            <button type="button" class="btn btn-primary btnCol column" style="margin: 5px">Clear</button>
+                            <button type="button" id="makeChanges" class="btn btn-primary btnCol">Find Book</button>
+                            <button type="button" id="clear" class="btn btn-primary btnCol column" style="margin: 5px">Clear</button>
                         </p>
                     </fieldset>
                 </form>
@@ -194,13 +219,13 @@
                             <legend>Book Info</legend>
                             <p>
                                 <label style = "display: inline-block;">Title:</label>
-                                <p id ='title'></p>
+                                <p type="text" id ='title'></p>
                                 <!--${bookTitle}-->
                             </p>
                             <p>
 
                                 <label>Seq Nr:</label>
-                                <p id ='seqNr'></p>
+                                <p type="text" id ='seqNr'></p>
                                 <!--${seqNr}-->
                             </p>
                         </fieldset>
@@ -208,22 +233,22 @@
                             <legend>Current Info</legend>
                             <p>
                                 <label>Current Disposition:</label>
-                                <p id ='currentDisposition'></p>
+                                <p type="text" id ='currentDisposition'></p>
                                 <!--${bookDisposition}-->
                             </p>
                             <p>
                                 <label>Term Checked Out:</label>
-                                <p id ='currentTermCheckOut'></p>
+                                <p type="text" id ='currentTermCheckOut'></p>
                                 <!--${termCheckedOut}-->
                             </p>
                             <p>
                                 <label>Checked Out To:</label>
-                                <p id ='currentCheckedOutTo'></p>
+                                <p type="text" id ='currentCheckedOutTo'></p>
                                 <!--${checkedOutTo}-->
                             </p>
                             <p>
                                 <label>Date Checked Out:</label>
-                                <p id ='currentDateCheckedOut'></p>
+                                <p type="text" id ='currentDateCheckedOut'></p>
                                 <!--${dateCheckedOut}-->
                             </p>
                         </fieldset>
@@ -233,17 +258,17 @@
                             <legend>Previous Info</legend>
                             <p>
                                 <label>Previous Term Check Out:</label>
-                                <p id ='previousTermCheckedOut'></p>
+                                <p type="text" id ='previousTermCheckedOut'></p>
                                 <!--${prevTerm}-->
                             </p>
                             <p>
                                 <label>Previously Checked Out To:</label>
-                                <p id ='previousCheckedOutTo'></p>
+                                <p type="text" id ='previousCheckedOutTo'></p>
                                 <!--${prevCheckedOutTo}-->
                             </p>
                             <p>
                                 <label>Date Checked In:</label>
-                                <p id ='previousDateCheckedIn'></p>
+                                <p type="text" id ='previousDateCheckedIn'></p>
                                 <!--${dateCheckedIn}-->
                             </p>
                         </fieldset>

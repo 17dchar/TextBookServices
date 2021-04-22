@@ -33,18 +33,16 @@
                         dataType: 'json',
                         timeout: 6000000,
                         success: function (data) {
-                            if (data.errors){
-                                console.log(data);
-                            }else if(!withEditionYear) {
-                                document.getElementById('editionYear').placeholder = data.editionYear;
+                            console.log(data);
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
                             }
-                            if(withBarcode){
-                                document.getElementById('bookCode').placeholder = data.bookCode;
-                                document.getElementById('editionYear').placeholder = data.editionYear;
-                            }
-                            document.getElementById('title').placeholder = data.title;
-                            document.getElementById('seqNr').placeholder = data.lastSeqNr;
-
+                            $('input[type=text]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).attr('placeholder',data[id.toString()]);
+                            });
                             console.log("SUCCESS");
                         },
                         error: function (data) {
@@ -88,6 +86,36 @@
                             }
                         }, 3000);
                     }
+                });
+                $('#output').keydown(function (e) {
+                    if (e.keyCode == 13) {
+                        e.preventDefault();
+                        queryMessage();
+                        return false;
+                    }
+                });
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
+                });
+                $('#makeChanges').click(function (){
+                    console.log("click");
+                    queryMessage();
                 });
             });
         </script>
@@ -157,8 +185,8 @@
                         </p>
                         <p>
                             <label>Seq Nr</label>
-                            <input id="seqNr"
-                                    type="number"
+                            <input id="lastSeqNr"
+                                    type="text"
                                    name="seqNumber"
                                    class="form-control left"/>
                         </p>
@@ -172,8 +200,8 @@
                     </fieldset>
                 </div>
                 <span class="addlmargin">
-                    <button type="button" class="btn btn-primary btnCol">Save</button>
-                    <button type="submit" class="btn btn-primary btnCol" name="clear">Clear</button>
+                    <button type="button" id ="makeChanges"class="btn btn-primary btnCol">Save</button>
+                    <button type="button" id = "clear" class="btn btn-primary btnCol" name="clear">Clear</button>
                 </span>
             </form>
         </div>

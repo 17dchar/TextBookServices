@@ -104,6 +104,14 @@ public class HomeController {
         if(bindingResult.hasErrors()){
             for (ObjectError object : bindingResult.getAllErrors()) {
                 //check for specific errors
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            if(nwtxin.getBookCode() == ""){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
+                return outputBookInformationModel;
             }
         }
         System.out.println(nwtxin.getBookCode());
@@ -111,7 +119,12 @@ public class HomeController {
             nwtxin = maintenanceService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear());
         } else{
             nwtxin = maintenanceService.getMostRecentNwtxin(nwtxin.getBookCode());
+        }
 
+        if(nwtxin == null){
+            outputBookInformationModel.setErrors(true);
+            outputBookInformationModel.setErrorMessage("We Couldn't Find a Book With That Code");
+            return outputBookInformationModel;
         }
         List<Nwtxdt> nwtxdtList = maintenanceService.getNwtxdtList(nwtxin.getBookCode(), nwtxin.getEditionYear());
         int largestSeqNr = 0;

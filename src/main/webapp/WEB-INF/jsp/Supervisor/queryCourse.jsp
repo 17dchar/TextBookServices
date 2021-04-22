@@ -25,6 +25,10 @@
                         timeout: 6000000,
                         success: function (data) {
                             console.log(data);
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
+                            }
                             $.each(data, function (i, item){
                                 var $tr = $('<tr>').append(
                                     $('<td>').text(item.bookCode),
@@ -59,7 +63,25 @@
                         }, 3000);
                     }
                 });
-
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
+                });
                 //mock json
 
 
@@ -140,8 +162,10 @@
                                     class="form-control"/>
                         </p>
                         <p>
-                            <input type="submit" name="Save" class="btn btn-primary btnCol column"/>
-                            <button type="button" class="btn btn-primary btnCol column" style="margin: 5px">Clear</button>
+                            <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
+                        </p>
+                        <p>
+                            <button type="button" id="clear" class="btn btn-primary btnCol">Clear</button>
                         </p>
                     </fieldset>
                 </form>

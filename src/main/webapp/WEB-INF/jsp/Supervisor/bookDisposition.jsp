@@ -33,24 +33,26 @@
                         dataType: 'json',
                         timeout: 6000000,
                         success: function (data) {
-                            if (data.errors){
-                                console.log(data);
-                            }else if(!withEditionYear) {
-                                document.getElementById('editionYear').placeholder = data.editionYear;
+                            console.log(data);
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
                             }
-                            if(withBarcode){
-                                document.getElementById('bookCode').placeholder = data.bookCode;
-                                document.getElementById('editionYear').placeholder = data.editionYear;
-                            }
-                            document.getElementById('title').innerHTML = data.title;
-                            document.getElementById('seqNr').innerHTML = data.seqNr;
-                            /*
-                            <option value="I" class="custom-option">Checked In</option>
-                            <option value="O" class="custom-option">Checked Out</option>
-                            <option value="S" class="custom-option">Sold</option>
-                            <option value="N" class="custom-option">Not Retruned</option>
-                            <option value="U">Unrepairable</option>
-                             */
+                            $('input[type=text]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).attr('placeholder',data[id.toString()]);
+                            });
+                            $('p[type=text]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).text(data[id.toString()]);
+                            });
+                            $('input[type=date]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).val(data[id.toString()]);
+                            });
                             if(data.currentDisposition === "I"){
                                 document.getElementById('currentDisposition').innerHTML = "Checked In";
                             } else if(data.currentDisposition === "O"){
@@ -131,6 +133,25 @@
                         }, 3000);
                     }
                 }));
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
+                });
             });
         </script>
     </head>
@@ -232,8 +253,12 @@
                         </fieldset>
                     </div>
                     <span class="addlmargin">
-                        <input type="submit" class="btn btn-primary btnCol" name="Save">
-                        <button type="submit" class="btn btn-primary btnCol" name="clear">Clear</button>
+                        <p>
+                            <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
+                        </p>
+                        <p>
+                            <button type="button" id="clear" class="btn btn-primary btnCol">Clear</button>
+                        </p>
                     </span>
                 </form>
             </div>

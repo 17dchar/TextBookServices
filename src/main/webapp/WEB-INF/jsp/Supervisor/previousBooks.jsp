@@ -15,8 +15,6 @@
             var delayman;
             $(document).ready(function() {
                 var attempt = false;
-                var x = document.getElementById("messageChanging");
-                x.style.display = "none";
                 function queryMessage(){
                     var string = $("#course").serialize();
                     console.log("Attempting Query With " + string);
@@ -27,6 +25,10 @@
                         dataType: 'json',
                         timeout: 6000000,
                         success: function (data) {
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
+                            }
                             if (data.course !== document.getElementById("course").value){
                                 data.message = data.course;
                             }else if(!attempt){
@@ -60,6 +62,25 @@
                             queryMessage();
                         }, 3000);
                     }
+                });
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
                 });
             });
         </script>
@@ -125,6 +146,12 @@
                                 <p>${prevBooks.bookCode}</p>
                                 </p>
                             </c:forEach>
+                            <p>
+                                <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
+                            </p>
+                            <p>
+                                <button type="button" id="clear" class="btn btn-primary btnCol">Clear</button>
+                            </p>
                         </form>
                     </div>
                 </div>

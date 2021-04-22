@@ -36,8 +36,9 @@
                         dataType: 'json',
                         timeout: 6000000,
                         success: function (data) {
-                            if (data.errors){
-                                console.log(data);
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
                             }else if(!withEditionYear) {
                                 document.getElementById('editionYear').placeholder = data.editionYear;
                             }
@@ -118,6 +119,25 @@
                         }, 3000);
                     }
                 }));
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
+                });
             });
         </script>
     </head>
@@ -176,6 +196,12 @@
                             </p>
                                 <input type="submit" name="Save"/>
                         </fieldset>
+                        <p>
+                            <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
+                        </p>
+                        <p>
+                            <button type="button" id="clear" class="btn btn-primary btnCol">Clear</button>
+                        </p>
                     </form>
                     <c:forEach items="${output}" var="output" varStatus="status">
                             <p>Title: ${outputTitle[status.index]}</p>

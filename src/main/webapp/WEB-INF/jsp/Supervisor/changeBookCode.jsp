@@ -59,8 +59,9 @@
                         dataType: 'json',
                         timeout: 6000000,
                         success: function (data) {
-                            if (data.errors){
-                                console.log(data);
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
                             }else if(!withEditionYear) {
                                 document.getElementById('editionYear').placeholder = data.editionYear;
                             }
@@ -123,6 +124,25 @@
                         queryMessage();
                         return false;
                     }
+                });
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
                 });
             });
         </script>
@@ -197,6 +217,12 @@
                         </div>
                         <input type="submit" class="btn btn-primary btnCol column" name="Save" style="width: 100%; align-self: center;"/>
                         -->
+                        <p>
+                            <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
+                        </p>
+                        <p>
+                            <button type="button" id="clear" class="btn btn-primary btnCol">Clear</button>
+                        </p>
                     </fieldset>
                 </form:form>
             </div>

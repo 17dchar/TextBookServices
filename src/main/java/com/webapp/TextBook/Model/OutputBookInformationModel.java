@@ -11,6 +11,16 @@ import java.util.Date;
 public class OutputBookInformationModel
 {
     Boolean errors;
+
+    public Boolean getRequestChange() {
+        return requestChange;
+    }
+
+    public void setRequestChange(Boolean requestChange) {
+        this.requestChange = requestChange;
+    }
+
+    Boolean requestChange;
     String errorMessage;
     String successMessage;
     String bookCode;
@@ -62,14 +72,6 @@ public class OutputBookInformationModel
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
-    }
-
-    public String getCost() {
-        return cost;
-    }
-
-    public void setCost(String cost) {
-        this.cost = cost;
     }
 
     public String getPurchaseDate() {
@@ -153,7 +155,6 @@ public class OutputBookInformationModel
     }
 
     String isbn;
-    String cost;
     String purchaseDate;
     String discontinued;
     String firstDateUsed;
