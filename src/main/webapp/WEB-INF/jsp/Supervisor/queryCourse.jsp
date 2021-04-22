@@ -146,8 +146,8 @@
                     </fieldset>
                 </form>
             </div>
-            <div id = 'tableDiv' class="border rounded form-group" style="width: 75%; margin-left: 20px; margin: 15px;">
-                <table class="table" id="excelDataTable" border="1">
+            <div id = 'tableDiv' class="border" style="width: 75%; margin-left: 20px; margin: 15px;">
+                <table class = "table border" id="excelDataTable" border="1">
                     <thead>
                         <tr id = "bookTable">
                             <th scope="col">Book Code</th>
