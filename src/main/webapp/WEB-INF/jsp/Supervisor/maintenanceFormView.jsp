@@ -13,10 +13,13 @@
             var delayman;
             $(document).ready(function() {
                 var withEditionYear = false;
-                var withBarcode = false;
+                var change = false;
+                var query = '';
                 function queryMessage(){
                     var obj;
-                    if(withEditionYear){
+                    if(change){
+                        obj = query;
+                    } else if(withEditionYear){
                         obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
                             '", "editionYear" : "' + document.getElementById("editionYear").value + '"}';
                     } else{
@@ -101,15 +104,21 @@
                 });
                 $('#makeChanges').click(function (){
                     console.log("click");
+                    query = '{"' + $('#bookCode').attr('id') + '" : "' + $('#bookCode').val() + '"' ;
                     $('input[type=text]').each(function(){
-                        if($(this).attr('id') !== 'editionYear' && $(this).attr('id') !== 'bookCode'){
+                        if($(this).attr('id') !== 'bookCode'){
                             var text_value=$(this).val();
                             if(text_value!==''){
+                                query+= ',"' + $(this).attr('id') + '" :  "' + $(this).val() + '"';
                                 console.log("there was a change here!");
                                 console.log($(this).attr('id'));
+                                change = true;
                             }
                         }
                     })
+                    query+= '}';
+                    console.log(query);
+                    queryMessage();
                 });
                 $('#clear').click(function (){
                     console.log("click");
@@ -167,7 +176,7 @@
             </div>
         </div>
         <a href="/" class = "dropbtn">Log out</a>
-        <div class = "page-body" style="height: 80vh;">
+        <div class = "page-body">
             <form method = post class="addlmargin">
                 <div class="border rounded form-group">
                     <fieldset>

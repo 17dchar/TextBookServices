@@ -14,7 +14,6 @@ public class Nwtxin {
     @Column (name = "NWTXIN_EDITION_YEAR")
     @NotEmpty
     private String editionYear;
-    @Id
     @Column (name = "NWTXIN_TITLE")
     private String title;
     @Column(name = "NWTXIN_AUTHOR")
@@ -26,6 +25,7 @@ public class Nwtxin {
     @Column (name = "NWTXIN_CURRENT_PRICE")
     private String currentPrice;
     @Column(name = "NWTXIN_ISBN")
+    @Id
     private String isbn;
     @Column(name = "NWTXIN_PURCHASE_DATE")
     @Temporal(TemporalType.DATE)

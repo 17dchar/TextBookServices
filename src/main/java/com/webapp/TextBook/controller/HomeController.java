@@ -114,18 +114,35 @@ public class HomeController {
                 return outputBookInformationModel;
             }
         }
-        System.out.println(nwtxin.getBookCode());
+        Nwtxin originalNwtxin = new Nwtxin();
         if(nwtxin.getEditionYear() != null){
-            nwtxin = maintenanceService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear());
+            originalNwtxin = maintenanceService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear());
+            System.out.println("made it");
+            if(originalNwtxin == null){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("We Couldn't Find a Book With That Code");
+                return outputBookInformationModel;
+            }
+            if(maintenanceService.hasDifferences(nwtxin, originalNwtxin)){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("Changes Made!");
+                return outputBookInformationModel;
+            }
         } else{
-            nwtxin = maintenanceService.getMostRecentNwtxin(nwtxin.getBookCode());
+            originalNwtxin = maintenanceService.getMostRecentNwtxin(nwtxin.getBookCode());
+            if(originalNwtxin == null){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("We Couldn't Find a Book With That Code");
+                return outputBookInformationModel;
+            }
+            if(maintenanceService.hasDifferences(nwtxin, originalNwtxin)){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("Changes Made!");
+                return outputBookInformationModel;
+            }
         }
 
-        if(nwtxin == null){
-            outputBookInformationModel.setErrors(true);
-            outputBookInformationModel.setErrorMessage("We Couldn't Find a Book With That Code");
-            return outputBookInformationModel;
-        }
+        nwtxin = originalNwtxin;
         List<Nwtxdt> nwtxdtList = maintenanceService.getNwtxdtList(nwtxin.getBookCode(), nwtxin.getEditionYear());
         int largestSeqNr = 0;
         int booksPurchased = 0;
@@ -351,7 +368,8 @@ public class HomeController {
             return null;
         }
         OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
-        Nwtxin returningNwtxin = new Nwtxin();
+        String changingDisposition = nwtxdt.getDisposition();
+        System.out.println(changingDisposition);
         if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
             for (Object object : bindingResult.getAllErrors()) {
@@ -375,6 +393,27 @@ public class HomeController {
             outputBookInformationModel = bookDispositionService.getNwtxdtByBarcode(nwtxdt.getBarcode());
         } else{
             System.out.println("How did we get here?");
+        }
+
+        if(changingDisposition != null){
+            System.out.println("changing stuff");
+            if(!outputBookInformationModel.getCurrentDisposition().equals(changingDisposition)){
+                System.out.println("in here");
+                nwtxdt.setDisposition(changingDisposition);
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setEditionYear(outputBookInformationModel.getEditionYear());
+                nwtxdt.setSeqNr(outputBookInformationModel.getSeqNr());
+                nwtxdt.setBarcode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                bookDispositionService.save(nwtxdt);
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("New Disposition Saved!");
+            }
         }
         if(outputBookInformationModel == null){
             outputBookInformationModel = new OutputBookInformationModel();

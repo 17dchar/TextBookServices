@@ -14,9 +14,13 @@
             $(document).ready(function() {
                 var withEditionYear = false;
                 var withBarcode = false;
+                var change = false;
+                var query = '';
                 function queryMessage(){
                     var obj;
-                    if(withBarcode) {
+                    if(change){
+                        obj = query;
+                    } else if(withBarcode) {
                         obj = '{ "barcode" : "' + document.getElementById("barcode").value +'"}';
                     } else if(withEditionYear){
                         obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
@@ -152,6 +156,24 @@
                         $(this).val("");
                     });
                 });
+
+                $('#makeChanges').click(function (){
+                    console.log("click");
+                    query = '{"' + $('#bookCode').attr('id') + '" : "' + $('#bookCode').val() + '"' ;
+
+                        if($('#changingDisposition').val() !== $('#currentDisposition').val()){
+                            var text_value=$('#changingDisposition').val();
+                            if(text_value!==''){
+                                query+= ',"disposition" :  "' + $('#changingDisposition').val() + '"';
+                                console.log("there was a change here!");
+                                console.log($('#changingDisposition').attr('id'));
+                                change = true;
+                            }
+                        }
+                    query+= '}';
+                    console.log(query);
+                    queryMessage();
+                });
             });
         </script>
     </head>
@@ -228,7 +250,7 @@
                             </p>
                             <p>
                                 <label>Seq Nr</label>
-                                <p type="number"
+                                <p type="text"
                                        id="seqNr"
                                        name="seqNr"
                                    class="form-control left"> </p>
@@ -241,7 +263,7 @@
                             </p>
                             <p>
                                 <label for="currentDisposition">Change Disposition To:</label>
-                                <select name="disposition" class="custom-select select">
+                                <select id="changingDisposition" name="disposition" class="custom-select select">
                                     <option selected value="" class="custom-option">(No Change)</option>
                                     <option value="I" class="custom-option">Checked In</option>
                                     <option value="O" class="custom-option">Checked Out</option>
