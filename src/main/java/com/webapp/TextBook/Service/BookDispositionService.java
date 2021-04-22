@@ -90,19 +90,23 @@ public class BookDispositionService {
                     }
                 }
             }
+            List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByBookCodeAndEditionYear(bookCode, nwtxinList.get(mostRecent).getEditionYear());
+            int largestSeqNr = 0;
+            int largestPosition = 0;
+            for(Nwtxdt nwtxdtSqr: nwtxdtList){
+                if(Integer.parseInt(nwtxdtSqr.getSeqNr()) > largestSeqNr){
+                    largestSeqNr = Integer.parseInt(nwtxdtSqr.getSeqNr());
+                    largestPosition++;
+                }
+            }
+
             OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
             outputBookInformationModel.setBookCode(nwtxinList.get(mostRecent).getBookCode());
             outputBookInformationModel.setBarcode("No Specific Barcode Given");
             outputBookInformationModel.setEditionYear(nwtxinList.get(mostRecent).getEditionYear());
-            outputBookInformationModel.setCurrentCheckedOutTo("We Need A Barcode For This");outputBookInformationModel.setPreviousCheckedOutTo("We Need A Barcode For This");
             outputBookInformationModel.setTitle(nwtxinList.get(mostRecent).getTitle());
-            outputBookInformationModel.setCurrentDisposition("We Need A Barcode For This");
-            outputBookInformationModel.setSeqNr("We Need A Barcode For This");
-            DateFormat df = new SimpleDateFormat("MMM/dd/yyyy");
-            outputBookInformationModel.setCurrentDateCheckedOut("We Need A Barcode For This");
-            outputBookInformationModel.setCurrentTermCheckOut("We Need A Barcode For This");
-            outputBookInformationModel.setPreviousTermCheckedOut("We Need A Barcode For This");
-            outputBookInformationModel.setPreviousDateCheckedIn("We Need A Barcode For This");
+            outputBookInformationModel.setCurrentDisposition(nwtxdtList.get(largestPosition-1).getDisposition());
+            outputBookInformationModel.setSeqNr(Integer.toString(largestSeqNr));
             outputBookInformationModel.setBookCode(nwtxinList.get(mostRecent).getBookCode());
             return outputBookInformationModel;
         } else{
@@ -132,4 +136,7 @@ public class BookDispositionService {
         }
     }
 
+    public void save(Nwtxdt nwtxdt) {
+        nwtxdtRepository.save(nwtxdt);
+    }
 }

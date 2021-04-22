@@ -1,12 +1,8 @@
 package com.webapp.TextBook.Service;
 
 //Spring Dependencies
-import com.webapp.TextBook.Model.Nwtxdt;
-import com.webapp.TextBook.Model.Spriden;
-import com.webapp.TextBook.Model.Stvterm;
-import com.webapp.TextBook.Repository.NwtxdtRepository;
-import com.webapp.TextBook.Repository.SpridenRepository;
-import com.webapp.TextBook.Repository.StvtermRepository;
+import com.webapp.TextBook.Model.*;
+import com.webapp.TextBook.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,29 +11,30 @@ import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 //Textbook Services Dependencies
-import com.webapp.TextBook.Repository.NwtxcmRepository;
-import com.webapp.TextBook.Model.Nwtxcm;
 
 
 @Service
 public class CheckInOutService {
 
     @Autowired private StvtermRepository stvtermRepository;
-    public List<Stvterm> getLatestTerms(){
-        Calendar cal = Calendar.getInstance();
-        int currentMonth = cal.get(Calendar.MONTH)+1;
-        int currentYear = cal.get(Calendar.YEAR);
-        List<Stvterm> stvtermList;
-        if(currentMonth <5){
-            stvtermList= stvtermRepository.findByCodeOrCodeOrCode(Integer.toString(currentYear)+"10",Integer.toString(currentYear)+"20",Integer.toString(currentYear)+"30");
-        } else if(currentMonth < 8){
-            stvtermList= stvtermRepository.findByCodeOrCodeOrCode(Integer.toString(currentYear)+"20",Integer.toString(currentYear)+"30",Integer.toString(currentYear+1)+"10");
-        } else{
-            stvtermList= stvtermRepository.findByCodeOrCodeOrCode(Integer.toString(currentYear)+"30",Integer.toString(currentYear+1)+"10",Integer.toString(currentYear+1)+"20");
+    @Autowired private SfrverfRepository sfrverfRepository;
+    public Stvterm getLatestTerm(String pidm){
+        List<Sfrverf> sfrverfList = sfrverfRepository.findByPidm(Integer.parseInt(pidm));
+        int mostRecent = 0;
+        for(Sfrverf sfrverf : sfrverfList){
+            if(Integer.parseInt(sfrverf.getTermCode()) > mostRecent){
+                mostRecent = Integer.parseInt(sfrverf.getTermCode());
+            }
         }
-        return stvtermList;
+        List<Stvterm> stvtermList = stvtermRepository.findByCode(Integer.toString(mostRecent));
+        if(stvtermList.size() > 0){
+            return stvtermList.get(0);
+        } else{
+            return null;
+        }
     }
     @Autowired
     private SpridenRepository spridenRepository;
@@ -75,6 +72,25 @@ public class CheckInOutService {
             }
         } else{
             return 0;
+        }
+    }
+    @Autowired
+    private NwtxbnRepository nwtxbnRepository;
+    public String getBag(String pidm){
+        List<Nwtxbn> nwtxbnList = nwtxbnRepository.findByPidm(pidm);
+        if(nwtxbnList.size() > 0){
+            return nwtxbnList.get(0).getBagNum();
+        } else{
+            return null;
+        }
+    }
+
+    public List<Nwtxdt> getBooks(String pidm, String termCode){
+        List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByPidmAndTerm(pidm, termCode);
+        if(nwtxdtList.size() > 0){
+            return nwtxdtList;
+        } else{
+            return null;
         }
     }
 }

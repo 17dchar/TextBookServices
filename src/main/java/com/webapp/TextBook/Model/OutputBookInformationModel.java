@@ -11,14 +11,36 @@ import java.util.Date;
 public class OutputBookInformationModel
 {
     Boolean errors;
+
+    public Boolean getRequestChange() {
+        return requestChange;
+    }
+
+    public void setRequestChange(Boolean requestChange) {
+        this.requestChange = requestChange;
+    }
+
+    Boolean requestChange;
     String errorMessage;
+    String successMessage;
     String bookCode;
     String editionYear;
     @Id
     String barcode;
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    String price;
     String title;
     String seqNr;
     String author;
+    String status;
     String currentDisposition;
     String currentTermCheckOut;
     String currentCheckedOutTo;
@@ -50,14 +72,6 @@ public class OutputBookInformationModel
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
-    }
-
-    public String getCost() {
-        return cost;
-    }
-
-    public void setCost(String cost) {
-        this.cost = cost;
     }
 
     public String getPurchaseDate() {
@@ -141,7 +155,6 @@ public class OutputBookInformationModel
     }
 
     String isbn;
-    String cost;
     String purchaseDate;
     String discontinued;
     String firstDateUsed;
@@ -338,4 +351,19 @@ public class OutputBookInformationModel
         this.errorMessage = errorMessage;
     }
 
+    public String getSuccessMessage() {
+        return successMessage;
+    }
+
+    public void setSuccessMessage(String successMessage) {
+        this.successMessage = successMessage;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

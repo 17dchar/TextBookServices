@@ -15,18 +15,24 @@
             var delayman;
             $(document).ready(function() {
                 var attempt = false;
-                var x = document.getElementById("messageChanging");
-                x.style.display = "none";
                 function queryMessage(){
-                    var string = $("#course").serialize();
+
+                    var obj;
+                    obj = '{ "id" : "' + document.getElementById("id").value + '"}';
+                    var string = JSON.parse(obj);
                     console.log("Attempting Query With " + string);
                     $.ajax({
                         type: "POST",
-                        url: '/Course-Message',
+                        url: '/Previous-Books',
                         data: string,
                         dataType: 'json',
                         timeout: 6000000,
                         success: function (data) {
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
+                            }
+                            console.log(data);
                             if (data.course !== document.getElementById("course").value){
                                 data.message = data.course;
                             }else if(!attempt){
@@ -61,6 +67,29 @@
                         }, 3000);
                     }
                 });
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
+                });
+                $('#makeChanges').click(function (){
+                    console.log("click");
+                    queryMessage();
+                });
             });
         </script>
     </head>
@@ -92,7 +121,7 @@
             </div>
         </div>
         <a href="/" class = "dropbtn">Log out</a>
-        <div class="page-body">
+        <div class="page-body" style="">
             <div class="tenPix"></div>
                 <div class="container">
                     <div class="container">
@@ -108,15 +137,10 @@
                                     <div class="form-group">
                                         <label>ID:</label>
                                         <input type = "text"
+                                               id="id"
                                            name = "id"
                                            class="form-control"/>
                                         <input type="submit" name="Find Them!"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Bag#:</label>
-                                        <input type = "text"
-                                           id = "bagNumber"
-                                           class="form-control"/>
                                     </div>
                                 </p>
                             </fieldset>
@@ -125,6 +149,12 @@
                                 <p>${prevBooks.bookCode}</p>
                                 </p>
                             </c:forEach>
+                            <p>
+                                <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
+                            </p>
+                            <p>
+                                <button type="button" id="clear" class="btn btn-primary btnCol">Clear</button>
+                            </p>
                         </form>
                     </div>
                 </div>

@@ -1,12 +1,15 @@
 package com.webapp.TextBook.Service;
 
 import com.webapp.TextBook.Model.Nwtxdt;
+import com.webapp.TextBook.Model.Nwtxin;
 import com.webapp.TextBook.Model.Spriden;
 import com.webapp.TextBook.Repository.NwtxdtRepository;
+import com.webapp.TextBook.Repository.NwtxinRepository;
 import com.webapp.TextBook.Repository.SpridenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,4 +41,20 @@ public class SoldBooksService {
             return null;
         }
     }
+
+    @Autowired
+    private NwtxinRepository nwtxinRepository;
+    public List<Nwtxin> getTitles(List<Nwtxdt> nwtxdtList){
+        List<Nwtxin> nwtxinList = new ArrayList<Nwtxin>();
+        for(Nwtxdt nwtxdt :nwtxdtList){
+            List<Nwtxin> tempList = nwtxinRepository.findByBookCodeAndEditionYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
+            if(tempList.size() > 0){
+                nwtxinList.add(tempList.get(0));
+            } else {
+                nwtxinList.add(null);
+            }
+        }
+        return nwtxinList;
+    }
+
 }

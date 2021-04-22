@@ -14,7 +14,7 @@
             $(document).ready(function() {
                 function queryMessage(){
                     var obj;
-                        obj = '{ "course" : "' + document.getElementById("course").value + '"}';
+                    obj = '{ "course" : "' + document.getElementById("course").value + '"}';
                     var string = JSON.parse(obj);
                     console.log("Query With " + string);
                     $.ajax({
@@ -25,14 +25,15 @@
                         timeout: 6000000,
                         success: function (data) {
                             console.log(data);
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
+                            }
+                            var trHTML = '';
                             $.each(data, function (i, item){
-                                var $tr = $('<tr>').append(
-                                    $('<td>').text(item.bookCode),
-                                    $('<td>').text(item.editionYear),
-                                    $('<td>').text(item.title)
-
-                                ).appendTo('#bookTable');
+                                trHTML += '<tr><td>' + item.bookCode + '</td><td>' + item.editionYear + '</td><td>' + item.title + '</td></tr>';
                             });
+                            $('#excelDataTable').append(trHTML);
                             console.log("SUCCESS");
                         },
                         error: function (data) {
@@ -59,25 +60,60 @@
                         }, 3000);
                     }
                 });
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
+                });
+                //mock json
+
+
+                /*let bookData = [
+                    { title: 'book1', code: '1010', year: '2014'},
+                    { title: 'book2', code: '1020', year: '2013'},
+                    { title: 'book3', code: '1030', year: '2012'},
+                    { title: 'book4', code: '1040', year: '2008'},
+                    { title: 'book5', code: '1050', year: '2007'},
+                    { title: 'book6', code: '1060', year: '2009'},
+                    { title: 'book7', code: '1070', year: '2011'},
+                    { title: 'book8', code: '1080', year: '2010'},
+                    { title: 'book9', code: '1090', year: '2020'},
+                    { title: 'book10', code: '1011', year: '2019'},
+
+                ];
+                $.each(bookData, function (i, item){
+                    var $tr = $('<tr>').append(
+                        $('<td>').text(item.code),
+                        $('<td>').text(item.year),
+                        $('<td>').text(item.title)
+
+                    ).appendTo('#bookTable');
+                });*/
             });
+
         </script>
         <script>
-            let bookData = [
-            { title: 'book1', code: '1010', year: '2014'},
-            { title: 'book2', code: '1020', year: '2013'},
-            { title: 'book3', code: '1030', year: '2012'},
-            { title: 'book4', code: '1040', year: '2008'},
-            { title: 'book5', code: '1050', year: '2007'},
-            { title: 'book6', code: '1060', year: '2009'},
-            { title: 'book7', code: '1070', year: '2011'},
-            { title: 'book8', code: '1080', year: '2010'},
-            { title: 'book9', code: '1090', year: '2020'},
-            { title: 'book10', code: '1011', year: '2019'},
-
-            ];
         </script>
     </head>
     <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <body onLoad="buildHtmlTable('#excelDataTable')">
+    </body>
         <div class="TBSHeader">
             <h1 class="page-title" >Find Course</h1>
         </div>
@@ -111,7 +147,7 @@
             </div>
         </div>
         <a href="/" class = "dropbtn">Log out</a>
-        <div class="page-body">
+        <div class="page-body" style="height: 80vh;">
             <div class="border rounded form-group" style="width: 75%; margin-left: 20px; margin: 15px;">
                 <form method="post">
                     <fieldset>
@@ -123,20 +159,17 @@
                                     class="form-control"/>
                         </p>
                         <p>
-                            <input type="submit" name="Save" class="btn btn-primary btnCol column"/>
-                            <button type="button" class="btn btn-primary btnCol column" style="margin: 5px">Clear</button>
+                            <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
+                        </p>
+                        <p>
+                            <button type="button" id="clear" class="btn btn-primary btnCol">Clear</button>
                         </p>
                     </fieldset>
                 </form>
             </div>
-            <div id = 'tableDiv' class="border rounded form-group" style="width: 75%; margin-left: 20px; margin: 15px;">
-                <table class="table">
-                    <thead>
-                        <tr id = "bookTable">
-                            <th scope="col">Course Code</th>
-                            <th scope="col">Course Year</th>
-                            <th scope="col">Title</th>
-                        </tr>
+            <div id = 'tableDiv' class="border" style="width: 75%; margin-left: 20px; margin: 15px;">
+                <table class = "table border" id="excelDataTable" border="1">
+
                         <!--
                         <c:forEach items="${crseTable}" var="crseTable">
                             <tr>
@@ -146,8 +179,12 @@
                             </tr>
                         </c:forEach>
                         -->
-                    </thead>
-                    <tbody id="tableData"></tbody>
+
+                    <tr>
+                        <th>Book Code</th>
+                        <th>Edition Year</th>
+                        <th>Title</th>
+                    </tr>
                 </table>
             </div>
         </div>

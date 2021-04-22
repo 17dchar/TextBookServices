@@ -33,6 +33,10 @@
                         dataType: 'json',
                         timeout: 6000000,
                         success: function (data) {
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
+                            }
                             if (data.course !== document.getElementById("course").value){
                                 data.message = data.course;
                             }else if(!attempt){
@@ -73,6 +77,25 @@
                         }, 3000);
                     }
                 });
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
+                });
             });
         </script>
     </head>
@@ -111,7 +134,7 @@
         </div>
         <a href="/" class = "dropbtn">Log out</a>
         <div class="tenPix"></div>
-        <div class="page-body">
+        <div class="page-body" style="height: 80vh;">
             <div class="container left column border rounded">
                 <form:form class="courseMessageForm" method = "post" action="Course-Message" modelAttribute="inputNwtxcm">
                     <p>
@@ -131,6 +154,12 @@
                     </div>
                     </p>
                 </form:form>
+                <p>
+                    <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
+                </p>
+                <p>
+                    <button type="button" id="clear" class="btn btn-primary btnCol">Clear</button>
+                </p>
             </div>
         </div>
     </body>

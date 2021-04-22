@@ -33,8 +33,9 @@
                         dataType: 'json',
                         timeout: 6000000,
                         success: function (data) {
-                            if (data.errors){
-                                console.log(data);
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
                             }else if(!withEditionYear) {
                                 document.getElementById('editionYear').placeholder = data.editionYear;
                             }
@@ -42,16 +43,21 @@
                                 document.getElementById('bookCode').placeholder = data.bookCode;
                                 document.getElementById('editionYear').placeholder = data.editionYear;
                             }
-                            document.getElementById('title').innerHTML = data.title;
-                            document.getElementById('seqNr').innerHTML = data.seqNr;
-                            document.getElementById('currentDisposition').innerHTML = data.currentDisposition;
-                            document.getElementById('currentTermCheckOut').innerHTML = data.currentTermCheckOut;
-                            document.getElementById('currentCheckedOutTo').innerHTML = data.currentCheckedOutTo;
-                            document.getElementById('currentDateCheckedOut').innerHTML = data.currentDateCheckedOut;
-                            document.getElementById('previousTermCheckedOut').innerHTML = data.previousTermCheckedOut;
-                            document.getElementById('previousCheckedOutTo').innerHTML = data.previousTermCheckedOut;
-                            document.getElementById('previousDateCheckedIn').innerHTML = data.previousDateCheckedIn;
-
+                            $('input[type=text]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).attr('placeholder',data[id.toString()]);
+                            });
+                            $('p[type=text]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).text(data[id.toString()]);
+                            });
+                            $('input[type=date]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).val(data[id.toString()]);
+                            });
                             console.log("SUCCESS");
                         },
                         error: function (data) {
@@ -115,6 +121,25 @@
                         }, 3000);
                     }
                 }));
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
+                });
             });
         </script>
     </head>
@@ -152,7 +177,7 @@
             </div>
         </div>
         <a href="/" class = "dropbtn">Log out</a>
-        <div class="page-body">
+        <div class="page-body" style="height: 80vh;">
             <div class="marginftn">
                 <form:form method="post" action="Change-Barcode"  modelAttribute="inputNwtxdt" style="width: 75%;">
                     <div class="border rounded form-group" style="width: auto; margin-left: 20px; margin: 15px;">
@@ -191,7 +216,7 @@
                             <p>
                                 <label>Seq Nr</label>
                                 <input id="seqNr"
-                                        type="number"
+                                        type="text"
                                        name="seqNumber"
                                        class="form-control left"/>
                             </p>
@@ -210,6 +235,12 @@
                         <button type="submit" class="btn btn-primary btnCol" name="clear">Clear</button>
                     </span>
                     -->
+                    <p>
+                        <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
+                    </p>
+                    <p>
+                        <button type="button" id="clear" class="btn btn-primary btnCol">Clear</button>
+                    </p>
                 </form:form>
             </div>
         </div>

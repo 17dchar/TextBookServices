@@ -1,7 +1,9 @@
 package com.webapp.TextBook.controller;
 
 //Imported Standard Java Libraries
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,11 +104,46 @@ public class HomeController {
         if(bindingResult.hasErrors()){
             for (ObjectError object : bindingResult.getAllErrors()) {
                 //check for specific errors
+                if(object instanceof FieldError) {
+                    System.out.println((FieldError) object);
+                }
+            }
+            if(nwtxin.getBookCode() == ""){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
+                return outputBookInformationModel;
             }
         }
-        System.out.println(nwtxin.getBookCode());
-        nwtxin = maintenanceService.getNwtxinList(nwtxin.getBookCode()).get(0);
-        List<Nwtxdt> nwtxdtList = maintenanceService.getNwtxdtList(nwtxin.getBookCode());
+        Nwtxin originalNwtxin = new Nwtxin();
+        if(nwtxin.getEditionYear() != null){
+            originalNwtxin = maintenanceService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear());
+            System.out.println("made it");
+            if(originalNwtxin == null){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("We Couldn't Find a Book With That Code");
+                return outputBookInformationModel;
+            }
+            if(maintenanceService.hasDifferences(nwtxin, originalNwtxin)){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("Changes Made!");
+                return outputBookInformationModel;
+            }
+        } else{
+            originalNwtxin = maintenanceService.getMostRecentNwtxin(nwtxin.getBookCode());
+            if(originalNwtxin == null){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("We Couldn't Find a Book With That Code");
+                return outputBookInformationModel;
+            }
+            if(maintenanceService.hasDifferences(nwtxin, originalNwtxin)){
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("Changes Made!");
+                return outputBookInformationModel;
+            }
+        }
+
+        nwtxin = originalNwtxin;
+        List<Nwtxdt> nwtxdtList = maintenanceService.getNwtxdtList(nwtxin.getBookCode(), nwtxin.getEditionYear());
         int largestSeqNr = 0;
         int booksPurchased = 0;
         int booksSold = 0;
@@ -143,6 +180,7 @@ public class HomeController {
                 count++;
             }
         }
+        outputBookInformationModel.setStatus(nwtxin.getBookStatus());
         outputBookInformationModel.setBooksCheckedIn(booksCheckedIn);
         outputBookInformationModel.setBooksCheckedOut(booksCheckedOut);
         outputBookInformationModel.setBooksinInventory(booksInInventory);
@@ -154,13 +192,20 @@ public class HomeController {
         outputBookInformationModel.setEditionYear(nwtxdtList.get(0).getEditionYear());
         outputBookInformationModel.setTitle(nwtxin.getTitle());
         //outputBookInformationModel.setAuthor(nwtxin.getAuthor());
-
-        Nwtxin inputNwtxin = maintenanceService.getNwtxin(nwtxin.getBookCode(), nwtxdtList.get(0).getEditionYear());
+        //Nwtxin inputNwtxin = maintenanceService.getNwtxin(nwtxin.getBookCode(), nwtxdtList.get(0).getEditionYear());
         outputBookInformationModel.setAuthor(nwtxin.getAuthor());
         outputBookInformationModel.setPublisher(nwtxin.getPublisher());
         outputBookInformationModel.setIsbn(nwtxin.getIsbn());
-        //outputBookInformationModel.setPurchaseDate(nwtxin.getPruchaseDate());
-        //outputBookInformationModel.setDiscontinued(nwtxin.getDiscontinuedDate());
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        outputBookInformationModel.setPurchaseDate(df.format(nwtxin.getPruchaseDate()));
+        if(nwtxin.getDiscontinuedDate() != null){
+            outputBookInformationModel.setDiscontinued(df.format(nwtxin.getDiscontinuedDate()));
+        }
+        if(nwtxin.getFirstUsedDate() != null){
+            outputBookInformationModel.setFirstDateUsed(df.format(nwtxin.getFirstUsedDate()));
+        }
+        outputBookInformationModel.setPrice(nwtxin.getCurrentPrice());
         outputBookInformationModel.setCourseTitle(nwtxin.getCrseName());
         outputBookInformationModel.setCourse1(nwtxin.getCrse1());
         outputBookInformationModel.setCourse2(nwtxin.getCrse2());
@@ -323,7 +368,8 @@ public class HomeController {
             return null;
         }
         OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
-        Nwtxin returningNwtxin = new Nwtxin();
+        String changingDisposition = nwtxdt.getDisposition();
+        System.out.println(changingDisposition);
         if(bindingResult.hasErrors()){
             model.put("returnVoidError", "Invalid Credentials");
             for (Object object : bindingResult.getAllErrors()) {
@@ -347,6 +393,27 @@ public class HomeController {
             outputBookInformationModel = bookDispositionService.getNwtxdtByBarcode(nwtxdt.getBarcode());
         } else{
             System.out.println("How did we get here?");
+        }
+
+        if(changingDisposition != null){
+            System.out.println("changing stuff");
+            if(!outputBookInformationModel.getCurrentDisposition().equals(changingDisposition)){
+                System.out.println("in here");
+                nwtxdt.setDisposition(changingDisposition);
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setEditionYear(outputBookInformationModel.getEditionYear());
+                nwtxdt.setSeqNr(outputBookInformationModel.getSeqNr());
+                nwtxdt.setBarcode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                nwtxdt.setBookCode(outputBookInformationModel.getBookCode());
+                bookDispositionService.save(nwtxdt);
+                outputBookInformationModel.setErrors(true);
+                outputBookInformationModel.setErrorMessage("New Disposition Saved!");
+            }
         }
         if(outputBookInformationModel == null){
             outputBookInformationModel = new OutputBookInformationModel();
@@ -609,31 +676,25 @@ public class HomeController {
 
     //Previoius Books POST
     @RequestMapping(value= "/Previous-Books", method = RequestMethod.POST)
-    public String prevBooksPost(ModelMap model,
-                                @RequestParam(value = "id", required = false, defaultValue = "")String id,
-                                @RequestParam(value = "prevTerm", required = false, defaultValue = "")String prevTerm)
+    public @ResponseBody OutputStudentInformationModel previousBooksPost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model)
                                 throws ParseException{
         System.out.println("Previous Books POST");
         //Pseudo Regex
-        if(id.equals("") || prevTerm.equals("")){
-            System.out.println("nah dawg");
-            //Supervisor Privileges
-            if(supervisor){
-                return"Supervisor/previousBooks";
-            }
-            return "StudentEmployee/previousBooks";
-        }
 
-        Spriden spriden = previousBooksService.getSpriden(id);
-        Stvterm stvterm = previousBooksService.getStvterm(prevTerm);
-        if(spriden != null && stvterm != null){
-            model.put("prevBooks",previousBooksService.getNwtxdt(spriden.getPidm(), prevTerm));
+        spriden = previousBooksService.getSpriden(spriden.getId());
+        OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
+        outputStudentInformationModel.setLastName(spriden.getLastName());
+        if(spriden != null){
+            List<Nwtxdt> nwtxdtList =  previousBooksService.getNwtxdt(spriden.getPidm());
+            List<Nwtxin> nwtxinList = previousBooksService.getTitles(nwtxdtList);
+            outputStudentInformationModel.setNwtxinList(nwtxinList);
+            outputStudentInformationModel.setNwtxdtList(nwtxdtList);
         }
         //Supervisor Privileges
         if(supervisor){
-            return"Supervisor/previousBooks";
+            return outputStudentInformationModel;
         }
-        return "StudentEmployee/previousBooks";
+        return outputStudentInformationModel;
     }
 
 
@@ -655,27 +716,24 @@ public class HomeController {
 
     //Sold Books POST
     @RequestMapping(value= "/Sold-Books", method = RequestMethod.POST)
-    public String soldBooksPost(ModelMap model,
-                                @RequestParam(value = "id", required = false, defaultValue = "")String id){
+    public @ResponseBody OutputStudentInformationModel soldBooksPost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model){
         System.out.println("Sold Books Post");
         //Pseudo Regex
-        if(id.equals("")){
-            //Supervisor Privileges
-            if(supervisor){
-                return"Supervisor/soldBooks";
-            }
-            return "StudentEmployee/soldBooks";
+
+        spriden = soldBooksService.getSpriden(spriden.getId());
+        OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
+        if(spriden != null){
+            List<Nwtxdt> nwtxdtList =  soldBooksService.getNwtxdt(spriden.getPidm());
+            List<Nwtxin> nwtxinList = soldBooksService.getTitles(nwtxdtList);
+            outputStudentInformationModel.setNwtxinList(nwtxinList);
+            outputStudentInformationModel.setNwtxdtList(nwtxdtList);
         }
 
-        Spriden spriden = soldBooksService.getSpriden(id);
-        if(spriden != null){
-            model.put("soldBooks",soldBooksService.getNwtxdt(spriden.getPidm()));
-        }
         //Supervisor Privileges
         if(supervisor){
-            return"Supervisor/soldBooks";
+            return outputStudentInformationModel;
         }
-        return "StudentEmployee/soldBooks";
+        return outputStudentInformationModel;
     }
 
 
@@ -687,7 +745,6 @@ public class HomeController {
     public String studentSchedule(ModelMap model){
         System.out.println("Student Schedule GET");
         if(supervisor){
-            model.put("term", studentScheduleService.getLatestTerms());
             return"Supervisor/studentSchedule";
         } else if(studentEmployee){
             return "StudentEmployee/studentSchedule";
@@ -698,36 +755,19 @@ public class HomeController {
 
     //Student Schedule POST
     @RequestMapping(value= "/Student-Schedule", method = RequestMethod.POST)
-    public String studentSchedulePost(ModelMap model,
-                                      @RequestParam(value = "selectedTerm", required = false, defaultValue = "")String termSeason,
-                                      @RequestParam(value = "id", required = false, defaultValue = "")String id)
+    public @ResponseBody OutputStudentInformationModel studentSchedulePost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model)
                                       throws ParseException{
         System.out.println("Student Schedule POST");
         if(!supervisor && !studentEmployee){
-            return "redirect:/";
+            return null;
         }
         //Pseudo Regex
-        if(termSeason.equals("") || id.equals("")){
-            System.out.println("nah dawg");
-            //Supervisor Privileges
-            if(supervisor){
-                return"Supervisor/studentSchedule";
-            }
-            return "StudentEmployee/studentSchedule";
-        }
+        spriden = previousBooksService.getSpriden(spriden.getId());
+        OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
+        outputStudentInformationModel.setLastName(spriden.getLastName());
+        Stvterm term = studentScheduleService.getLatestTerm(spriden.getPidm());
 
-        studentScheduleService.getStvterm(termSeason).getDesc();
-        if(studentScheduleService.getSpriden(id).getPidm().equals("")){
-            System.out.println("pidm empty");
-            //Supervisor Privileges
-            if(supervisor){
-                return"Supervisor/studentSchedule";
-            }
-            return "StudentEmployee/studentSchedule";
-        }
-        int pidm = Integer.parseInt(studentScheduleService.getSpriden(id).getPidm());
-
-        List<Sfrstcr> sfrstcr = studentScheduleService.getSfrstcr(pidm, termSeason);
+        List<Sfrstcr> sfrstcr = studentScheduleService.getSfrstcr(Integer.parseInt(spriden.getPidm()), term.getCode());
         List<Ssbsect> output = new ArrayList<>();
         List<String> outputTitle = new ArrayList<>();
         List<Ssrmeet> outputTimes = new ArrayList<>();
@@ -739,16 +779,17 @@ public class HomeController {
                 System.out.println("there are titles!");
                 outputTitle.add(scbcrse.getTitle());
             }
-            outputTimes.add(studentScheduleService.getSsrmeet(termSeason,item.getCrn()));
         }
+
+        outputStudentInformationModel.setSsbsectList(output);
         model.put("output", output);
         model.put("outputTitle", outputTitle);
         model.put("outputTimes", outputTimes);
         //Supervisor Privileges
         if(supervisor){
-            return"Supervisor/studentSchedule";
+            return outputStudentInformationModel;
         }
-        return "StudentEmployee/studentSchedule";
+        return outputStudentInformationModel;
     }
 
 
@@ -776,21 +817,37 @@ public class HomeController {
 
     //Check-In-Out POST
     @PostMapping("/Check-In-Out")
-    public String checkInOutPost(ModelMap model,
-                                 @RequestParam(value = "id", required = false, defaultValue = "")String id,
-                                 @RequestParam(value = "barCode", required = false, defaultValue = "")String barCode,
-                                 @RequestParam(value = "selectedTerm", required = false, defaultValue = "")String term){
+    public @ResponseBody OutputStudentInformationModel changeBookCodePost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model){
         System.out.println("Check In Out POST");
-        Spriden spriden = checkInOutService.getStudent(id);
+        System.out.println(spriden.getId());
         System.out.println(spriden.getFirstName());
-        List<Stvterm> terms = checkInOutService.getLatestTerms();
-        model.put("term", terms);
+        spriden = checkInOutService.getStudent(spriden.getId());
+        System.out.println(spriden.getFirstName());
+        Stvterm term = checkInOutService.getLatestTerm(spriden.getPidm());
+
+        System.out.println("here");
+        String bagNumber = checkInOutService.getBag(spriden.getPidm());
+
+        if(bagNumber != null){
+
+        }
+        OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
+        outputStudentInformationModel.setBagNumber(bagNumber);
+
+        outputStudentInformationModel.setTerm(term.getDesc());
+        outputStudentInformationModel.setFirstName(spriden.getFirstName());
+        outputStudentInformationModel.setMiddleInitial(spriden.getMiddleInitial());
+        outputStudentInformationModel.setLastName(spriden.getLastName());
+
+        List<Nwtxdt> nwtxdtList = checkInOutService.getBooks(spriden.getPidm(), term.getCode());
+        System.out.println(nwtxdtList.size());
+        outputStudentInformationModel.setNwtxdtList(nwtxdtList);
         //Checks the availability of the book
         //0 = Book couldn't be found by given barcode
         //1 = Book isn't currently checked out to anyone
         //2 = Book is currently checked out to someone
         //3 = Book is currently checked out to this current person
-        int availability = checkInOutService.checkAvailability(barCode, spriden, term);
+        int availability = 0;//checkInOutService.checkAvailability(barCode, spriden, term);
         if(availability == 0){
             System.out.println("nah dawg");
         } else if(availability == 1){
@@ -801,11 +858,9 @@ public class HomeController {
             System.out.println("book was checked out to this person");
 
         }
-        model.put("barCode", barCode);
-        model.put("id", id);
-        model.put("selectedTerm", term);
+        model.put("bagNumber", checkInOutService.getBag(spriden.getPidm()));
 
-        return "Supervisor/checkInOut";
+        return outputStudentInformationModel;
     }
     /*
     $$When a barcode is scanned on the check in/check out screen we know the

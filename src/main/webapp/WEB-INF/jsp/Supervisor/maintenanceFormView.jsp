@@ -13,10 +13,13 @@
             var delayman;
             $(document).ready(function() {
                 var withEditionYear = false;
-                var withBarcode = false;
+                var change = false;
+                var query = '';
                 function queryMessage(){
                     var obj;
-                    if(withEditionYear){
+                    if(change){
+                        obj = query;
+                    } else if(withEditionYear){
                         obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
                             '", "editionYear" : "' + document.getElementById("editionYear").value + '"}';
                     } else{
@@ -34,32 +37,27 @@
                         success: function (data) {
                             console.log("why");
                             if (data.errors){
-                                console.log(data);
+                                alert(data.errorMessage);
+                                return;
                             }else if(!withEditionYear) {
                                 document.getElementById('editionYear').placeholder = data.editionYear;
                             }
-                            console.log(data)
-                            document.getElementById('title').placeholder = data.title;
-                            document.getElementById('publisher').placeholder = data.publisher;
-                            document.getElementById('author').placeholder = data.author;
-                            document.getElementById('bookStatus').placeholder = data.bookStatus;
-                            document.getElementById('comment').placeholder = data.comment;
-                            document.getElementById('firstUsedDate').placeholder = data.firstUsedDate;
-                            document.getElementById('isbn').placeholder = data.isbn;
-                            document.getElementById('purchaseDate').placeholder = data.purchaseDate;
-                            document.getElementById('crse1').placeholder = data.course1;
-                            document.getElementById('crse2').placeholder = data.course2;
-                            document.getElementById('crse3').placeholder = data.course3;
-                            document.getElementById('crse4').placeholder = data.course4;
-                            document.getElementById('crse5').placeholder = data.course5;
-                            document.getElementById('crseName').placeholder = data.courseTitle;
-                            document.getElementById('booksPurchased').innerHTML = data.booksPurchased;
-                            document.getElementById('booksSold').innerHTML = data.booksSold;
-                            document.getElementById('booksUnrepairable').innerHTML = data.booksUnrepairable;
-                            document.getElementById('booksNonreturned').innerHTML = data.booksNonreturned;
-                            document.getElementById('booksInInventory').innerHTML = data.booksinInventory;
-                            document.getElementById('booksCheckedOut').innerHTML = data.booksCheckedOut;
-                            document.getElementById('lastSeqNo').innerHTML = data.lastSeqNr;
+                            console.log(data);
+                            $('input[type=text]').each(function(){
+                                    var id = $(this).attr('id');
+                                    console.log(id);
+                                    $(this).attr('placeholder',data[id.toString()]);
+                            });
+                            $('p[type=text]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).text(data[id.toString()]);
+                            });
+                            $('input[type=date]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).val(data[id.toString()]);
+                            });
                             console.log("SUCCESS");
                         },
                         error: function (data) {
@@ -104,12 +102,49 @@
                         }, 3000);
                     }
                 });
+                $('#makeChanges').click(function (){
+                    console.log("click");
+                    query = '{"' + $('#bookCode').attr('id') + '" : "' + $('#bookCode').val() + '"' ;
+                    $('input[type=text]').each(function(){
+                        if($(this).attr('id') !== 'bookCode'){
+                            var text_value=$(this).val();
+                            if(text_value!==''){
+                                query+= ',"' + $(this).attr('id') + '" :  "' + $(this).val() + '"';
+                                console.log("there was a change here!");
+                                console.log($(this).attr('id'));
+                                change = true;
+                            }
+                        }
+                    })
+                    query+= '}';
+                    console.log(query);
+                    queryMessage();
+                });
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
+                });
             });
         </script>
     </head>
     <body>
         <div class="TBSHeader">
-            <h1 class="page-title" >Maintenance</h1>
+            <h1 class="page-title">Maintenance-Maintenance</h1>
         </div>
         <h2 class="BookCodeYearTitle"></h2>
         <div class="dropdown">
@@ -183,19 +218,19 @@
                                         <label>ISBN #:</label>
                                         <input type="text" id="isbn" name = "isbn" class="form-control width85">
                                         <label>Cost:</label>
-                                        <input type="text" id="bookCost" class="form-control width85">
+                                        <input type="text" id="price" class="form-control width85">
                                     </p>
                                     <p>
                                         <label>Status:</label>
-                                        <input type="text" id="bookStatus" name="bookStatus" class="form-control">
+                                        <input type="text" id="status" name="bookStatus" class="form-control">
                                         <label>Purchase Date:</label>
                                         <input type="date" id="purchaseDate" name="purchaseDate" class="form-control">
                                     </p>
                                     <p>
                                         <label>Discontinued:</label>
-                                        <input type="text" id="discontinuedDate" name="discontinuedDate" class="form-control">
+                                        <input type="date" id="discontinued" name="discontinuedDate" class="form-control">
                                         <label>First Used Date:</label>
-                                        <input type="date" id="firstUsedDate" name="firstUsedDate" class="form-control">
+                                        <input type="date" id="firstDateUsed" name="firstUsedDate" class="form-control">
                                     </p>
                                     <p>
                                         <label>Date Comment:</label>
@@ -206,23 +241,23 @@
                                     <legend>Course Info</legend>
                                     <p>
                                         <label>Course Title:</label>
-                                        <input type="text" id="crseName" name="crseName" class="form-control">
+                                        <input type="text" id="courseTitle" name="crseName" class="form-control">
                                     </p>
                                     <p>
                                         <label>Course 1:</label>
-                                        <input type="text" id="crse1" name="crse1" class="form-control">
+                                        <input type="text" id="course1" name="crse1" class="form-control">
                                         <label>Course 4:</label>
-                                        <input type="text" id="crse4" name="crse4" class="form-control">
+                                        <input type="text" id="course4" name="crse4" class="form-control">
                                     </p>
                                     <p>
                                         <label>Course 2:</label>
-                                        <input type="text" id="crse2" name="crse2" class="form-control">
+                                        <input type="text" id="course2" name="crse2" class="form-control">
                                         <label>Course 5:</label>
-                                        <input type="text" id="crse5" name="crse5" class="form-control">
+                                        <input type="text" id="course5" name="crse5" class="form-control">
                                     </p>
                                     <p>
                                         <label>Course 3:</label>
-                                        <input type="text" id="crse3" name="crse3" class="form-control">
+                                        <input type="text" id="course3" name="crse3" class="form-control">
                                     </p>
                                 </fieldset>
                             </div>
@@ -231,40 +266,44 @@
                                     <legend>Book Stats</legend>
                                     <p>
                                         <label>Books Purchased:</label>
-                                        <p type="number" id="booksPurchased" value="0" class="form-control">
+                                        <p type="text" id="booksPurchased" value="0" class="form-control">
                                     </p>
                                     <p>
                                         <label>Books Sold:</label>
-                                        <p type="number" id="booksSold" value="0" class="form-control">
+                                        <p type="text" id="booksSold" value="0" class="form-control">
                                     </p>
                                     <p>
                                         <label>Books Unrepairable:</label>
-                                        <p type="number" id="booksUnrepairable" value="0" class="form-control">
+                                        <p type="text" id="booksUnrepairable" value="0" class="form-control">
                                     </p>
                                     <p>
                                         <label>Books Nonreturned:</label>
-                                        <p type="number" id="booksNonreturned" value="0" class="form-control">
+                                        <p type="text" id="booksNonreturned" value="0" class="form-control">
                                     </p>
                                     <p>
                                         <label>Books In Inventory:</label>
-                                        <p type="number" id="booksInInventory" value="0" class="form-control">
+                                        <p type="text" id="booksinInventory" value="0" class="form-control">
+                                    </p>
+                                    <p>
+                                        <label>Books Checked In:</label>
+                                        <p type="text" id="booksCheckedIn" value="0" class="form-control">
                                     </p>
                                     <p>
                                         <label>Books Checked Out:</label>
-                                        <p type="number" id="booksCheckedOut" value="0" class="form-control">
+                                        <p type="text" id="booksCheckedOut" value="0" class="form-control">
                                     </p>
                                     <p>
                                         <label>Last Seq. No.:</label>
-                                        <p type="number" u0="" id="lastSeqNo" value="0" class="form-control">
+                                        <p type="text" id="lastSeqNr" value="0" class="form-control">
                                     </p>
                                 </fieldset>
                             </div>
                             <div class="column right">
                                 <p>
-                                    <button type="button" class="btn btn-primary btnCol">Save</button>
+                                    <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
                                 </p>
                                 <p>
-                                    <button type="button" class="btn btn-primary btnCol">Clear</button>
+                                    <button type="button" id="clear" class="btn btn-primary btnCol">Clear</button>
                                 </p>
                             </div>
                         </div>

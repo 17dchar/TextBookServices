@@ -14,9 +14,13 @@
             $(document).ready(function() {
                 var withEditionYear = false;
                 var withBarcode = false;
+                var change = false;
+                var query = '';
                 function queryMessage(){
                     var obj;
-                    if(withBarcode) {
+                    if(change){
+                        obj = query;
+                    } else if(withBarcode) {
                         obj = '{ "barcode" : "' + document.getElementById("barcode").value +'"}';
                     } else if(withEditionYear){
                         obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
@@ -33,24 +37,26 @@
                         dataType: 'json',
                         timeout: 6000000,
                         success: function (data) {
-                            if (data.errors){
-                                console.log(data);
-                            }else if(!withEditionYear) {
-                                document.getElementById('editionYear').placeholder = data.editionYear;
+                            console.log(data);
+                            if(data.errors){
+                                alert(data.errorMessage);
+                                return;
                             }
-                            if(withBarcode){
-                                document.getElementById('bookCode').placeholder = data.bookCode;
-                                document.getElementById('editionYear').placeholder = data.editionYear;
-                            }
-                            document.getElementById('title').innerHTML = data.title;
-                            document.getElementById('seqNr').innerHTML = data.seqNr;
-                            /*
-                            <option value="I" class="custom-option">Checked In</option>
-                            <option value="O" class="custom-option">Checked Out</option>
-                            <option value="S" class="custom-option">Sold</option>
-                            <option value="N" class="custom-option">Not Retruned</option>
-                            <option value="U">Unrepairable</option>
-                             */
+                            $('input[type=text]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).attr('placeholder',data[id.toString()]);
+                            });
+                            $('p[type=text]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).text(data[id.toString()]);
+                            });
+                            $('input[type=date]').each(function(){
+                                var id = $(this).attr('id');
+                                console.log(id);
+                                $(this).val(data[id.toString()]);
+                            });
                             if(data.currentDisposition === "I"){
                                 document.getElementById('currentDisposition').innerHTML = "Checked In";
                             } else if(data.currentDisposition === "O"){
@@ -131,6 +137,43 @@
                         }, 3000);
                     }
                 }));
+                $('#clear').click(function (){
+                    console.log("click");
+                    $('input[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).attr('placeholder',"");
+                        $(this).val("");
+                    });
+                    $('p[type=text]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).text("");
+                    });
+                    $('input[type=date]').each(function(){
+                        var id = $(this).attr('id');
+                        console.log(id);
+                        $(this).val("");
+                    });
+                });
+
+                $('#makeChanges').click(function (){
+                    console.log("click");
+                    query = '{"' + $('#bookCode').attr('id') + '" : "' + $('#bookCode').val() + '"' ;
+
+                        if($('#changingDisposition').val() !== $('#currentDisposition').val()){
+                            var text_value=$('#changingDisposition').val();
+                            if(text_value!==''){
+                                query+= ',"disposition" :  "' + $('#changingDisposition').val() + '"';
+                                console.log("there was a change here!");
+                                console.log($('#changingDisposition').attr('id'));
+                                change = true;
+                            }
+                        }
+                    query+= '}';
+                    console.log(query);
+                    queryMessage();
+                });
             });
         </script>
     </head>
@@ -167,7 +210,7 @@
                 <a href="Report">Add Report Here</a>
             </div>
         </div>
-        <div class="page-body">
+        <div class="page-body" style="height: 80vh;">
             <div class="marginftn">
                 <form method="post" style="width: 75%;">
                     <div class="border rounded form-group" style="width: auto; margin-left: 20px; margin: 15px;">
@@ -207,7 +250,7 @@
                             </p>
                             <p>
                                 <label>Seq Nr</label>
-                                <p type="number"
+                                <p type="text"
                                        id="seqNr"
                                        name="seqNr"
                                    class="form-control left"> </p>
@@ -220,7 +263,7 @@
                             </p>
                             <p>
                                 <label for="currentDisposition">Change Disposition To:</label>
-                                <select name="disposition" class="custom-select select">
+                                <select id="changingDisposition" name="disposition" class="custom-select select">
                                     <option selected value="" class="custom-option">(No Change)</option>
                                     <option value="I" class="custom-option">Checked In</option>
                                     <option value="O" class="custom-option">Checked Out</option>
@@ -232,8 +275,12 @@
                         </fieldset>
                     </div>
                     <span class="addlmargin">
-                        <input type="submit" class="btn btn-primary btnCol" name="Save">
-                        <button type="submit" class="btn btn-primary btnCol" name="clear">Clear</button>
+                        <p>
+                            <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
+                        </p>
+                        <p>
+                            <button type="button" id="clear" class="btn btn-primary btnCol">Clear</button>
+                        </p>
                     </span>
                 </form>
             </div>

@@ -85,21 +85,27 @@
                 <p>
                     <label>919#</label>
                     <input type = "text"
-                           name = "id"/>
+                           name = "id"
+                           class="form-control"/>
                     <input type="submit" name="Find Them!"/>
                     <label>Term:</label>
                     <input type = "text"
-                           id = "termSeason" />
+                           id = "termSeason"
+                           class="form-control"/>
                     <input type = "text"
-                           id = "termYear" />
+                           id = "termYear"
+                           class="form-control"/>
                     <label>ID:</label>
                     <input type = "text"
-                           id = "bookID1" />
+                           id = "bookID1"
+                           class="form-control"/>
                     <input type = "text"
-                           id = "bookID2" />
+                           id = "bookID2"
+                           class="form-control"/>
                     <label>Bag#:</label>
                     <input type = "text"
-                           id = "bagNumber" />
+                           id = "bagNumber"
+                           class="form-control"/>
                 </p>
             </fieldset>
         </form>
