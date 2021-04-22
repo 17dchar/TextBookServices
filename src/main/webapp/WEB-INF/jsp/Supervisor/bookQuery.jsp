@@ -184,7 +184,7 @@
         <div class="dropdown">
         <a href="/" class = "dropdown-content">Log out</a>
         </div>
-        <div class="page-body" style="height:10%;">
+        <div class="page-body" style="height: 80vh;">
             <div class="border rounded form-group" style="width: 75%; margin-left: 20px; margin: 15px;">
                 <form method="post">
                     <fieldset>

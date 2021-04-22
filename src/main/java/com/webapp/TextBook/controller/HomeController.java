@@ -683,27 +683,24 @@ public class HomeController {
 
     //Sold Books POST
     @RequestMapping(value= "/Sold-Books", method = RequestMethod.POST)
-    public String soldBooksPost(ModelMap model,
-                                @RequestParam(value = "id", required = false, defaultValue = "")String id){
+    public @ResponseBody OutputStudentInformationModel soldBooksPost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model){
         System.out.println("Sold Books Post");
         //Pseudo Regex
-        if(id.equals("")){
-            //Supervisor Privileges
-            if(supervisor){
-                return"Supervisor/soldBooks";
-            }
-            return "StudentEmployee/soldBooks";
+
+        spriden = soldBooksService.getSpriden(spriden.getId());
+        OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
+        if(spriden != null){
+            List<Nwtxdt> nwtxdtList =  soldBooksService.getNwtxdt(spriden.getPidm());
+            List<Nwtxin> nwtxinList = soldBooksService.getTitles(nwtxdtList);
+            outputStudentInformationModel.setNwtxinList(nwtxinList);
+            outputStudentInformationModel.setNwtxdtList(nwtxdtList);
         }
 
-        Spriden spriden = soldBooksService.getSpriden(id);
-        if(spriden != null){
-            model.put("soldBooks",soldBooksService.getNwtxdt(spriden.getPidm()));
-        }
         //Supervisor Privileges
         if(supervisor){
-            return"Supervisor/soldBooks";
+            return outputStudentInformationModel;
         }
-        return "StudentEmployee/soldBooks";
+        return outputStudentInformationModel;
     }
 
 
@@ -715,7 +712,6 @@ public class HomeController {
     public String studentSchedule(ModelMap model){
         System.out.println("Student Schedule GET");
         if(supervisor){
-            model.put("term", studentScheduleService.getLatestTerms());
             return"Supervisor/studentSchedule";
         } else if(studentEmployee){
             return "StudentEmployee/studentSchedule";
@@ -726,36 +722,20 @@ public class HomeController {
 
     //Student Schedule POST
     @RequestMapping(value= "/Student-Schedule", method = RequestMethod.POST)
-    public String studentSchedulePost(ModelMap model,
-                                      @RequestParam(value = "selectedTerm", required = false, defaultValue = "")String termSeason,
-                                      @RequestParam(value = "id", required = false, defaultValue = "")String id)
+    public @ResponseBody OutputStudentInformationModel studentSchedulePost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model)
                                       throws ParseException{
         System.out.println("Student Schedule POST");
         if(!supervisor && !studentEmployee){
-            return "redirect:/";
+            return null;
         }
         //Pseudo Regex
-        if(termSeason.equals("") || id.equals("")){
-            System.out.println("nah dawg");
-            //Supervisor Privileges
-            if(supervisor){
-                return"Supervisor/studentSchedule";
-            }
-            return "StudentEmployee/studentSchedule";
-        }
 
-        studentScheduleService.getStvterm(termSeason).getDesc();
-        if(studentScheduleService.getSpriden(id).getPidm().equals("")){
-            System.out.println("pidm empty");
-            //Supervisor Privileges
-            if(supervisor){
-                return"Supervisor/studentSchedule";
-            }
-            return "StudentEmployee/studentSchedule";
-        }
-        int pidm = Integer.parseInt(studentScheduleService.getSpriden(id).getPidm());
+        OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
 
-        List<Sfrstcr> sfrstcr = studentScheduleService.getSfrstcr(pidm, termSeason);
+        int pidm = Integer.parseInt(studentScheduleService.getSpriden(spriden.getId()).getPidm());
+        Stvterm term = studentScheduleService.getLatestTerm(Integer.toString(pidm));
+
+        List<Sfrstcr> sfrstcr = studentScheduleService.getSfrstcr(pidm, term.getCode());
         List<Ssbsect> output = new ArrayList<>();
         List<String> outputTitle = new ArrayList<>();
         List<Ssrmeet> outputTimes = new ArrayList<>();
@@ -767,16 +747,15 @@ public class HomeController {
                 System.out.println("there are titles!");
                 outputTitle.add(scbcrse.getTitle());
             }
-            outputTimes.add(studentScheduleService.getSsrmeet(termSeason,item.getCrn()));
         }
         model.put("output", output);
         model.put("outputTitle", outputTitle);
         model.put("outputTimes", outputTimes);
         //Supervisor Privileges
         if(supervisor){
-            return"Supervisor/studentSchedule";
+            return outputStudentInformationModel;
         }
-        return "StudentEmployee/studentSchedule";
+        return outputStudentInformationModel;
     }
 
 

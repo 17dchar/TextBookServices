@@ -29,6 +29,7 @@
                                 alert(data.errorMessage);
                                 return;
                             }
+                            console.log(data);
                             if (data.course !== document.getElementById("course").value){
                                 data.message = data.course;
                             }else if(!attempt){
@@ -113,7 +114,7 @@
             </div>
         </div>
         <a href="/" class = "dropbtn">Log out</a>
-        <div class="page-body">
+        <div class="page-body" style="">
             <div class="tenPix"></div>
                 <div class="container">
                     <div class="container">

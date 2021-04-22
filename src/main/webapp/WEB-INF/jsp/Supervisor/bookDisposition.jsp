@@ -188,7 +188,7 @@
                 <a href="Report">Add Report Here</a>
             </div>
         </div>
-        <div class="page-body">
+        <div class="page-body" style="height: 80vh;">
             <div class="marginftn">
                 <form method="post" style="width: 75%;">
                     <div class="border rounded form-group" style="width: auto; margin-left: 20px; margin: 15px;">

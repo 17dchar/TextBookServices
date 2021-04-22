@@ -21,19 +21,21 @@ public class StudentScheduleService {
             return null;
         }
     }
-    public List<Stvterm> getLatestTerms(){
-        Calendar cal = Calendar.getInstance();
-        int currentMonth = cal.get(Calendar.MONTH)+1;
-        int currentYear = cal.get(Calendar.YEAR);
-        List<Stvterm> stvtermList;
-        if(currentMonth <5){
-            stvtermList= stvtermRepository.findByCodeOrCodeOrCode(Integer.toString(currentYear)+"10",Integer.toString(currentYear)+"20",Integer.toString(currentYear)+"30");
-        } else if(currentMonth < 8){
-            stvtermList= stvtermRepository.findByCodeOrCodeOrCode(Integer.toString(currentYear)+"20",Integer.toString(currentYear)+"30",Integer.toString(currentYear+1)+"10");
-        } else{
-            stvtermList= stvtermRepository.findByCodeOrCodeOrCode(Integer.toString(currentYear)+"30",Integer.toString(currentYear+1)+"10",Integer.toString(currentYear+1)+"20");
+    @Autowired private SfrverfRepository sfrverfRepository;
+    public Stvterm getLatestTerm(String pidm){
+        List<Sfrverf> sfrverfList = sfrverfRepository.findByPidm(Integer.parseInt(pidm));
+        int mostRecent = 0;
+        for(Sfrverf sfrverf : sfrverfList){
+            if(Integer.parseInt(sfrverf.getTermCode()) > mostRecent){
+                mostRecent = Integer.parseInt(sfrverf.getTermCode());
+            }
         }
-        return stvtermList;
+        List<Stvterm> stvtermList = stvtermRepository.findByCode(Integer.toString(mostRecent));
+        if(stvtermList.size() > 0){
+            return stvtermList.get(0);
+        } else{
+            return null;
+        }
     }
 
     @Autowired
@@ -57,9 +59,6 @@ public class StudentScheduleService {
             return null;
         }
     }
-
-    @Autowired
-    private SfrverfRepository sfrverfRepository;
     public List<Sfrverf> getSfrverf(String pidm, String term){
         return sfrverfRepository.findByPidmAndTermCode(Integer.parseInt(pidm), term);
     }

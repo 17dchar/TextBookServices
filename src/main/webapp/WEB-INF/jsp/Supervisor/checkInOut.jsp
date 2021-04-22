@@ -160,7 +160,7 @@
             </div>
         </div>
         <a href="/" class = "dropbtn">Log out</a>
-        <div class="page-body">
+        <div class="page-body" style="height: 80vh;">
             <div class="tenPix"> </div>
             <div class="container">
                 <form class="yearCodeForm" method="post">

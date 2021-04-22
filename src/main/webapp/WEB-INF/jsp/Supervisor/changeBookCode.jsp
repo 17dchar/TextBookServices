@@ -181,7 +181,7 @@
             </div>
         </div>
         <div class="tenPix"></div>
-        <div class="page-body">
+        <div class="page-body" style="height: 80vh;">
             <div class="border rounded" style="width: 60%; margin-left: 15px;">
                 <form:form  class="yearCodeForm" method = "post" action="Change-Barcode" modelAttribute="inputNwtxdt">
                     <fieldset>

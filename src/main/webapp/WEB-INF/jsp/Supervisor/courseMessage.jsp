@@ -134,7 +134,7 @@
         </div>
         <a href="/" class = "dropbtn">Log out</a>
         <div class="tenPix"></div>
-        <div class="page-body">
+        <div class="page-body" style="height: 80vh;">
             <div class="container left column border rounded">
                 <form:form class="courseMessageForm" method = "post" action="Course-Message" modelAttribute="inputNwtxcm">
                     <p>

@@ -177,7 +177,7 @@
             </div>
         </div>
         <a href="/" class = "dropbtn">Log out</a>
-        <div class="page-body">
+        <div class="page-body" style="height: 80vh;">
             <div class="marginftn">
                 <form:form method="post" action="Change-Barcode"  modelAttribute="inputNwtxdt" style="width: 75%;">
                     <div class="border rounded form-group" style="width: auto; margin-left: 20px; margin: 15px;">

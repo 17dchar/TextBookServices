@@ -155,7 +155,7 @@
             </div>
         </div>
         <a href="/" class = "dropbtn">Log out</a>
-        <div class="page-body">
+        <div class="page-body" style = "height: 80vh">
             <form method="post" class="addlmargin">
                 <div class="border rounded form-group" style="width: auto; margin-left: 20px; margin: 15px;">
                     <fieldset>

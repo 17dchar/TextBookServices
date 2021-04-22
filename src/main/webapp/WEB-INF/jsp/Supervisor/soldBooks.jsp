@@ -19,19 +19,12 @@
                 var withBarcode = false;
                 function queryMessage(){
                     var obj;
-                    if(withEditionYear){
-                        obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
-                            '", "editionYear" : "' + document.getElementById("editionYear").value + '"}';
-                    } else if(withBarcode) {
-                        obj = '{ "barcode" : "' + document.getElementById("barcode").value +'"}';
-                    } else{
-                        obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +'"}';
-                    }
+                        obj = '{ "id" : "' + document.getElementById("id").value + '"}';
                     var string = JSON.parse(obj);
                     console.log("Query With " + string);
                     $.ajax({
                         type: "POST",
-                        url: '/Find-Book',
+                        url: '/Sold-Books',
                         data: string,
                         dataType: 'json',
                         timeout: 6000000,
@@ -39,23 +32,15 @@
                             if(data.errors){
                                 alert(data.errorMessage);
                                 return;
-                            }else if(!withEditionYear) {
-                                document.getElementById('editionYear').placeholder = data.editionYear;
                             }
-                            if(withBarcode){
-                                document.getElementById('bookCode').placeholder = data.bookCode;
-                                document.getElementById('editionYear').placeholder = data.editionYear;
-                            }
-                            document.getElementById('title').innerHTML = data.title;
-                            document.getElementById('seqNr').innerHTML = data.seqNr;
-                            document.getElementById('currentDisposition').innerHTML = data.currentDisposition;
-                            document.getElementById('currentTermCheckOut').innerHTML = data.currentTermCheckOut;
-                            document.getElementById('currentCheckedOutTo').innerHTML = data.currentCheckedOutTo;
-                            document.getElementById('currentDateCheckedOut').innerHTML = data.currentDateCheckedOut;
-                            document.getElementById('previousTermCheckedOut').innerHTML = data.previousTermCheckedOut;
-                            document.getElementById('previousCheckedOutTo').innerHTML = data.previousTermCheckedOut;
-                            document.getElementById('previousDateCheckedIn').innerHTML = data.previousDateCheckedIn;
-
+                            console.log(data);
+                            var trHTML = '';
+                            $.each(data.nwtxdtList, function (i, item){
+                                console.log(item);
+                                console.log(item.bookCode);
+                                trHTML += '<tr><td>' + item.bookCode + '</td><td>' + item.editionYear  +'</td></tr>';
+                            });
+                            $('#excelDataTable').append(trHTML);
                             console.log("SUCCESS");
                         },
                         error: function (data) {
@@ -138,6 +123,10 @@
                         $(this).val("");
                     });
                 });
+                $('#makeChanges').click(function (){
+                    console.log("click");
+                    queryMessage();
+                });
             });
         </script>
     </head>
@@ -169,7 +158,7 @@
             </div>
         </div>
         <a href="/" class = "dropbtn">Log out</a>
-        <div class="page-body">
+        <div class="page-body" style="height: 80vh;">
             <div class="tenPix"></div>
             <div class="container">
                 <div class="container">
@@ -178,18 +167,11 @@
                             <p>
                                 <label>919#</label>
                                 <input type = "text"
+                                       id = "id"
                                        name = "id"
-                                       class="form-control"/>
-                                <input type="submit" name="Find Them!"/>
-                            </p>
-                            <p>
-                                <label>Term:</label>
-                                <input type = "text"
-                                       id = "termSeason"
                                        class="form-control"/>
                             </p>
                         </fieldset>
-
                         <p>
                             <button type="button" id="makeChanges" class="btn btn-primary btnCol">Save</button>
                         </p>
@@ -198,11 +180,15 @@
                         </p>
                     </form>
                 </div>
-                <c:forEach items="${soldBooks}" var="soldBooks">
-                    <p>
-                        <p>${soldBooks.bookCode}</p>
-                    </p>
-                </c:forEach>
+                <table class = "table border" id="excelDataTable" border="1">
+                    <tr>
+                        <th>Book Code</th>
+                        <th>Edition Year</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Refund?</th>
+                    </tr>
+                </table>
             </div>
         </div>
     </body>

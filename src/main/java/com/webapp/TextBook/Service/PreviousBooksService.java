@@ -2,8 +2,12 @@ package com.webapp.TextBook.Service;
 
 
 //Spring Dependencies
+import com.webapp.TextBook.Model.Nwtxin;
+import com.webapp.TextBook.Repository.NwtxinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 //Textbook Services Dependencies

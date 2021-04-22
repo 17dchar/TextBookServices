@@ -10,12 +10,6 @@
     <meta charset="UTF-8">
     <title>Supervisor View</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        var delayman;
-        $(document).ready(function() {
-
-        });
-    </script>
 </head>
 <body>
 <div class="TBSHeader">
@@ -51,7 +45,7 @@
     </div>
 </div>
 <a href="/" class = "dropbtn">Log out</a>
-<div style="height:100%;">Hi there! You look great today!</div>
+<div class="page-body" style = "height: 80vh;"></div>
 
 </body>
 </html>

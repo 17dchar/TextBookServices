@@ -59,9 +59,16 @@ public class OutputStudentInformationModel {
         return nwtxdtList;
     }
 
-    public void setNwtxinList(List<Nwtxdt> nwtxidtist) {
-        this.nwtxdtList = nwtxdtList;
+
+    public List<Nwtxin> getNwtxinList() {
+        return nwtxinList;
     }
+
+    public void setNwtxinList(List<Nwtxin> nwtxinList) {
+        this.nwtxinList = nwtxinList;
+    }
+
+    private List<Nwtxin> nwtxinList;
 
 
     public Nwtxdt getNwtxdt() {
