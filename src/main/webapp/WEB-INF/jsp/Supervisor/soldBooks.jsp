@@ -158,11 +158,15 @@
                             <p>
                                 <label>919#</label>
                                 <input type = "text"
-                                       name = "id"/>
+                                       name = "id"
+                                       class="form-control"/>
                                 <input type="submit" name="Find Them!"/>
+                            </p>
+                            <p>
                                 <label>Term:</label>
                                 <input type = "text"
-                                       id = "termSeason" />
+                                       id = "termSeason"
+                                       class="form-control"/>
                             </p>
                         </fieldset>
                     </form>
