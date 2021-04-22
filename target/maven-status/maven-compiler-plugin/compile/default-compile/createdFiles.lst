@@ -7,6 +7,8 @@ com\webapp\TextBook\Repository\NwtxbnRepository.class
 com\webapp\TextBook\Model\Nwtxms.class
 com\webapp\TextBook\Model\UserModel.class
 com\webapp\TextBook\Service\AddBookService.class
+com\webapp\TextBook\Model\ChangingVariableModel.class
+com\webapp\TextBook\Service\MaintenanceService.class
 com\webapp\TextBook\Model\Nwtxcm.class
 com\webapp\TextBook\Repository\SsbsectRepository.class
 com\webapp\TextBook\Service\SoldBooksService.class
@@ -20,6 +22,7 @@ com\webapp\TextBook\Model\Stvterm.class
 com\webapp\TextBook\Repository\NwtxinRepository.class
 com\webapp\TextBook\Service\BookDispositionService.class
 com\webapp\TextBook\Repository\NwtxarRepository.class
+com\webapp\TextBook\Model\OutputBookInformationModel.class
 com\webapp\TextBook\Repository\SfrstcrRepository.class
 com\webapp\TextBook\Model\Nwtxin.class
 com\webapp\TextBook\Model\Nwtxbn.class
@@ -29,8 +32,10 @@ com\webapp\TextBook\Configuration\MaskConfig.class
 com\webapp\TextBook\Service\ReplaceBarcodeService.class
 com\webapp\TextBook\TextBookApplication.class
 com\webapp\TextBook\Repository\NwtxmsRepository.class
+com\webapp\TextBook\Service\CheckInOutService.class
 com\webapp\TextBook\Service\BookQueryService.class
 com\webapp\TextBook\Repository\SfrverfRepository.class
+com\webapp\TextBook\Model\OutputStudentInformationModel.class
 com\webapp\TextBook\Model\Nwtxdt.class
 com\webapp\TextBook\Repository\SpridenRepository.class
 com\webapp\TextBook\Configuration\MaskConfig$1.class
