@@ -6,15 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-
-import com.webapp.TextBook.Model.*;
-import com.webapp.TextBook.Repository.NwtxdtRepository;
-import com.webapp.TextBook.Service.*;
-
-//Imported Spring Libraries
-import com.webapp.TextBook.Model.Nwtxin;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,14 +13,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-
-
-//Imported Services
-
-
-//Imported Models
-
 import javax.validation.Valid;
+
+//Imported Spring Libraries
+import com.webapp.TextBook.Model.*;
+import com.webapp.TextBook.Service.*;
+import com.webapp.TextBook.Model.Nwtxin;
 
 
 @Controller
@@ -47,6 +36,12 @@ public class HomeController {
     }
 
     //Just temporary login things for now. Intended to be replaced later!
+    //Supervisor:
+        //Login: admin
+        //Password: admin
+    //Student Employee:
+        //Login: student
+        //Password: student
     @RequestMapping(value="/", method = RequestMethod.POST)
     public String loginPost(@RequestParam (value = "login",required = false, defaultValue = "")String login,
                             @RequestParam (value = "password",required = false, defaultValue = "")String password)
@@ -69,6 +64,9 @@ public class HomeController {
     //SUPERVISOR ACCESS ONLY
     @RequestMapping("/Supervisor-Home")
     public String supervisor(){
+        //If the user didn't put in supervisor credentials prior, then
+        //They will be redirected to the login page. These should all be
+        //taken out when security is fully implemented.
         if(!supervisor){
             return "redirect:/";
         }
@@ -83,7 +81,10 @@ public class HomeController {
     //SUPERVISOR ACCESS ONLY
     @GetMapping("/Maintenance-Form")
     public String maintenance(){
+        //Log to prove we've gotten to this function
         System.out.println("Maintenance GET");
+
+        //Pseudo Security
         if(!supervisor){
             return "redirect:/";
         }
@@ -95,52 +96,88 @@ public class HomeController {
     @PostMapping("/Maintenance-Form")
     public @ResponseBody OutputBookInformationModel maintenancePost(@Valid @RequestBody @ModelAttribute("inputNwtxin") Nwtxin nwtxin, BindingResult bindingResult,
                                   ModelMap model){
+        //Log to prove we've gotten to this function
         System.out.println("Maintenance POST");
+
+        //Pseudo Security
         if(!supervisor){
             return null;
         }
+
+        //Creating a model to use and ultimately send via AJAX
         OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
-        //If There Are Errors Compared To The Model, Then It Will Return Invalid Credentials
+
+        //Javax Data Validation
         if(bindingResult.hasErrors()){
+            //Print all errors for debugging sake. Can be removed if wanted
             for (ObjectError object : bindingResult.getAllErrors()) {
-                //check for specific errors
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }
             }
+            //Checks if bookcode at least exists. If not, then we return an error
             if(nwtxin.getBookCode() == ""){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
                 return outputBookInformationModel;
             }
         }
-        Nwtxin originalNwtxin = new Nwtxin();
+        //Passed Data Validation
+
+        //Model created to hold data queried. Created outside of if statements, because both
+        //sections of if statements need it for different purposes
+        Nwtxin originalNwtxin;
+
         if(nwtxin.getEditionYear() != null){
+            //If an edition year was entered, we'll run this
+
+            //Model to Hold Data Queried Base off of the bookcode and edition year
             originalNwtxin = maintenanceService.getNwtxin(nwtxin.getBookCode(), nwtxin.getEditionYear());
-            System.out.println("made it");
+
+            //If Model is Empty, Return Error
             if(originalNwtxin == null){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("We Couldn't Find a Book With That Code");
                 return outputBookInformationModel;
             }
+
+            //If Old database query Model is Different from Information Given, then
+            //There was a Change Made by the User, thus We Shall
+            //Change the Original Model and Update the Database.
+            //We can Only See the Message Sent to the User Here,
+            //But the Logic for this is in the Method Called Here.
             if(maintenanceService.hasDifferences(nwtxin, originalNwtxin)){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("Changes Made!");
                 return outputBookInformationModel;
             }
-        } else{
+        }else{
+            //If no edition year was entered, then we look for the most recent edition year
+
+            //Model to Hold Data Queried based off of book code. Will derive most recent edition year
             originalNwtxin = maintenanceService.getMostRecentNwtxin(nwtxin.getBookCode());
+
+            //If Model is Empty, Return Error
             if(originalNwtxin == null){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("We Couldn't Find a Book With That Code");
                 return outputBookInformationModel;
             }
+
+            //If Model is Different from Information Given, then
+            //There was a Change Made by the User, thus We Shall
+            //Change the Original Model and Update the Database.
+            //We can Only See the Message Sent to the User Here,
+            //But the Logic for this is in the Method Called Here.
             if(maintenanceService.hasDifferences(nwtxin, originalNwtxin)){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("Changes Made!");
                 return outputBookInformationModel;
             }
         }
+
+        //If No Changes Have been Made to the Original Model,
+        //Then we run this code, which populates data required for the maintenance page
 
         nwtxin = originalNwtxin;
         List<Nwtxdt> nwtxdtList = maintenanceService.getNwtxdtList(nwtxin.getBookCode(), nwtxin.getEditionYear());
@@ -223,7 +260,10 @@ public class HomeController {
     //SUPERVISOR ACCESS ONLY
     @GetMapping("/Add-Book")
     public String addBookPage(){
+        //Log to prove we've gotten to this function
         System.out.println("Add Book GET");
+
+        //Pseudo Security
         if(!supervisor){
             return "redirect:/";
         }
@@ -235,19 +275,26 @@ public class HomeController {
     @PostMapping("/Add-Book")
     public @ResponseBody OutputBookInformationModel addBookPOST(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
                               ModelMap model) throws ParseException {
+        //Log to prove we've gotten to this function
         System.out.println("Add Book POST");
+
+        //Pseudo Security
         if(!supervisor){
             return null;
         }
 
+        //Creating a model to use and ultimately send via AJAX
         OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
-        //If There Are Errors Compared To The Model, Then We'll Check for Invalid Inputs
+
+        //Javax Data Validation
         if(bindingResult.hasErrors()){
+            //Print all errors for debugging sake. Can be removed if wanted
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }
             }
+            //Checks if bookcode at least exists. If not, then we return an error
             if(nwtxdt.getBookCode() == ""){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
@@ -255,25 +302,33 @@ public class HomeController {
             }
         }
         outputBookInformationModel.setErrors(false);
-        System.out.println("Passed Data Validation");
+        //Passed Data Validation
+
         if(nwtxdt.getEditionYear() == ""){
+            //If No Edition Year, Then we Look for Most Recent Edition Year
             outputBookInformationModel = addBookService.getMostRecentNwtxdt(nwtxdt.getBookCode());
         } else if(nwtxdt.getEditionYear() != ""){
+            //If There Is Edition Year, Then Query off of Both Bookcode and Edition Year
             outputBookInformationModel = addBookService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
         }else{
+            //If this Function Gets Called, Email Zachariah Durbin, Because That should NEVER Happen
             System.out.println("How did we get here?");
         }
+
+        //If the Data Query is Null, Notify the User that there is no correlating data
         if(outputBookInformationModel == null){
             outputBookInformationModel = new OutputBookInformationModel();
             outputBookInformationModel.setErrors(true);
             outputBookInformationModel.setErrorMessage("We Couldn't Find a Book Off of Given Credentials");
             return outputBookInformationModel;
         }
+
+        //If there is data found off of given credentials AND a barcode was entered,
+        //Save a copy of this book with the given barcode to database
         if(nwtxdt.getBarcode() != ""){
             System.out.println("saving this!");
             nwtxdt.setEditionYear(outputBookInformationModel.getEditionYear());
             nwtxdt.setSeqNr(String.valueOf(outputBookInformationModel.getLastSeqNr()+1));
-
             addBookService.saveNwtxdt(nwtxdt);
         }
         outputBookInformationModel.setLastSeqNr(outputBookInformationModel.getLastSeqNr()+1);
@@ -288,7 +343,10 @@ public class HomeController {
     //SUPERVISOR ONLY
     @GetMapping("/Find-Book")
     public String bookQuery(ModelMap model){
+        //Log to prove we've gotten to this function
         System.out.println("Book Query GET");
+
+        //Pseudo Security
         if(!supervisor){
             return "redirect:/";
         }
@@ -302,19 +360,25 @@ public class HomeController {
     OutputBookInformationModel bookQueryPost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
                                              ModelMap model)
                                              throws ParseException {
+        //Log to prove we've gotten to this function
         System.out.println("Book Query POST");
+
+        //Pseudo Security
         if(!supervisor){
             return null;
         }
 
+        //Creating a model to use and ultimately send via AJAX
         OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
-        //If There Are Errors Compared To The Model, Then We'll Check for Invalid Inputs
+        //Javax Data Validation
         if(bindingResult.hasErrors()){
+            //Print all errors for debugging sake. Can be removed if wanted
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }
             }
+            //Checks if bookcode or barcode at least exists. If not, then we return an error
             if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
@@ -322,17 +386,25 @@ public class HomeController {
             }
         }
         outputBookInformationModel.setErrors(false);
+        //Passed Data Validation
+
         System.out.println("Passed Data Validation");
         if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
+            //If no edition year or barcode was given, we look for the most recent edition year of given book code
             outputBookInformationModel = bookQueryService.getMostRecentNwtxdt(nwtxdt.getBookCode());
         } else if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() != ""){
+            //If no barcode was given but edition year is given, we look for the book based off of book code and edition year
             outputBookInformationModel = bookQueryService.getNwtxdtByBookCodeAndYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
         }
         else if(!nwtxdt.getBarcode().equals("")){
+            //If barcode was given, we look off of barcode given
             outputBookInformationModel = bookQueryService.getNwtxdtByBarcode(nwtxdt.getBarcode());
         } else{
+            //Email Zachariah Durbin if this ever gets called. This should be impossible
             System.out.println("How did we get here?");
         }
+
+        //If no data was found from given credentials, return error
         if(outputBookInformationModel == null){
             outputBookInformationModel = new OutputBookInformationModel();
             outputBookInformationModel.setErrors(true);
@@ -349,7 +421,10 @@ public class HomeController {
     //SUPERVISOR ONLY
     @GetMapping("/Change-Disposition")
     public String bookDisposition(){
+        //Log to prove we've gotten to this function
         System.out.println("Book Dispostion GET");
+
+        //Pseudo Security
         if(!supervisor){
             return "redirect:/";
         }
@@ -364,25 +439,31 @@ public class HomeController {
                                       ModelMap model)
                                       throws ParseException {
         System.out.println("Book Disposition POST");
+
+        //Pseudo Security
         if(!supervisor){
             return null;
         }
+
+        //Creating a model to use and ultimately send via AJAX
         OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
         String changingDisposition = nwtxdt.getDisposition();
-        System.out.println(changingDisposition);
+        //Javax Data Validation
         if(bindingResult.hasErrors()){
-            model.put("returnVoidError", "Invalid Credentials");
+            //Print all errors for debugging sake. Can be removed if wanted
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }
             }
+            //Checks if bookcode or barcode at least exists. If not, then we return an error
             if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
                 return outputBookInformationModel;
             }
         }
+        //Passed Data Validation
         outputBookInformationModel.setErrors(false);
         System.out.println("Passed Data Validation");
         if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
@@ -431,8 +512,10 @@ public class HomeController {
     //SUPERVISOR ONLY
     @RequestMapping(value = "/Change-Barcode", method = RequestMethod.GET)
     public String replaceBarcode(ModelMap model) {
-        model.addAttribute("inputNwtxin", new Nwtxin());
+        //Log to prove we've gotten to this function
         System.out.println("Replace Barcode GET");
+
+        //Pseudo Security
         if(!supervisor){
             return "redirect:/";
         }
@@ -445,25 +528,33 @@ public class HomeController {
     public @ResponseBody OutputBookInformationModel replaceBarcodePOST(@Valid @RequestBody @ModelAttribute("inputNwtxdt") Nwtxdt nwtxdt, BindingResult bindingResult,
                                      ModelMap model)
                                      throws ParseException {
+        //Log to prove we've gotten to this function
         System.out.println("Replace Barcode POST");
+
+        //Pseudo Security
         if(!supervisor){
             return null;
         }
-        //Pseudo Regex
+
+        //Creating a model to use and ultimately send via AJAX
         OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
+        //Javax Data Validation
         if(bindingResult.hasErrors()){
+            //Print all errors for debugging sake. Can be removed if wanted
             System.out.println("ope, there were errors");
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }
             }
+            //Checks if bookcode or barcode at least exists. If not, then we return an error
             if(nwtxdt.getBookCode() == "" && nwtxdt.getBarcode() == ""){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
                 return outputBookInformationModel;
             }
         }
+        //Passed Data Validation
         outputBookInformationModel.setErrors(false);
         System.out.println("Passed Data Validation");
         if(nwtxdt.getBarcode() == "" && nwtxdt.getEditionYear() == ""){
@@ -491,8 +582,10 @@ public class HomeController {
     //SUPERVISOR ONLY
     @GetMapping("/Find-Course")
     public String queryCourse(ModelMap model){
-        model.addAttribute("inputNwtxin", new Nwtxin());
+        //Log to prove we've gotten to this function
         System.out.println("Course Query GET");
+
+        //Pseudo Security
         if(!supervisor){
             return "redirect:/";
         }
@@ -505,12 +598,17 @@ public class HomeController {
     //public @ResponseBody List<Nwtxin> queryCoursePost(ModelMap model, @Valid @RequestBody @ModelAttribute("inputNwtxin")  Nwtxin nwtxin, BindingResult bindingResult)
     public @ResponseBody List<Nwtxin> queryCoursePost(ModelMap model, @RequestParam("course")  String course)
                                   throws ParseException {
+        //Log to prove we've gotten to this function
         System.out.println("Course Query POST");
+
+        //Pseudo Security
         if(!supervisor){
             return null;
         }
-        //Pseudo Regex
 
+        //We completely forgot to put regex for this function. Sorry!
+
+        //Creating a model to use and ultimately send via AJAX
         List<Nwtxin> nwtxinList = new ArrayList<Nwtxin>();
 
         nwtxinList = queryCourseService.getAllBooksForCourse(course);
@@ -532,8 +630,10 @@ public class HomeController {
     //SUPERVISOR ONLY
     @GetMapping("/Course-Message")
     public String courseMessage(ModelMap model){
+        //Log to prove we've gotten to this function
         System.out.println("Course Message GET");
-        model.addAttribute("inputNwtxcm", new Nwtxcm());
+
+        //Pseudo Security
         if(!supervisor){
             return "redirect:/";
         }
@@ -545,30 +645,60 @@ public class HomeController {
     @PostMapping("/Course-Message")
     public @ResponseBody Nwtxcm courseMessagePost(@RequestBody @ModelAttribute("inputNwtxcm") @Valid Nwtxcm nwtxcm, BindingResult bindingResult, ModelMap model)
                                     throws ParseException{
+        //Log to prove we've gotten to this function
         System.out.println("Course Message POST");
+
+        //Pseudo Security
         if(!supervisor){
             return nwtxcm;
         }
-        //Pseudo Regex
+        /*
+         * IF WE HAD MORE TIME FOR THIS PROJECT, WE WOULD HAVE DONE MORE DATA
+         * VALIDATION LIKE THIS ONE IN THE SENSE THAT WE WOULD CHECK IF THE
+         * DATA INPUTTED WAS PROPER. NOT JUST IF IT EXISTED OR NOT
+
+         * This data validation is weird. This was one of the first methods
+         * we tried to do data validation for, and at this moment we didn't
+         * want to create new models to send to the views. This method will
+         * change the inputs given from the user and return the model given,
+         * and in turn, whenever the view gets our response, it will check to
+         * see if there are any changes to the inputs it gave. If so, then it
+         * knows there was an error and will read the error for each specific
+         * input that was changed. This ultimately didn't work out for other
+         * methods, and should be replaced.
+         */
+        //Javax Data Validation
         if(bindingResult.hasErrors()){
+            //Print all errors for debugging sake. Can be removed if wanted
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }
             }
+            //Checks if course message at least exists. If not, then we return an error
             if(nwtxcm.getCourse() == ""){
                 nwtxcm.setCourse("Course Cannot Be Empty (They're All 9 Characters Long)");
             } else if(nwtxcm.getCourse().length() != 9){
+                //Checks to see if course message is the proper length
                 nwtxcm.setCourse("Course Has to Be 9 Characters Long");
             } else if(nwtxcm.getMessage().length() > 15){
+                //If the new message inputted is too long, we return an error
                 nwtxcm.setCourse("Message is too long!");
             }
             return nwtxcm;
         }
+        //Passed Data Validation
 
+        //Queries data from database
         Nwtxcm oldNwtxcm = courseMessageService.getNwtxcm(nwtxcm.getCourse());
-        System.out.println(nwtxcm.getCourse());
+
+        //Checks to see that the query had any results
         if (oldNwtxcm != null) {
+            //There was at least one object that worked for the query, so we'll continue
+
+            //Checks to see if there was any message input from the user. If there
+            //was, we assume they want to change the message. If not, we send the
+            //old course's message
             if (nwtxcm.getMessage() == null) {
                 nwtxcm.setMessage(oldNwtxcm.getMessage());
             } else if(!nwtxcm.getMessage().equals(oldNwtxcm.getMessage())) {
@@ -589,8 +719,10 @@ public class HomeController {
     //SUPERVISOR ONLY
     @RequestMapping(value= "/Change-Book-Code", method = RequestMethod.GET)
     public String changeBookCode(ModelMap model){
-        model.addAttribute("inputNwtxin", new Nwtxin());
+        //Log to prove we've gotten to this function
         System.out.println("Course Message GET");
+
+        //Pseudo Security
         if(!supervisor){
             return "redirect:/";
         }
@@ -600,26 +732,37 @@ public class HomeController {
     //Change Book Code POST
     //SUPERVISOR ONLY
     @RequestMapping(value= "/Change-Book-Code", method = RequestMethod.POST)
+
+    //**IMPORTANT** This method uses the "ChangingVariableModel", which I meant to get rid of. Sorry!
     public @ResponseBody OutputBookInformationModel changeBookCodePost(@Valid @RequestBody @ModelAttribute("inputNwtxdt") ChangingVariableModel changingVariableModel, BindingResult bindingResult, ModelMap model)
                                      throws ParseException{
+        //Log to prove we've gotten to this function
         System.out.println("Course Message POST");
+
+        //Pseudo Security
         if(!supervisor){
             return null;
         }
+
+        //Creating a model to use and ultimately send via AJAX
         OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
-        //If There Are Errors Compared To The Model, Then We'll Check for Invalid Inputs
+        //Javax Data Validation
         if(bindingResult.hasErrors()){
+            //Print all errors for debugging sake. Can be removed if wanted
             for (Object object : bindingResult.getAllErrors()) {
                 if(object instanceof FieldError) {
                     System.out.println((FieldError) object);
                 }
             }
+
+            //Checks if bookcode at least exists. If not, then we return an error
             if(changingVariableModel.getCurrentBookCode() == ""){
                 outputBookInformationModel.setErrors(true);
                 outputBookInformationModel.setErrorMessage("We Need at Least a Book Code or a Barcode");
                 return outputBookInformationModel;
             }
         }
+        //Passed Data Validation
         outputBookInformationModel.setErrors(false);
         System.out.println(changingVariableModel.getCurrentBookCode());
         System.out.println(changingVariableModel.getCurrentEditionYear());
@@ -664,7 +807,10 @@ public class HomeController {
     //Previous Books GET
     @RequestMapping(value= "/Previous-Books", method = RequestMethod.GET)
     public String prevBoooks(){
+        //Log to prove we've gotten to this function
         System.out.println("Previous Books GET");
+
+        //Pseudo Security
         if(supervisor){
             return"Supervisor/previousBooks";
         } else if(studentEmployee){
@@ -678,12 +824,18 @@ public class HomeController {
     @RequestMapping(value= "/Previous-Books", method = RequestMethod.POST)
     public @ResponseBody OutputStudentInformationModel previousBooksPost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model)
                                 throws ParseException{
+        //Log to prove we've gotten to this function
         System.out.println("Previous Books POST");
-        //Pseudo Regex
+
+        //This function we completely forgot to put any security or regex on. Sorry!
 
         spriden = previousBooksService.getSpriden(spriden.getId());
+
+        //Creating a model to use and ultimately send via AJAX
         OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
         outputStudentInformationModel.setLastName(spriden.getLastName());
+
+        //If Spriden is not null from database query, get all books relevant
         if(spriden != null){
             List<Nwtxdt> nwtxdtList =  previousBooksService.getNwtxdt(spriden.getPidm());
             List<Nwtxin> nwtxinList = previousBooksService.getTitles(nwtxdtList);
@@ -704,7 +856,10 @@ public class HomeController {
     //Sold Books GET
     @RequestMapping(value= "/Sold-Books", method = RequestMethod.GET)
     public String soldBooks(){
+        //Log to prove we've gotten to this function
         System.out.println("Sold Books GET");
+
+        //Pseudo Security
         if(supervisor){
             return"Supervisor/soldBooks";
         } else if(studentEmployee){
@@ -717,11 +872,16 @@ public class HomeController {
     //Sold Books POST
     @RequestMapping(value= "/Sold-Books", method = RequestMethod.POST)
     public @ResponseBody OutputStudentInformationModel soldBooksPost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model){
+        //Log to prove we've gotten to this function
         System.out.println("Sold Books Post");
-        //Pseudo Regex
 
+        //This function we completely forgot to put any security or regex on. Sorry!
+
+        //Creating a model to use and ultimately send via AJAX
         spriden = soldBooksService.getSpriden(spriden.getId());
         OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
+
+        //If Spriden is not null from database query, get all books relevant
         if(spriden != null){
             List<Nwtxdt> nwtxdtList =  soldBooksService.getNwtxdt(spriden.getPidm());
             List<Nwtxin> nwtxinList = soldBooksService.getTitles(nwtxdtList);
@@ -743,7 +903,10 @@ public class HomeController {
     //Student Schedule GET
     @RequestMapping(value= "/Student-Schedule", method = RequestMethod.GET)
     public String studentSchedule(ModelMap model){
+        //Log to prove we've gotten to this function
         System.out.println("Student Schedule GET");
+
+        //Pseudo Security
         if(supervisor){
             return"Supervisor/studentSchedule";
         } else if(studentEmployee){
@@ -757,34 +920,41 @@ public class HomeController {
     @RequestMapping(value= "/Student-Schedule", method = RequestMethod.POST)
     public @ResponseBody OutputStudentInformationModel studentSchedulePost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model)
                                       throws ParseException{
+        //Log to prove we've gotten to this function
         System.out.println("Student Schedule POST");
+
+        //Pseudo Security
         if(!supervisor && !studentEmployee){
             return null;
         }
-        //Pseudo Regex
+
+        //We completely forgot to put regex for this function. Sorry!
+
+        //Making variable to place data query info into
         spriden = previousBooksService.getSpriden(spriden.getId());
+        //Creating a model to use and ultimately send via AJAX
         OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
         outputStudentInformationModel.setLastName(spriden.getLastName());
+        //Making variable to place data query info into
         Stvterm term = studentScheduleService.getLatestTerm(spriden.getPidm());
-
+        //Making variable to place data query info into
         List<Sfrstcr> sfrstcr = studentScheduleService.getSfrstcr(Integer.parseInt(spriden.getPidm()), term.getCode());
         List<Ssbsect> output = new ArrayList<>();
         List<String> outputTitle = new ArrayList<>();
         List<Ssrmeet> outputTimes = new ArrayList<>();
+        //For each class the student is in, add that class to the output
         for(Sfrstcr item: sfrstcr){
             Ssbsect ssbsect = studentScheduleService.getSsbsect(item.getCrn(), item.getTermCode());
             output.add(ssbsect);
             Scbcrse scbcrse = studentScheduleService.getScbcrse(ssbsect.getSubjCode(),ssbsect.getCrseNumb());
+            //If the class has a title, add that as well
             if(scbcrse != null){
-                System.out.println("there are titles!");
                 outputTitle.add(scbcrse.getTitle());
             }
         }
 
+        //Sets the output list to the returning model
         outputStudentInformationModel.setSsbsectList(output);
-        model.put("output", output);
-        model.put("outputTitle", outputTitle);
-        model.put("outputTimes", outputTimes);
         //Supervisor Privileges
         if(supervisor){
             return outputStudentInformationModel;
@@ -799,8 +969,10 @@ public class HomeController {
     //Check-In-Out GET
     @GetMapping("/Check-In-Out")
     public String checkInOut(ModelMap model){
+        //Log to prove we've gotten to this function
         System.out.println("Check In Out GET");
 
+        //Pseudo Security
         if(supervisor){
             //List<Stvterm> terms = checkInOutService.getLatestTerms();
             //model.put("term", terms);
@@ -818,35 +990,54 @@ public class HomeController {
     //Check-In-Out POST
     @PostMapping("/Check-In-Out")
     public @ResponseBody OutputStudentInformationModel changeBookCodePost(@Valid @RequestBody @ModelAttribute("inputSpriden") Spriden spriden, BindingResult bindingResult, ModelMap model){
+        //Log to prove we've gotten to this function
         System.out.println("Check In Out POST");
-        System.out.println(spriden.getId());
-        System.out.println(spriden.getFirstName());
-        spriden = checkInOutService.getStudent(spriden.getId());
-        System.out.println(spriden.getFirstName());
-        Stvterm term = checkInOutService.getLatestTerm(spriden.getPidm());
 
-        System.out.println("here");
+        //This function we completely forgot to put any security or regex on. Sorry!
+
+        //Data to hold the query information
+        spriden = checkInOutService.getStudent(spriden.getId());
+        Stvterm term = checkInOutService.getLatestTerm(spriden.getPidm());
         String bagNumber = checkInOutService.getBag(spriden.getPidm());
 
+        //If statement that was meant to hold a function in case there was a bag number... apparently got deleted?
         if(bagNumber != null){
 
         }
-        OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
-        outputStudentInformationModel.setBagNumber(bagNumber);
 
+        //Creating a model to use and ultimately send via AJAX
+        OutputStudentInformationModel outputStudentInformationModel = new OutputStudentInformationModel();
+        //Setting information into output model
+        outputStudentInformationModel.setBagNumber(bagNumber);
         outputStudentInformationModel.setTerm(term.getDesc());
         outputStudentInformationModel.setFirstName(spriden.getFirstName());
         outputStudentInformationModel.setMiddleInitial(spriden.getMiddleInitial());
         outputStudentInformationModel.setLastName(spriden.getLastName());
 
+        //Collects all books relevant to student of this term, and sends them to output model
         List<Nwtxdt> nwtxdtList = checkInOutService.getBooks(spriden.getPidm(), term.getCode());
-        System.out.println(nwtxdtList.size());
         outputStudentInformationModel.setNwtxdtList(nwtxdtList);
+
+
+        /* **IMPORTANT** This code originally dealt with checking books in and out to the id given
+         * Unfortunately, we didn't have enough time to get both systems working where we could
+         * show all books checked out to a certain person AND this system that can check them in
+         * and out, so we set this one where it never gets used, as you can see commented below
+         * This can easily be implemented back in, however. There just wasn't enough time for us
+         * to implement that back in. If only we had a week more to work on this, so many of these
+         * problems would be gone!
+         */
+
+
         //Checks the availability of the book
         //0 = Book couldn't be found by given barcode
         //1 = Book isn't currently checked out to anyone
         //2 = Book is currently checked out to someone
         //3 = Book is currently checked out to this current person
+
+        //Originally availability would check to see if the inputted barcode was valid to check
+        //In or out. We set it to never do anything, because we needed data validation for
+        //the barcode section.
         int availability = 0;//checkInOutService.checkAvailability(barCode, spriden, term);
         if(availability == 0){
             System.out.println("nah dawg");
@@ -862,15 +1053,4 @@ public class HomeController {
 
         return outputStudentInformationModel;
     }
-    /*
-    $$When a barcode is scanned on the check in/check out screen we know the
-    $$user is Checking in a book or check out a book.  If the book is checked out to the ID
-    $$we will check the book in.  If the book is checked out to someone else we will check the
-    $$book in for the other person and display a message.  If the book is not checked out we
-    $$assume they are wanting to check the book out for the ID
-    $$
-    $$If employee user clicks onthe book status, nothing will happen
-    $$If the supervisor clicks on the book status a new screen will appear to either sell
-    $$the book or reverse charges.
-     */
 }

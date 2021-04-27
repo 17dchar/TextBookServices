@@ -19,15 +19,20 @@ import java.util.List;
 public class AddBookService {
 
     @Autowired private NwtxdtRepository nwtxdtRepository;
+
+    //Saves Nwtxdt to database
     public Nwtxdt saveNwtxdt(Nwtxdt nwtxdt) {
         return nwtxdtRepository.save(nwtxdt);
     }
 
+
+    //Gets Most recent Nwtxin based off of book code
     @Autowired private NwtxinRepository nwtxinRepository;
-    @Autowired private SpridenRepository spridenRepository;
-    @Autowired private StvtermRepository stvtermRepository;
     public OutputBookInformationModel getMostRecentNwtxdt(String bookCode){
+        //List to hold all data based off of query
         List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCode(bookCode);
+
+        //If the query holds any information, look for most recent edition year out of all information
         if(nwtxinList.size() >0){
             int mostRecent = 0;
             for(int i = 0; i < nwtxinList.size(); i++){
@@ -46,6 +51,10 @@ public class AddBookService {
                 }
             }
 
+
+            //Set all information to output model. **IMPORTANT** We set a lot of it to nothing becasue
+            //We did not have a sequence number to go with it, but we can do that now with the code from
+            //Maintenance in home controller! This can easily be updated.
             OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
             outputBookInformationModel.setBookCode(nwtxinList.get(mostRecent).getBookCode());
             outputBookInformationModel.setBarcode("No Specific Barcode Given");
@@ -66,8 +75,14 @@ public class AddBookService {
             return null;
         }
     }
+
+    //Finds by book code and edition year
     public OutputBookInformationModel getNwtxdtByBookCodeAndYear(String bookCode, String editionYear){
+
+        //List to hold data from query
         List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCodeAndEditionYear(bookCode, editionYear);
+
+        //If query has information, populate based off of index 0
         if(nwtxinList.size() >0){
             List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByBookCodeAndEditionYear(bookCode, editionYear);
             int biggestSeqNr = 0;
@@ -76,6 +91,9 @@ public class AddBookService {
                     biggestSeqNr = Integer.parseInt(nwtxdt.getSeqNr());
                 }
             }
+
+            //Populates data. We should create another integer that holds the index value
+            //of the biggest sequence number so we can populate these based of that book
             OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
             outputBookInformationModel.setBookCode(nwtxinList.get(0).getBookCode());
             outputBookInformationModel.setBarcode("No Specific Barcode Given");
