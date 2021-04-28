@@ -91,6 +91,7 @@ public class MaintenanceService {
         }
     }
 
+    //If there are any changes between data given and data that is in database, save those changes
     public boolean hasDifferences(Nwtxin nwtxin, Nwtxin originalNwtxin) {
         Boolean changes = false;
         if(nwtxin.getFirstUsedDate() != null){

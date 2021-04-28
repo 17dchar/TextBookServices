@@ -1,6 +1,5 @@
 package com.webapp.TextBook.Service;
 
-//Spring Dependencies
 import com.webapp.TextBook.Model.*;
 import com.webapp.TextBook.Repository.NwtxinRepository;
 import com.webapp.TextBook.Repository.SpridenRepository;
@@ -11,8 +10,6 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
-//Textbook Services Dependencies
 import com.webapp.TextBook.Repository.NwtxdtRepository;
 
 
@@ -32,41 +29,54 @@ public class BookDispositionService {
         if (nwtxdtList.size() > 0) {
             List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCodeAndEditionYear(nwtxdtList.get(0).getBookCode(),nwtxdtList.get(0).getEditionYear());
             if(nwtxinList.size() > 0){
+                //Gets Lists of Information from database
                 List<Spriden> currentPersonSpriden = spridenRepository.findByPidm(nwtxdtList.get(0).getPidm());
                 List<Spriden> previousPersonSpriden = spridenRepository.findByPidm(nwtxdtList.get(0).getPrevPidm());
                 List<Stvterm> currentTerm = stvtermRepository.findByCode(nwtxdtList.get(0).getTerm());
                 List<Stvterm> previousTerm = stvtermRepository.findByCode(nwtxdtList.get(0).getPrevTerm());
+
+                //Creates output model and populates known information from queries
                 OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
                 outputBookInformationModel.setBookCode(nwtxdtList.get(0).getBookCode());
                 outputBookInformationModel.setBarcode(nwtxdtList.get(0).getBarcode());
                 outputBookInformationModel.setEditionYear(nwtxdtList.get(0).getEditionYear());
+                //Checks if there is a person that has the book currently. If so, says name, else, notifies there is no one with book
                 if(currentPersonSpriden.size()>0){
                     outputBookInformationModel.setCurrentCheckedOutTo(currentPersonSpriden.get(0).getFirstName() + " " + currentPersonSpriden.get(0).getMiddleInitial() + " " + currentPersonSpriden.get(0).getLastName());
                 } else{
                     outputBookInformationModel.setCurrentCheckedOutTo("Currently Isn't Checked Out To Anyone");
                 }
+
+                //Checks if there is a previous person that checked out the book
                 if(previousPersonSpriden.size()>0){
                     outputBookInformationModel.setPreviousCheckedOutTo(previousPersonSpriden.get(0).getFirstName() + " " + previousPersonSpriden.get(0).getMiddleInitial() + " " + previousPersonSpriden.get(0).getLastName());
                 } else{
                     outputBookInformationModel.setPreviousCheckedOutTo("No Previous Person Checked Out To");
                 }
+
+                //Populates output more
                 outputBookInformationModel.setTitle(nwtxinList.get(0).getTitle());
                 outputBookInformationModel.setCurrentDisposition(nwtxdtList.get(0).getDisposition());
                 outputBookInformationModel.setSeqNr(nwtxdtList.get(0).getSeqNr());
                 DateFormat df = new SimpleDateFormat("MMM/dd/yyyy");
+                //If book is checked out, gets date
                 if(nwtxdtList.get(0).getDateCheckedOut() != null){
                     outputBookInformationModel.setCurrentDateCheckedOut(df.format(nwtxdtList.get(0).getDateCheckedOut()));
                 }
+                //If current term is available, get current term
                 if(currentTerm.size() > 0){
                     outputBookInformationModel.setCurrentTermCheckOut(currentTerm.get(0).getDesc());
                 } else{
                     outputBookInformationModel.setCurrentTermCheckOut("Couldn't Find a Term Description for: " + nwtxdtList.get(0).getTerm());
                 }
+                //If previous check out term is available, get previous check out term
                 if(previousTerm.size() > 0){
                     outputBookInformationModel.setPreviousTermCheckedOut(previousTerm.get(0).getDesc());
                 } else{
                     outputBookInformationModel.setPreviousTermCheckedOut("Couldn't Find a Term Description for: " + nwtxdtList.get(0).getPrevTerm());
                 }
+
+                //If previous checked in date is available, get previous date checked in
                 if(nwtxdtList.get(0).getPrevDateCheckedIn() != null){
                     outputBookInformationModel.setPreviousDateCheckedIn(df.format(nwtxdtList.get(0).getPrevDateCheckedIn()));
                 }
@@ -78,8 +88,13 @@ public class BookDispositionService {
     }
 
     public OutputBookInformationModel getMostRecentNwtxdt(String bookCode){
+        //List to contain data queried from database
         List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCode(bookCode);
+
+        //If there is data found, continue, else return nothing
         if(nwtxinList.size() >0){
+
+            //Finds most recent edition year of book code
             int mostRecent = 0;
             for(int i = 0; i < nwtxinList.size(); i++){
                 if(i > 0){
@@ -89,7 +104,11 @@ public class BookDispositionService {
                     }
                 }
             }
+
+            //queries based off of most recent book code and edition year
             List<Nwtxdt> nwtxdtList = nwtxdtRepository.findByBookCodeAndEditionYear(bookCode, nwtxinList.get(mostRecent).getEditionYear());
+
+            //Finds largest seq number based off of query
             int largestSeqNr = 0;
             int largestPosition = 0;
             for(Nwtxdt nwtxdtSqr: nwtxdtList){
@@ -99,6 +118,7 @@ public class BookDispositionService {
                 }
             }
 
+            //Populates output
             OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
             outputBookInformationModel.setBookCode(nwtxinList.get(mostRecent).getBookCode());
             outputBookInformationModel.setBarcode("No Specific Barcode Given");
@@ -112,9 +132,16 @@ public class BookDispositionService {
             return null;
         }
     }
+
+    // Get proper list off of book code and edition year
     public OutputBookInformationModel getNwtxdtByBookCodeAndYear(String bookCode, String editionYear){
+
+        //List to contain data queried from database
         List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCodeAndEditionYear(bookCode, editionYear);
+
+        //if list has data, continue populating output, else return nothing
         if(nwtxinList.size() >0){
+            //populates output. **IMPORTANT** needs to take seq number section from method above
             OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
             outputBookInformationModel.setBookCode(nwtxinList.get(0).getBookCode());
             outputBookInformationModel.setBarcode("No Specific Barcode Given");
@@ -135,6 +162,7 @@ public class BookDispositionService {
         }
     }
 
+    //Saves inputted model to database
     public void save(Nwtxdt nwtxdt) {
         nwtxdtRepository.save(nwtxdt);
     }

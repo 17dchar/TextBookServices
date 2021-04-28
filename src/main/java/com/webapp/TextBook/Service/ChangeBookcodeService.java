@@ -25,8 +25,12 @@ public class ChangeBookcodeService {
     @Autowired private SpridenRepository spridenRepository;
     @Autowired private StvtermRepository stvtermRepository;
 
+    //Changes book code and edition year
     public void changeByBookCodeAndEditionYear(String bookCode, String editionYear, String newBookCode, String newEditionYear){
+
+        //List of data queried from database
         List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCodeAndEditionYear(bookCode, editionYear);
+        //If there is data, make changes, else do nothing
         if( nwtxinList.size() > 0 ){
             System.out.println("found one");
             nwtxinList.get(0).setBookCode(newBookCode);
@@ -36,9 +40,16 @@ public class ChangeBookcodeService {
         }
     }
 
+    //Get most recent nwtxdt
     public OutputBookInformationModel getMostRecentNwtxdt(String bookCode){
+
+        //List of data queried from database
         List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCode(bookCode);
+
+        //If there is data, populate output, else return nothing
         if(nwtxinList.size() >0){
+
+            //Find most recent edition year
             int mostRecent = 0;
             for(int i = 0; i < nwtxinList.size(); i++){
                 if(i > 0){
@@ -48,6 +59,8 @@ public class ChangeBookcodeService {
                     }
                 }
             }
+
+            //Populate output
             OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
             outputBookInformationModel.setBookCode(nwtxinList.get(mostRecent).getBookCode());
             outputBookInformationModel.setBarcode("No Specific Barcode Given");
@@ -67,8 +80,13 @@ public class ChangeBookcodeService {
             return null;
         }
     }
+
+    //Find nwtxdt from book code and edition year
     public OutputBookInformationModel getNwtxdtByBookCodeAndYear(String bookCode, String editionYear){
+        //List for data quried from database
         List<Nwtxin> nwtxinList = nwtxinRepository.findByBookCodeAndEditionYear(bookCode, editionYear);
+
+        //If there is data, populate output, else return nothing
         if(nwtxinList.size() >0){
             OutputBookInformationModel outputBookInformationModel = new OutputBookInformationModel();
             outputBookInformationModel.setBookCode(nwtxinList.get(0).getBookCode());

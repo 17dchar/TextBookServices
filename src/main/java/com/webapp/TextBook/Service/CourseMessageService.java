@@ -14,6 +14,8 @@ import com.webapp.TextBook.Model.Nwtxcm;
 public class CourseMessageService {
 
     @Autowired private NwtxcmRepository nwtxcmRepository;
+
+    //Get course
     public Nwtxcm getNwtxcm(String courseId) {
         //Create a list of all repositories under given credentials
         List<Nwtxcm> nwtxcmList = nwtxcmRepository.findByCourse(courseId);
@@ -27,6 +29,7 @@ public class CourseMessageService {
         }
     }
 
+    //Save Changes
     public Nwtxcm saveNwtxcm(Nwtxcm nwtxcm){
         System.out.println("Saving Added Repository");
         return nwtxcmRepository.save(nwtxcm);

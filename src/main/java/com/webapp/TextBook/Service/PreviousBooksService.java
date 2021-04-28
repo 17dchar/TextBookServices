@@ -80,7 +80,10 @@ public class PreviousBooksService {
 
     @Autowired
     private NwtxinRepository nwtxinRepository;
+
+    //Get all titles
     public List<Nwtxin> getTitles(List<Nwtxdt> nwtxdtList){
+        //List for all changes
         List<Nwtxin> nwtxinList = new ArrayList<Nwtxin>();
         for(Nwtxdt nwtxdt :nwtxdtList){
             List<Nwtxin> tempList = nwtxinRepository.findByBookCodeAndEditionYear(nwtxdt.getBookCode(), nwtxdt.getEditionYear());
