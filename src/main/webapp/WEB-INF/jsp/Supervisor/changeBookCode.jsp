@@ -11,10 +11,13 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             var delayman;
+
             $(document).ready(function() {
                 var withEditionYear = false;
                 var changingBookCode = false;
                 var changingEditionYear = false;
+
+                //AJAX Function
                 function queryMessage(){
                     var obj;
                     if(withEditionYear){
@@ -52,6 +55,8 @@
                     }
                     var string = JSON.parse(obj);
                     console.log("Query With " + string);
+
+                    //AJAX
                     $.ajax({
                         type: "POST",
                         url: '/Change-Book-Code',
@@ -72,12 +77,15 @@
                         }
                     })
                 }
+
+                //Nullify bookcode enter key presses
                 $('#bookCode').keydown(function (e) {
                     if (e.keyCode == 13) {
                         e.preventDefault();
                         return false;
                     }
                 });
+                //If there is change in the bookcode, check if it's valid to query off of
                 $('#bookCode').keyup(function(){
                     withEditionYear = false;
                     changingVariables = false;
@@ -86,6 +94,8 @@
                     if(document.getElementById('bookCode').value.length===8){
                         queryMessage();
                     } else{
+                        //If there is no change for 3 seconds, assume that the user is waiting for
+                        //The query, and query anyway (will likely get caught by data validation)
                         delayman =setTimeout(() => {
                             if(document.getElementById('bookCode').value.length!==0) {
                                 console.log("Checking Anyway With Only Book Code!");
@@ -94,6 +104,8 @@
                         }, 3000);
                     }
                 });
+
+                //If there is change in the edition year, check if it's valid to query off of
                 $('#editionYear').keyup(function(){
                     withEditionYear = false;
                     changingBookCode = false;
@@ -103,6 +115,8 @@
                         withEditionYear = true;
                         queryMessage();
                     } else{
+                        //If there is no change for 3 seconds, assume that the user is waiting for
+                        //The query, and query anyway (will likely get caught by data validation)
                         delayman =setTimeout(() => {
                             if(document.getElementById('editionYear').value.length!==0) {
                                 console.log("Checking Anyway With Edition Year And Book Code!");
@@ -112,6 +126,8 @@
                         }, 3000);
                     }
                 });
+
+                //Check if new New edition year is valid, then send change request
                 $('#newEditionYear').keydown(function (e) {
                     if (e.keyCode == 13) {
                         e.preventDefault();
@@ -125,6 +141,8 @@
                         return false;
                     }
                 });
+
+                //Clear all input fields
                 $('#clear').click(function (){
                     console.log("click");
                     $('input[type=text]').each(function(){

@@ -11,6 +11,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             var delayman;
+            //AJAX FUNCTION
             $(document).ready(function() {
                 var withEditionYear = false;
                 var withBarcode = false;
@@ -18,11 +19,15 @@
                 var query = '';
                 function queryMessage(){
                     var obj;
+                    //If there is a change in the book disposition, use that json string instead
                     if(change){
                         obj = query;
                     } else if(withBarcode) {
+                        //If not and there is a barcode, use that
                         obj = '{ "barcode" : "' + document.getElementById("barcode").value +'"}';
                     } else if(withEditionYear){
+                        //If there is an edition year used, use that
+
                         obj = '{ "bookCode" : "' + document.getElementById("bookCode").value +
                             '", "editionYear" : "' + document.getElementById("editionYear").value + '"}';
                     } else{
@@ -30,6 +35,8 @@
                     }
                     var string = JSON.parse(obj);
                     console.log("Query With " + string);
+
+                    //AJAX
                     $.ajax({
                         type: "POST",
                         url: '/Change-Disposition',
@@ -42,6 +49,8 @@
                                 alert(data.errorMessage);
                                 return;
                             }
+
+                            //Fill out form
                             $('input[type=text]').each(function(){
                                 var id = $(this).attr('id');
                                 console.log(id);
@@ -57,6 +66,8 @@
                                 console.log(id);
                                 $(this).val(data[id.toString()]);
                             });
+
+                            //Give what the meaining of each character
                             if(data.currentDisposition === "I"){
                                 document.getElementById('currentDisposition').innerHTML = "Checked In";
                             } else if(data.currentDisposition === "O"){
@@ -81,12 +92,14 @@
                         }
                     })
                 }
+                //Nullify all enter keypresses in bookcode field
                 $('#bookCode').keydown(function (e) {
                     if (e.keyCode == 13) {
                         e.preventDefault();
                         return false;
                     }
                 });
+                //If there is change in the bookcode, check if it's valid to query off of
                 $('#bookCode').keyup(function(){
                     withEditionYear = false;
                     //document.getElementById('output').innerHTML ="";
@@ -94,6 +107,8 @@
                     if(document.getElementById('bookCode').value.length===8){
                         queryMessage();
                     } else{
+                        //If there is no change for 3 seconds, assume that the user is waiting for
+                        //The query, and query anyway (will likely get caught by data validation)
                         delayman =setTimeout(() => {
                             if(document.getElementById('bookCode').value.length!==0) {
                                 console.log("Checking Anyway With Only Book Code!");
@@ -102,6 +117,8 @@
                         }, 3000);
                     }
                 });
+
+                //If there is change in the edition year, check if it's valid to query off of
                 $('#editionYear').keyup(function(){
                     withEditionYear = false;
                     clearTimeout(delayman);
@@ -109,6 +126,9 @@
                         withEditionYear = true;
                         queryMessage();
                     } else{
+
+                        //If there is no change for 3 seconds, assume that the user is waiting for
+                        //The query, and query anyway (will likely get caught by data validation)
                         delayman =setTimeout(() => {
                             if(document.getElementById('editionYear').value.length!==0) {
                                 console.log("Checking Anyway With Edition Year And Book Code!");
@@ -118,6 +138,8 @@
                         }, 3000);
                     }
                 });
+
+                //If there is change to barcode, check if it's valid to query off of
                 $('#barcode').unbind().bind('keyup',(function(){
                     withBarcode = false;
                     //document.getElementById('output').innerHTML ="";
@@ -127,6 +149,9 @@
                         withBarcode = true;
                         queryMessage();
                     } else{
+
+                        //If there is no change for 3 seconds, assume that the user is waiting for
+                        //The query, and query anyway (will likely get caught by data validation)
                         delayman =setTimeout(() => {
                             if(document.getElementById('barcode').value.length!==0){
                                 console.log("Checking Anyway With Barcode!");
@@ -137,6 +162,8 @@
                         }, 3000);
                     }
                 }));
+
+                //Clears all input values
                 $('#clear').click(function (){
                     console.log("click");
                     $('input[type=text]').each(function(){
@@ -157,6 +184,7 @@
                     });
                 });
 
+                //Creates json string if there is any changes at all to the values given
                 $('#makeChanges').click(function (){
                     console.log("click");
                     query = '{"' + $('#bookCode').attr('id') + '" : "' + $('#bookCode').val() + '"' ;

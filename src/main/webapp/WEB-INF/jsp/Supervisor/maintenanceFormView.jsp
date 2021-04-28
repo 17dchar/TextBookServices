@@ -43,6 +43,8 @@
                                 document.getElementById('editionYear').placeholder = data.editionYear;
                             }
                             console.log(data);
+
+                            //Populate page
                             $('input[type=text]').each(function(){
                                     var id = $(this).attr('id');
                                     console.log(id);
@@ -65,12 +67,16 @@
                         }
                     })
                 }
+
+                //Nullify book code enter
                 $('#bookCode').keydown(function (e) {
                     if (e.keyCode == 13) {
                         e.preventDefault();
                         return false;
                     }
                 });
+
+                //If there is change in the book code, check if it's valid to query off of
                 $('#bookCode').keyup(function(){
                     withEditionYear = false;
                     //document.getElementById('output').innerHTML ="";
@@ -79,6 +85,8 @@
                         queryMessage();
                     } else{
                         delayman =setTimeout(() => {
+                            //If there is no change for 3 seconds, assume that the user is waiting for
+                            //The query, and query anyway (will likely get caught by data validation)
                             if(document.getElementById('bookCode').value.length!==0) {
                                 console.log("Checking Anyway With Only Book Code!");
                                 queryMessage();
@@ -86,6 +94,8 @@
                         }, 3000);
                     }
                 });
+
+                //If there is change in the edition year, check if it's valid to query off of
                 $('#editionYear').keyup(function(){
                     withEditionYear = false;
                     clearTimeout(delayman);
@@ -94,6 +104,8 @@
                         queryMessage();
                     } else{
                         delayman =setTimeout(() => {
+                            //If there is no change for 3 seconds, assume that the user is waiting for
+                            //The query, and query anyway (will likely get caught by data validation)
                             if(document.getElementById('editionYear').value.length!==0) {
                                 console.log("Checking Anyway With Edition Year And Book Code!");
                                 withEditionYear = true;
@@ -102,6 +114,8 @@
                         }, 3000);
                     }
                 });
+
+                //If there are any changes in input fields beyond the top three, make query
                 $('#makeChanges').click(function (){
                     console.log("click");
                     query = '{"' + $('#bookCode').attr('id') + '" : "' + $('#bookCode').val() + '"' ;
@@ -120,6 +134,8 @@
                     console.log(query);
                     queryMessage();
                 });
+
+                //Clear all inputs
                 $('#clear').click(function (){
                     console.log("click");
                     $('input[type=text]').each(function(){

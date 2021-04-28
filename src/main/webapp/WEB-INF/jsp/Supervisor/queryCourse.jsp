@@ -12,11 +12,15 @@
         <script>
             var delayman;
             $(document).ready(function() {
+
+                //AJAX Function
                 function queryMessage(){
                     var obj;
                     obj = '{ "course" : "' + document.getElementById("course").value + '"}';
                     var string = JSON.parse(obj);
                     console.log("Query With " + string);
+
+                    //AJAX
                     $.ajax({
                         type: "POST",
                         url: '/Find-Course',
@@ -25,10 +29,14 @@
                         timeout: 6000000,
                         success: function (data) {
                             console.log(data);
+
+                            //If there are errors, don't populate table and instead return error
                             if(data.errors){
                                 alert(data.errorMessage);
                                 return;
                             }
+
+                            //Populate table
                             var trHTML = '';
                             $.each(data, function (i, item){
                                 trHTML += '<tr><td>' + item.bookCode + '</td><td>' + item.editionYear + '</td><td>' + item.title + '</td></tr>';
@@ -41,17 +49,23 @@
                         }
                     })
                 }
+
+                //Nullify all enter key presses in course
                 $('#course').keydown(function (e) {
                     if (e.keyCode == 13) {
                         e.preventDefault();
                         return false;
                     }
                 });
+
+                //If there is change in the course, check if it's valid to query off of
                 $('#course').keyup(function(){
                     clearTimeout(delayman);
                     if(document.getElementById('course').value.length===9){
                         queryMessage();
                     } else{
+                        //If there is no change for 3 seconds, assume that the user is waiting for
+                        //The query, and query anyway (will likely get caught by data validation)
                         delayman =setTimeout(() => {
                             if(document.getElementById('course').value.length!==0){
                                 console.log("Checking Anyway!");
@@ -60,6 +74,8 @@
                         }, 3000);
                     }
                 });
+
+                //Clear all input variables
                 $('#clear').click(function (){
                     console.log("click");
                     $('input[type=text]').each(function(){

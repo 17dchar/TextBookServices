@@ -16,6 +16,8 @@
             var delayman;
             $(document).ready(function() {
                 var attempt = false;
+
+                //AJAX Function
                 function queryMessage(){
                     var obj;
                     if(attempt){
@@ -26,6 +28,7 @@
                     }
                     var string = JSON.parse(obj);
                     console.log("Attempting Query With " + string);
+                    //AJAX
                     $.ajax({
                         type: "POST",
                         url: '/Course-Message',
@@ -33,6 +36,7 @@
                         dataType: 'json',
                         timeout: 6000000,
                         success: function (data) {
+                            //If there are errors, don't populate and show error
                             if(data.errors){
                                 alert(data.errorMessage);
                                 return;
@@ -51,12 +55,16 @@
                         }
                     })
                 }
+
+                //Nullify course enter keypress
                 $('#course').keydown(function (e) {
                     if (e.keyCode == 13) {
                         e.preventDefault();
                         return false;
                     }
                 });
+
+                //Initiate message query upon hitting enter in output field
                 $('#output').keydown(function (e) {
                     if (e.keyCode == 13) {
                         e.preventDefault();
@@ -64,6 +72,10 @@
                         return false;
                     }
                 });
+
+
+
+                //If there is change in the course, check if it's valid to query off of
                 $('#course').keyup(function(){
                     attempt = false;
                     document.getElementById('output').innerHTML =" ";
@@ -71,12 +83,16 @@
                     if(document.getElementById('course').value.length===9){
                         queryMessage();
                     } else{
+                        //If there is no change for 3 seconds, assume that the user is waiting for
+                        //The query, and query anyway (will likely get caught by data validation)
                         delayman =setTimeout(() => {
                             console.log("Checking Anyway!");
                             queryMessage();
                         }, 3000);
                     }
                 });
+
+                //Clear all inputs
                 $('#clear').click(function (){
                     console.log("click");
                     $('input[type=text]').each(function(){

@@ -17,11 +17,15 @@
             $(document).ready(function() {
                 var withEditionYear = false;
                 var withBarcode = false;
+
+                //AJAX Function
                 function queryMessage(){
                     var obj;
                     obj = '{ "id" : "' + document.getElementById("id").value + '"}';
                     var string = JSON.parse(obj);
                     console.log("Query With " + string);
+
+                    //AJAX
                     $.ajax({
                         type: "POST",
                         url: '/Student-Schedule',
@@ -41,12 +45,16 @@
                         }
                     })
                 }
+
+                //Nullify book code enter key presses
                 $('#bookCode').keydown(function (e) {
                     if (e.keyCode == 13) {
                         e.preventDefault();
                         return false;
                     }
                 });
+
+                //If there is change in the book code, check if it's valid to query off of
                 $('#bookCode').keyup(function(){
                     withEditionYear = false;
                     //document.getElementById('output').innerHTML ="";
@@ -54,6 +62,8 @@
                     if(document.getElementById('bookCode').value.length===8){
                         queryMessage();
                     } else{
+                        //If there is no change for 3 seconds, assume that the user is waiting for
+                        //The query, and query anyway (will likely get caught by data validation)
                         delayman =setTimeout(() => {
                             if(document.getElementById('bookCode').value.length!==0) {
                                 console.log("Checking Anyway With Only Book Code!");
@@ -62,6 +72,8 @@
                         }, 3000);
                     }
                 });
+
+                //If there is change in the edition year, check if it's valid to query off of
                 $('#editionYear').keyup(function(){
                     withEditionYear = false;
                     clearTimeout(delayman);
@@ -69,6 +81,8 @@
                         withEditionYear = true;
                         queryMessage();
                     } else{
+                        //If there is no change for 3 seconds, assume that the user is waiting for
+                        //The query, and query anyway (will likely get caught by data validation)
                         delayman =setTimeout(() => {
                             if(document.getElementById('editionYear').value.length!==0) {
                                 console.log("Checking Anyway With Edition Year And Book Code!");
@@ -78,6 +92,8 @@
                         }, 3000);
                     }
                 });
+
+                //If there is change in the barcode, check if it's valid to query off of
                 $('#barcode').unbind().bind('keyup',(function(){
                     withBarcode = false;
                     //document.getElementById('output').innerHTML ="";
@@ -87,6 +103,8 @@
                         withBarcode = true;
                         queryMessage();
                     } else{
+                        //If there is no change for 3 seconds, assume that the user is waiting for
+                        //The query, and query anyway (will likely get caught by data validation)
                         delayman =setTimeout(() => {
                             if(document.getElementById('barcode').value.length!==0){
                                 console.log("Checking Anyway With Barcode!");
@@ -97,6 +115,8 @@
                         }, 3000);
                     }
                 }));
+
+                //Clear all input fields
                 $('#clear').click(function (){
                     console.log("click");
                     $('input[type=text]').each(function(){
